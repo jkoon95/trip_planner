@@ -13,7 +13,6 @@ const Login = () => {
   const login = () => {
     if (memberEmail !== "" && memberPw !== "") {
       const obj = { memberEmail, memberPw };
-      console.log(obj);
       axios
         .post(backServer + "/member/login", obj)
         .then((res) => {

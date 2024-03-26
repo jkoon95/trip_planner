@@ -1,12 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      우왕
-    </div>
-  );
+  return <div className="App">우왕</div>;
 }
 
 export default App;

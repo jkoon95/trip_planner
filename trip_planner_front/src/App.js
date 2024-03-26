@@ -7,6 +7,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import InnList from "./page/INN/InnList";
 import { Route, Routes } from "react-router-dom";
+import Login from "./page/member/Login";
+import Main from "./page/common/Main";
 
 function App() {
   return (

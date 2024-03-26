@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./member.css";
 import { useNavigate } from "react-router-dom";
-import Input from "../component/FromFrm";
+import Input from "../../component/FromFrm";
 import axios from "axios";
 import Swal from "sweetalert2";
 

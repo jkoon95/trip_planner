@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Swal from "sweetalert2";
-import Input from "../../component/FormFrm";
+import { Button1, Input } from "../../component/FormFrm";
 
 const Login = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -39,30 +39,30 @@ const Login = () => {
     }
   };
   return (
-    <div className="login-wrap">
-      <div className="page-title">로그인</div>
-      <div className="login-input-wrap">
-        <label htmlFor="memberEmail">이메일</label>
-        <Input
-          type="text"
-          content="memberEmail"
-          data={memberEmail}
-          setData={setMemberEmail}
-        />
+    <section className="contents login">
+      <h2>로그인</h2>
+      <div className="login_input_area">
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="memberEmail">아이디</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="memberEmail" data={memberEmail} setData={setMemberEmail} />
+          </div>
+        </div>
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="memberPw">비밀번호</label>
+          </div>
+          <div className="input_item">
+            <Input type="password" content="memberPw" data={memberPw} setData={setMemberPw} />
+          </div>
+        </div>
+        <div className="btn_area">
+          <Button1 text="로그인" clickEvent={login}></Button1>
+        </div>
       </div>
-      <div className="login-input-wrap">
-        <label htmlFor="memberPw">비밀번호</label>
-        <Input
-          type="password"
-          content="memberPw"
-          data={memberPw}
-          setData={setMemberPw}
-        />
-      </div>
-      <button className="btn" onClick={login}>
-        로그인
-      </button>
-    </div>
+    </section>
   );
 };
 

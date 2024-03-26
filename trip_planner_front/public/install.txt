@@ -5,4 +5,4 @@ npm install sweetalert2
 npm install react-quill
 npm install quill-image-resize-module-react
 npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/material @mui/styled-engine-sc styled-componentsnpm
+npm install @mui/material @mui/styled-engine-sc styled-components

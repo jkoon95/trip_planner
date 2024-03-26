@@ -1,0 +1,19 @@
+.blog-list-wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+.blog-list-title-wrap > div {
+  margin-bottom: 20px;
+}
+.blog-list-title-one {
+  color: #005caa;
+  font-weight: 900;
+  font-size: 150%;
+}
+.blog-list-title-two {
+  color: #e9511c;
+  font-size: 150%;
+}
+.blog-list-title-three {
+  font-weight: 900;
+}

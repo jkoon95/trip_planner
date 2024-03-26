@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./member.css";
 import { useNavigate } from "react-router-dom";
-import Input from "../../component/FromFrm";
+
 import axios from "axios";
 import Swal from "sweetalert2";
+import Input from "../../component/FormFrm";
 
 const Login = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;

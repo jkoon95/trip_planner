@@ -1,8 +1,8 @@
 import './page/common/reset.css';
 import './page/common/common.css';
 import { Route, Routes } from "react-router-dom";
-import Login from "./member/Login";
-import Main from "./common/Main";
+import Login from "./page/member/Login";
+import Main from "./page/common/Main";
 
 function App() {
   return (

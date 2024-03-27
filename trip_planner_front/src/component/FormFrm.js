@@ -1,10 +1,11 @@
 import "./formFrm.css";
 
 const Input = (props) => {
-  const data = props.data;            //input태그와 연결할 state
-  const setData = props.setData;      //state 값 변경 함수
   const type = props.type;
   const content = props.content;
+  const data = props.data;            //input태그와 연결할 state
+  const setData = props.setData;      //state 값 변경 함수
+  const clickEvent = props.clickEvent;
   const blurEvent = props.blurEvent;
   const readonly = props.readonly;
   const disabled = props.disabled;
@@ -23,7 +24,7 @@ const Input = (props) => {
     );
   } else {
     return (
-      <input className="input" id={content} type={type} value={data || ""} onChange={chageData} onBlur={blurEvent} ref={inputRef} onKeyUp={keyupEvent} />
+      <input className="input" id={content} type={type} value={data || ""} onChange={chageData} ref={inputRef} onKeyUp={keyupEvent} onClick={clickEvent} onBlur={blurEvent} />
     );
   }
 };

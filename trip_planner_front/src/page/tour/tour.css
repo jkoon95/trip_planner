@@ -1,3 +1,63 @@
-.contents > h2 {
+/*
+메인 색상
+#005caa 파랑  #e9511c 주황  #f4f5ef 베이지  #000000 검정
+#30e462 성공  #ff2803 에러  #f9b71b 경고    #1795f0 인포
+기타 #89cff0 #f4f5ef #8f705b #035e7b
+*/
+
+.tour-title > h2 {
   text-align: left;
+  font-size: 2.2em;
+}
+
+/* 상단 검색창 */
+.tour-search-wrap {
+  border-radius: 10px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.tour-search-wrap .material-icons {
+  font-size: 32px;
+}
+.tour-search-wrap > Button {
+  width: 80px;
+  height: 40px;
+  font-size: 16px !important;
+}
+.tour-search-wrap > .search-wrap,
+.tour-search-wrap > .calendar-wrap {
+  width: 50%;
+}
+.tour-search-wrap > .search-wrap {
+  border-right: 1px solid #999;
+  overflow: hidden;
+}
+.tour-search-wrap > .search-wrap > * {
+  float: left;
+}
+.tour-search-wrap > .search-wrap > input {
+  height: 32px;
+  padding-left: 10px;
+}
+.tour-search-wrap > .calendar-wrap {
+  padding-left: 20px;
+  overflow: hidden;
+}
+.tour-search-wrap > .calendar-wrap > input {
+  height: 32px;
+  padding-left: 10px;
+}
+.tour-search-wrap > .calendar-wrap > * {
+  float: left;
+}
+
+/* 아이콘바 */
+.tour-icon-wrap img {
+  width: 66px;
+  height: 66px;
+  border-radius: 20px;
 }

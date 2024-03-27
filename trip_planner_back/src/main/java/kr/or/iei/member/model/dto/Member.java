@@ -20,4 +20,6 @@ public class Member {
 	private String memberAddr;
 	private int memberType;
 	private int memberStatus;
+	private String memberId;
+	private String memberDomain;
 }

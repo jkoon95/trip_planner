@@ -1,9 +1,12 @@
 package kr.or.iei.member.controller;
 
+import java.sql.Array;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,18 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
 		Member m = memberService.login(member);
+		if(m != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", m);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value="/kakaoLogin")
+	public ResponseEntity<ResponseDTO> kakaoLogin(@RequestBody Member member){
+		Member m = memberService.kakaoLogin(member);
 		if(m != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", m);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

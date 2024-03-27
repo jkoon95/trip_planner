@@ -39,6 +39,43 @@ const Login = () => {
         });
     }
   };
+  const kakaoLogin = () => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      window.Kakao.init("ddeb625775a0919685ee69a92e0fd14c");
+      window.Kakao.Auth.login({
+        scope: "account_email",
+        success: function (authObj) {
+          console.log(authObj);
+          window.Kakao.API.request({
+            url: "/v2/user/me",
+            success: (res) => {
+              const kakaoEmail = res.kakao_account.email;
+              const obj = kakaoEmail.split("@");
+              const arr = { memberId: obj[0], memberDomain: obj[1] };
+              console.log(obj);
+
+              axios
+                .post(backServer + "/member/kakaoLogin", arr)
+                .then((res) => {
+                  if (res.data.message === "success") {
+                    console.log("카카오 로그인 성공");
+                    navigate("/");
+                  }
+                })
+                .catch((res) => {
+                  console.log("카카오 로그인 실패");
+                });
+            },
+          });
+        },
+      });
+    };
+  };
   return (
     <section className="contents login">
       <h2>로그인</h2>
@@ -70,7 +107,7 @@ const Login = () => {
           </div>
         </div>
         <div className="btn_area">
-          <Button class="kakao" clickEvent={login}></Button>
+          <Button class="kakao" clickEvent={kakaoLogin}></Button>
           <Button class="naver" clickEvent={login}></Button>
         </div>
         <div className="btn_area">

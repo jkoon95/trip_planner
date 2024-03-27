@@ -7,10 +7,13 @@ import Main from "./page/common/Main";
 import BlogList from "./page/blog/BlogList";
 import TourList from "./page/tour/TourList";
 import Ref from "./Ref";
+import Header from "./page/common/Header";
+import Footer from "./page/common/Footer";
 
 function App() {
   return (
     <div className="wrap">
+      <Header />
       <main className="container">
         <Routes>
           <Route path="/" element={<Main />} />
@@ -21,6 +24,7 @@ function App() {
           <Route path="/ref" element={<Ref />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

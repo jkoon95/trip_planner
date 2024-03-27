@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./page/member/Login";
 import Main from "./page/common/Main";
 import BlogList from "./page/blog/BlogList";
+import TourList from "./page/tour/TourList";
 import Ref from "./Ref";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/innList" element={<InnList />} />
           <Route path="/blogList" element={<BlogList />} />
+          <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
         </Routes>
       </main>

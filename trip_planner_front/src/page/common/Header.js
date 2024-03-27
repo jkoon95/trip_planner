@@ -69,7 +69,7 @@ const HeaderNavi = (props) => {
             isLogin ? (
               <ul>
                 <li>
-                  <Link to="#">마이페이지</Link>
+                  <Link to="/myPage">마이페이지</Link>
                 </li>
                 <li>
                   <Link to="/innList">숙소 예약하기</Link>

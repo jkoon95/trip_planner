@@ -9,6 +9,7 @@ import TourList from "./page/tour/TourList";
 import Ref from "./Ref";
 import Header from "./page/common/Header";
 import Footer from "./page/common/Footer";
+import MyPageMain from "./page/mypage/MyPageMain";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/blogList" element={<BlogList />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
+          <Route path="/mypage" element={<MyPageMain />} />
         </Routes>
       </main>
       <Footer />

@@ -11,3 +11,5 @@ npm install @mui/material @mui/styled-engine-sc styled-components
 npm install dayjs
 npm install @mui/x-date-pickers
 
+2024-03-27 slide
+npm install swiper

@@ -63,7 +63,7 @@ function App() {
   }, []);
   return (
     <div className="wrap">
-      <Header />
+      <Header isLogin={isLogin} logout={logout} />
       <main className="container">
         <Routes>
           <Route

@@ -6,7 +6,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Button, Input } from "../../component/FormFrm";
 
-const Login = () => {
+const Login = (props) => {
+  const loginFunction = props.login;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [memberEmail, setMemberEmail] = useState("");
@@ -20,6 +21,7 @@ const Login = () => {
         .then((res) => {
           if (res.data.message === "success") {
             console.log("로그인 성공");
+            loginFunction(res.data.data);
             Swal.fire({
               title: "로그인 성공",
               text: "로그인을 성공했습니다",

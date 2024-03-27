@@ -14,6 +14,7 @@ const Login = () => {
   const login = () => {
     if (memberEmail !== "" && memberPw !== "") {
       const obj = { memberEmail, memberPw };
+      console.log(backServer);
       axios
         .post(backServer + "/member/login", obj)
         .then((res) => {
@@ -47,7 +48,12 @@ const Login = () => {
             <label htmlFor="memberEmail">아이디</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="memberEmail" data={memberEmail} setData={setMemberEmail} />
+            <Input
+              type="text"
+              content="memberEmail"
+              data={memberEmail}
+              setData={setMemberEmail}
+            />
           </div>
         </div>
         <div className="input_wrap">
@@ -55,7 +61,12 @@ const Login = () => {
             <label htmlFor="memberPw">비밀번호</label>
           </div>
           <div className="input_item">
-            <Input type="password" content="memberPw" data={memberPw} setData={setMemberPw} />
+            <Input
+              type="password"
+              content="memberPw"
+              data={memberPw}
+              setData={setMemberPw}
+            />
           </div>
         </div>
         <div className="btn_area">

@@ -75,7 +75,7 @@ function App() {
           <Route path="/blogList" element={<BlogList />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
-          <Route path="/mypage/*" element={<MypageMain />} />
+          <Route path="/mypage/*" element={<MypageMain isLogin={isLogin} logout={logout} />} />
         </Routes>
       </main>
       <Footer />

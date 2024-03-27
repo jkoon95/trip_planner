@@ -1,19 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MypageSideMenu from "./MypageSideMenu";
 import "./mypage.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import MyTrips from "./MyTrips";
 import MyBooks from "./MyBooks";
 import MyCoupons from "./MyCoupons";
 import MyLikes from "./MyLikes";
 import MyReviews from "./MyReviews";
 import MyInfo from "./MyInfo";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const logout = props.logout;
   const [member, setMember] = useState("");
+  const navigate = useNavigate();
+
+  if(!isLogin){
+    Swal.fire({icon: "warning", text: "로그인 후 이용이 가능합니다.", confirmButtonText: "닫기"});
+    navigate("/");
+  }
+  console.log(window.localStorage.getItem("member"));
+
+  // useEffect(() => {
+  //   axios.get(backServer + "/member/")
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((res) => {
+  //     console.log(res);
+  //   })
+  // },[]);
 
   const [menus, setMenus] = useState([
     {url: "myBooks", text: "내 예약", active: true},
@@ -31,7 +50,8 @@ const MypageMain = (props) => {
         <MypageSideMenu menus={menus} setMenus={setMenus} />
       </div>
       <div className="content_wrap">
-          {member && member.memberType === 1 ? (
+          {/* {member && member.memberType === 1 ? ( */}
+          {isLogin ? (
             <Routes>
               <Route path="/myBooks" element={<MyBooks />} />
               <Route path="/myTrips" element={<MyTrips />} />

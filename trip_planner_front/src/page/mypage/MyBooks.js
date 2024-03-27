@@ -1,8 +1,12 @@
 const MyBooks = () => {
   return(
-    <>
-      내 예약
-    </>
+    <div className="myBooks_wrap">
+      <ul className="myBooks_list">
+        <li>
+          
+        </li>
+      </ul>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@
 기타 #89cff0 #f4f5ef #8f705b #035e7b
 */
 
-.tour-title > h2 {
+.tour-list-title > h2 {
   text-align: left;
   font-size: 2.2em;
 }
@@ -17,7 +17,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 .tour-search-wrap .material-icons {
@@ -56,8 +56,42 @@
 }
 
 /* 아이콘바 */
+.tour-icon-wrap {
+  width: 720px;
+  margin: 0 auto;
+  display: flex; /* flexbox를 사용하여 항목들을 행으로 정렬 */
+  flex-wrap: wrap; /* 필요시 다음 줄로 감싸기 허용 */
+  justify-content: space-around; /* 항목들을 균등하게 배치 */
+  align-items: center; /* 항목들을 세로 중앙에 배치 */
+  font-size: 15px;
+  margin-bottom: 60px;
+}
+
 .tour-icon-wrap img {
-  width: 66px;
-  height: 66px;
+  width: 77px; /* 이미지 너비 설정 */
+  height: auto; /* 이미지 높이를 자동으로 설정하여 비율 유지 */
+  margin-bottom: 8px; /* 이미지와 설명 사이의 간격 조절 */
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+}
+.tour-icon-wrap img:hover {
+  transform: scale(1.2); /* 마우스 오버 시 크기를 1.2배로 확대 */
+}
+
+.tour-icon-wrap div {
+  text-align: center; /* 설명 텍스트를 중앙 정렬 */
+  width: 100%; /* 각 설명을 전체 너비로 설정하여 한 줄로 배치 */
+}
+
+/* 슬라이드 */
+.tour-swiper {
+  margin-bottom: 120px;
+}
+.tour-swiper img {
+  height: 240px;
+  width: 100%;
   border-radius: 20px;
+}
+.tour-swiper .swiper-slide {
+  padding: 0 30px;
 }

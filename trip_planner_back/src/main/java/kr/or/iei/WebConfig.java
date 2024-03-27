@@ -19,5 +19,12 @@ public class WebConfig implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
 	}
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loginInterceptor)
+				.addPathPatterns("/member/**","/board/**","/admin/**")
+				.excludePathPatterns("/member/login");
+	}
 
 }

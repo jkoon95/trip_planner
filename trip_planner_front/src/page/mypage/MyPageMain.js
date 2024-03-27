@@ -28,15 +28,16 @@ const MypageMain = (props) => {
   }
   console.log(window.localStorage.getItem("member"));
 
-  // useEffect(() => {
-  //   axios.get(backServer + "/member/")
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((res) => {
-  //     console.log(res);
-  //   })
-  // },[]);
+  useEffect(() => {
+    axios
+      .get(backServer + "/member")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   const [menus, setMenus] = useState([
     { url: "myBooks", text: "내 예약", active: true },

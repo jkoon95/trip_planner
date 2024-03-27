@@ -11,4 +11,6 @@ public interface MemberDao {
 
 	Member kakaoLogin(Member member);
 
+	Member selectOneMember(String memberEmail);
+
 }

@@ -7,4 +7,7 @@
 	<select id="kakaoLogin" resultType="member">
 		SELECT * FROM member_tbl WHERE member_email = #{memberId}||'@'||#{memberDomain}	
 	</select>
+	<select id="selectOneMember" resultType="member">
+		select * from member_tbl where member_email=#{memberEmail}
+	</select>
 </mapper>

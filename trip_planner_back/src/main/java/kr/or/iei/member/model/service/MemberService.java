@@ -16,10 +16,10 @@ public class MemberService {
 	private JwtUtil jwtUtil;
 
 	public String login(Member member) {
-		Member m = memberDao.login(member);
+		Member m = memberDao.selectOneMember(member.getMemberEmail());
 		if(m != null) {
 			long expiredDateMs = 60*60*1000l;
-			String accessToken = jwtUtil.createToken(member.getMemberEmail(), expiredDateMs);			
+			String accessToken = jwtUtil.createToken(member.getMemberEmail(), expiredDateMs);
 			return accessToken;
 		}else {			
 			return null;
@@ -29,5 +29,10 @@ public class MemberService {
 	public Member kakaoLogin(Member member) {
 		System.out.println(member);
 		return memberDao.kakaoLogin(member);
+	}
+	
+	public Member selectOneMember(String memberEmail) {
+		// TODO Auto-generated method stub
+		return memberDao.selectOneMember(memberEmail);
 	}
 }

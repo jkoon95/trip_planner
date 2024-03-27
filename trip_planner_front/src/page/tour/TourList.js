@@ -101,11 +101,37 @@ const TourSwiper = () => {
 
 const TourItem = () => {
   return (
-    <div className="tour-item">
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
+    <div className="tour-item-wrap">
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
     </div>
   );
 };

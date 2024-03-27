@@ -95,3 +95,49 @@
 .tour-swiper .swiper-slide {
   padding: 0 30px;
 }
+
+/* 추천 투어상품 */
+.tour-item-wrap {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* 한 줄에 4개의 동일한 너비의 열 생성 */
+  grid-gap: 20px; /* 열 사이의 간격 설정 */
+}
+
+.tour-item {
+  box-sizing: border-box;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.tour-item img {
+  width: 100%;
+  max-width: 265px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.tour-item-name {
+  font-size: 1.2em;
+  margin-top: auto; /* tour-item-name을 아래쪽으로 이동시킴 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tour-item-info {
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.tour-item-price {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #e9511c; /* 주황색 */
+  margin-top: 5px;
+}

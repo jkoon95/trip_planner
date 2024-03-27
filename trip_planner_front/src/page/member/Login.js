@@ -6,7 +6,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Button, Input } from "../../component/FormFrm";
 
-const Login = () => {
+const Login = (props) => {
+  const loginFunction = props.login;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [memberEmail, setMemberEmail] = useState("");
@@ -20,6 +21,7 @@ const Login = () => {
         .then((res) => {
           if (res.data.message === "success") {
             console.log("로그인 성공");
+            loginFunction(res.data.data);
             Swal.fire({
               title: "로그인 성공",
               text: "로그인을 성공했습니다",
@@ -38,6 +40,43 @@ const Login = () => {
           console.log(res);
         });
     }
+  };
+  const kakaoLogin = () => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      window.Kakao.init("ddeb625775a0919685ee69a92e0fd14c");
+      window.Kakao.Auth.login({
+        scope: "account_email",
+        success: function (authObj) {
+          console.log(authObj);
+          window.Kakao.API.request({
+            url: "/v2/user/me",
+            success: (res) => {
+              const kakaoEmail = res.kakao_account.email;
+              const obj = kakaoEmail.split("@");
+              const arr = { memberId: obj[0], memberDomain: obj[1] };
+              console.log(obj);
+
+              axios
+                .post(backServer + "/member/kakaoLogin", arr)
+                .then((res) => {
+                  if (res.data.message === "success") {
+                    console.log("카카오 로그인 성공");
+                    navigate("/");
+                  }
+                })
+                .catch((res) => {
+                  console.log("카카오 로그인 실패");
+                });
+            },
+          });
+        },
+      });
+    };
   };
   return (
     <section className="contents login">
@@ -70,11 +109,11 @@ const Login = () => {
           </div>
         </div>
         <div className="btn_area">
-          <Button
-            text="로그인"
-            className="btn_primary"
-            clickEvent={login}
-          ></Button>
+          <Button class="kakao" clickEvent={kakaoLogin}></Button>
+          <Button class="naver" clickEvent={login}></Button>
+        </div>
+        <div className="btn_area">
+          <Button text="로그인" class="btn_primary" clickEvent={login}></Button>
         </div>
       </div>
     </section>

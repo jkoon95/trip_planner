@@ -5,15 +5,29 @@ import org.springframework.stereotype.Service;
 
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.util.JwtUtil;
 
 @Service
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
-	public Member login(Member member) {
+	public String login(Member member) {
+		Member m = memberDao.login(member);
+		if(m != null) {
+			long expiredDateMs = 60*60*1000l;
+			String accessToken = jwtUtil.createToken(member.getMemberEmail(), expiredDateMs);			
+			return accessToken;
+		}else {			
+			return null;
+		}
+	}
+
+	public Member kakaoLogin(Member member) {
 		System.out.println(member);
-		System.out.println(memberDao.login(member));
-		return memberDao.login(member);
+		return memberDao.kakaoLogin(member);
 	}
 }

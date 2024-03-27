@@ -125,7 +125,7 @@ const HeaderNavi = (props) => {
                 <Link to="/login">로그인</Link>
               </li>
               <li>
-                <Link to="#">회원가입</Link>
+                <Link to="/join">회원가입</Link>
               </li>
               <li>
                 <Link to="/innList">숙소 예약하기</Link>

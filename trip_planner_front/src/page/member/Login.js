@@ -22,6 +22,7 @@ const Login = (props) => {
           if (res.data.message === "success") {
             console.log("로그인 성공");
             loginFunction(res.data.data);
+            console.log(res.data.data);
             Swal.fire({
               title: "로그인 성공",
               text: "로그인을 성공했습니다",
@@ -60,12 +61,12 @@ const Login = (props) => {
               const obj = kakaoEmail.split("@");
               const arr = { memberId: obj[0], memberDomain: obj[1] };
               console.log(obj);
-
               axios
                 .post(backServer + "/member/kakaoLogin", arr)
                 .then((res) => {
                   if (res.data.message === "success") {
                     console.log("카카오 로그인 성공");
+                    loginFunction(res.data.data);
                     navigate("/");
                   }
                 })
@@ -84,12 +85,13 @@ const Login = (props) => {
       <div className="login_input_area">
         <div className="input_wrap">
           <div className="input_title">
-            <label htmlFor="memberEmail">아이디</label>
+            <label htmlFor="memberEmail">이메일</label>
           </div>
           <div className="input_item">
             <Input
               type="text"
               content="memberEmail"
+              placeholder="abc@google.com"
               data={memberEmail}
               setData={setMemberEmail}
             />

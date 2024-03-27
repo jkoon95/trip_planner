@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import MypageMain from "./page/mypage/MypageMain";
 import Join from "./page/member/Join";
+import BlogWrite from "./page/blog/BlogWrite";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -82,6 +83,7 @@ function App() {
             path="/mypage/*"
             element={<MypageMain isLogin={isLogin} logout={logout} />}
           />
+          <Route path="/blogWrite" element={<BlogWrite />} />
         </Routes>
       </main>
       <Footer />

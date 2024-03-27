@@ -28,7 +28,7 @@ const TourList = () => {
 const TourSearchBox = () => {
   return (
     <div className="tour-search-wrap">
-      <div className="search-wrap">
+      <div className="tour-search">
         <span className="material-icons">search</span>
         <input type="text" placeholder="도시, 상품명으로 검색해주세요." />
       </div>
@@ -45,24 +45,24 @@ const TourIconBox = () => {
   return (
     <div className="tour-icon-wrap">
       <Link to="#">
-        <img alt="입장권" src="image/테마파크.jpg" />
+        <img alt="입장권" src="image/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
       </Link>
       <Link to="#">
-        <img alt="테마파크" src="image/테마파크.jpg" />
+        <img alt="전시회" src="image/투어전시.jpg" />
         <div>전시회</div>
       </Link>
       <Link to="#">
-        <img alt="액티비티" src="image/테마파크.jpg" />
+        <img alt="액티비티" src="image/투어레저.jpg" />
         <div>액티비티</div>
       </Link>
       <Link to="#">
-        <img alt="박람회" src="image/테마파크.jpg" />
+        <img alt="박람회" src="image/투어박람.jpg" />
         <div>박람회</div>
       </Link>
       <Link to="#">
-        <img alt="버스투어" src="image/테마파크.jpg" />
-        <div>버스투어</div>
+        <img alt="테마파크" src="image/투어테마.jpg" />
+        <div>테마파크</div>
       </Link>
     </div>
   );

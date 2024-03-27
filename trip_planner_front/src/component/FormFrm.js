@@ -30,8 +30,6 @@ const Input = (props) => {
 
 const Button = (props)=>{
   const text = props.text;
-  const size = props.size;
-  const outline = props.outline;
   const clickEvent = props.clickEvent;
   const className = props.class;
   console.log(className);

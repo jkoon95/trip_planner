@@ -18,21 +18,27 @@ const Header = (props) => {
   }
   const searchOpen = () => {
     searchRef.current.classList.add("active");
-    searchInputRef.current.focus();
   }
   const searchClose = () => {
     if(searchData === ""){
       searchRef.current.classList.remove("active");
     }
   }
+  const searchInputClickFunc = (e) => {
+    e.stopPropagation();
+    searchRef.current.classList.add("focus");
+  }
   document.body.addEventListener("click", () => {
     menuRef.current.classList.remove("active");
+    if(searchData === ""){
+      searchRef.current.classList.remove("focus");
+    }
   })
   return(
     <header className="header">
       <div className="header_inner">
         <h1 className="logo"><Link to="/" onClick={menuClose}>Trip Planner</Link></h1>
-        <HeaderNavi searchData={searchData} setSearchData={setSearchData} menuRef={menuRef} searchRef={searchRef} searchInputRef={searchInputRef} menuOpenFunc={menuOpen} searchOpenFunc={searchOpen} searchCloseFunc={searchClose} />
+        <HeaderNavi searchData={searchData} setSearchData={setSearchData} menuRef={menuRef} searchRef={searchRef} searchInputRef={searchInputRef} menuOpenFunc={menuOpen} searchOpenFunc={searchOpen} searchCloseFunc={searchClose} searchInputClickFunc={searchInputClickFunc} />
       </div>
     </header>
   );
@@ -49,10 +55,11 @@ const HeaderNavi = (props) => {
   const searchOpen = props.searchOpenFunc;
   const searchClose = props.searchCloseFunc;
   const searchInputRef = props.searchInputRef;
+  const searchInputClick = props.searchInputClickFunc;
   return(
     <div className="header_navi">
       <div className="search_wrap" ref={searchRef} onMouseOver={searchOpen} onMouseLeave={searchClose}>
-        <Input type="text" data={searchData} setData={setSearchData} inputRef={searchInputRef} keyupEvent={searchClose} />
+        <Input type="text" data={searchData} setData={setSearchData} inputRef={searchInputRef} clickEvent={searchInputClick} />
         <button className="btn_search"><span className="hidden">검색</span></button>
       </div>
       <div className="menu_wrap">
@@ -62,7 +69,7 @@ const HeaderNavi = (props) => {
             isLogin ? (
               <ul>
                 <li>
-                  <Link to="#">마이페이지</Link>
+                  <Link to="/myPage">마이페이지</Link>
                 </li>
                 <li>
                   <Link to="/innList">숙소 예약하기</Link>

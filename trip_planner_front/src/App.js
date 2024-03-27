@@ -11,6 +11,7 @@ import Header from "./page/common/Header";
 import Footer from "./page/common/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MyPageMain from "./page/mypage/MyPageMain";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -74,6 +75,7 @@ function App() {
           <Route path="/blogList" element={<BlogList />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
+          <Route path="/mypage" element={<MyPageMain />} />
         </Routes>
       </main>
       <Footer />

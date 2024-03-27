@@ -137,7 +137,7 @@ const HeaderNavi = (props) => {
                 <Link to="#">프로모션</Link>
               </li>
               <li>
-                <Link to="#">블로그</Link>
+                <Link to="/blogList">블로그</Link>
               </li>
             </ul>
           )}

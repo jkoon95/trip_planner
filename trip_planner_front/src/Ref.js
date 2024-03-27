@@ -11,16 +11,15 @@ const Ref = () => {
     <section className="contents">
       <h2>공통 모음</h2>
       <h3>페이지 기본 레이아웃</h3>
-      <div className="ref_section">{/* .ref_section 클래스명은 쓰는거 아닙니당 여기에만 쓴거예요! */}
+      <div className="ref_section">
+        {/* .ref_section 클래스명은 쓰는거 아닙니당 여기에만 쓴거예요! */}
         <div className="layout_sample">
           header
           <div>
             .container
             <div>
               section.contents - 모든 서브페이지는 section.contents로 감싸기
-              <div>
-                h2 페이지타이틀
-              </div>
+              <div>h2 페이지타이틀</div>
             </div>
           </div>
           footer
@@ -42,21 +41,38 @@ const Ref = () => {
         <Button text="btn_primary" class="btn_primary"></Button>
         <Button text="btn_primary outline" class="btn_primary outline"></Button>
         <Button text="btn_secondary" class="btn_secondary"></Button>
-        <Button text="btn_secondary outline" class="btn_secondary outline"></Button>
+        <Button
+          text="btn_secondary outline"
+          class="btn_secondary outline"
+        ></Button>
 
         <h5>버튼 medium: .md</h5>
         <Button text="btn_primary md" class="btn_primary md"></Button>
-        <Button text="btn_primary outline md" class="btn_primary outline md"></Button>
+        <Button
+          text="btn_primary outline md"
+          class="btn_primary outline md"
+        ></Button>
         <Button text="btn_secondary md" class="btn_secondary md"></Button>
-        <Button text="btn_secondary outline md" class="btn_secondary outline md"></Button>
+        <Button
+          text="btn_secondary outline md"
+          class="btn_secondary outline md"
+        ></Button>
 
         <h5>버튼 small: .sm</h5>
         <Button text="btn_primary sm" class="btn_primary sm"></Button>
-        <Button text="btn_primary outline sm" class="btn_primary outline sm"></Button>
+        <Button
+          text="btn_primary outline sm"
+          class="btn_primary outline sm"
+        ></Button>
         <Button text="btn_secondary sm" class="btn_secondary sm"></Button>
-        <Button text="btn_secondary outline sm" class="btn_secondary outline sm"></Button>
+        <Button
+          text="btn_secondary outline sm"
+          class="btn_secondary outline sm"
+        ></Button>
 
-        <h4>영역 안에서 버튼 사용시<span>(.btn_area로 감싸기)</span></h4>
+        <h4>
+          영역 안에서 버튼 사용시<span>(.btn_area로 감싸기)</span>
+        </h4>
         <div className="btn_area">
           <Button text="취소" class="btn_primary outline"></Button>
           <Button text="확인" class="btn_primary"></Button>
@@ -77,9 +93,16 @@ const Ref = () => {
             <label htmlFor="input1">기본 인풋</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="input1" data={input1} setData={setInput1} />
+            <Input
+              type="text"
+              content="input1"
+              data={input1}
+              setData={setInput1}
+            />
           </div>
-          <p className="msg">비밀번호는 4~12자리 영문 대/소문자를 포함해서 입력해주세요.</p>
+          <p className="msg">
+            비밀번호는 4~12자리 영문 대/소문자를 포함해서 입력해주세요.
+          </p>
         </div>
 
         <div className="input_wrap">
@@ -87,7 +110,12 @@ const Ref = () => {
             <label htmlFor="input2">기본 인풋</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="input2" data={input2} setData={setInput2} />
+            <Input
+              type="text"
+              content="input2"
+              data={input2}
+              setData={setInput2}
+            />
           </div>
           <p className="msg error">필수 입력항목입니다.</p>
         </div>
@@ -97,13 +125,18 @@ const Ref = () => {
             <label htmlFor="input3">기본 인풋</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="input3" data={input3} setData={setInput3} />
+            <Input
+              type="text"
+              content="input3"
+              data={input3}
+              setData={setInput3}
+            />
           </div>
           <p className="msg success">비밀번호가 일치합니다.</p>
         </div>
       </section>
     </section>
   );
-}
+};
 
 export default Ref;

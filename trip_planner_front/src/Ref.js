@@ -1,4 +1,4 @@
-import { Button1, Button2 } from "./component/FormFrm";
+import { Button } from "./component/FormFrm";
 import "./ref.css";
 
 const Ref = () => {
@@ -34,34 +34,34 @@ const Ref = () => {
       <section className="ref_section">
         <h4>버튼 기본</h4>
         <h5>버튼 default</h5>
-        <Button1 text="버튼 primary"></Button1>
-        <Button2 text="버튼 secondary"></Button2>
-        <Button1 text="버튼 primary outline" outline="outline"></Button1>
-        <Button2 text="버튼 secondary outline" outline="outline"></Button2>
+        <Button text="버튼 primary" class="btn_primary"></Button>
+        <Button text="버튼 primary" class="btn_primary outline"></Button>
+        <Button text="버튼 secondary" class="btn_secondary"></Button>
+        <Button text="버튼 secondary" class="btn_secondary outline"></Button>
 
         <h5>버튼 medium</h5>
-        <Button1 text="버튼 primary" size="md"></Button1>
-        <Button2 text="버튼 secondary" size="md"></Button2>
-        <Button1 text="버튼 primary outline" size="md" outline="outline"></Button1>
-        <Button2 text="버튼 secondary outline" size="md" outline="outline"></Button2>
+        <Button text="버튼 primary" class="btn_primary md"></Button>
+        <Button text="버튼 primary" class="btn_primary outline md"></Button>
+        <Button text="버튼 secondary" class="btn_secondary md"></Button>
+        <Button text="버튼 secondary" class="btn_secondary outline md"></Button>
 
         <h5>버튼 small</h5>
-        <button type="button" className="btn_primary sm">버튼 primary</button>
-        <button type="button" className="btn_secondary sm">버튼 secondary</button>
-        <button type="button" className="btn_primary outline sm">버튼 primary outline</button>
-        <button type="button" className="btn_secondary outline sm">버튼 secondary outline</button>
+        <Button text="버튼 primary" class="btn_primary sm"></Button>
+        <Button text="버튼 primary" class="btn_primary outline sm"></Button>
+        <Button text="버튼 secondary" class="btn_secondary sm"></Button>
+        <Button text="버튼 secondary" class="btn_secondary outline sm"></Button>
 
         <h4>영역 안에서 버튼 사용시<span>(.btn_area로 감싸기)</span></h4>
         <div className="btn_area">
-          <button type="button" className="btn_primary outline lg">취소</button>
-          <button type="button" className="btn_primary lg">확인</button>
+          <Button text="취소" class="btn_primary outline"></Button>
+          <Button text="확인" class="btn_primary"></Button>
         </div>
         <div className="btn_area">
-          <button type="button" className="btn_primary lg">메인으로 가기</button>
+          <Button text="목록" class="btn_secondary"></Button>
         </div>
         <div className="btn_area">
-          <button type="button" className="btn_primary sm">수정</button>
-          <button type="button" className="btn_primary outline sm">삭제</button>
+          <Button text="수정" class="btn_primary sm"></Button>
+          <Button text="삭제" class="btn_primary outline sm"></Button>
         </div>
       </section>
     </section>

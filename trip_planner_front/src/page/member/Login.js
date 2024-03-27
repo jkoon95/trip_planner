@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Button1, Input } from "../../component/FormFrm";
+import { Button, Input } from "../../component/FormFrm";
 
 const Login = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -70,7 +70,7 @@ const Login = () => {
           </div>
         </div>
         <div className="btn_area">
-          <Button1 text="로그인" clickEvent={login}></Button1>
+          <Button text="로그인" clickEvent={login}></Button>
         </div>
       </div>
     </section>

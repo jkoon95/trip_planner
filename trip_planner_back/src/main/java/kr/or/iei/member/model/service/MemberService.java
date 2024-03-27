@@ -12,6 +12,8 @@ public class MemberService {
 	private MemberDao memberDao;
 
 	public Member login(Member member) {
+		System.out.println(member);
+		System.out.println(memberDao.login(member));
 		return memberDao.login(member);
 	}
 }

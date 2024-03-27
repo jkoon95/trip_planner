@@ -72,9 +72,10 @@ const Ref = () => {
 
       <h3>인풋</h3>
       <section className="ref_section">
+        <h4>기본 인풋</h4>
         <div className="input_wrap">
           <div className="input_title">
-            <label htmlFor="input1">기본 인풋</label>
+            <label htmlFor="input1">기본 인풋 label</label>
           </div>
           <div className="input_item">
             <Input type="text" content="input1" data={input1} setData={setInput1} />
@@ -84,7 +85,7 @@ const Ref = () => {
 
         <div className="input_wrap">
           <div className="input_title">
-            <label htmlFor="input2">기본 인풋</label>
+            <label htmlFor="input2">기본 인풋 label</label>
           </div>
           <div className="input_item">
             <Input type="text" content="input2" data={input2} setData={setInput2} />
@@ -94,12 +95,32 @@ const Ref = () => {
 
         <div className="input_wrap">
           <div className="input_title">
-            <label htmlFor="input3">기본 인풋</label>
+            <label htmlFor="input3">기본 인풋 label</label>
           </div>
           <div className="input_item">
             <Input type="text" content="input3" data={input3} setData={setInput3} />
           </div>
           <p className="msg success">비밀번호가 일치합니다.</p>
+        </div>
+
+        <h4>readonly</h4>
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="input4">readonly label</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="input4" data="인풋 readonly" readonly="readonly" />
+          </div>
+        </div>
+
+        <h4>disabled</h4>
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="input5">disabled label</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="input5" data="인풋 disabled" disabled="disabled" />
+          </div>
         </div>
       </section>
     </section>

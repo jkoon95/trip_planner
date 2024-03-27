@@ -12,6 +12,7 @@ import Footer from "./page/common/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MypageMain from "./page/mypage/MypageMain";
+import Join from "./page/member/Join";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -21,6 +22,7 @@ function App() {
   const [expiredTime, setExpiredTime] = useState(
     obj ? new Date(obj.tokenExpired) : ""
   ); //만료시간
+
   if (obj) {
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   }
@@ -71,11 +73,15 @@ function App() {
             element={<Main isLogin={isLogin} logout={logout} />}
           />
           <Route path="/login" element={<Login login={login} />} />
+          <Route path="/join" element={<Join />} />
           <Route path="/innList" element={<InnList />} />
           <Route path="/blogList" element={<BlogList />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
-          <Route path="/mypage/*" element={<MypageMain isLogin={isLogin} logout={logout} />} />
+          <Route
+            path="/mypage/*"
+            element={<MypageMain isLogin={isLogin} logout={logout} />}
+          />
         </Routes>
       </main>
       <Footer />

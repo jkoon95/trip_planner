@@ -70,11 +70,11 @@ const Login = () => {
           </div>
         </div>
         <div className="btn_area">
-          <Button
-            text="로그인"
-            className="btn_primary"
-            clickEvent={login}
-          ></Button>
+          <Button class="kakao" clickEvent={login}></Button>
+          <Button class="naver" clickEvent={login}></Button>
+        </div>
+        <div className="btn_area">
+          <Button text="로그인" class="btn_primary" clickEvent={login}></Button>
         </div>
       </div>
     </section>

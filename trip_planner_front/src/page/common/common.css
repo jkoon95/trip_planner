@@ -63,6 +63,7 @@ h5{margin-bottom: 8px; color: #000; font-family: pt-b; font-size: 14px; font-wei
 .header .search_wrap{display: flex;}
 .header .search_wrap>input{width: 0; padding: 8px 0 7px;font-size: 14px; line-height: 20px; transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);}
 .header .search_wrap.active>input{width: 270px;}
+.header .search_wrap.focus>input{width: 270px;}
 .header .search_wrap>.btn_search{display: block; width: 36px; height: 36px; background: url(/public/images/icon_search.svg) no-repeat center / contain;}
 .header .menu_wrap>.menu_list{display: none; position: absolute; right: 0; top: 60px; padding: 12px 0; border: 1px solid #000; border-radius: 12px;}
 .header .menu_wrap>.menu_list.active{display: block;}

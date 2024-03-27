@@ -9,7 +9,7 @@ import TourList from "./page/tour/TourList";
 import Ref from "./Ref";
 import Header from "./page/common/Header";
 import Footer from "./page/common/Footer";
-import MyPageMain from "./page/mypage/MyPageMain";
+import MypageMain from "./page/mypage/MypageMain";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           <Route path="/blogList" element={<BlogList />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
-          <Route path="/mypage" element={<MyPageMain />} />
+          <Route path="/mypage/*" element={<MypageMain />} />
         </Routes>
       </main>
       <Footer />

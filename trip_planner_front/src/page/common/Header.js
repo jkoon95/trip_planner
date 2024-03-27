@@ -30,9 +30,6 @@ const Header = (props) => {
   };
   document.body.addEventListener("click", () => {
     menuRef.current.classList.remove("active");
-    if (searchData === "") {
-      searchRef.current.classList.remove("focus");
-    }
   });
   return (
     <header className="header">
@@ -86,6 +83,7 @@ const HeaderNavi = (props) => {
           setData={setSearchData}
           inputRef={searchInputRef}
           clickEvent={searchInputClick}
+          blurEvent={searchClose}
         />
         <button className="btn_search">
           <span className="hidden">검색</span>

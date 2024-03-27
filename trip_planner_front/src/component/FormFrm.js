@@ -1,4 +1,4 @@
-import "./formFrm.css";
+import "../page/common/common.css";
 
 const Input = (props) => {
   const data = props.data;            //input태그와 연결할 state
@@ -28,24 +28,14 @@ const Input = (props) => {
   }
 };
 
-const Button1 = (props)=>{
+const Button = (props)=>{
   const text = props.text;
-  const size = props.size;
-  const outline = props.outline;
   const clickEvent = props.clickEvent;
+  const className = props.class;
+  console.log(className);
   return(
-      <button type="button" className={"btn_primary"} onClick={clickEvent}>{text}</button>
+      <button type="button" className={className} onClick={clickEvent}>{text}</button>
   );
 }
 
-const Button2 = (props)=>{
-  const text = props.text;
-  const size = props.size;
-  const outline = props.outline;
-  const clickEvent = props.clickEvent;
-  return(
-    <button type="button" className={"btn_secondary"} onClick={clickEvent}>{text}</button>
-  );
-}
-
-export { Input, Button1, Button2 };
+export { Input, Button };

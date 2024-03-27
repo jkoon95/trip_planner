@@ -1,7 +1,12 @@
-import { Button1, Button2 } from "./component/FormFrm";
+import { useState } from "react";
+import { Button, Input } from "./component/FormFrm";
 import "./ref.css";
 
 const Ref = () => {
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+  const [input3, setInput3] = useState("");
+
   return (
     <section className="contents">
       <h2>공통 모음</h2>
@@ -33,35 +38,68 @@ const Ref = () => {
       <h3>버튼</h3>
       <section className="ref_section">
         <h4>버튼 기본</h4>
-        <h5>버튼 default</h5>
-        <Button1 text="버튼 primary"></Button1>
-        <Button2 text="버튼 secondary"></Button2>
-        <Button1 text="버튼 primary outline" outline="outline"></Button1>
-        <Button2 text="버튼 secondary outline" outline="outline"></Button2>
+        <h5>버튼 default: .btn_primary, .btn_secondary / outline</h5>
+        <Button text="btn_primary" class="btn_primary"></Button>
+        <Button text="btn_primary outline" class="btn_primary outline"></Button>
+        <Button text="btn_secondary" class="btn_secondary"></Button>
+        <Button text="btn_secondary outline" class="btn_secondary outline"></Button>
 
-        <h5>버튼 medium</h5>
-        <Button1 text="버튼 primary" size="md"></Button1>
-        <Button2 text="버튼 secondary" size="md"></Button2>
-        <Button1 text="버튼 primary outline" size="md" outline="outline"></Button1>
-        <Button2 text="버튼 secondary outline" size="md" outline="outline"></Button2>
+        <h5>버튼 medium: .md</h5>
+        <Button text="btn_primary md" class="btn_primary md"></Button>
+        <Button text="btn_primary outline md" class="btn_primary outline md"></Button>
+        <Button text="btn_secondary md" class="btn_secondary md"></Button>
+        <Button text="btn_secondary outline md" class="btn_secondary outline md"></Button>
 
-        <h5>버튼 small</h5>
-        <button type="button" className="btn_primary sm">버튼 primary</button>
-        <button type="button" className="btn_secondary sm">버튼 secondary</button>
-        <button type="button" className="btn_primary outline sm">버튼 primary outline</button>
-        <button type="button" className="btn_secondary outline sm">버튼 secondary outline</button>
+        <h5>버튼 small: .sm</h5>
+        <Button text="btn_primary sm" class="btn_primary sm"></Button>
+        <Button text="btn_primary outline sm" class="btn_primary outline sm"></Button>
+        <Button text="btn_secondary sm" class="btn_secondary sm"></Button>
+        <Button text="btn_secondary outline sm" class="btn_secondary outline sm"></Button>
 
         <h4>영역 안에서 버튼 사용시<span>(.btn_area로 감싸기)</span></h4>
         <div className="btn_area">
-          <button type="button" className="btn_primary outline lg">취소</button>
-          <button type="button" className="btn_primary lg">확인</button>
+          <Button text="취소" class="btn_primary outline"></Button>
+          <Button text="확인" class="btn_primary"></Button>
         </div>
         <div className="btn_area">
-          <button type="button" className="btn_primary lg">메인으로 가기</button>
+          <Button text="목록" class="btn_secondary"></Button>
         </div>
         <div className="btn_area">
-          <button type="button" className="btn_primary sm">수정</button>
-          <button type="button" className="btn_primary outline sm">삭제</button>
+          <Button text="수정" class="btn_primary sm"></Button>
+          <Button text="삭제" class="btn_primary outline sm"></Button>
+        </div>
+      </section>
+
+      <h3>인풋</h3>
+      <section className="ref_section">
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="input1">기본 인풋</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="input1" data={input1} setData={setInput1} />
+          </div>
+          <p className="msg">비밀번호는 4~12자리 영문 대/소문자를 포함해서 입력해주세요.</p>
+        </div>
+
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="input2">기본 인풋</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="input2" data={input2} setData={setInput2} />
+          </div>
+          <p className="msg error">필수 입력항목입니다.</p>
+        </div>
+
+        <div className="input_wrap">
+          <div className="input_title">
+            <label htmlFor="input3">기본 인풋</label>
+          </div>
+          <div className="input_item">
+            <Input type="text" content="input3" data={input3} setData={setInput3} />
+          </div>
+          <p className="msg success">비밀번호가 일치합니다.</p>
         </div>
       </section>
     </section>

@@ -1,0 +1,46 @@
+.inn-reg-wrap {
+  width: 800px;
+}
+.inn-reg-top {
+  display: flex;
+}
+.inn-reg-top > a > span {
+  line-height: 31px;
+}
+.toMain {
+  font-family: pt-b;
+  font-size: 20px;
+}
+.inn-reg-content {
+  margin-top: 20px;
+}
+.inn-type-box > div:last-child {
+  width: 250px;
+}
+.inn-type-box > div:first-child {
+  padding: 10px 0px;
+  font-size: 16px;
+  font-family: pt-b;
+}
+.inn-type-box > div:last-child label {
+  font-family: pt-r;
+  font-size: 14px;
+}
+.inn-reg-image-wrap-title {
+  font-family: pt-b;
+  font-size: 16px;
+}
+.inn-reg-image-wrap-title > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  padding: 0px 5px;
+  font-size: 12px;
+}
+.inn-reg-image-wrap {
+  margin: 20px 0px;
+}
+.inn-reg-image {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+}

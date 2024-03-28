@@ -33,8 +33,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**")
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*");
-				.addPathPatterns("/member/**","/blog/**")
-				.excludePathPatterns("/member/login","/member/join","/blog/editor/*");
+
 	}
 	
 	@Bean

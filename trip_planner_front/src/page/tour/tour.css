@@ -28,11 +28,9 @@
   height: 40px;
   font-size: 16px !important;
 }
-.tour-search-wrap > .tour-search,
-.tour-search-wrap > .calendar-wrap {
-  width: 50%;
-}
+
 .tour-search-wrap > .tour-search {
+  width: 60%;
   border-right: 1px solid #999;
   overflow: hidden;
 }
@@ -41,18 +39,19 @@
 }
 .tour-search-wrap > .tour-search > input {
   height: 32px;
+  min-width: 80%;
   padding-left: 10px;
 }
 .tour-search-wrap > .calendar-wrap {
+  width: 40%;
   padding-left: 20px;
   overflow: hidden;
 }
-.tour-search-wrap > .calendar-wrap > input {
-  height: 32px;
-  padding-left: 10px;
+.tour-search-wrap > .calendar-wrap * {
+  border: none;
 }
-.tour-search-wrap > .calendar-wrap > * {
-  float: left;
+.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  width: 55% !important;
 }
 
 /* 아이콘바 */

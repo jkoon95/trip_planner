@@ -6,6 +6,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./tour.css";
 
 const TourList = () => {
@@ -26,6 +31,8 @@ const TourList = () => {
 };
 
 const TourSearchBox = () => {
+  const [startDate, setStartDate] = React.useState(dayjs());
+
   return (
     <div className="tour-search-wrap">
       <div className="tour-search">
@@ -33,8 +40,18 @@ const TourSearchBox = () => {
         <input type="text" placeholder="도시, 상품명으로 검색해주세요." />
       </div>
       <div className="calendar-wrap">
-        <span className="material-icons">event_available</span>
-        <input type="text" placeholder="날짜를 선택해주세요." />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker", "DatePicker"]}>
+            <DatePicker
+              format="YYYY년 MM월 DD일"
+              label="이용일"
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+              showDaysOutsideCurrentMonth
+              disablePast
+            />
+          </DemoContainer>
+        </LocalizationProvider>
       </div>
       <Button text="검색" class="btn_primary sm" />
     </div>

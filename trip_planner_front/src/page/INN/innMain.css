@@ -57,6 +57,7 @@
 }
 .price-wrap {
   padding: 1ch;
+  border-top: 1px solid #eee;
 }
 .price-wrap > div {
   box-sizing: border-box;
@@ -64,4 +65,41 @@
 .price-wrap > .css-1v5z18m {
   box-sizing: border-box;
   padding: 10px;
+}
+.price-check-zone > span {
+  font-size: 12px;
+}
+.hashTag-wrap {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  box-sizing: border-box;
+  max-width: 300px;
+}
+.hashTag-wrap > .hashTag-title {
+  margin-top: 20px;
+}
+.hashTag-content > .hashTag {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}
+.hashTag-content > .hashTag > ul > li {
+  display: inline-block;
+  cursor: pointer;
+  padding: 3px 2px;
+}
+.hashTag-content > .hashTag > ul > li > button {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  color: #1e1e1e;
+  font-family: pt-r;
+  font-size: 13px;
+}
+.hashTag-content > .hashTag > ul > li > button.active-hashTag {
+  background-color: #005caa;
+  color: #fff;
+  border-color: #005caa;
+  font-family: pt-r;
 }

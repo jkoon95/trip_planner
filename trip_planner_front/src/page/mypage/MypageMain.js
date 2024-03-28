@@ -10,7 +10,6 @@ import MyReviews from "./MyReviews";
 import MyInfo from "./MyInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
-import CouponReg from "./CouponReg";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -111,7 +110,6 @@ const MypageMain = (props) => {
           <Route path="/myLikes" element={<MyLikes />} />
           <Route path="/myReviews" element={<MyReviews />} />
           <Route path="/myInfo" element={<MyInfo />} />
-          <Route path="/couponReg" element={<CouponReg />} />
         </Routes>
       </div>
     </section>

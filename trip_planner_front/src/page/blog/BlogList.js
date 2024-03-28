@@ -4,7 +4,6 @@ import "./blog.css";
 
 const BlogList = (props) => {
   const isLogin = props.isLogin;
-
   const navigate = useNavigate();
   const writeBtn = () => {
     navigate("/blogWrite");
@@ -17,10 +16,19 @@ const BlogList = (props) => {
           <div className="blog-list-title-two">추천 여행지</div>
           <div className="blog-list-title-three">
             <p>🔥 HOT한 국내 여행지를 추천해드려요</p>
-
-            <div className="blog-write-btn">
-              <Button text="글쓰기" class="btn_secondary" clickEvent={writeBtn} />
-            </div>
+            <>
+              {isLogin ? (
+                <div className="blog-write-btn">
+                  <Button
+                    text="글쓰기"
+                    class="btn_secondary"
+                    clickEvent={writeBtn}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           </div>
         </div>
         <div className="blog-list-main-wrap">

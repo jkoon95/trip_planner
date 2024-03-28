@@ -17,7 +17,9 @@
 }
 
  */
-
+.blogFrm {
+  width: 800px;
+}
 .blog-list-title-wrap {
   margin-left: 10px;
   overflow: hidden;
@@ -78,12 +80,11 @@
 }
 .blog-frm-title {
   font-size: 120%;
-  font-family: pt-b;
+  font-family: pt-eb;
+  color: var(--main_01);
 }
 #blog-frm-title {
-  border: 1px solid var(--gray_03);
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-indent: 10px;
 }
 .blog-frm-content > .input {

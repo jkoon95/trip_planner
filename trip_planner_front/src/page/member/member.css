@@ -1,7 +1,8 @@
 .login_input_area{width: 540px; margin: 0 auto; padding: 48px; border: 1px solid #000; border-radius: 24px;}
 .join_input_area{width: 540px; margin: 0 auto; padding: 48px; border: 1px solid #000; border-radius: 24px;}
-
-
+.join-input-wrap{
+    padding-bottom: 40px;
+}
 .naver{
     background-image: url(../../../public/image/btnG_축약형.png);
     width: 90px;

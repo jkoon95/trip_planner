@@ -4,14 +4,13 @@ package kr.or.iei.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.iei.ResponseDTO;
@@ -26,6 +25,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+
 	
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
@@ -56,5 +56,17 @@ public class MemberController {
 		Member member = memberService.selectOneMember(memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PostMapping(value="/join")
+	public ResponseEntity<ResponseDTO> join(@RequestBody Member member){
+		int result = memberService.insertMember(member);
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 	}
 }

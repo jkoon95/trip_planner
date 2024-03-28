@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
 import "./blog.css";
 
-const BlogList = () => {
+const BlogList = (props) => {
+  const isLogin = props.isLogin;
+
   const navigate = useNavigate();
   const writeBtn = () => {
     navigate("/blogWrite");
@@ -15,6 +17,7 @@ const BlogList = () => {
           <div className="blog-list-title-two">추천 여행지</div>
           <div className="blog-list-title-three">
             <p>🔥 HOT한 국내 여행지를 추천해드려요</p>
+
             <div className="blog-write-btn">
               <button
                 type="button"

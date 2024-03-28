@@ -156,6 +156,21 @@ const Ref = () => {
           </div>
         </div>
       </section>
+
+      <h3>badge</h3>
+      <section className="ref_section">
+        <h4>색상명으로 구분(.badge.blue/.red/.green/.gray)</h4>
+        <span className="badge blue">예약확정</span>
+        <span className="badge red">예약취소</span>
+        <span className="badge green">승인</span>
+        <span className="badge gray">미승인</span>
+
+        <h4>그룹 사용(.badges>.badge)</h4>
+        <div className="badges">
+          <span className="badge blue">blue</span>
+          <span className="badge gray">gray</span>
+        </div>
+      </section>
     </section>
   );
 };

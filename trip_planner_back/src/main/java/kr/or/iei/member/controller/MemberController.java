@@ -7,12 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
@@ -50,6 +54,26 @@ public class MemberController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+	@Operation(summary = "닉네임 중복체크", description = "매개변수로 전달한 닉네임 사용여부 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버에러")
+	})
+	@GetMapping(value="/nickName/{memberNickName}")
+	public ResponseEntity<ResponseDTO> selectOneMemberNickName(@PathVariable(name="memberNickName") String memberNickName){
+		System.out.println(memberNickName);
+		Member member = memberService.selectOneMemberNickName(memberNickName);
+		System.out.println(member);
+		if(member == null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "not duplication", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "duplication", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 	
 	@GetMapping
 	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberEmail){

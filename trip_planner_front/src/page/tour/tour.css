@@ -59,12 +59,15 @@
 }
 
 /* 추천 투어상품 */
+.tour-list-item > h2 {
+  margin-bottom: 24px;
+}
+
 .tour-item-wrap {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
 .tour-item-wrap > .tour-item {
   box-sizing: border-box;
   padding: 20px;
@@ -72,10 +75,18 @@
   display: flex;
   flex-direction: column;
   width: calc(25% - 40px);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.tour-item-wrap > .tour-item img {
+.tour-item-wrap > .tour-item > .tour-bookmark {
+  overflow: hidden;
+}
+.tour-item-wrap > .tour-item > .tour-bookmark > img {
+  max-width: 30px;
+  float: right;
+}
+
+.tour-item-wrap > .tour-item > .tour-item-img {
   width: 100%;
   height: auto;
   border-radius: 10px;
@@ -101,4 +112,70 @@
   font-weight: bold;
   color: #e9511c; /* 주황색 */
   margin-top: 5px;
+}
+
+/* 추천순, 가격낮은순 */
+.tour-option-wrap {
+  overflow: hidden;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+  margin: 0 auto;
+  margin-bottom: 60px;
+}
+.tour-option-wrap > .tour-option-btn {
+  font-size: 16px;
+  margin-right: 20px;
+  float: right;
+}
+
+/* 검색 상품 */
+.tour-item-zone > .tour-item {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.tour-item-zone > .tour-item img {
+  height: 200px;
+  width: 300px;
+  margin-right: 40px;
+  border-radius: 10px;
+}
+
+.tour-item-zone > .tour-item > .tour-item-info {
+  flex: 1; /* 남은 공간을 모두 차지하기 위해 flex-grow 사용 */
+}
+
+.tour-item-zone > .tour-item > .tour-item-info > .tour-item-name {
+  font-size: 24px;
+  font-family: pt-b;
+  padding-top: 5px;
+  margin-bottom: 5px;
+}
+.tour-item-zone > .tour-item > .tour-item-info > .tour-item-subname {
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+.tour-item-zone > .tour-item > .tour-item-info > .tour-item-limit {
+  color: #666;
+}
+.tour-item-zone > .tour-item > .tour-item-info > .tour-item-price {
+  font-size: 36px;
+  font-family: pt-b;
+  text-align: right;
+  padding-right: 120px;
+}
+.tour-item-zone > .tour-item > .tour-item-info > .tour-item-bookmark {
+  width: 30px;
+  height: 30px;
+}
+
+/* 더 보기 버튼 */
+.tour-list-more {
+  margin-top: 80px;
+  text-align: center;
+}
+.tour-list-more > Button {
+  width: 600px;
+  font-family: pt-b;
+  border-radius: 20px !important;
 }

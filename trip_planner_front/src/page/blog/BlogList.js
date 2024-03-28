@@ -19,13 +19,7 @@ const BlogList = (props) => {
             <p>🔥 HOT한 국내 여행지를 추천해드려요</p>
 
             <div className="blog-write-btn">
-              <button
-                type="button"
-                className="btn_secondary md"
-                onClick={writeBtn}
-              >
-                글쓰기
-              </button>
+              <Button text="글쓰기" class="btn_secondary" clickEvent={writeBtn} />
             </div>
           </div>
         </div>

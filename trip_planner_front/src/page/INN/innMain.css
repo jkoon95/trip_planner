@@ -6,13 +6,16 @@
   display: flex;
 }
 .sideMenu-wrap {
-  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
-  padding: 5px;
+  padding: 0 10px;
+  width: 360px;
 }
 .search-day .css-10o2lyd-MuiStack-root > .MuiTextField-root {
   min-width: 0px;
   width: 150px;
   padding: 0;
+}
+.search-day .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size: 14px;
 }
 .search-day > .place-title {
   display: block;
@@ -62,6 +65,11 @@
 .price-wrap > div {
   box-sizing: border-box;
 }
+.price-range {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .price-wrap > .css-1v5z18m {
   box-sizing: border-box;
   padding: 10px;
@@ -73,7 +81,6 @@
   margin-top: 20px;
   border-top: 1px solid #eee;
   box-sizing: border-box;
-  max-width: 300px;
 }
 .hashTag-wrap > .hashTag-title {
   margin-top: 20px;
@@ -102,4 +109,14 @@
   color: #fff;
   border-color: #005caa;
   font-family: pt-r;
+}
+.sideMenu-wrap>.btn_area{
+  padding: 1ch;
+}
+.sideMenu-wrap>.btn_area>button{
+  margin: 5px;
+}
+.sideMenu-wrap .btn_area > button {
+  width: 100%;
+  box-sizing: border-box;
 }

@@ -79,6 +79,7 @@ const Login = (props) => {
       });
     };
   };
+  console.clear();
   return (
     <section className="contents login">
       <h2>로그인</h2>

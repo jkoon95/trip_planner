@@ -74,6 +74,20 @@ public class MemberController {
 		}
 	}
 	
+	@GetMapping(value="/email/{memberEmail}")
+	public ResponseEntity<ResponseDTO> selectOneMemberEmail(@PathVariable String memberEmail){
+		System.out.println(memberEmail);
+		Member member = memberService.selectOneMember(memberEmail);
+		System.out.println(member);
+		if(member == null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "not duplication", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "duplication", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 	
 	@GetMapping
 	public ResponseEntity<ResponseDTO> getMember(@RequestAttribute String memberEmail){

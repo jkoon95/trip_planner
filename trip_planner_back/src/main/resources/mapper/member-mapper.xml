@@ -13,4 +13,8 @@
 	<insert id="insertMember">
 		insert into member_tbl values (member_seq.nextval,#{memberEmail},#{memberPw},#{memberName},#{memberNickName},#{memberPhone},#{memberAddr},1,1,0)
 	</insert>
+	<select id="selectOneMemberNickName" resultType="member">
+		select * from member_tbl where member_nickname=#{memberNickName}
+	</select>
+	
 </mapper>

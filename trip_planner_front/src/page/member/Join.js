@@ -17,18 +17,77 @@ const Join = () => {
   const [memberNickName, setMemberNickName] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
   const [memberAddr, setMemberAddr] = useState("");
-  const [checkIdMsg, setCheckIdMsg] = useState("");
+  const [checkEmailMsg, setCheckEmailMsg] = useState("");
+  const [checkPwMsg, setCheckPwMsg] = useState("");
+  const [checkPwReMsg, setCheckPwReMsg] = useState("");
+  const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
 
-  //회원가입버튼 클릭 시 동작할 이벤트
+  const emailChk = () => {
+    //이메일 형태가 맞는지 검증할 정규표현식
+    const emailChk = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailChk.test(memberEmail)) {
+      setCheckEmailMsg("이메일 형식이 맞습니다.");
+      axios
+        .get(backServer + "/member/email/" + memberEmail)
+        .then((res) => {
+          if (res.data.message === "duplication") {
+            setCheckEmailMsg("이미 사용중인 이메일입니다.");
+          } else {
+            setCheckEmailMsg("");
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    } else {
+      setCheckEmailMsg("이메일 형식을 지키세요.");
+    }
+  };
+  const pwChk = () => {
+    //정규표현식으로 유효성 검사
+    const pwReg = /^(?=.*[a-zA-Z])(?=.*[\W_]).{8,20}$/;
+    if (pwReg.test(memberPw)) {
+      //정규표현식 만족했을때
+      setCheckPwMsg("");
+    } else {
+      //정규표현식 만족하지 못했을때
+      setCheckPwMsg("비밀번호 조건을 다시 확인해주세요.");
+    }
+  };
+  const pwReChk = () => {
+    if (memberPw === memberPwRe) {
+      setCheckPwReMsg("");
+    } else {
+      setCheckPwReMsg("비밀번호가 일치하지 않습니다.");
+    }
+  };
+  const nickNameChk = () => {
+    console.log(memberNickName);
+    axios
+      .get(backServer + "/member/nickName/" + memberNickName)
+      .then((res) => {
+        if (res.data.message === "duplication") {
+          setCheckNickNameMsg("이미 사용중인 닉네임입니다.");
+        } else {
+          setCheckNickNameMsg("");
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
   const join = () => {
-    console.log("로그인 함수 호출");
     if (
       memberEmail !== "" &&
       memberPw !== "" &&
       memberName !== "" &&
       memberNickName !== "" &&
       memberPhone !== "" &&
-      memberAddr !== ""
+      memberAddr !== "" &&
+      checkEmailMsg !== "" &&
+      checkPwMsg !== "" &&
+      checkPwReMsg !== "" &&
+      checkNickNameMsg !== ""
     ) {
       const obj = {
         memberEmail,
@@ -70,6 +129,8 @@ const Join = () => {
           type="text"
           data={memberEmail}
           setData={setMemberEmail}
+          checkMsg={checkEmailMsg}
+          blurEvent={emailChk}
         />
         <JoinInputWrap
           label="비밀번호"
@@ -78,16 +139,18 @@ const Join = () => {
           type="password"
           data={memberPw}
           setData={setMemberPw}
+          checkMsg={checkPwMsg}
+          blurEvent={pwChk}
         />
-        {/*
         <JoinInputWrap
           label="비밀번호 확인"
           content="memberPwRe"
           type="password"
           data={memberPwRe}
           setData={setMemberPwRe}
+          checkMsg={checkPwReMsg}
+          blurEvent={pwReChk}
         />
-        */}
         <JoinInputWrap
           label="이름"
           content="memberName"
@@ -101,10 +164,12 @@ const Join = () => {
           type="text"
           data={memberNickName}
           setData={setMemberNickName}
+          checkMsg={checkNickNameMsg}
+          blurEvent={nickNameChk}
         />
         <JoinInputWrap
           label="전화번호"
-          content="memberNickName"
+          content="memberPhone"
           type="text"
           placeholder="ex)010-0000-0000"
           data={memberPhone}

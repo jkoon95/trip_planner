@@ -23,16 +23,47 @@ const MypageMain = (props) => {
       icon: "warning",
       text: "로그인 후 이용이 가능합니다.",
       confirmButtonText: "닫기",
-    });
-    navigate("/");
+    }).then(
+      navigate("/")
+    );
   }
-  console.log(window.localStorage.getItem("member"));
 
   useEffect(() => {
     axios
       .get(backServer + "/member")
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data);
+        setMember(res.data.data);
+        if(res.data.data.memberType === 3){
+          setMenus([
+            { url: "#", text: "회원 관리", active: true },
+            { url: "#", text: "업체 관리", active: false },
+            { url: "#", text: "프로모션 관리", active: false },
+            { url: "#", text: "쿠폰 등록", active: false },
+          ])
+        } else if(res.data.data.memberType === 2){
+          axios.get(backServer + "/partner/" + res.data.data.memberNo)
+          .then((res2) => {
+            console.log(res2.data);
+            if(res2.data.data !== null && res2.data.data.partnerType === 1){//숙소
+              setMenus([
+                { url: "innReg", text: "숙소 등록", active: true },
+                { url: "roomReg", text: "방 등록", active: false },
+                { url: "innMgmt", text: "숙소 관리", active: false },
+                { url: "bookMgmt", text: "예약 관리", active: false },
+              ])
+            }else if(res2.data.data !== null && res2.data.data.partnerType === 2){//투어
+              setMenus([
+                { url: "tourMgmt", text: "투어 예약관리", active: true },
+                { url: "tourReg", text: "투어 상품등록", active: false },
+                { url: "tourSale", text: "투어 상품조회", active: false },
+              ])
+            }
+          })
+          .catch((res2) => {
+            console.log(res2);
+          })
+        }
       })
       .catch((res) => {
         console.log(res);
@@ -55,19 +86,14 @@ const MypageMain = (props) => {
         <MypageSideMenu menus={menus} setMenus={setMenus} />
       </div>
       <div className="content_wrap">
-        {/* {member && member.memberType === 1 ? ( */}
-        {isLogin ? (
-          <Routes>
-            <Route path="/myBooks" element={<MyBooks />} />
-            <Route path="/myTrips" element={<MyTrips />} />
-            <Route path="/myCoupons" element={<MyCoupons />} />
-            <Route path="/myLikes" element={<MyLikes />} />
-            <Route path="/myReviews" element={<MyReviews />} />
-            <Route path="/myInfo" element={<MyInfo />} />
-          </Routes>
-        ) : (
-          ""
-        )}
+        <Routes>
+          <Route path="/myBooks" element={<MyBooks />} />
+          <Route path="/myTrips" element={<MyTrips />} />
+          <Route path="/myCoupons" element={<MyCoupons />} />
+          <Route path="/myLikes" element={<MyLikes />} />
+          <Route path="/myReviews" element={<MyReviews />} />
+          <Route path="/myInfo" element={<MyInfo />} />
+        </Routes>
       </div>
     </section>
   );

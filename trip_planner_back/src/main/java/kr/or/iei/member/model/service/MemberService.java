@@ -46,4 +46,8 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.insertMember(member);
 	}
+
+	public Member selectOneMemberNickName(String memberNickName) {
+		return memberDao.selectOneMemberNickName(memberNickName);
+	}
 }

@@ -30,6 +30,7 @@ const JoinInputWrap = (props) => {
           type={type}
           data={data}
           setData={setData}
+          blurEvent={blurEvent}
         />
       </div>
       {checkMsg && <div className="check-msg">{checkMsg}</div>}

@@ -18,3 +18,9 @@
     background-repeat: no-repeat;
     object-fit: contain;
 }
+
+.check-msg{
+    padding-top: 10px;
+    color: red;
+    font-weight: bold;
+}

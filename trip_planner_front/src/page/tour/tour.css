@@ -5,53 +5,16 @@
 기타 #89cff0 #f4f5ef #8f705b #035e7b
 */
 
+.tour-list-title {
+  overflow: hidden;
+}
 .tour-list-title > h2 {
   text-align: left;
   font-size: 2.2em;
-}
-
-/* 상단 검색창 */
-.tour-search-wrap {
-  border-radius: 10px;
-  padding: 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 60px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-.tour-search-wrap .material-icons {
-  font-size: 32px;
-}
-.tour-search-wrap > Button {
-  width: 80px;
-  height: 40px;
-  font-size: 16px !important;
-}
-
-.tour-search-wrap > .tour-search {
-  width: 60%;
-  border-right: 1px solid #999;
-  overflow: hidden;
-}
-.tour-search-wrap > .tour-search > * {
   float: left;
 }
-.tour-search-wrap > .tour-search > input {
-  height: 32px;
-  min-width: 80%;
-  padding-left: 10px;
-}
-.tour-search-wrap > .calendar-wrap {
-  width: 40%;
-  padding-left: 20px;
-  overflow: hidden;
-}
-.tour-search-wrap > .calendar-wrap * {
-  border: none;
-}
-.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-  width: 55% !important;
+.tour-list-title > h2:first-child {
+  margin-right: 40px;
 }
 
 /* 아이콘바 */

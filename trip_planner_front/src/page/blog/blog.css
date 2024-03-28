@@ -50,13 +50,10 @@
 }
 .blog-list-main-wrap {
   border: 1px solid #1e1e1e;
-  height: 500px;
-  background-color: antiquewhite;
 }
 .blog-list-content {
-  padding: 50px;
+  padding: 100px;
   box-sizing: border-box;
-  text-align: center;
 }
 /*
 .blog-write-btn {

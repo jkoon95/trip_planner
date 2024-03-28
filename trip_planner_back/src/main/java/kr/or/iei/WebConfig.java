@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import kr.or.iei.util.LoginInterceptor;
@@ -19,5 +20,11 @@ public class WebConfig implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
 	}
-
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry
+		.addResourceHandler("/blog/editor/**")
+		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
+	}
 }

@@ -2,6 +2,8 @@ import { Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
 const BlogFrm = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   const blogTitle = props.blogTitle;
   const setBlogTitle = props.setBlogTitle;
   const blogContent = props.blogContent;
@@ -26,7 +28,11 @@ const BlogFrm = (props) => {
           />
         </div>
         <div className="blog-frm-content">
-          <TextEditor data={blogContent} setData={setBlogContent} />
+          <TextEditor
+            data={blogContent}
+            setData={setBlogContent}
+            url={backServer + "/blog/editor"}
+          />
         </div>
         <div className="blog-frm-btn">
           <button

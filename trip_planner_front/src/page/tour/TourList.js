@@ -6,6 +6,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./tour.css";
 
 const TourList = () => {
@@ -26,15 +31,27 @@ const TourList = () => {
 };
 
 const TourSearchBox = () => {
+  const [startDate, setStartDate] = React.useState(dayjs());
+
   return (
     <div className="tour-search-wrap">
-      <div className="search-wrap">
+      <div className="tour-search">
         <span className="material-icons">search</span>
         <input type="text" placeholder="도시, 상품명으로 검색해주세요." />
       </div>
       <div className="calendar-wrap">
-        <span className="material-icons">event_available</span>
-        <input type="text" placeholder="날짜를 선택해주세요." />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker", "DatePicker"]}>
+            <DatePicker
+              format="YYYY년 MM월 DD일"
+              label="이용일"
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+              showDaysOutsideCurrentMonth
+              disablePast
+            />
+          </DemoContainer>
+        </LocalizationProvider>
       </div>
       <Button text="검색" class="btn_primary sm" />
     </div>
@@ -45,24 +62,24 @@ const TourIconBox = () => {
   return (
     <div className="tour-icon-wrap">
       <Link to="#">
-        <img alt="입장권" src="image/테마파크.jpg" />
+        <img alt="입장권" src="image/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
       </Link>
       <Link to="#">
-        <img alt="테마파크" src="image/테마파크.jpg" />
+        <img alt="전시회" src="image/투어전시.jpg" />
         <div>전시회</div>
       </Link>
       <Link to="#">
-        <img alt="액티비티" src="image/테마파크.jpg" />
+        <img alt="액티비티" src="image/투어레저.jpg" />
         <div>액티비티</div>
       </Link>
       <Link to="#">
-        <img alt="박람회" src="image/테마파크.jpg" />
+        <img alt="박람회" src="image/투어박람.jpg" />
         <div>박람회</div>
       </Link>
       <Link to="#">
-        <img alt="버스투어" src="image/테마파크.jpg" />
-        <div>버스투어</div>
+        <img alt="테마파크" src="image/투어테마.jpg" />
+        <div>테마파크</div>
       </Link>
     </div>
   );
@@ -101,11 +118,37 @@ const TourSwiper = () => {
 
 const TourItem = () => {
   return (
-    <div className="tour-item">
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
-      <img ale="#" src="image/테마파크.jpg" />
+    <div className="tour-item-wrap">
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
+      <div className="tour-item">
+        <img alt="#" src="image/테마파크.jpg" />
+        <div className="tour-item-name">[서울] 테마 파크</div>
+        <div className="tour-item-info">강릉 입장권</div>
+        <div className="tour-item-price">10,000원</div>
+      </div>
     </div>
   );
 };

@@ -3,11 +3,11 @@
 }
 .inn-wrap {
   overflow: hidden;
+  display: flex;
 }
 .sideMenu-wrap {
-  width: 350px;
   box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
-  padding: 15px;
+  padding: 5px;
 }
 .search-day .css-10o2lyd-MuiStack-root > .MuiTextField-root {
   min-width: 0px;

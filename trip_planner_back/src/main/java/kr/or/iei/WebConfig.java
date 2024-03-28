@@ -1,7 +1,9 @@
 package kr.or.iei;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -27,4 +29,15 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceHandler("/blog/editor/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
 	}
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loginInterceptor)
+				.addPathPatterns("/member/**")
+				.excludePathPatterns("/member/login","/member/join");
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 }

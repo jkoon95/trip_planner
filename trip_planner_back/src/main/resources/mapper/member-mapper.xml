@@ -7,4 +7,10 @@
 	<select id="kakaoLogin" resultType="member">
 		SELECT * FROM member_tbl WHERE member_email = #{memberId}||'@'||#{memberDomain}	
 	</select>
+	<select id="selectOneMember" resultType="member">
+		select * from member_tbl where member_email=#{memberEmail}
+	</select>
+	<insert id="insertMember">
+		insert into member_tbl values (member_seq.nextval,#{memberEmail},#{memberPw},#{memberName},#{memberNickName},#{memberPhone},#{memberAddr},1,1,0)
+	</insert>
 </mapper>

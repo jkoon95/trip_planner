@@ -38,7 +38,7 @@ const BlogWrite = () => {
   };
   return (
     <section className="contents blogFrm">
-      <h2>블로그 작성하기</h2>
+      <h2>블로그 작성</h2>
       <BlogFrm
         blogTitle={blogTitle}
         setBlogTitle={setBlogTitle}

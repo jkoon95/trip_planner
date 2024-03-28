@@ -32,7 +32,7 @@ const Input = (props) => {
       <input
         className="input"
         id={content}
-        type={type}
+        tnype={type}
         value={data || ""}
         disabled
         ref={inputRef}

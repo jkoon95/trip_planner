@@ -142,7 +142,12 @@ const Ref = () => {
             <label htmlFor="input4">readonly label</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="input4" data="인풋 readonly" readonly="readonly" />
+            <Input
+              type="text"
+              content="input4"
+              data="인풋 readonly"
+              readonly="readonly"
+            />
           </div>
         </div>
 
@@ -152,7 +157,12 @@ const Ref = () => {
             <label htmlFor="input5">disabled label</label>
           </div>
           <div className="input_item">
-            <Input type="text" content="input5" data="인풋 disabled" disabled="disabled" />
+            <Input
+              type="text"
+              content="input5"
+              data="인풋 disabled"
+              disabled="disabled"
+            />
           </div>
         </div>
       </section>

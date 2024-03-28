@@ -14,10 +14,7 @@ const ListSideMenu = () => {
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [bookGuest, setBookGuest] = useState("");
-  const [innType, setInnType] = useState([]);
-  const [roomPrice, setRoomPrice] = useState("");
-  const [optionNo, setOptionNo] = useState([]);
-  const [hashTagNo, setHashTagNo] = useState([]);
+  const [roomPrice, setRoomPrice] = useState([]);
 
   const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
   const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
@@ -132,6 +129,41 @@ const ListSideMenu = () => {
       value: 10,
     },
   ]);
+
+  const [innTypeList, setInnTypeList] = useState([
+    {
+      text: "호텔",
+      content: "hotel",
+      defaultValue: 1,
+      name: "innType",
+      type: "checkbox",
+      checked: false,
+    },
+    {
+      text: "리조트",
+      content: "resort",
+      defaultValue: 2,
+      name: "innType",
+      type: "checkbox",
+      checked: false,
+    },
+    {
+      text: "펜션",
+      content: "pension",
+      defaultValue: 3,
+      name: "innType",
+      type: "checkbox",
+      checked: false,
+    },
+    {
+      text: "게스트하우스",
+      content: "guest-house",
+      defaultValue: 4,
+      name: "innType",
+      type: "checkbox",
+      checked: false,
+    },
+  ]);
   const searchInn = () => {
     //장소, 날짜, 인원 선택 후 검색 버튼 누르면 해당하는 리스트 출력하는 함수
     console.log(checkIn);
@@ -149,6 +181,15 @@ const ListSideMenu = () => {
   //   }
   // });
 
+  const searchInnOption = () => {
+    console.log(innTypeList);
+    console.log(hashTageMenu);
+    console.log(optionMenu);
+    console.log(checkIn);
+    console.log(checkOut);
+    console.log(innAddr);
+    console.log(bookGuest);
+  };
   return (
     <div className="sideMenu-wrap">
       <div className="search-wrap">
@@ -196,46 +237,10 @@ const ListSideMenu = () => {
         <div className="filter-title">
           <h3>숙소 유형</h3>
         </div>
-        <div className="inn-type-filter">
-          <CheckBoxInput
-            type="checkbox"
-            content="hotel"
-            name="innType"
-            value={1}
-            data={innType}
-            setData={setInnType}
-          />
-          <label htmlFor="hotel">호텔</label>
-        </div>
-        <div className="inn-type-filter">
-          <CheckBoxInput
-            type="checkbox"
-            content="resort"
-            name="innType"
-            value={2}
-            data={innType}
-            setData={setInnType}
-          />
-          <label htmlFor="resort">리조트</label>
-        </div>
-        <div className="inn-type-filter">
-          <CheckBoxInput
-            type="checkbox"
-            content="pension"
-            name="innType"
-            value={3}
-          />
-          <label htmlFor="pension">펜션</label>
-        </div>
-        <div className="inn-type-filter">
-          <CheckBoxInput
-            type="checkbox"
-            content="guest-house"
-            name="innType"
-            value={4}
-          />
-          <label htmlFor="guest-house">게스트하우스</label>
-        </div>
+        <CheckBoxInput
+          innTypeList={innTypeList}
+          setInnTypeList={setInnTypeList}
+        />
       </div>
       <div className="price-wrap">
         <div className="price-title">
@@ -251,10 +256,7 @@ const ListSideMenu = () => {
         </div>
         <div className="hashTag-content">
           <div className="hashTag">
-            <HashTagComponent
-              hashTageMenu={hashTageMenu}
-              setHashTagMenu={setHashTagMenu}
-            />
+            <TagComponent tageMenu={hashTageMenu} setTagMenu={setHashTagMenu} />
           </div>
         </div>
       </div>
@@ -264,12 +266,18 @@ const ListSideMenu = () => {
         </div>
         <div className="hashTag-content">
           <div className="hashTag">
-            <HashTagComponent
-              hashTageMenu={optionMenu}
-              setHashTagMenu={setOptionMenu}
-            />
+            <TagComponent tageMenu={optionMenu} setTagMenu={setOptionMenu} />
           </div>
         </div>
+      </div>
+      <div className="btn_area">
+        <Button
+          text="btn_primary md"
+          class="btn_primary md"
+          onClick={searchInnOption}
+        >
+          검색
+        </Button>
       </div>
     </div>
   );
@@ -330,19 +338,34 @@ const SearchInput = (props) => {
 };
 
 const CheckBoxInput = (props) => {
-  const type = props.type;
-  const contents = props.content;
-  const name = props.name;
-  const value = props.value;
+  const [selectInn, setSelectInn] = useState([]);
+  const innTypeList = props.innTypeList;
+  const setInnTypeList = props.setInnTypeList;
 
   return (
-    <input
-      className="checkbox-input"
-      type={type}
-      name={name}
-      id={contents}
-      value={value}
-    />
+    <>
+      {innTypeList.map((item, index) => {
+        const selectInnType = () => {
+          innTypeList[index].checked = !innTypeList[index].checked;
+          setInnTypeList([...innTypeList]);
+        };
+        return (
+          <div className="inn-type-filter" key={"item" + index}>
+            <input
+              className="checkbox-input"
+              type={item.type}
+              name={item.name}
+              id={item.content}
+              checked={item.checked}
+              onChange={(e) => {
+                selectInnType();
+              }}
+            />
+            <label htmlFor={item.content}>{item.text}</label>
+          </div>
+        );
+      })}
+    </>
   );
 };
 
@@ -436,21 +459,22 @@ const PriceRange = () => {
   );
 };
 
-const HashTagComponent = (props) => {
-  const hashTageMenu = props.hashTageMenu;
-  const setHashTagMenu = props.setHashTagMenu;
+const TagComponent = (props) => {
+  const tageMenu = props.tageMenu;
+  const setTagMenu = props.setTagMenu;
   const selectValue = (index) => {
-    const copyHashTagMenu = [...hashTageMenu];
-
+    const copyHashTagMenu = [...tageMenu];
     copyHashTagMenu[index].active = !copyHashTagMenu[index].active;
-    if (copyHashTagMenu[index].active) {
-    } else {
-    }
-    setHashTagMenu(copyHashTagMenu);
+    setTagMenu(copyHashTagMenu);
   };
   return (
     <ul>
-      {hashTageMenu.map((item, index) => {
+      {tageMenu.map((item, index) => {
+        const selectValue = (index) => {
+          const copyHashTagMenu = [...tageMenu];
+          copyHashTagMenu[index].active = !copyHashTagMenu[index].active;
+          setTagMenu(copyHashTagMenu);
+        };
         return (
           <li key={"item" + index}>
             <Button

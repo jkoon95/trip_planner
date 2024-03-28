@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./blog.css";
 import BlogFrm from "./BlogFrm";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BlogWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,6 +25,11 @@ const BlogWrite = () => {
         })
         .then((res) => {
           console.log(res);
+          if (res.data.message === "success") {
+            Navigate("/blogList");
+          } else {
+            Swal.fire("메롱");
+          }
         })
         .catch((res) => {
           console.log(res);

@@ -76,7 +76,7 @@ function App() {
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/join" element={<Join />} />
           <Route path="/innList" element={<InnList />} />
-          <Route path="/blogList" element={<BlogList />} />
+          <Route path="/blogList" element={<BlogList />} isLogin={isLogin} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/ref" element={<Ref />} />
           <Route

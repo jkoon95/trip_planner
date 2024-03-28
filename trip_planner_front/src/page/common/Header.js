@@ -20,13 +20,20 @@ const Header = (props) => {
     searchRef.current.classList.add("active");
   };
   const searchClose = () => {
-    if (searchData === "") {
+    if(searchData === "") {
       searchRef.current.classList.remove("active");
     }
   };
   const searchInputClickFunc = (e) => {
     e.stopPropagation();
     searchRef.current.classList.add("focus");
+  };
+  const searchInputBlurFunc = (e) => {
+    e.stopPropagation();
+    searchRef.current.classList.remove("focus");
+    if(searchData === "") {
+      searchRef.current.classList.remove("active");
+    }
   };
   document.body.addEventListener("click", () => {
     menuRef.current.classList.remove("active");
@@ -51,6 +58,7 @@ const Header = (props) => {
           searchOpenFunc={searchOpen}
           searchCloseFunc={searchClose}
           searchInputClickFunc={searchInputClickFunc}
+          searchInputBlurFunc={searchInputBlurFunc}
         />
       </div>
     </header>
@@ -69,6 +77,7 @@ const HeaderNavi = (props) => {
   const searchClose = props.searchCloseFunc;
   const searchInputRef = props.searchInputRef;
   const searchInputClick = props.searchInputClickFunc;
+  const searchInputBlur = props.searchInputBlurFunc;
   return (
     <div className="header_navi">
       <div
@@ -83,7 +92,7 @@ const HeaderNavi = (props) => {
           setData={setSearchData}
           inputRef={searchInputRef}
           clickEvent={searchInputClick}
-          blurEvent={searchClose}
+          blurEvent={searchInputBlur}
         />
         <button className="btn_search">
           <span className="hidden">검색</span>

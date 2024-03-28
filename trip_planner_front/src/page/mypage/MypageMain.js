@@ -18,15 +18,15 @@ const MypageMain = (props) => {
   const [member, setMember] = useState("");
   const navigate = useNavigate();
 
-  if (!isLogin) {
-    Swal.fire({
-      icon: "warning",
-      text: "로그인 후 이용이 가능합니다.",
-      confirmButtonText: "닫기",
-    }).then(
-      navigate("/")
-    );
-  }
+  // if (!isLogin) {
+  //   Swal.fire({
+  //     icon: "warning",
+  //     text: "로그인 후 이용이 가능합니다.",
+  //     confirmButtonText: "닫기",
+  //   }).then(
+  //     navigate("/")
+  //   );
+  // }
 
   useEffect(() => {
     axios
@@ -56,11 +56,11 @@ const MypageMain = (props) => {
               navigate("/mypage/innReg");
             }else if(res2.data.data !== null && res2.data.data.partnerType === 2){//투어
               setMenus([
-                { url: "tourMgmt", text: "투어 예약관리", active: true },
-                { url: "tourReg", text: "투어 상품등록", active: false },
-                { url: "tourSale", text: "투어 상품조회", active: false },
+                { url: "tour/mgmt", text: "투어 예약관리", active: true },
+                { url: "tour/reg", text: "투어 상품등록", active: false },
+                { url: "tour/sale", text: "투어 상품조회", active: false },
               ])
-              navigate("/mypage/tourMgmt");
+              navigate("/mypage/tour/mgmt");
             }
             //업체인데 등록한 업체가 없을 경우
             setMenus([

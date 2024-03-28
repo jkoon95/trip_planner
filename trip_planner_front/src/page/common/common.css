@@ -78,3 +78,11 @@ h5{margin-bottom: 8px; color: #000; font-family: pt-b; font-size: 14px; font-wei
 .footer .menu_list>ul{display: flex; gap: 24px; margin-top: 20px;}
 .footer .menu_list>ul>li>a{display: block; color: #fff; font-size: 16px; line-height: 1.5;}
 .footer .footer_txt{margin-top: 40px; color: #fff; font-size: 14px; line-height: 1.5;}
+
+/* badge */
+.badge{display: inline-block; min-width: 69px; padding: 0 11px; border-radius: 30px; font-family: pt-b; font-size: 13px; line-height: 28px; text-align: center;}
+.badge.blue{border: 1px solid var(--info); background-color: rgba(23, 149, 240, 0.1); color: var(--info);}
+.badge.red{border: 1px solid var(--error); background-color: rgba(255, 40, 3, 0.1); color: var(--error);}
+.badge.green{border: 1px solid var(--success); background-color: rgba(48, 228, 98, 0.1); color: var(--success);}
+.badge.gray{border: 1px solid var(--gray_02); background-color: rgba(85, 85, 85, 0.1); color: var(--gray_02);}
+.badges{display: flex; flex-wrap: wrap; gap: 8px;}

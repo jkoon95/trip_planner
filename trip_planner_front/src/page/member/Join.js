@@ -64,7 +64,10 @@ const Join = () => {
       memberName !== "" &&
       memberNickName !== "" &&
       memberPhone !== "" &&
-      memberAddr !== ""
+      memberAddr !== "" &&
+      checkPwMsg !== "" &&
+      checkPwReMsg !== "" &&
+      checkNickNameMsg !== ""
     ) {
       const obj = {
         memberEmail,

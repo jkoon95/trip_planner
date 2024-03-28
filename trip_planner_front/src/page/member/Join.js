@@ -77,6 +77,15 @@ const Join = () => {
       });
   };
   const join = () => {
+    const obj = {
+      memberEmail,
+      memberPw,
+      memberName,
+      memberNickName,
+      memberPhone,
+      memberAddr,
+    };
+    console.log(obj);
     if (
       memberEmail !== "" &&
       memberPw !== "" &&
@@ -84,19 +93,13 @@ const Join = () => {
       memberNickName !== "" &&
       memberPhone !== "" &&
       memberAddr !== "" &&
-      checkEmailMsg !== "" &&
-      checkPwMsg !== "" &&
-      checkPwReMsg !== "" &&
-      checkNickNameMsg !== ""
+      checkEmailMsg === "" &&
+      checkPwMsg === "" &&
+      checkPwReMsg === "" &&
+      checkNickNameMsg === ""
     ) {
-      const obj = {
-        memberEmail,
-        memberPw,
-        memberName,
-        memberNickName,
-        memberPhone,
-        memberAddr,
-      };
+      console.log(obj);
+      console.log(memberPw);
       axios
         .post(backServer + "/member/join", obj)
         .then((res) => {

@@ -108,12 +108,12 @@
   background-color: #005caa;
   color: #fff;
   border-color: #005caa;
-  font-family: pt-r;
+  font-family: pt-b;
 }
-.sideMenu-wrap>.btn_area{
+.sideMenu-wrap > .btn_area {
   padding: 1ch;
 }
-.sideMenu-wrap>.btn_area>button{
+.sideMenu-wrap > .btn_area > button {
   margin: 5px;
 }
 .sideMenu-wrap .btn_area > button {

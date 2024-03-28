@@ -9,8 +9,6 @@
   overflow: hidden;
 }
 .tour-list-title > h2 {
-  text-align: left;
-  font-size: 2.2em;
   float: left;
 }
 .tour-list-title > h2:first-child {

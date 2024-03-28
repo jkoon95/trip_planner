@@ -39,16 +39,14 @@ const BlogWrite = () => {
   return (
     <section className="contents blogFrm">
       <h2>블로그 작성하기</h2>
-      <div>
-        <BlogFrm
-          blogTitle={blogTitle}
-          setBlogTitle={setBlogTitle}
-          blogContent={blogContent}
-          setBlogContent={setBlogContent}
-          buttonFunction={write}
-          type="write"
-        />
-      </div>
+      <BlogFrm
+        blogTitle={blogTitle}
+        setBlogTitle={setBlogTitle}
+        blogContent={blogContent}
+        setBlogContent={setBlogContent}
+        buttonFunction={write}
+        type="write"
+      />
     </section>
   );
 };

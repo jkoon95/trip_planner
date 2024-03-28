@@ -3,7 +3,7 @@ import ListSideMenu from "./ListSideMenu";
 const InnList = () => {
   return (
     <section className="contents">
-      <h2>숙소</h2>
+      <h2 className="hidden">숙소</h2>
       <div className="inn-wrap">
         <ListSideMenu />
         <div className="inn-list-wrap">ㅎㅎ</div>

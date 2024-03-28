@@ -1,4 +1,5 @@
-import { Input } from "../../component/FormFrm";
+
+import { Button, Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
 const BlogFrm = (props) => {
@@ -14,37 +15,29 @@ const BlogFrm = (props) => {
   const type = props.type;
 
   return (
-    <section className="contents blogFrm">
-      <div className="blog-frm-wrap">
-        <div className="blog-frm-contnet">
-          <label htmlFor="blog-frm-title" className="blog-frm-title">
-            제목
-          </label>
-          <Input
-            type="text"
-            data={blogTitle}
-            setData={setBlogTitle}
-            content="blog-frm-title"
-          />
-        </div>
-        <div className="blog-frm-content">
-          <TextEditor
-            data={blogContent}
-            setData={setBlogContent}
-            url={backServer + "/blog/editor"}
-          />
-        </div>
-        <div className="blog-frm-btn">
-          <button
-            type="button"
-            className="btn_secondary outline md blogBtn"
-            onClick={buttonFunction}
-          >
-            등 록
-          </button>
-        </div>
+    <div className="blog-frm-wrap">
+      <div className="blog-frm-contnet">
+        <label htmlFor="blog-frm-title" className="blog-frm-title">
+          제목
+        </label>
+        <Input
+          type="text"
+          data={blogTitle}
+          setData={setBlogTitle}
+          content="blog-frm-title"
+        />
       </div>
-    </section>
+      <div className="blog-frm-content">
+        <TextEditor
+          data={blogContent}
+          setData={setBlogContent}
+          url={backServer + "/blog/editor"}
+        />
+      </div>
+      <div className="btn_area">
+        <Button text="등록" class="btn_secondary" clickEvent={buttonFunction} />
+      </div>
+    </div>
   );
 };
 

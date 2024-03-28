@@ -6,8 +6,8 @@
   display: flex;
 }
 .sideMenu-wrap {
-  padding-left: 10px;
-  width: 350px;
+  padding: 0 10px;
+  width: 360px;
 }
 .search-day .css-10o2lyd-MuiStack-root > .MuiTextField-root {
   min-width: 0px;
@@ -65,6 +65,11 @@
 .price-wrap > div {
   box-sizing: border-box;
 }
+.price-range {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .price-wrap > .css-1v5z18m {
   box-sizing: border-box;
   padding: 10px;
@@ -105,7 +110,13 @@
   border-color: #005caa;
   font-family: pt-r;
 }
-.btn_area > button {
+.sideMenu-wrap>.btn_area{
+  padding: 1ch;
+}
+.sideMenu-wrap>.btn_area>button{
+  margin: 5px;
+}
+.sideMenu-wrap .btn_area > button {
   width: 100%;
   box-sizing: border-box;
 }

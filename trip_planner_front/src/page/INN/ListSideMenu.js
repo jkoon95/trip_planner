@@ -15,6 +15,8 @@ const ListSideMenu = () => {
   const [checkOutDate, setCheckOutDate] = useState();
   const [bookGuest, setBookGuest] = useState("");
   const [roomPrice, setRoomPrice] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(500000);
 
   const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
   const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
@@ -168,6 +170,8 @@ const ListSideMenu = () => {
     //장소, 날짜, 인원 선택 후 검색 버튼 누르면 해당하는 리스트 출력하는 함수
     console.log(checkIn);
     console.log(checkOut);
+    console.log(innAddr);
+    console.log(bookGuest);
   };
   // const array = new Array();
   // hashTageMenu.forEach((item) => {
@@ -189,6 +193,8 @@ const ListSideMenu = () => {
     console.log(checkOut);
     console.log(innAddr);
     console.log(bookGuest);
+    console.log(minPrice);
+    console.log(maxPrice);
   };
   return (
     <div className="sideMenu-wrap">
@@ -247,7 +253,12 @@ const ListSideMenu = () => {
           <h3>가격</h3>
         </div>
         <div className="price-range">
-          <PriceRange />
+          <PriceRange
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+          />
         </div>
       </div>
       <div className="hashTag-wrap">
@@ -306,12 +317,14 @@ const DateWrap = (props) => {
           format="YYYY-MM-DD"
           value={checkInDate}
           onChange={changeCheckInDate}
+          disablePast
         />
         <DatePicker
           label="체크아웃"
           format="YYYY-MM-DD"
           value={checkOutDate}
           onChange={changeCheckOutDate}
+          disablePast
         />
       </DemoContainer>
     </LocalizationProvider>
@@ -338,10 +351,8 @@ const SearchInput = (props) => {
 };
 
 const CheckBoxInput = (props) => {
-  const [selectInn, setSelectInn] = useState([]);
   const innTypeList = props.innTypeList;
   const setInnTypeList = props.setInnTypeList;
-
   return (
     <>
       {innTypeList.map((item, index) => {
@@ -373,10 +384,12 @@ function valuetext(value) {
   return `${value}원`;
 }
 
-const PriceRange = () => {
+const PriceRange = (props) => {
   const [value, setValue] = useState([0, 100]);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(500000);
+  const minPrice = props.minPrice;
+  const setMinPrice = props.setMinPrice;
+  const maxPrice = props.maxPrice;
+  const setMaxPrice = props.setMaxPrice;
 
   const minDistance = 15;
 
@@ -395,25 +408,18 @@ const PriceRange = () => {
     let min = 0;
     //const max = newValue[1] * 10000;
     if (newValue[1] === 100) {
-      console.log("50만원 이상");
       max = 500000;
     } else if (newValue[1] === 90) {
-      console.log("40만원 이하");
       max = 400000;
     } else if (newValue[1] === 75) {
-      console.log("30만원 이하");
       max = 300000;
     } else if (newValue[1] === 60) {
-      console.log("20만원 이하");
       max = 200000;
     } else if (newValue[1] === 45) {
-      console.log("10만원 이하");
       max = 100000;
     } else if (newValue[1] === 30) {
-      console.log("5만원 이하");
       max = 50000;
     } else if (newValue[1] === 15) {
-      console.log("3만원 이하");
       max = 30000;
     }
 
@@ -433,10 +439,7 @@ const PriceRange = () => {
     setMinPrice(min);
     setMaxPrice(max);
     setValue(newValue);
-    console.log(newValue);
   };
-  console.log(minPrice, maxPrice);
-  console.log(value);
   return (
     <>
       <Box sx={{ width: 300 }}>

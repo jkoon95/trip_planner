@@ -90,7 +90,8 @@ const CreateTrips = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker value={tripStartDate} onChange={(newValue) => {
-                      setTripStartDate(newValue)
+                      console.log(newValue);
+                      setTripStartDate(newValue);
                     }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} />
                     <DatePicker value={tripEndDate} onChange={(newValue) => {
                       setTripEndDate(newValue)
@@ -212,7 +213,7 @@ const ItemTripPlace = (props) => {
           </div>
         </div>
       </li>
-    ) : listType === "result_items" ? (
+    ) : (
       <li className="item tripPlace">
         <div className="item_box">
           <div className="item_box_content">
@@ -228,7 +229,7 @@ const ItemTripPlace = (props) => {
           </div>
         </div>
       </li>
-    ) : ""
+    )
   )
 }
 

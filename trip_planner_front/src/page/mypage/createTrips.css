@@ -7,14 +7,16 @@
 
 .createTrips_wrap .trips_wrap>.trips_input_wrap{padding: 0 20px;}
 .createTrips_wrap .trips_wrap>.trips_input_wrap>.set_date_wrap{margin-top: 24px;}
-.createTrips_wrap .css-10o2lyd-MuiStack-root{gap: 24px;}
+.createTrips_wrap .css-10o2lyd-MuiStack-root{gap: 24px; padding-top: 0;}
 .createTrips_wrap .css-10o2lyd-MuiStack-root>.MuiTextField-root{min-width: 0; border-bottom: 1px solid #000;}
-.createTrips_wrap .css-10o2lyd-MuiStack-root>:not(style)~:not(style){margin-left: 0;}
+.createTrips_wrap .css-10o2lyd-MuiStack-root>:not(style)~:not(style){position: relative; margin-left: 0;}
+.createTrips_wrap .css-10o2lyd-MuiStack-root>:not(style)~:not(style)::before{content: '-'; display: block; position: absolute; left: -24px; top:0; bottom: 0; width: 24px; color: var(--gray_05); font-size: 16px; line-height: 41px; text-align: center;}
 .createTrips_wrap .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{padding: 0;}
 .createTrips_wrap .css-1d3z3hw-MuiOutlinedInput-notchedOutline{top: 0; border: none;}
-.createTrips_wrap .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{flex-grow: 1; padding: 12px 0; font-size: 16px; line-height: 1.5;}
+.createTrips_wrap .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{flex-grow: 1; padding: 9px 0; font-size: 16px; line-height: 1.5;}
 .createTrips_wrap .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root{width: 36px; height: 36px; margin: 0; background: url(/public/images/icon_calendar_gray.svg) no-repeat center / contain;}
 .createTrips_wrap .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root>svg{display: none;}
+.createTrips_wrap .css-1laqsz7-MuiInputAdornment-root{margin-left: 0;}
 
 .createTrips_wrap .trips_wrap>.trips_plan_wrap{margin-top: 20px; padding: 20px 20px 40px; overflow-y: auto;}
 .createTrips_wrap .trips_wrap .set_day_wrap+.set_day_wrap{margin-top: 40px;}
@@ -40,7 +42,7 @@
 /* .createTrips_wrap .place_list>.item .item_box .place_info>span{display: inline-block;} */
 .createTrips_wrap .place_list>.item .item_box .place_info>span+span{position: relative; margin-left: 12px;}
 .createTrips_wrap .place_list>.item .item_box .place_info>span+span::before{content: ''; display: block; position: absolute; top: 8px; left: -7px; width: 2px; height: 2px; border-radius: 50%; background-color: var(--gray_05);}
-.createTrips_wrap .place_list>.item .item_box .place_phone{margin-top: 8px; color: var(--info); font-family: pt-b; font-size: 13px; line-height: 20px;}
+.createTrips_wrap .place_list>.item .item_box .place_phone{margin-top: 8px; padding-left: 20px; background: url(/public/images/icon_call_blue.svg) no-repeat left center / 16px ; color: var(--info); font-family: pt-b; font-size: 13px; line-height: 20px;}
 .createTrips_wrap .place_list>.item .item_box_content{flex-grow: 1; max-width: calc(100% - 54px);}
 .createTrips_wrap .place_list>.item.tripTodo .item_box .item_box_content{display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-overflow: ellipsis; overflow: hidden; font-size: 14px; line-height: 1.5;}
 .createTrips_wrap .place_list>.item .item_btn_wrap{display: flex; gap: 6px; align-self: center;}

@@ -18,7 +18,7 @@
 
  */
 .blogFrm {
-  width: 800px;
+  width: 680px;
 }
 .blog-list-title-wrap {
   margin-left: 10px;
@@ -57,6 +57,23 @@
   padding: 100px;
   box-sizing: border-box;
 }
+.blog-date-wrap {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray_04);
+}
+.blog-date-wrap div:nth-child(1) {
+  float: left;
+}
+
+.blog-date-wrap span {
+  margin-left: 15px;
+}
+
+.day-add-btn {
+  margin: 20px 0;
+}
+
 /*
 .blog-write-btn {
   width: 100px;
@@ -75,17 +92,27 @@
 */
 
 /*blogWrite*/
+
 .blog-frm-content {
   margin-bottom: 10px;
+}
+.blog-title-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  line-height: 42px;
 }
 .blog-frm-title {
   font-size: 120%;
   font-family: pt-eb;
   color: var(--main_01);
 }
+
 #blog-frm-title {
-  margin-bottom: 20px;
+  width: 90%;
   text-indent: 10px;
+  border: 1px solid #1e1e1e;
+  border-radius: 5px;
 }
 .blog-frm-content > .input {
   border: 1px solid #1e1e1e;

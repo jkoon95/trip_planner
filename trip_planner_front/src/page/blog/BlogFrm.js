@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import { Button, Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
@@ -14,25 +14,47 @@ const BlogFrm = (props) => {
 
   const type = props.type;
 
+  const [test, setTest] = useState(false);
+  const blogDateAdd = () => {
+    setTest(true);
+  };
   return (
     <div className="blog-frm-wrap">
       <div className="blog-frm-contnet">
-        <label htmlFor="blog-frm-title" className="blog-frm-title">
-          제목
-        </label>
-        <Input
-          type="text"
-          data={blogTitle}
-          setData={setBlogTitle}
-          content="blog-frm-title"
-        />
+        <div className="blog-title-wrap">
+          <label htmlFor="blog-frm-title" className="blog-frm-title">
+            제목
+          </label>
+          <Input
+            type="text"
+            data={blogTitle}
+            setData={setBlogTitle}
+            content="blog-frm-title"
+            placeholder="블로그 제목을 입력해주세요..."
+          />
+        </div>
       </div>
-      <div className="blog-frm-content">
+      <div className="blog-date-wrap">
+        <div>DAY 1</div>
+        <div>
+          <div>일정생성</div>
+          <button onClick={blogDateAdd}>
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+      </div>
+
+      {test ? (
         <TextEditor
           data={blogContent}
           setData={setBlogContent}
           url={backServer + "/blog/editor"}
         />
+      ) : (
+        ""
+      )}
+      <div className="day-add-btn">
+        <Button text="DAY 추가" class="btn_primary sm " />
       </div>
       <div className="btn_area">
         <Button text="등록" class="btn_secondary" clickEvent={buttonFunction} />

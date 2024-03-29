@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.blog.model.dto.Blog;
 import kr.or.iei.blog.model.service.BlogService;
+import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.util.FileUtils;
 
 @CrossOrigin("*")
@@ -24,8 +25,7 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 	@Autowired
-	private FileUtils fileUtils;
-	
+	private FileUtils fileUtils;	
 	@Value("${file.root}")
 	private String root;
 	
@@ -42,6 +42,8 @@ public class BlogController {
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertBlog(@ModelAttribute Blog blog, @RequestAttribute String memberEmail){
 		int result = blogService.insertBlog(blog, memberEmail);
+		
+		
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

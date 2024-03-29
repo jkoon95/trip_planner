@@ -1,0 +1,49 @@
+.contents.createTrips{max-width: none; width: calc(100% + 80px); margin-left: -40px; padding: 0;}
+.createTrips_wrap{display: flex; height: 700px; min-height: calc(100vh - 61px);}
+.createTrips_wrap>.map_area{flex-grow: 1; background-color: #f2f2f2;}
+.createTrips_wrap>.left_area{display: flex;}
+.createTrips_wrap .trips_wrap{position:relative; display: flex; flex-direction: column; width: 377px; padding: 24px 0 92px; border-right: 1px solid var(--line_03);}
+.createTrips_wrap .search_wrap{display: flex; flex-direction: column; width: 377px; padding: 24px 0; border-right: 1px solid var(--line_03);}
+
+.createTrips_wrap .trips_wrap>.trips_input_wrap{padding: 0 20px;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap>.set_date_wrap{margin-top: 24px;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-10o2lyd-MuiStack-root{gap: 24px;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-10o2lyd-MuiStack-root>.MuiTextField-root{min-width: 0; border-bottom: 1px solid #000;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-10o2lyd-MuiStack-root>:not(style)~:not(style){margin-left: 0;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{padding: 0;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-1d3z3hw-MuiOutlinedInput-notchedOutline{top:0; border: none;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{flex-grow: 1; padding: 12px 0; font-size: 16px; line-height: 1.5;}
+.createTrips_wrap .trips_wrap>.trips_input_wrap .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root{margin: 0;}
+
+.createTrips_wrap .trips_wrap>.trips_plan_wrap{margin-top: 20px; padding:20px 20px 40px; overflow-y: auto;}
+.createTrips_wrap .trips_wrap .set_day_wrap+.set_day_wrap{margin-top: 40px;}
+.createTrips_wrap .set_day_wrap .day_title_wrap{display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line_03);}
+.createTrips_wrap .set_day_wrap .day_title_wrap .day_title{font-family: pt-b; font-size: 16px; line-height: 24px;}
+.createTrips_wrap .set_day_wrap .day_title_wrap .day_title>.tripDay{margin-left: 4px; color: var(--gray_05); font-family: pt-b;}
+.createTrips_wrap .set_day_wrap .day_title_wrap .btn_tripCost{position:relative; display: inline-block; padding-left: 12px; color: var(--main_02); font-size: 14px; line-height: 40px;}
+.createTrips_wrap .set_day_wrap .day_title_wrap .btn_tripCost::before{content:"+"; display: block; position:absolute; top:0; bottom:0; left: 0; width: 12px; font-size: 14px; line-height: 40px; text-align: center;}
+.createTrips_wrap .set_day_wrap .day_title_wrap .btn_tripCost.on{} 
+
+.createTrips_wrap .set_day_wrap .day_items_wrap{position: relative; display: flex; flex-direction: column; gap: 12px; padding: 12px 0 0;}
+.createTrips_wrap .set_day_wrap .day_items_wrap::before{content: ''; display: block; position: absolute; width: 2px; top: 0; bottom: 0; left: 13px; background-color: rgba(233,81,28,0.2); z-index: -1;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item{display: flex; gap: 4px; justify-content: space-between;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .tripRoute_no{align-self: center; display: inline-block; width: 20px; height: 20px; margin: 0 4px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 12px; line-height: 20px; text-align: center;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item.tripTodo .tripRoute_no{width: 8px; height: 8px; margin: 0 auto; font-size: 0;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_box{flex: 1; display: flex; justify-content: space-between; max-width: calc(100% - 32px); max-height: 77px; padding: 15px 11px; border: 1px solid var(--line_03); border-radius: 8px;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_box .place_title{font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_box .place_info{margin-top: 4px; color: var(--gray_05); font-family: pt-b; font-size: 13px; line-height: 20px;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_box .item_box_content{flex-grow: 1; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-overflow: ellipsis; overflow: hidden; padding: 0 8px; font-size: 14px; line-height: 1.5;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_btn_wrap{display: flex; gap: 6px; align-self: center;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_btn_wrap .btn_changeOrder{display: block; width:24px; height: 24px; border: 1px solid var(--line_02); border-radius: 50%;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_btn_wrap .btn_changeOrder.down{background: url(/public/images/icon_changeOrder_down.svg) no-repeat center / contain;}
+.createTrips_wrap .set_day_wrap .day_items_wrap>.item .item_btn_wrap .btn_changeOrder.up{background: url(/public/images/icon_changeOrder_up.svg) no-repeat center / contain;}
+
+.createTrips_wrap .trips_wrap>.btn_area{position: absolute; left: 0; right: 0; bottom: 0; padding: 24px 20px;}
+.createTrips_wrap .trips_wrap>.btn_area::before{content: ''; display: block; position: absolute; top: -7px; left: 0; right: 0; height: 8px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));}
+.createTrips_wrap .btn_area [class^=btn_]{flex-grow: 1;}
+
+.createTrips_wrap .search_wrap .search_input_wrap{padding: 0 20px}
+.createTrips_wrap .search_wrap .search_result_wrap{padding: 10px 20px 0; overflow-y: auto;}
+.createTrips_wrap .search_wrap .search_result_wrap .result_place_area{padding: 10px 0;}
+.createTrips_wrap .search_wrap .search_result_wrap .result_inns_area{padding-top: 10px;}
+.createTrips_wrap .search_wrap .search_result_wrap .result_title{margin-bottom: 8px; font-family: pt-b; font-size: 16px; line-height: 1.5;}

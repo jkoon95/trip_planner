@@ -20,7 +20,7 @@ const Header = (props) => {
     searchRef.current.classList.add("active");
   };
   const searchClose = () => {
-    if(searchData === "") {
+    if (searchData === "") {
       searchRef.current.classList.remove("active");
     }
   };
@@ -31,7 +31,7 @@ const Header = (props) => {
   const searchInputBlurFunc = (e) => {
     e.stopPropagation();
     searchRef.current.classList.remove("focus");
-    if(searchData === "") {
+    if (searchData === "") {
       searchRef.current.classList.remove("active");
     }
   };
@@ -141,7 +141,7 @@ const HeaderNavi = (props) => {
                 <Link to="/tourList">투어 예약하기</Link>
               </li>
               <li>
-                <Link to="#">프로모션</Link>
+                <Link to="/promotionList">프로모션</Link>
               </li>
               <li>
                 <Link to="/blogList">블로그</Link>

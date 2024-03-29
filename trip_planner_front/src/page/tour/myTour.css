@@ -76,3 +76,31 @@
 }
 
 /* 투어 이미지 */
+.tour-img-wrap {
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.tour-img-wrap > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tour-img-wrap > div > .tour-img-title {
+  width: 30%;
+  font-size: 18px;
+  font-family: pt-b;
+}
+.tour-img-wrap > div > input[type="file"] {
+  width: 70%;
+}
+.tour-img-wrap > div > .tour-thumbnail > img {
+  max-width: 400px;
+}
+
+/* 등록 버튼 */
+.tour-reg-btn {
+  margin: 20px auto;
+  text-align: center;
+  display: block;
+}

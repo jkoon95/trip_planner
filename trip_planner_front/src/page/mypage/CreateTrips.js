@@ -42,8 +42,10 @@ const CreateTrips = () => {
                   <div className="item tripPlace">
                     <div className="tripRoute_no">1</div>
                     <div className="item_box">
-                      <div className="place_title">부산역</div>
-                      <div className="place_info">부산 동구</div>
+                      <div className="item_box_content">
+                        <div className="place_title">부산역</div>
+                        <div className="place_info">부산 동구</div>
+                      </div>
                       <div className="item_btn_wrap">
                         <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
                         <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
@@ -53,8 +55,10 @@ const CreateTrips = () => {
                   <div className="item tripPlace">
                     <div className="tripRoute_no">2</div>
                     <div className="item_box">
-                      <div className="place_title">해운대 해수욕장</div>
-                      <div className="place_info">해운대</div>
+                      <div className="item_box_content">
+                        <div className="place_title">해운대 해수욕장</div>
+                        <div className="place_info">해운대</div>
+                      </div>
                       <div className="item_btn_wrap">
                         <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
                         <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
@@ -64,7 +68,7 @@ const CreateTrips = () => {
                   <div className="item tripTodo">
                     <div className="tripRoute_no">2</div>
                     <div className="item_box">
-                      <div className="todo_content">할일 메모 메모메모</div>
+                      <div className="item_box_content">할일 메모 메모메모<br /> 할 일<br /> 메모메모</div>
                       <div className="item_btn_wrap">
                         <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
                         <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
@@ -74,8 +78,59 @@ const CreateTrips = () => {
                 </div>
                 <div className="day_btns_wrap">
                   <div className="btn_area">
-                  <Button text="장소 추가" class="btn_secondary" />
-                  <Button text="할 일 추가" class="btn_secondary outline" />
+                    <Button text="장소 추가" class="btn_secondary md" />
+                    <Button text="할 일 추가" class="btn_secondary outline md" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="set_day_wrap">
+                <div className="day_title_wrap">
+                  <div className="day_title">Day 2<span className="tripDay">4.25/목</span></div>
+                  <button type="button" className="btn_tripCost">예산 추가</button>
+                </div>
+                <div className="day_items_wrap">
+                  <div className="item tripPlace">
+                    <div className="tripRoute_no">1</div>
+                    <div className="item_box">
+                      <div className="item_box_content">
+                        <div className="place_title">부산역</div>
+                        <div className="place_info">부산 동구</div>
+                      </div>
+                      <div className="item_btn_wrap">
+                        <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
+                        <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="item tripPlace">
+                    <div className="tripRoute_no">2</div>
+                    <div className="item_box">
+                      <div className="item_box_content">
+                        <div className="place_title">해운대 해수욕장</div>
+                        <div className="place_info">해운대</div>
+                      </div>
+                      <div className="item_btn_wrap">
+                        <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
+                        <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="item tripTodo">
+                    <div className="tripRoute_no">2</div>
+                    <div className="item_box">
+                      <div className="item_box_content">할일 메모 메모메모<br /> 할 일<br /> 메모메모</div>
+                      <div className="item_btn_wrap">
+                        <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
+                        <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="day_btns_wrap">
+                  <div className="btn_area">
+                    <Button text="장소 추가" class="btn_secondary md" />
+                    <Button text="할 일 추가" class="btn_secondary outline md" />
                   </div>
                 </div>
               </div>
@@ -106,12 +161,13 @@ const CreateTrips = () => {
                   </li>
                 </ul>
                 <div className="btn_area">
-                  <Button text="숙소 검색 결과 더보기" class="btn_primary outline" />
+                  <Button text="숙소 검색 결과 더보기" class="btn_primary outline md" />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className="map_area" id="map"></div>
       </div>
     </section>

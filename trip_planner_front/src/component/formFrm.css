@@ -8,6 +8,7 @@
 .input_item+.msg{position: relative; margin-top: 8px; color: var(--info); font-size: 14px; line-height: 1.5;}
 .input_item+.msg.success{color: var(--success);}
 .input_item+.msg.error{color: var(--error);}
+input::placeholder{color: var(--gray_05);}
 
 button[disabled]{opacity: 0.2;}
 .btn_primary{min-width: 120px; padding: 11px 20px; border: 1px solid var(--main_01); border-radius: 24px; background-color: var(--main_01); color: #fff; font-size: 14px; line-height: 1.5; text-align: center; transition: all 0.2s;}

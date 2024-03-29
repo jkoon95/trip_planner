@@ -1,5 +1,5 @@
 .inn-reg-wrap {
-  width: 800px;
+  width: 1000px;
 }
 .inn-reg-top {
   display: flex;
@@ -43,17 +43,25 @@
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .img-box {
-  display: inline-flex;
   box-sizing: border-box;
   padding: 10px;
   width: 300px;
-  height: 200px;
+  height: 300px;
   border: 1px solid #eee;
   border-radius: 15px;
   margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img-box span {
+  font-size: 100px;
 }
 .img-box > img {
   width: 100%;
@@ -61,8 +69,7 @@
   object-fit: contain;
 }
 .img-box > label {
-  color: #ccc;
-  line-height: 128px;
+  color: #eee;
   cursor: pointer;
   font-size: 12px;
 }

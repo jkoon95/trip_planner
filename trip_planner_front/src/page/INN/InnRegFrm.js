@@ -45,7 +45,7 @@ const InnRegFrm = (props) => {
         </div>
         <div className="inn-reg-image-wrap">
           <div className="inn-reg-image-wrap-title">
-            숙소 사진등록<sub>(최대 5장 등록 가능)</sub>
+            숙소 사진등록<sub>(최대 6장 등록 가능)</sub>
           </div>
           <div className="inn-reg-image">
             {innImg.map((item, index) => {
@@ -140,7 +140,9 @@ const InnImgReg = (props) => {
       <div className="img-box">
         {item === null ? (
           <>
-            <label htmlFor={"innImg" + index}>첨부파일 등록</label>
+            <label htmlFor={"innImg" + index}>
+              <span class="material-icons">photo_camera</span>
+            </label>
             <input
               type="file"
               className="hidden"

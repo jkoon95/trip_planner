@@ -3,7 +3,7 @@
 .join-input-wrap{
     padding-bottom: 40px;
 }
-.naver{
+.join-input-wrap .naver{
     background-image: url(../../../public/image/btnG_축약형.png);
     width: 90px;
     height: 45px;
@@ -11,7 +11,7 @@
     object-fit: contain;
 }
 
-.kakao{
+.join-input-wrap .kakao{
     background-image: url(../../../public/image/kakao_login_medium.png);
     width: 90px;
     height: 45px;

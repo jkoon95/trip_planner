@@ -1,5 +1,9 @@
+.inn-reg-all-wrap {
+  padding: 5px;
+  background-color: #fff;
+}
 .inn-reg-wrap {
-  width: 800px;
+  width: 1000px;
 }
 .inn-reg-top {
   display: flex;
@@ -19,7 +23,7 @@
 }
 .inn-type-box > div:first-child {
   padding: 10px 0px;
-  font-size: 16px;
+  font-size: 18px;
   font-family: pt-b;
 }
 .inn-type-box > div:last-child label {
@@ -28,7 +32,7 @@
 }
 .inn-reg-image-wrap-title {
   font-family: pt-b;
-  font-size: 16px;
+  font-size: 18px;
 }
 .inn-reg-image-wrap-title > sub {
   color: #e9511c;
@@ -37,10 +41,102 @@
   font-size: 12px;
 }
 .inn-reg-image-wrap {
-  margin: 20px 0px;
+  margin: 3cap 0px;
 }
 .inn-reg-image {
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.img-box {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.img-box span {
+  font-size: 100px;
+}
+.img-box > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.img-box > label {
+  color: #eee;
+  cursor: pointer;
+  font-size: 12px;
+}
+.inn-reg-image {
+  margin-top: 30px;
+}
+
+.inn-addr-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.inn-addr-wrap > input::placeholder {
+  font-size: 12px;
+}
+.img-box > .cancel-btn {
+  font-size: 20px;
+  color: #ccc;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+.inn-intro-title {
+  margin-top: 50px;
+  font-family: pt-b;
+  font-size: 18px;
+}
+.inn-intro-wrap > input::placeholder {
+  font-size: 12px;
+}
+.inn-info-title {
+  margin-top: 50px;
+  font-family: pt-b;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.inn-info-wrap .ql-container {
+  height: 300px;
+}
+.inn-check-time-wrap {
+  margin-top: 30px;
+}
+.check-in-wrap {
+  margin-right: 50px;
+}
+.check-in-title,
+.check-out-title {
+  display: flex;
+  font-family: pt-b;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.inn-check-time-wrap > input::placeholder {
+  font-size: 12px;
+}
+.check-out-title {
+  margin-top: 30px;
+}
+.inn-reg-wrap .btn-area {
+  margin-top: 40px;
+}
+.inn-reg-wrap .btn-area > button {
+  width: 100%;
 }

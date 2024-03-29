@@ -1,70 +1,70 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./innReg.css";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
-const InnReg = () => {
-  const [inntype, setInnType] = useState([]);
+import InnRegFrm from "./InnRegFrm";
+
+const InnReg = (props) => {
+  const isLogin = props.isLogin;
+  console.log(isLogin);
+  const [innType, setInnType] = useState(0);
+  const [innAddr, setInnAddr] = useState("");
+  const [innInfo, setInnInfo] = useState("");
+  const [innCheckInTime, setInnCheckInTime] = useState("");
+  const [innCheckOutTime, setInnCheckOutTime] = useState("");
+  const [innIntro, setInnIntro] = useState("");
+  const [innFile, setInnFile] = useState([null, null, null, null, null, null]); //최대 5개 등록
+
+  const [innImg, setInnImg] = useState([null, null, null, null, null, null]);
+
+  const write = () => {
+    const backServer = process.env.REACT_APP_BACK_SERVER;
+    console.log("숙소 등록쓰");
+    console.log(innType);
+    console.log(innAddr);
+    console.log(innInfo);
+    console.log(innCheckInTime);
+    console.log(innCheckOutTime);
+    console.log(innIntro);
+    console.log(innFile);
+    if (
+      innType !== 0 &&
+      innAddr !== "" &&
+      innInfo !== "" &&
+      innCheckInTime !== "" &&
+      innCheckOutTime !== "" &&
+      innIntro !== "" &&
+      innFile !== null
+    ) {
+      const form = new FormData();
+    }
+  };
   return (
     <div className="inn-reg-all-wrap">
-      <div className="inn-reg-title">
+      <div className="inn-reg-title hidden">
         <h2>숙소등록페이지</h2>
       </div>
-      <div className="inn-reg-wrap">
-        <div className="inn-reg-top">
-          <Link to="/">
-            <span className="material-icons">arrow_back</span>
-          </Link>
-          <div className="toMain">숙소등록</div>
-        </div>
-        <div className="inn-reg-content">
-          <div className="inn-type-box">
-            <div className="inn-type-title">숙소유형</div>
-            <div>
-              <SelectInnType data={inntype} setData={setInnType} />
-            </div>
-          </div>
-          <div className="inn-reg-image-wrap">
-            <div className="inn-reg-image-wrap-title">
-              숙소 사진등록<sub>(최대 5장 등록 가능)</sub>
-            </div>
-            <div className="inn-reg-image">ㅋㅋㅋ</div>
-          </div>
-        </div>
-      </div>
+      <InnRegFrm
+        innType={innType}
+        setInnType={setInnType}
+        innAddr={innAddr}
+        setInnAddr={setInnAddr}
+        innInfo={innInfo}
+        setInnInfo={setInnInfo}
+        innCheckInTime={innCheckInTime}
+        setInnCheckInTime={setInnCheckInTime}
+        innCheckOutTime={innCheckOutTime}
+        setInnCheckOutTime={setInnCheckOutTime}
+        innIntro={innIntro}
+        setInnIntro={setInnIntro}
+        innFile={innFile}
+        setInnFile={setInnFile}
+        innImg={innImg}
+        setInnImg={setInnImg}
+        buttonFunction={write}
+      />
     </div>
   );
 };
 
-const SelectInnType = (props) => {
-  const data = props.data;
-  const setData = props.setData;
-  const changeInn = (e) => {
-    setData(e.target.value);
-  };
-  console.log(data);
-  return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">유형</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={data}
-          label="숙소"
-          onChange={changeInn}
-        >
-          <MenuItem value={1}>호텔</MenuItem>
-          <MenuItem value={2}>리조트</MenuItem>
-          <MenuItem value={3}>펜션</MenuItem>
-          <MenuItem value={4}>게스트하우스</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
-  );
-};
 export default InnReg;

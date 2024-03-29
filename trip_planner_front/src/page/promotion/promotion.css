@@ -1,0 +1,16 @@
+.contents.promotion .btn_search{
+    display: block; width: 36px; height: 36px; background: url(/public/images/icon_search.svg) no-repeat center / contain;
+}
+
+.contents.promotion .input_wrap{
+    margin: 20px auto;
+    margin-bottom: 50px;
+    width: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.contents.promotion .input{
+    border-bottom: none;
+}

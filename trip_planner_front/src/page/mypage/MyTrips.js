@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 const MyTrips = () => {
   return(
-    <>
-      내 여행
-    </>
+    <div className="myTrips_wrap">
+      내 여행(탭페이지)
+      <Link to="/createTrips">여행 일정 만들기</Link>
+    </div>
   );
 }
 

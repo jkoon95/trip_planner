@@ -10,6 +10,7 @@ import MyReviews from "./MyReviews";
 import MyInfo from "./MyInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
+import InnReg from "../INN/InnReg";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -32,7 +33,7 @@ const MypageMain = (props) => {
     axios
       .get(backServer + "/member")
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setMember(res.data.data);
         if (res.data.data.memberType === 3) {
           //관리자로 로그인 시
@@ -48,7 +49,7 @@ const MypageMain = (props) => {
           axios
             .get(backServer + "/partner/" + res.data.data.memberNo)
             .then((res2) => {
-              console.log(res2.data);
+              // console.log(res2.data.data);
               if (res2.data.data !== null && res2.data.data.partnerType === 1) {
                 //숙소
                 setMenus([
@@ -69,10 +70,13 @@ const MypageMain = (props) => {
                   { url: "tour/sale", text: "투어 상품조회", active: false },
                 ]);
                 navigate("/mypage/tour/mgmt");
+              } else {
+                //업체인데 등록한 업체가 없을 경우
+                setMenus([
+                  { url: "myInfo", text: "내 정보 수정", active: true },
+                ]);
+                navigate("/mypage/myInfo");
               }
-              //업체인데 등록한 업체가 없을 경우
-              setMenus([{ url: "myInfo", text: "내 정보 수정", active: true }]);
-              navigate("/mypage/myInfo");
             })
             .catch((res2) => {
               console.log(res2);
@@ -110,6 +114,7 @@ const MypageMain = (props) => {
           <Route path="/myLikes" element={<MyLikes />} />
           <Route path="/myReviews" element={<MyReviews />} />
           <Route path="/myInfo" element={<MyInfo />} />
+          <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
         </Routes>
       </div>
     </section>

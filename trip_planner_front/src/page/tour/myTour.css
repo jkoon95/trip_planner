@@ -1,0 +1,78 @@
+/*
+메인 색상
+#005caa 파랑  #e9511c 주황  #f4f5ef 베이지  #000000 검정
+#30e462 성공  #ff2803 에러  #f9b71b 경고    #1795f0 인포
+기타 #89cff0 #f4f5ef #8f705b #035e7b
+*/
+
+.tour-reg-wrap {
+  width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* 투어 입력창 */
+.tour-input-wrap {
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.tour-input-wrap > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tour-input-wrap > div > .tour-label {
+  width: 30%;
+}
+.tour-input-wrap > div > .tour-label > label {
+  font-size: 18px;
+  font-family: pt-b;
+}
+.tour-input-wrap > div > .tour-input {
+  width: 70%;
+}
+
+/* 투어 라디오 */
+.tour-radio-wrap {
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.tour-radio-wrap > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tour-radio-wrap > div > .tour-radio-title {
+  width: 30%;
+  font-size: 18px;
+  font-family: pt-b;
+}
+.tour-radio-wrap > div > .tour-type {
+  width: 70%;
+}
+.tour-radio-wrap > div > .tour-type > input {
+  display: none;
+}
+.tour-radio-wrap > div > .tour-type > label {
+  display: inline-block;
+  width: 70px;
+  text-align: center;
+  font-size: 16px;
+  margin-right: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #d9d9d9;
+}
+.tour-radio-wrap > div > .tour-type > label:hover {
+  background-color: #005caa;
+  color: #fff;
+}
+.tour-radio-wrap > div > .tour-type > input:checked + label {
+  background-color: #005caa;
+  color: #fff;
+}
+
+/* 투어 이미지 */

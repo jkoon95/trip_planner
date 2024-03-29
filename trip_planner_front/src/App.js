@@ -16,6 +16,7 @@ import Join from "./page/member/Join";
 import BlogWrite from "./page/blog/BlogWrite";
 import TourSearch from "./page/tour/TourSearch";
 import InnReg from "./page/INN/InnReg";
+import TourReg from "./page/tour/TourReg";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -81,6 +82,7 @@ function App() {
           <Route path="/blogList" element={<BlogList isLogin={isLogin} />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/tourSearch" element={<TourSearch />} />
+          <Route path="/tour/*" element={<TourReg isLogin={isLogin} />} />
           <Route path="/ref" element={<Ref />} />
           <Route
             path="/mypage/*"

@@ -11,16 +11,16 @@ const InnReg = () => {
   const [innCheckInTime, setInnCheckInTime] = useState("");
   const [innCheckOutTime, setInnCheckOutTime] = useState("");
   const [innIntro, setInnIntro] = useState("");
-  const [innFile, setInnFile] = useState([null, null, null, null, null]); //최대 5개 등록
+  const [innFile, setInnFile] = useState([null, null, null, null, null, null]); //최대 5개 등록
 
-  const [innImg, setInnImg] = useState([null, null, null, null, null]);
+  const [innImg, setInnImg] = useState([null, null, null, null, null, null]);
 
   const write = () => {
     console.log("숙소 등록쓰");
   };
   return (
     <div className="inn-reg-all-wrap">
-      <div className="inn-reg-title">
+      <div className="inn-reg-title hidden">
         <h2>숙소등록페이지</h2>
       </div>
       <InnRegFrm

@@ -93,8 +93,6 @@ function App() {
           <Route path="/createTrips" element={<CreateTrips />} />
           <Route path="/promotionList" element={<PromotionList />} />
           <Route path="/blogWrite" element={<BlogWrite />} />
-          {/*요건 작업하느라 여기서 지정해놨습니다.  */}
-          <Route path="/innReg" element={<InnReg />} />
         </Routes>
       </main>
       <Footer />

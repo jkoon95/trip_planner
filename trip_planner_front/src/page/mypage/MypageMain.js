@@ -70,9 +70,11 @@ const MypageMain = (props) => {
                   { url: "tour/sale", text: "투어 상품조회", active: false },
                 ]);
                 navigate("/mypage/tour/mgmt");
-              } else{
+              } else {
                 //업체인데 등록한 업체가 없을 경우
-                setMenus([{ url: "myInfo", text: "내 정보 수정", active: true }]);
+                setMenus([
+                  { url: "myInfo", text: "내 정보 수정", active: true },
+                ]);
                 navigate("/mypage/myInfo");
               }
             })
@@ -112,7 +114,7 @@ const MypageMain = (props) => {
           <Route path="/myLikes" element={<MyLikes />} />
           <Route path="/myReviews" element={<MyReviews />} />
           <Route path="/myInfo" element={<MyInfo />} />
-          <Route path="/innReg" element={<InnReg />} />
+          <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
         </Routes>
       </div>
     </section>

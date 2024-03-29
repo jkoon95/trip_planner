@@ -5,7 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Input } from "../../component/FormFrm";
+import { Button, Input } from "../../component/FormFrm";
+import TextEditor from "../../component/TextEditor";
 
 const InnRegFrm = (props) => {
   const innType = props.innType;
@@ -19,7 +20,7 @@ const InnRegFrm = (props) => {
   const innCheckOutTime = props.innCheckOutTime;
   const setInnCheckOutTime = props.setInnCheckOutTime;
   const innIntro = props.innIntro;
-  const setInnIntro = props.innIntro;
+  const setInnIntro = props.setInnIntro;
   const innFile = props.innFile;
   const setInnFile = props.setInnFile;
 
@@ -27,7 +28,7 @@ const InnRegFrm = (props) => {
   const setInnImg = props.setInnImg;
 
   const buttonFunction = props.buttonFunction;
-
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   return (
     <div className="inn-reg-wrap">
       <div className="inn-reg-top">
@@ -70,7 +71,50 @@ const InnRegFrm = (props) => {
             content="innAddr"
             data={innAddr}
             setData={setInnAddr}
-            placeholder="숙소주소를 입력해주세요"
+            placeholder="숙소 주소를 입력해주세요"
+          />
+        </div>
+        <div className="inn-intro-wrap">
+          <div className="inn-intro-title">숙소소개</div>
+          <InnInput
+            type="text"
+            content="innAddr"
+            data={innIntro}
+            setData={setInnIntro}
+            placeholder="우리 숙소에 대해 간단한 소개를 적어주세요"
+          />
+        </div>
+        <div className="inn-info-wrap">
+          <div className="inn-info-title">숙소정보</div>
+          <TextEditor
+            data={innInfo}
+            setData={setInnInfo}
+            url={backServer + "/inn/innReg"}
+          ></TextEditor>
+        </div>
+        <div className="inn-check-time-wrap">
+          <div className="check-in-title">체크인 시간</div>
+          <InnInput
+            type="text"
+            content="innCheckInTime"
+            data={innCheckInTime}
+            setData={setInnCheckInTime}
+            placeholder="ex. 14:00 / 15:00 형식으로 작성해주세요"
+          />
+          <div className="check-out-title">체크아웃 시간</div>
+          <InnInput
+            type="text"
+            content="innCheckInTime"
+            data={innCheckOutTime}
+            setData={setInnCheckOutTime}
+            placeholder="ex. 11:00 / 12:00 형식으로 작성해주세요"
+          />
+        </div>
+        <div className="btn-area">
+          <Button
+            text="등록하기"
+            class="btn_primary md"
+            clickEvent={buttonFunction}
           />
         </div>
       </div>
@@ -84,7 +128,7 @@ const SelectInnType = (props) => {
   const changeInn = (e) => {
     setData(e.target.value);
   };
-  console.log(data);
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -133,8 +177,14 @@ const InnImgReg = (props) => {
       setInnFile([...innFile]);
     }
   };
-  console.log(innFile);
-  console.log(innImg);
+
+  const cancelImg = (e) => {
+    const cancel = e.currentTarget.index;
+    innImg[index] = null;
+    setInnImg([...innImg]);
+    innFile[index] = null;
+    setInnFile([...innFile]);
+  };
   return (
     <>
       <div className="img-box">
@@ -152,7 +202,12 @@ const InnImgReg = (props) => {
             ></input>
           </>
         ) : (
-          <img src={item} />
+          <>
+            <img src={item} />
+            <span className="material-icons cancel-btn" onClick={cancelImg}>
+              clear
+            </span>
+          </>
         )}
       </div>
     </>
@@ -177,4 +232,5 @@ const InnInput = (props) => {
     />
   );
 };
+
 export default InnRegFrm;

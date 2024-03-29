@@ -4,7 +4,7 @@ import "./promotion.css";
 
 const PromotionList = () => {
   return (
-    <section className="contents">
+    <section className="contents promotion">
       <div className="input_wrap">
         <div className="input_item">
           <input id="search" className="input" placeholder="...검색어 입력" />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input } from "../../component/FormFrm";
+import { Button, Input } from "../../component/FormFrm";
 import "./myTour.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -7,31 +7,64 @@ import { useNavigate } from "react-router-dom";
 
 const TourReg = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
   const [tourName, setTourName] = useState("");
   const [tourType, setTourType] = useState("");
   const [tourRegion, setTourRegion] = useState("");
   const [tourCount, setTourCount] = useState("");
   const [salesPeriod, setSalesPeriod] = useState("");
-  const [tourFilepath, setTourFilepath] = useState("");
-  const [tourIntro, setTourIntro] = useState("");
+  const [tourFilepath, setTourFilepath] = useState(null);
+  const [tourIntro, setTourIntro] = useState(null);
   const navigate = useNavigate();
 
-  const TourReg = () => {
-    if (tourName !== "" && tourRegion !== "") {
-      const obj = {
-        tourName,
-        tourType,
-        tourRegion,
-        tourCount,
-        salesPeriod,
-        tourFilepath,
-        tourIntro,
+  const changeTourImg = (e) => {
+    const files = e.currentTarget.files;
+    if (files.length !== 0 && files[0] !== 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = () => {
+        setTourFilepath(reader.result); // 이미지 파일을 읽어와서 섬네일로 설정
       };
+    } else {
+      setTourFilepath(null);
+    }
+  };
+  const changeTourIntro = (e) => {
+    const files = e.currentTarget.files;
+    if (files.length !== 0 && files[0] !== 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = () => {
+        setTourIntro(reader.result); // 이미지 파일을 읽어와서 섬네일로 설정
+      };
+    } else {
+      setTourIntro(null);
+    }
+  };
+
+  const handleTourReg = () => {
+    if (tourName !== "") {
+      // 전송용 form객체 생성
+      const form = new FormData();
+      form.append("tourName", tourName);
+      form.append("tourType", tourType);
+      form.append("tourRegion", tourRegion);
+      form.append("tourCount", tourCount);
+      form.append("salesPeriod", salesPeriod);
+      // 섬네일은 첨부한 경우에만 추가
+      if (tourFilepath !== null) {
+        form.append("tourFilepath", tourFilepath);
+      }
+      if (tourIntro !== null) {
+        form.append("tourIntro", tourIntro);
+      }
+
       axios
-        .post(backServer + "/tour/reg", obj)
+        .post(backServer + "/tour/reg", form)
         .then((res) => {
           if (res.data.message === "success") {
-            navigate("/mypage");
+            Swal.fire("이용권 등록을 위해 상품 수정 페이지로 이동합니다.");
+            navigate("/tour/edit");
           } else {
             Swal.fire("입력값을 다시 확인해주세요.");
           }
@@ -54,7 +87,6 @@ const TourReg = () => {
           placeholder="상품명을 입력해주세요."
           label="투어 이름"
           content="tourName"
-          type="text"
           data={tourName}
           setData={setTourName}
         />
@@ -63,7 +95,6 @@ const TourReg = () => {
           placeholder="투어 주소를 입력해주세요."
           label="투어 주소"
           content="tourRegion"
-          type="text"
           data={tourRegion}
           setData={setTourRegion}
         />
@@ -71,7 +102,6 @@ const TourReg = () => {
           placeholder="하루 판매수량을 입력해주세요.(숫자만 입력)"
           label="일일 판매수량"
           content="tourCount"
-          type="text"
           data={tourCount}
           setData={setTourCount}
         />
@@ -79,40 +109,48 @@ const TourReg = () => {
           placeholder="예) 2024-04-17"
           label="판매 종료날짜"
           content="salesPeriod"
-          type="text"
           data={salesPeriod}
           setData={setSalesPeriod}
         />
-        <TourImgInput />
+        <div className="tour-img-wrap">
+          <div>
+            <div className="tour-img-title">대표 이미지</div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={changeTourImg}
+              multiple={false}
+            />
+            {/* 섬네일 미리보기 */}
+            {tourFilepath && (
+              <div className="tour-thumbnail">
+                <img src={tourFilepath} alt="섬네일" />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="tour-img-wrap">
+          <div>
+            <div className="tour-img-title">소개 이미지</div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={changeTourIntro}
+              multiple={false}
+            />
+            {/* 섬네일 미리보기 */}
+            {tourIntro && (
+              <div className="tour-thumbnail">
+                <img src={tourIntro} alt="섬네일" />
+              </div>
+            )}
+          </div>
+        </div>
+        <button class="btn_primary tour-reg-btn" onClick={handleTourReg}>
+          등록하기
+        </button>
       </div>
     </section>
-  );
-};
-
-const TourInputWrap = (props) => {
-  const placeholder = props.placeholder;
-  const label = props.label;
-  const content = props.content;
-  const type = props.type;
-  const data = props.data;
-  const setData = props.setData;
-  return (
-    <div className="tour-input-wrap">
-      <div>
-        <div className="tour-label">
-          <label htmlFor={content}>{label}</label>
-        </div>
-        <div className="tour-input">
-          <Input
-            placeholder={placeholder}
-            data={data}
-            setData={setData}
-            type={type}
-            content={content}
-          />
-        </div>
-      </div>
-    </div>
   );
 };
 
@@ -180,11 +218,26 @@ const TourTypeRadio = (props) => {
   );
 };
 
-const TourImgInput = () => {
+const TourInputWrap = (props) => {
+  const placeholder = props.placeholder;
+  const label = props.label;
+  const content = props.content;
+  const data = props.data;
+  const setData = props.setData;
   return (
-    <div className="tour-img-wrap">
+    <div className="tour-input-wrap">
       <div>
-        <div className="tour-img-title">이미지</div>
+        <div className="tour-label">
+          <label htmlFor={content}>{label}</label>
+        </div>
+        <div className="tour-input">
+          <Input
+            placeholder={placeholder}
+            data={data}
+            setData={setData}
+            content={content}
+          />
+        </div>
       </div>
     </div>
   );

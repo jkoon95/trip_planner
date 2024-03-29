@@ -51,33 +51,45 @@ const TourItem = () => {
   return (
     <div className="tour-item-zone">
       <div className="tour-item">
-        <img alt="박람회" src="image/테마파크.jpg" />
+        <img alt="박람회" src="images/테마파크.jpg" />
         <div className="tour-item-info">
           <div className="tour-item-name">[서울] 테마파크 입장권</div>
           <div className="tour-item-subname">서울 티켓·입장권</div>
           <div className="tour-item-limit">~2024.06.30</div>
           <div className="tour-item-price">10,000원</div>
-          <img className="tour-item-bookmark" alt="찜" src="image/찜버튼.png" />
+          <img
+            className="tour-item-bookmark"
+            alt="찜"
+            src="images/찜버튼.png"
+          />
         </div>
       </div>
       <div className="tour-item">
-        <img alt="박람회" src="image/테마파크.jpg" />
+        <img alt="박람회" src="images/테마파크.jpg" />
         <div className="tour-item-info">
           <div className="tour-item-name">[서울] 테마파크 입장권</div>
           <div className="tour-item-subname">서울 티켓·입장권</div>
           <div className="tour-item-limit">~2024.06.30</div>
           <div className="tour-item-price">10,000원</div>
-          <img className="tour-item-bookmark" alt="찜" src="image/찜버튼.png" />
+          <img
+            className="tour-item-bookmark"
+            alt="찜"
+            src="images/찜버튼.png"
+          />
         </div>
       </div>
       <div className="tour-item">
-        <img alt="박람회" src="image/테마파크.jpg" />
+        <img alt="박람회" src="images/테마파크.jpg" />
         <div className="tour-item-info">
           <div className="tour-item-name">[서울] 테마파크 입장권</div>
           <div className="tour-item-subname">서울 티켓·입장권</div>
           <div className="tour-item-limit">~2024.06.30</div>
           <div className="tour-item-price">10,000원</div>
-          <img className="tour-item-bookmark" alt="찜" src="image/찜버튼.png" />
+          <img
+            className="tour-item-bookmark"
+            alt="찜"
+            src="images/찜버튼.png"
+          />
         </div>
       </div>
     </div>

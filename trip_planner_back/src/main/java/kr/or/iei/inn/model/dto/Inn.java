@@ -1,0 +1,22 @@
+package kr.or.iei.inn.model.dto;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Alias("inn")
+public class Inn {
+	private int innNo;
+	private int partnerNo;
+	private int innType;
+	private String innAddr;
+	private String innInfo;
+	private String innCheckInTime;
+	private String innCheckOutTime;
+	private String innIntro;
+}

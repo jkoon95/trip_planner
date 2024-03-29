@@ -17,23 +17,26 @@ const JoinInputWrap = (props) => {
   };
 
   return (
-    <div className="join-input-wrap">
+    <div className="input_wrap">
       <div>
-        <div className="label">
-          <label htmlFor={content}>{label}</label>
+        <div className="input_title">
+          <label className="input2" htmlFor={content}>
+            {label}
+          </label>
         </div>
-        <Input
-          className="input"
-          value={data}
-          onChange={chageData}
-          placeholder={placeholder}
-          type={type}
-          data={data}
-          setData={setData}
-          blurEvent={blurEvent}
-        />
+        <div className="input_item">
+          <Input
+            value={data}
+            onChange={chageData}
+            placeholder={placeholder}
+            type={type}
+            data={data}
+            setData={setData}
+            blurEvent={blurEvent}
+          />
+        </div>
+        {checkMsg && <p className="msg error">{checkMsg}</p>}
       </div>
-      {checkMsg && <div className="check-msg">{checkMsg}</div>}
     </div>
   );
 };

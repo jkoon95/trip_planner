@@ -3,7 +3,7 @@
 .join-input-wrap{
     padding-bottom: 40px;
 }
-.naver{
+.contents.login .naver{
     background-image: url(../../../public/image/btnG_축약형.png);
     width: 90px;
     height: 45px;
@@ -11,10 +11,34 @@
     object-fit: contain;
 }
 
-.kakao{
+.contents.login .kakao{
     background-image: url(../../../public/image/kakao_login_medium.png);
     width: 90px;
     height: 45px;
     background-repeat: no-repeat;
     object-fit: contain;
+}
+
+.contents.consult{
+    height: 600px;
+    min-width: 400px;
+}
+
+.contents.consult .consult-title{
+    border-bottom: 2px solid #ccc;
+}
+
+#kakao-talk-channel-chat-button{
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.contents.consult .consult-content{
+    padding-top: 40px;
+    font-family: pt-b;
+}
+
+.consult-content li{
+    list-style-type: square;
 }

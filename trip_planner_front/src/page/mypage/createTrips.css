@@ -3,7 +3,7 @@
 .createTrips_wrap>.map_area{flex-grow: 1; background-color: #f2f2f2;}
 .createTrips_wrap>.left_area{display: flex;}
 .createTrips_wrap .trips_wrap{position:relative; display: flex; flex-direction: column; width: 377px; padding: 24px 0 92px; border-right: 1px solid var(--line_03);}
-.createTrips_wrap .search_wrap{width: 377px; padding: 24px 20px; border-right: 1px solid var(--line_03);}
+.createTrips_wrap .search_wrap{display: flex; flex-direction: column; width: 377px; padding: 24px 0; border-right: 1px solid var(--line_03);}
 
 .createTrips_wrap .trips_wrap>.trips_input_wrap{padding: 0 20px;}
 .createTrips_wrap .trips_wrap>.trips_input_wrap>.set_date_wrap{margin-top: 24px;}
@@ -42,7 +42,8 @@
 .createTrips_wrap .trips_wrap>.btn_area::before{content: ''; display: block; position: absolute; top: -7px; left: 0; right: 0; height: 8px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));}
 .createTrips_wrap .btn_area [class^=btn_]{flex-grow: 1;}
 
-.createTrips_wrap .search_wrap .search_result_wrap{padding: 10px 0;}
+.createTrips_wrap .search_wrap .search_input_wrap{padding: 0 20px}
+.createTrips_wrap .search_wrap .search_result_wrap{padding: 10px 20px 0; overflow-y: auto;}
 .createTrips_wrap .search_wrap .search_result_wrap .result_place_area{padding: 10px 0;}
-.createTrips_wrap .search_wrap .search_result_wrap .result_inns_area{padding: 10px 0;}
+.createTrips_wrap .search_wrap .search_result_wrap .result_inns_area{padding-top: 10px;}
 .createTrips_wrap .search_wrap .search_result_wrap .result_title{margin-bottom: 8px; font-family: pt-b; font-size: 16px; line-height: 1.5;}

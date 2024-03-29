@@ -17,6 +17,7 @@ import BlogWrite from "./page/blog/BlogWrite";
 import TourSearch from "./page/tour/TourSearch";
 import InnReg from "./page/INN/InnReg";
 import PromotionList from "./page/promotion/PromotionList";
+import CreateTrips from "./page/mypage/CreateTrips";
 
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
@@ -87,6 +88,7 @@ function App() {
             path="/mypage/*"
             element={<MypageMain isLogin={isLogin} logout={logout} />}
           />
+          <Route path="/createTrips" element={<CreateTrips />} />
           <Route path="/promotionList" element={<PromotionList />} />
           <Route path="/blogWrite" element={<BlogWrite />} />
           {/*요건 작업하느라 여기서 지정해놨습니다.  */}

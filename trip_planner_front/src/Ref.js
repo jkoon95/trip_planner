@@ -175,7 +175,7 @@ const Ref = () => {
         <span className="badge green">승인</span>
         <span className="badge gray">미승인</span>
 
-        <h4>그룹 사용(.badges>.badge)</h4>
+        <h4>그룹 사용(.badges&lt;.badge)</h4>
         <div className="badges">
           <span className="badge blue">blue</span>
           <span className="badge gray">gray</span>

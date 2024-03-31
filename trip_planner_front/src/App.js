@@ -20,6 +20,7 @@ import TourReg from "./page/tour/TourReg";
 import PromotionList from "./page/promotion/PromotionList";
 import CreateTrips from "./page/mypage/CreateTrips";
 import ConsultTalk from "./page/member/ConsultTalk";
+import RoomReg from "./page/INN/RoomReg";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
@@ -81,6 +82,8 @@ function App() {
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/join" element={<Join />} />
           <Route path="/innList" element={<InnList />} />
+          <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
+          <Route path="/roomReg" element={<RoomReg />} />
           <Route path="/blogList" element={<BlogList isLogin={isLogin} />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/tourSearch" element={<TourSearch />} />

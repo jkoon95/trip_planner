@@ -1,5 +1,7 @@
 package kr.or.iei.inn.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -19,4 +21,5 @@ public class Inn {
 	private String innCheckInTime;
 	private String innCheckOutTime;
 	private String innIntro;
+	private List fileList;
 }

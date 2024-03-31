@@ -11,6 +11,7 @@ import MyInfo from "./MyInfo";
 import axios from "axios";
 import Swal from "sweetalert2";
 import InnReg from "../INN/InnReg";
+import RoomReg from "../INN/RoomReg";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -115,6 +116,7 @@ const MypageMain = (props) => {
           <Route path="/myReviews" element={<MyReviews />} />
           <Route path="/myInfo" element={<MyInfo />} />
           <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
+          <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
         </Routes>
       </div>
     </section>

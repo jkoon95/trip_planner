@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./innReg.css";
 
 import InnRegFrm from "./InnRegFrm";
+import axios from "axios";
 
 const InnReg = (props) => {
   const isLogin = props.isLogin;
@@ -13,7 +14,7 @@ const InnReg = (props) => {
   const [innCheckInTime, setInnCheckInTime] = useState("");
   const [innCheckOutTime, setInnCheckOutTime] = useState("");
   const [innIntro, setInnIntro] = useState("");
-  const [innFile, setInnFile] = useState([null, null, null, null, null, null]); //최대 5개 등록
+  const [innFile, setInnFile] = useState([null, null, null, null, null, null]); //최대 6개 등록
 
   const [innImg, setInnImg] = useState([null, null, null, null, null, null]);
 
@@ -40,6 +41,27 @@ const InnReg = (props) => {
       form.append("innType", innType);
       form.append("innAddr", innAddr);
       form.append("innInfo", innInfo);
+      form.append("innCheckInTime", innCheckInTime);
+      form.append("innCheckOutTime", innCheckOutTime);
+      form.append("innIntro", innIntro);
+      form.append("innInfo", innInfo);
+      for (let i = 0; i < innFile.length; i++) {
+        form.append("innFile", innFile[i]);
+      }
+      //첨부파일도 있으므로 headers에 같이 요청
+      axios
+        .post(backServer + "/innReg", form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
     }
   };
   return (

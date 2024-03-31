@@ -37,6 +37,9 @@ const InnReg = (props) => {
       innFile !== null
     ) {
       const form = new FormData();
+      form.append("innType", innType);
+      form.append("innAddr", innAddr);
+      form.append("innInfo", innInfo);
     }
   };
   return (

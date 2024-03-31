@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./member.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -21,6 +21,11 @@ const Join = () => {
   const [checkPwMsg, setCheckPwMsg] = useState("");
   const [checkPwReMsg, setCheckPwReMsg] = useState("");
   const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
+
+  const location = useLocation();
+  const memberType = location.state.value;
+
+  console.log("join 전달 : " + memberType);
 
   const emailChk = () => {
     //이메일 형태가 맞는지 검증할 정규표현식
@@ -84,6 +89,7 @@ const Join = () => {
       memberNickName,
       memberPhone,
       memberAddr,
+      memberType,
     };
     console.log(obj);
     if (

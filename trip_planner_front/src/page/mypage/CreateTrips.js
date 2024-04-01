@@ -121,10 +121,10 @@ const CreateTrips = () => {
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker onChange={(newValue)=>{
                       setTripStartDate(newValue);
-                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} />
+                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
-                    }} format="YYYY-MM-DD" />
+                    }} format="YYYY-MM-DD" disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
@@ -194,7 +194,7 @@ const SetDayWrap = (props) => {
   const searchWrapInputRef = props.searchWrapInputRef;
   const setSelectPlaceListNo = props.setSelectPlaceListNo;
 
-  const openSearchWrap = () => {
+  const openSearchWrap = (e) => {
     searchWrapRef.current.style.display = "flex";
     searchWrapInputRef.current.focus();
     setSelectPlaceListNo(dayIndex);

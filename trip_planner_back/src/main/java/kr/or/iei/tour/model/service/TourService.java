@@ -29,18 +29,18 @@ public class TourService {
 		return result;
 	}
 
-//	public Map selectTourSale(int reqPage) {
-//		int numPerPage = 10;
-//		int pageNaviSize = 5;
-//		int totalCount = tourDao.totalCount();
-//		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
-//		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-//		List list = tourDao.selectTourSale(pi);
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("tourSale",list);
-//		map.put("pi",pi);
-//		return map;
-//	}
+	public Map selectTourSale(int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount = tourDao.totalCount();
+		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = tourDao.selectTourSale(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourSale",list);
+		map.put("pi",pi);
+		return map;
+	}
 
 	
 }

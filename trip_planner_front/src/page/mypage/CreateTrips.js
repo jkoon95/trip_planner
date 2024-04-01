@@ -81,7 +81,9 @@ const CreateTrips = () => {
     //tripStartDate.format("YYYY-MM-DD")
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
     if(tripStartDate && tripEndDate){
-      const endDate = tripEndDate.format("YYYY-MM-DD");    
+      selectPlaceList.length = 0;
+      tripDays.length = 0;
+      const endDate = tripEndDate.format("YYYY-MM-DD");
       let tripDayCount = 0;
       while(true){
         const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");
@@ -119,10 +121,10 @@ const CreateTrips = () => {
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker onChange={(newValue)=>{
                       setTripStartDate(newValue);
-                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} />
+                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
-                    }} format="YYYY-MM-DD" />
+                    }} format="YYYY-MM-DD" disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
@@ -192,7 +194,7 @@ const SetDayWrap = (props) => {
   const searchWrapInputRef = props.searchWrapInputRef;
   const setSelectPlaceListNo = props.setSelectPlaceListNo;
 
-  const openSearchWrap = () => {
+  const openSearchWrap = (e) => {
     searchWrapRef.current.style.display = "flex";
     searchWrapInputRef.current.focus();
     setSelectPlaceListNo(dayIndex);

@@ -6,6 +6,8 @@ import InnRegFrm from "./InnRegFrm";
 import axios from "axios";
 
 const InnReg = (props) => {
+  const member = props.member;
+  console.log(member);
   const isLogin = props.isLogin;
   console.log(isLogin);
   const [innType, setInnType] = useState(0);
@@ -50,7 +52,7 @@ const InnReg = (props) => {
       }
       //첨부파일도 있으므로 headers에 같이 요청
       axios
-        .post(backServer + "/innReg", form, {
+        .post(backServer + "/inn/innReg", form, {
           headers: {
             contentType: "multipart/form-data",
             processData: false,

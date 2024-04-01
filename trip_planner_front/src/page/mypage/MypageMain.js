@@ -120,9 +120,9 @@ const MypageMain = (props) => {
           <Route path="/myInfo" element={<MyInfo />} />
           <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
           <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
-          <Route path="/tour/reg" element={<TourReg isLogin={isLogin} />} />
-          <Route path="/tour/sale" element={<TourSale isLogin={isLogin} />} />
-          <Route path="/tour/edit" element={<TourEdit isLogin={isLogin} />} />
+          <Route path="/tour/reg" />
+          <Route path="/tour/sale" />
+          <Route path="/tour/edit" />
         </Routes>
       </div>
     </section>

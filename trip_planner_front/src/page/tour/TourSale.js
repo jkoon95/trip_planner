@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Pagination from "../../component/Pagination";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../../component/TourPagination";
 
 const TourSale = () => {
   const [tourSale, setTourSale] = useState([]);
@@ -32,8 +32,44 @@ const TourSale = () => {
         <div className="tour-reg-title">
           <h2>투어 상품 조회</h2>
         </div>
+        <div className="tour-sale-wrap">
+          {tourSale.map((tour, index) => {
+            return <TourItem key={"tour" + index} tour={tour} />;
+          })}
+        </div>
+        <div className="tour-page">
+          <Pagination
+            pageInfo={pageInfo}
+            reqPage={reqPage}
+            setReqPage={setReqPage}
+          />
+        </div>
       </div>
     </section>
+  );
+};
+
+const TourItem = (props) => {
+  const tour = props.tour;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const tourView = () => {
+    navigate("/tour/view/" + tour.tourNo);
+  };
+  return (
+    <div className="tour-item" onClick={tourView}>
+      <div className="tour-item-img">
+        {tour.tourImg === null ? (
+          <img src="/images/defaultTour.png" />
+        ) : (
+          <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+        )}
+      </div>
+      <div className="tour-item-info">
+        <div className="tour-item-name">{tour.tourName}</div>
+        <div className="tour-item-period">{tour.salesPeriod}</div>
+      </div>
+    </div>
   );
 };
 

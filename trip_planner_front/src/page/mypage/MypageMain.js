@@ -47,7 +47,7 @@ const MypageMain = (props) => {
             { url: "promotionMgmt", text: "프로모션 관리", active: false },
             { url: "couponReg", text: "쿠폰 등록", active: false },
           ]);
-          navigate("/mypage/memberMgmt");
+          // navigate("/mypage/memberMgmt");
         } else if (res.data.data.memberType === 2) {
           //업체로 로그인 시
           axios
@@ -62,7 +62,7 @@ const MypageMain = (props) => {
                   { url: "innMgmt", text: "숙소 관리", active: false },
                   { url: "bookMgmt", text: "예약 관리", active: false },
                 ]);
-                navigate("/mypage/innReg");
+                // navigate("/mypage/innReg");
               } else if (
                 res2.data.data !== null &&
                 res2.data.data.partnerType === 2
@@ -73,7 +73,7 @@ const MypageMain = (props) => {
                   { url: "tour/reg", text: "투어 상품등록", active: false },
                   { url: "tour/sale", text: "투어 상품조회", active: false },
                 ]);
-                navigate("/mypage/tour/mgmt");
+                // navigate("/mypage/tour/mgmt");
               } else {
                 //업체인데 등록한 업체가 없을 경우
                 setMenus([
@@ -120,9 +120,9 @@ const MypageMain = (props) => {
           <Route path="/myInfo" element={<MyInfo />} />
           <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
           <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
-          <Route path="/tour/reg" element={<TourReg isLogin={isLogin} />} />
-          <Route path="/tour/sale" element={<TourSale isLogin={isLogin} />} />
-          <Route path="/tour/edit" element={<TourEdit isLogin={isLogin} />} />
+          <Route path="/tour/reg" element={<TourReg />} />
+          <Route path="/tour/sale" element={<TourSale />} />
+          <Route path="/tour/edit" element={<TourEdit />} />
         </Routes>
       </div>
     </section>

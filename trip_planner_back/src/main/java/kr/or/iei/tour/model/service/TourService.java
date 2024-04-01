@@ -11,11 +11,15 @@ import kr.or.iei.tour.model.dto.Tour;
 public class TourService {
 	@Autowired
 	private TourDao tourDao;
-
+	
 	@Transactional
-	public int insertTour(Tour tour) {
+	public int insertTour(Tour tour, String memberEmail) {
+		int partnerNo = tourDao.searchPartner(memberEmail);
+		tour.setPartnerNo(partnerNo);
+		System.out.println("업체번호 : "+tour.getPartnerNo());
 		int result = tourDao.insertTour(tour);
 		return result;
 	}
+
 	
 }

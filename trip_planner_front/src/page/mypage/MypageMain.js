@@ -12,6 +12,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import InnReg from "../INN/InnReg";
 import RoomReg from "../INN/RoomReg";
+import TourReg from "./../tour/TourReg";
+import TourEdit from "../tour/TourEdit";
+import TourSale from "../tour/TourSale";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -117,6 +120,9 @@ const MypageMain = (props) => {
           <Route path="/myInfo" element={<MyInfo />} />
           <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
           <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
+          <Route path="/tour/reg" element={<TourReg isLogin={isLogin} />} />
+          <Route path="/tour/sale" element={<TourSale isLogin={isLogin} />} />
+          <Route path="/tour/edit" element={<TourEdit isLogin={isLogin} />} />
         </Routes>
       </div>
     </section>

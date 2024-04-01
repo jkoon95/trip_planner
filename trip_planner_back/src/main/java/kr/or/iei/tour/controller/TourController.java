@@ -29,22 +29,19 @@ public class TourController {
 	private String root;
 	
 	@PostMapping
-	public ResponseEntity<ResponseDTO> insertTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile tourIntro, @RequestAttribute int partnerNo) {
-		tour.setPartnerNo(partnerNo);
-		System.out.println("업체번호 : "+partnerNo);
-		
+	public ResponseEntity<ResponseDTO> insertTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
 		String savepath = root+"/tour/";
 		
 		if(thumbnail != null) {
 			String filepath = fileUtils.upload(savepath, thumbnail);
 			tour.setTourImg(filepath);
 		}
-		if(tourIntro != null) {
-			String intropath = fileUtils.upload(savepath, tourIntro);
+		if(intronail != null) {
+			String intropath = fileUtils.upload(savepath, intronail);
 			tour.setTourIntro(intropath);
 		}
 		
-		int result = tourService.insertTour(tour);
+		int result = tourService.insertTour(tour,memberEmail);
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

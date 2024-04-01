@@ -11,7 +11,7 @@ const TourSale = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   useEffect(() => {
     axios
-      .get(backServer + "/tour/sale" + reqPage)
+      .get(backServer + "/tour/sale/" + reqPage)
       .then((res) => {
         console.log(res.data);
         setTourSale(res.data.data.tourSale);

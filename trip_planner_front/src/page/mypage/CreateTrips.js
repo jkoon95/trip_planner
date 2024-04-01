@@ -10,20 +10,19 @@ const { kakao } = window;
 
 const CreateTrips = () => {
   const [tripTitle, setTripTitle] = useState("");
-  const [tripStartDate, setTripStartDate] = useState();
+  const [tripStartDate, setTripStartDate] = useState(dayjs(new Date()));
   const [tripEndDate, setTripEndDate] = useState();
+  const [tripDays, setTripDays] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchPlaces, setSearchPlaces] = useState("");
   const searchWrapRef = useRef();
   const searchWrapInputRef = useRef();
   const [placeResultList, setPlaceResultList] = useState([]);
   const [selectPlaceList, setSelectPlaceList] = useState([]);
+  const [selectPlaceListNo, setSelectPlaceListNo] = useState(-1);
   const [tripRoute, setTripRoute] = useState(0);
+  const [tripData, setTripData] = useState([]);
 
-  const openSearchWrap = () => {
-    searchWrapRef.current.style.display = "flex";
-    searchWrapInputRef.current.focus();
-  }
   const closeSearchWrap = () => {
     searchWrapRef.current.style.display = "none";
   }
@@ -32,6 +31,7 @@ const CreateTrips = () => {
     setSearchPlaces(searchInput);
   }
 
+  // map
   useEffect(() => {
     const infowindow = new kakao.maps.InfoWindow({zIndex:1});
     const container = document.getElementById('map');
@@ -48,7 +48,6 @@ const CreateTrips = () => {
         
         data.forEach((item) => {
           displayMarker(item);
-          // console.log(item);
           placeResultList.push(item);
           setPlaceResultList([...placeResultList]);
           bounds.extend(new kakao.maps.LatLng(item.y, item.x));
@@ -76,6 +75,35 @@ const CreateTrips = () => {
 
   }, [searchPlaces]);
 
+  // datepicker
+  useEffect(()=>{
+    //dayjs(new Date())
+    //tripStartDate.format("YYYY-MM-DD")
+    //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
+    if(tripStartDate && tripEndDate){
+      const endDate = tripEndDate.format("YYYY-MM-DD");    
+      let tripDayCount = 0;
+      while(true){
+        const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");
+        tripDays.push(tripDate);
+        setTripDays([...tripDays]);
+        if(tripDate === endDate){
+          break;
+        }
+        tripDayCount++;
+        selectPlaceList.push([]);
+        setSelectPlaceList([...selectPlaceList]);
+      }
+      selectPlaceList.push([]);
+      setSelectPlaceList([...selectPlaceList]);
+    }
+  },[tripStartDate,tripEndDate])
+
+  // 여행 등록하기
+  const createTrips = () => {
+    console.log("여행 등록하기!!!");
+  }
+
   return (
     <section className="contents createTrips">
       <h2 className="hidden">여행 일정 만들기</h2>
@@ -89,44 +117,27 @@ const CreateTrips = () => {
               <div className="set_date_wrap">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
-                    <DatePicker value={tripStartDate} onChange={(newValue) => {
-                      console.log(newValue);
+                    <DatePicker onChange={(newValue)=>{
                       setTripStartDate(newValue);
                     }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} />
-                    <DatePicker value={tripEndDate} onChange={(newValue) => {
-                      setTripEndDate(newValue)
+                    <DatePicker onChange={(newValue)=>{
+                      setTripEndDate(newValue);
                     }} format="YYYY-MM-DD" />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
             </div>
             <div className="trips_plan_wrap">
-              <div className="set_day_wrap">
-                <div className="day_title_wrap">
-                  <div className="day_title">Day 1<span className="tripDay">4.24/수</span></div>
-                  <button type="button" className="btn_tripCost">예산 추가</button>
-                </div>
-                <div className="day_items_wrap">
-                  <ul className="place_list">
-                    {
-                      selectPlaceList.map((place, index) => {
-                        return(
-                          <ItemTripPlace key={"place"+index} place={place} listType="day_items" itemType="tripPlace" tripRoute={index+1} />
-                        );
-                      })
-                    }
-                  </ul>
-                </div>
-                <div className="day_btns_wrap">
-                  <div className="btn_area">
-                    <Button text="장소 추가" class="btn_secondary md" clickEvent={openSearchWrap} />
-                    <Button text="할 일 추가" class="btn_secondary outline md" />
-                  </div>
-                </div>
-              </div>
+              {
+                selectPlaceList.map((item, index) => {
+                  return(
+                    <SetDayWrap key={"day" + index} dayIndex={index} tripDays={tripDays[index]} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} searchWrapRef={searchWrapRef} searchWrapInputRef={searchWrapInputRef} setSelectPlaceListNo={setSelectPlaceListNo}/>
+                  );
+                })
+              }
             </div>
             <div className="btn_area">
-              <Button text="여행 등록하기" class="btn_primary" />
+              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTrips} />
             </div>
           </div>
 
@@ -144,7 +155,7 @@ const CreateTrips = () => {
                   {
                     placeResultList.map((place, index) => {
                       return(
-                        <ItemTripPlace key={"place"+index} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" itemType="tripPlace" />
+                        <ItemTripPlace key={"place"+index} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" itemType="tripPlace" />
                       );
                     })
                   }
@@ -172,22 +183,67 @@ const CreateTrips = () => {
   );
 }
 
+const SetDayWrap = (props) => {
+  const dayIndex = props.dayIndex;
+  const tripDays = props.tripDays;
+  const selectPlaceList = props.selectPlaceList;
+  const setSelectPlaceList = props.setSelectPlaceList;
+  const searchWrapRef = props.searchWrapRef;
+  const searchWrapInputRef = props.searchWrapInputRef;
+  const setSelectPlaceListNo = props.setSelectPlaceListNo;
+
+  const openSearchWrap = () => {
+    searchWrapRef.current.style.display = "flex";
+    searchWrapInputRef.current.focus();
+    setSelectPlaceListNo(dayIndex);
+
+  }
+  return(
+    <div className="set_day_wrap">
+      <div className="day_title_wrap">
+        <div className="day_title">Day {dayIndex+1}<span className="tripDay">{tripDays}</span></div>
+        <button type="button" className="btn_tripCost">예산 추가</button>
+      </div>
+      <div className="day_items_wrap">
+        <ul className="place_list">
+          {
+            selectPlaceList[dayIndex].map((place, index) => {
+              return (
+                <ItemTripPlace key={"place" + index} thisIndex={dayIndex} place={place} listType="day_items" itemType="tripPlace" routeIndex={index + 1} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} />
+              );
+            })
+          }
+        </ul>
+      </div>
+      <div className="day_btns_wrap">
+        <div className="btn_area">
+          <Button text="장소 추가" class="btn_secondary md" clickEvent={openSearchWrap} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const ItemTripPlace = (props) => {
+  const thisIndex = props.thisIndex;
   const place = props.place;
   const selectPlaceList = props.selectPlaceList;
   const setSelectPlaceList = props.setSelectPlaceList;
   const listType = props.listType;
   const itemType = props.itemType;
-  const tripRoute = props.tripRoute;
+  const routeIndex = props.routeIndex;
+  
 
   const addPlaceFunc = () => {
-    setSelectPlaceList([...selectPlaceList, place]);
+    // console.log(thisIndex);
+    selectPlaceList[thisIndex].push(place);
+    setSelectPlaceList([...selectPlaceList]);
   }
 
   return(
     listType === "day_items" && itemType === "tripPlace" ? (
       <li className="item tripPlace">
-        <div className="tripRoute_no">{tripRoute}</div>
+        <div className="tripRoute_no">{routeIndex}</div>
         <div className="item_box">
           <div className="item_box_content">
             <div className="place_name">{place.place_name}</div>
@@ -199,6 +255,9 @@ const ItemTripPlace = (props) => {
           <div className="item_btn_wrap">
             <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
             <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+          </div>
+          <div className="btn_area">
+            <Button text="할 일 추가" class="btn_secondary outline md" />
           </div>
         </div>
       </li>

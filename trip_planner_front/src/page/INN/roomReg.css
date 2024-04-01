@@ -1,0 +1,167 @@
+.room-name-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 40px;
+}
+
+.room-reg-all-wrap {
+  padding: 5px;
+  background-color: #fff;
+}
+.room-reg-top {
+  display: flex;
+}
+.room-reg-top > a > span {
+  line-height: 31px;
+}
+.room-reg-wrap {
+  width: 1000px;
+}
+.room-reg-image-wrap-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.room-reg-image-wrap-title > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  padding: 0px 5px;
+  font-size: 12px;
+}
+.inn-reg-image-wrap {
+  margin: 3cap 0px;
+}
+.room-reg-image {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.room-reg-image {
+  margin-top: 30px;
+}
+.room-reg-max-people-wrap-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.room-reg-max-people-wrap > div:last-child {
+  width: 250px;
+  margin-top: 20px;
+}
+.room-reg-price-wrap > div:last-child {
+  display: flex;
+}
+.room-reg-price-wrap input {
+  width: 300px;
+}
+.room-reg-price-wrap span {
+  line-height: 41px;
+  font-family: pt-r;
+}
+.room-reg-price-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.room-reg-price-title > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  font-size: 12px;
+}
+.room-reg-hashtag-wrap > div:nth-child(2) {
+  display: flex;
+  margin-top: 15px;
+}
+.room-reg-hashtag-input-btn {
+  margin-left: 20px;
+}
+.room-reg-hashtag-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.room-reg-hashtag-title > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  font-size: 12px;
+}
+.room-reg-hashtag-wrap > div:last-child {
+  margin-top: 10px;
+}
+.room-reg-hashtag-wrap > div:last-child .MuiButtonBase-root span {
+  font-family: pt-b;
+}
+.room-reg-hashtag-zone {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  max-width: 400px;
+}
+
+.hashtag-box {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 10px;
+  margin-right: 10px;
+  position: relative;
+}
+.hashtag-box > span:first-child {
+  color: #e9511c;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.hashtag-box > span:last-child {
+  font-family: pt-r;
+}
+.room-reg-option-title {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.room-reg-option-title > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  font-size: 12px;
+}
+
+.option-box {
+  margin-top: 10px;
+}
+.room-reg-option-content span {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 15px;
+  margin-right: 5px;
+  margin-top: 8px;
+  display: block;
+  cursor: pointer;
+}
+.room-reg-option-content .check-option > span {
+  background-color: #1795f0;
+  color: #fff;
+  font-family: pt-b;
+  border-color: #1795f0;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  max-width: 400px;
+}
+.room-reg-wrap .btn-area {
+  margin-top: 50px;
+}
+.room-reg-wrap .btn-area > button {
+  width: 100%;
+}

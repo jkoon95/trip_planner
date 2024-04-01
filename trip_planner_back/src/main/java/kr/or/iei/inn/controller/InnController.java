@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,21 +19,27 @@ import kr.or.iei.ResponseDTO;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.service.InnService;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.partner.model.service.PartnerService;
 import kr.or.iei.util.FileUtils;
 
 @RestController
-@RequestMapping("/inn")
+@RequestMapping(value="/inn")
 @CrossOrigin("*")
 public class InnController {
 	@Autowired
 	private InnService innService;
 	@Autowired
 	private FileUtils fileUtils;
+	@Autowired
+	private PartnerService partnerService;
 	
 	
-	@PostMapping("/innReg")
-	public ResponseEntity<ResponseDTO> insertInn(@ModelAttribute Inn inn, @ModelAttribute MultipartFile[] innFile, @RequestBody Member member){
-		
+	@PostMapping
+	public ResponseEntity<ResponseDTO> insertInn(@ModelAttribute Inn inn, @ModelAttribute MultipartFile[] innFile, @RequestAttribute int memberNo){
+		int partnerNo = partnerService.getPartnerNo(memberNo);
+		System.out.println(memberNo);
+		System.out.println(partnerNo);
+		return null;
 	}
 	
 	

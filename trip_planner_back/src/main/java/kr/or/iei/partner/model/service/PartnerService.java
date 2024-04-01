@@ -14,4 +14,8 @@ public class PartnerService {
 	public Partner selectPartner(int memberNo) {
 		return partnerDao.selectPartner(memberNo);
 	}
+
+	public int getPartnerNo(int memberNo) {
+		return partnerDao.getPartnerNo(memberNo);
+	}
 }

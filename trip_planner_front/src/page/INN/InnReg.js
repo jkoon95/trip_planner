@@ -7,7 +7,6 @@ import axios from "axios";
 
 const InnReg = (props) => {
   const member = props.member;
-  console.log(member);
   const isLogin = props.isLogin;
   console.log(isLogin);
   const [innType, setInnType] = useState(0);

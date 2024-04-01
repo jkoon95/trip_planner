@@ -102,24 +102,26 @@ const MypageMain = (props) => {
   ]);
 
   return (
-    <section className="contents mypage">
-      <div className="side_wrap">
-        <h2>마이페이지</h2>
-        <MypageSideMenu menus={menus} setMenus={setMenus} />
-      </div>
-      <div className="content_wrap">
-        <Routes>
-          <Route path="/myBooks" element={<MyBooks />} />
-          <Route path="/myTrips" element={<MyTrips />} />
-          <Route path="/myCoupons" element={<MyCoupons />} />
-          <Route path="/myLikes" element={<MyLikes />} />
-          <Route path="/myReviews" element={<MyReviews />} />
-          <Route path="/myInfo" element={<MyInfo />} />
-          <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
-          <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
-        </Routes>
-      </div>
-    </section>
+    <>
+      <section className="contents mypage">
+        <div className="side_wrap">
+          <h2>마이페이지</h2>
+          <MypageSideMenu menus={menus} setMenus={setMenus} />
+        </div>
+        <div className="content_wrap">
+          <Routes>
+            <Route path="/myBooks" element={<MyBooks />} />
+            <Route path="/myTrips" element={<MyTrips />} />
+            <Route path="/myCoupons" element={<MyCoupons />} />
+            <Route path="/myLikes" element={<MyLikes />} />
+            <Route path="/myReviews" element={<MyReviews />} />
+            <Route path="/myInfo" element={<MyInfo />} />
+            <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
+            <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
+          </Routes>
+        </div>
+      </section>
+    </>
   );
 };
 

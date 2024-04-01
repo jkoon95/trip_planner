@@ -57,39 +57,6 @@
   padding: 100px;
   box-sizing: border-box;
 }
-.blog-date-wrap {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--gray_04);
-}
-.blog-date-wrap div:nth-child(1) {
-  float: left;
-}
-
-.blog-date-wrap span {
-  margin-left: 15px;
-}
-
-.day-add-btn {
-  margin: 20px 0;
-}
-
-/*
-.blog-write-btn {
-  width: 100px;
-}
-/*
-.blog-write-btn > button {
-  background-color: var(--main_02);
-  width: 100%;
-  font-size: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  color: #fff;
-  font-family: pt-b;
-}
-*/
 
 /*blogWrite*/
 
@@ -134,4 +101,57 @@
   height: 50px;
   font-size: 120%;
   font-family: pt-eb;
+}
+
+.blog-date-wrap {
+  margin-bottom: 20px;
+}
+.blog-content-box {
+  margin-bottom: 20px;
+}
+
+.blog-content-box label {
+  font-family: pt-b;
+}
+.blog-date-day {
+  text-align: center;
+  color: var(--main_02);
+}
+.blog-content-box .ql-editor {
+  height: 300px;
+}
+
+.day-add-box {
+  border-top: solid 3px var(--gray_04);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.day-add-box > div:nth-child(1) {
+  color: var(--main_01);
+  font-family: pt-b;
+}
+.day-add-btn {
+  float: left;
+}
+.day-add-btn-box {
+  line-height: 31px;
+}
+.day-add-btn-box span {
+  line-height: 31px;
+}
+
+.day-add-btn-info {
+  text-align: right;
+  color: #fc0000;
+  font-size: 90%;
+  font-family: pt-l;
+}
+
+.day-add-btn-info span {
+  font-size: 95%;
+}
+.date-add-btn {
+  text-align: center;
 }

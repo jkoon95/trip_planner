@@ -1,11 +1,10 @@
 import { useState } from "react";
 import "./member.css";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Button } from "../../component/FormFrm";
-import { JoinInputWrap } from "./MemberForm";
+import { AddressInput, JoinInputWrap } from "./MemberForm";
 
 const Join = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -191,6 +190,7 @@ const Join = () => {
           data={memberAddr}
           setData={setMemberAddr}
         />
+        <AddressInput />
         <div className="btn_area">
           <Button
             text="회원가입"

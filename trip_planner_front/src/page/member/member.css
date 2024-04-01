@@ -42,3 +42,22 @@
 .consult-content li{
     list-style-type: square;
 }
+
+.contents.license .license-input-wrap{
+    margin: 0 auto;
+    width: 540px;
+    border-radius: 10px;
+}
+
+.license-content{
+    padding-bottom: 50px;
+}
+
+.license-check{
+    margin-left: 130px;
+}
+
+#agree1, #agree2 {
+    appearance: checkbox;
+    font-family: pt-b;
+}

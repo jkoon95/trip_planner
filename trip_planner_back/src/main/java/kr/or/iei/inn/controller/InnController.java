@@ -1,8 +1,12 @@
 package kr.or.iei.inn.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +32,16 @@ public class InnController {
 		
 	}
 	*/
+	
+	@GetMapping("/roomOption")
+	public ResponseEntity<ResponseDTO> selectRoomOption(){
+		List list = innService.selectRoomOption();
+		if(!list.isEmpty()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 }

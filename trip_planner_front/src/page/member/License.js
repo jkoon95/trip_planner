@@ -6,14 +6,50 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./member.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const License = () => {
   const navigate = useNavigate();
+  const [agree1, setAgree1] = useState(false);
+  const [agree2, setAgree2] = useState(false);
+
+  const agree1Chk = () => {
+    if (agree1 === false) {
+      setAgree1(true);
+    } else {
+      setAgree1(false);
+    }
+  };
+
+  const agree2Chk = () => {
+    if (agree2 === false) {
+      setAgree2(true);
+    } else {
+      setAgree2(false);
+    }
+  };
+
   const general = () => {
-    navigate("/join/", { state: { value: 1 } });
+    if (agree1 && agree2) {
+      navigate("/join/", { state: { value: 1 } });
+    } else {
+      Swal.fire({
+        title: "약관 동의 실패",
+        text: "약관에 모두 동의해주세요",
+        icon: "error",
+      });
+    }
   };
   const partner = () => {
-    navigate("/join/", { state: { value: 2 } });
+    if (agree1 && agree2) {
+      navigate("/join/", { state: { value: 2 } });
+    } else {
+      Swal.fire({
+        title: "약관 동의 실패",
+        text: "약관에 모두 동의해주세요",
+        icon: "error",
+      });
+    }
   };
   return (
     <section className="contents license">
@@ -78,7 +114,24 @@ const License = () => {
             </Accordion>
           </div>
         </div>
-        <div className="license-check"></div>
+        <div className="license-check">
+          <input
+            type="checkbox"
+            id="agree1"
+            checked={agree1}
+            onChange={agree1Chk}
+          />
+          <label htmlFor="agree1">이용약관에 동의하겠습니다</label>
+        </div>
+        <div className="license-check">
+          <input
+            type="checkbox"
+            id="agree2"
+            checked={agree2}
+            onChange={agree2Chk}
+          />
+          <label htmlFor="agree2">개인정부 수집 및 이용에 동의하겠습니다</label>
+        </div>
       </div>
       <div className="btn_area">
         <button type="button" onClick={general} className="btn_primary outline">

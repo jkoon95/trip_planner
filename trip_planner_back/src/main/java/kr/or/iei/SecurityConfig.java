@@ -1,5 +1,7 @@
 package kr.or.iei;
 
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,9 +13,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-@EnableWebSecurity
+@EnableWebSecurity //webSecurity에 대한 설정 맞춤
 @Configuration
+@Configurable
 public class SecurityConfig {
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		return http
@@ -28,6 +32,7 @@ public class SecurityConfig {
 					//보안설정 객체 생성
 					.build();
 	}
+	
 	
 }
 

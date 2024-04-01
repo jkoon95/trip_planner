@@ -10,5 +10,24 @@
   	<insert id="insertTour">
 		insert into tour_tbl values
 		(tour_seq.nextval,#{partnerNo},#{tourName},#{tourType},#{tourAddr},#{tourImg},#{tourIntro},#{salesCount},#{salesPeriod},2)
+		<selectKey resultType="int" keyProperty="tourNo" order="AFTER">
+			select max(tour_no) from tour_tbl
+		</selectKey>
 	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from tour_tbl
+	</select>
+	<select id="selectTourSale" resultType="tour">
+		select * from
+		    (select rownum as rnum, t.* from
+		        (select
+		            tour_no,
+		            tour_name,
+		            tour_img,
+		            sales_count,
+		            sales_status,
+		            to_char(sales_period,'yyyy-mm-dd') as sales_period
+		        from tour_tbl order by tour_no desc)t)
+		where rnum between #{start} and #{end}
+	</select>
 </mapper>

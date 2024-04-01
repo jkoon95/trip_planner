@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./innReg.css";
-
+import Swal from "sweetalert2";
 import InnRegFrm from "./InnRegFrm";
 import axios from "axios";
 
@@ -58,6 +58,7 @@ const InnReg = (props) => {
         })
         .then((res) => {
           console.log(res.data);
+          Swal.fire("숙소 등록 완료");
         })
         .catch((res) => {
           console.log(res);

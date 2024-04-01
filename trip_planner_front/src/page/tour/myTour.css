@@ -5,37 +5,34 @@
 기타 #89cff0 #f4f5ef #8f705b #035e7b
 */
 
+/* 투어 등록창 */
 .tour-reg-wrap {
   width: 800px;
   margin: 0 auto;
-  padding: 30px;
+}
+.tour-reg-wrap > .tour-reg-title {
+  border-bottom: 1px solid #005caa;
+  margin-bottom: 48px;
+}
+.tour-reg-wrap > .tour-reg-title > h2 {
+  text-align: left;
+  color: #005caa;
+  margin-bottom: 15px;
 }
 
-/* 투어 입력창 */
-.tour-input-wrap {
-  padding: 20px 0px;
-  display: flex;
-  flex-direction: column;
+.tour-info-tbl span {
+  color: red;
 }
-.tour-input-wrap > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.tour-info-tbl input {
+  margin: 20px 0px;
 }
-.tour-input-wrap > div > .tour-label {
-  width: 30%;
-}
-.tour-input-wrap > div > .tour-label > label {
-  font-size: 18px;
+.tour-info-tbl label {
   font-family: pt-b;
-}
-.tour-input-wrap > div > .tour-input {
-  width: 70%;
 }
 
 /* 투어 라디오 */
 .tour-radio-wrap {
-  padding: 20px 0px;
+  margin: 20px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -43,14 +40,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.tour-radio-wrap > div > .tour-radio-title {
-  width: 30%;
-  font-size: 18px;
-  font-family: pt-b;
-}
-.tour-radio-wrap > div > .tour-type {
-  width: 70%;
 }
 .tour-radio-wrap > div > .tour-type > input {
   display: none;
@@ -75,32 +64,14 @@
   color: #fff;
 }
 
-/* 투어 이미지 */
-.tour-img-wrap {
-  padding: 20px 0px;
-  display: flex;
-  flex-direction: column;
-}
-.tour-img-wrap > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.tour-img-wrap > div > .tour-img-title {
-  width: 30%;
-  font-size: 18px;
-  font-family: pt-b;
-}
-.tour-img-wrap > div > input[type="file"] {
-  width: 70%;
-}
-.tour-img-wrap > div > .tour-thumbnail > img {
-  max-width: 400px;
+/* 투어 섬네일 */
+.tour-info-tbl .tour-thumbnail > img {
+  max-width: 360px;
+  max-height: 360px;
 }
 
-/* 등록 버튼 */
-.tour-reg-btn {
-  margin: 20px auto;
+/* 투어 등록버튼 */
+.tour-reg-wrap .tour-frm-wrap .tour-frm-btn-box {
   text-align: center;
-  display: block;
+  padding: 48px 0px;
 }

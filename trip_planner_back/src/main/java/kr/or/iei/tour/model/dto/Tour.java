@@ -17,11 +17,12 @@ public class Tour {
 	private int partnerNo;
 	private String tourName;
 	private int tourType;
-	private String tourRegion;
+	private String tourAddr;
+	private String tourImg;
 	private String tourIntro;
-	private String tourFilepath;
-	private int tourCount;
+	private int salesCount;
 	private String salesPeriod;
 	private int salesStatus;
 
+	private int thumbnailCheck;
 }

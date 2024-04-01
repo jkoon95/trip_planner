@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.tour.model.dao.TourDao">
-
+	<insert id="insertTour">
+		insert into tour_tbl values
+		(tour_seq.nextval,#{partnerNo},#{tourName},#{tourType},#{tourAddr},#{tourImg},#{tourIntro},#{salesCount},#{salesPeriod},2)
+		<selectKey resultType="int" keyProperty="tourNo" order="AFTER">
+			select max(tour_no) from tour_tbl
+		</selectKey>
+	</insert>
 </mapper>

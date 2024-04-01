@@ -81,7 +81,9 @@ const CreateTrips = () => {
     //tripStartDate.format("YYYY-MM-DD")
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
     if(tripStartDate && tripEndDate){
-      const endDate = tripEndDate.format("YYYY-MM-DD");    
+      selectPlaceList.length = 0;
+      tripDays.length = 0;
+      const endDate = tripEndDate.format("YYYY-MM-DD");
       let tripDayCount = 0;
       while(true){
         const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");

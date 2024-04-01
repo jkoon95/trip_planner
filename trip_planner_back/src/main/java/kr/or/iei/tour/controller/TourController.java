@@ -55,11 +55,11 @@ public class TourController {
 		}
 	}
 	
-//	@GetMapping(value="/sale/{reqPage}")
-//	public ResponseEntity<ResponseDTO> tourSale(@PathVariable int reqPage){
-//		Map map = tourService.selectTourSale(reqPage);
-//		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
-//		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-//	}
-//	
+	@GetMapping(value="/sale/{reqPage}")
+	public ResponseEntity<ResponseDTO> tourSale(@PathVariable int reqPage){
+		Map map = tourService.selectTourSale(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 }

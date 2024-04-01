@@ -9,12 +9,13 @@ const BlogWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [blogTitle, setBlogTitle] = useState("");
-  const [blogContent, setBlogContent] = useState("");
+  const [blogDateDay, setBlogDateDay] = useState([]);
+
   const write = () => {
-    if (blogTitle !== "" && blogContent !== "") {
+    if (blogTitle !== "" && blogDateDay !== "") {
       const form = new FormData();
       form.append("blogTitle", blogTitle);
-      form.append("blogContent", blogContent);
+      form.append("blogDateDay", blogDateDay);
 
       axios
         .post(backServer + "/blog", form, {
@@ -42,8 +43,8 @@ const BlogWrite = () => {
       <BlogFrm
         blogTitle={blogTitle}
         setBlogTitle={setBlogTitle}
-        blogContent={blogContent}
-        setBlogContent={setBlogContent}
+        blogDateDay={blogDateDay}
+        setBlogDateDay={setBlogDateDay}
         buttonFunction={write}
         type="write"
       />

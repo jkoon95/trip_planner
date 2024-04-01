@@ -122,7 +122,7 @@ const RoomRegFrm = (props) => {
                 type="text"
                 value={newHashtag}
                 onChange={(e) => setNewHashTag(e.target.value)}
-                placeholder="EX. #뷰 맛집"
+                placeholder="EX. #뷰 맛집, #야경맛집"
               />
             </div>
             <div className="room-reg-hashtag-input-btn">

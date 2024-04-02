@@ -16,39 +16,55 @@ const CreateTrips = () => {
   const [tripDays, setTripDays] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchPlaces, setSearchPlaces] = useState("");
-  const searchWrapRef = useRef();
-  const searchWrapInputRef = useRef();
+  const [openSearchWrap, setOpenSearchWrap] = useState(false);
   const [placeResultList, setPlaceResultList] = useState([]);
   const [selectPlaceList, setSelectPlaceList] = useState([]);
   const [selectPlaceListNo, setSelectPlaceListNo] = useState(-1);
   const [tripRoute, setTripRoute] = useState(0);
-  const [openModal, setOpenModal] = useState(false);
+  const [openTodoModal, setOpenTodoModal] = useState(false);
+  const [openCostModal, setOpenCostModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
-  const [todoContent, setTodoContent] = useState("");
+  const [tripTodo, setTripTodo] = useState("");
   const [todoDayIndex, setTodoDayIndex] = useState(-1);
   const [todoIndex, setTodoIndex] = useState(-1);
+  const [tripCost, setTripCost] = useState(0);
 
-  const closeTodoModal = () => {
+  const closeTodoModalFunc = () => {
     document.body.classList.remove("scroll_fixed");
-    setTodoContent("");
-    setOpenModal(false);
+    setTripTodo("");
+    setOpenTodoModal(false);
+  }
+
+  const closeCostModalFunc = () => {
+    document.body.classList.remove("scroll_fixed");
+    setTripCost("");
+    setOpenCostModal(false);
   }
 
   const addTodoFunc = () => {
-    console.log(todoDayIndex);
-    console.log(todoIndex);
-    selectPlaceList[todoDayIndex][todoIndex].tripTodo = todoContent;
+    // console.log(todoDayIndex);
+    // console.log(todoIndex);
+    selectPlaceList[todoDayIndex][todoIndex].tripTodo = tripTodo;
     setSelectPlaceList([...selectPlaceList]);
-    setTodoContent("");
-    setOpenModal(false);
+    setTripTodo("");
+    setOpenTodoModal(false);
+  }
+
+  const addCostFunc = () => {
+    selectPlaceList[todoDayIndex].tripCost = tripCost;
+    setSelectPlaceList([...selectPlaceList])
+    setTripCost("");
+    setOpenCostModal(false);
   }
 
   const closeSearchWrap = () => {
-    searchWrapRef.current.style.display = "none";
+    setOpenSearchWrap(false);
   }
 
   const searchFunc = () => {
-    setPlaceResultList([]);
+    if(searchInput !== searchPlaces){
+      setPlaceResultList([]);
+    }
     setSearchPlaces(searchInput);
   }
 
@@ -67,22 +83,34 @@ const CreateTrips = () => {
       if(status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
         
-        data.forEach((item) => {
-          displayMarker(item);
-          item.itemType = "tripPlace";
-          placeResultList.push(item);
+        data.forEach((place) => {
+          console.log(place);
+          if(openSearchWrap){
+            displayMarker(place);
+          }
+          place.itemType = "tripPlace";
+          placeResultList.push(place);
           setPlaceResultList([...placeResultList]);
-          bounds.extend(new kakao.maps.LatLng(item.y, item.x));
-          // console.log(item);
+          bounds.extend(new kakao.maps.LatLng(place.y, place.x));
         })
 
         map.setBounds(bounds);
-      } 
+      }
     }
 
     if(searchPlaces !== ""){
       ps.keywordSearch(searchPlaces, placesSearchCB);
-      setSearchPlaces("");
+    }
+
+    if(selectPlaceList.length !== 0 && !openSearchWrap){
+      selectPlaceList.forEach((item) => {
+        item.forEach((place) => {
+          new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.y, place.x) 
+          })
+        })
+      })
     }
 
     const displayMarker = (place) => {
@@ -90,14 +118,9 @@ const CreateTrips = () => {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x) 
       });
-  
-      kakao.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-        infowindow.open(map, marker);
-      });
     }
 
-  }, [searchPlaces]);
+  }, [searchPlaces, openSearchWrap]);
 
   // datepicker
   useEffect(()=>{
@@ -175,7 +198,7 @@ const CreateTrips = () => {
               {
                 selectPlaceList.map((item, index) => {
                   return(
-                    <SetDayWrap key={"day" + index} dayIndex={index} tripDays={tripDays[index]} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} searchWrapRef={searchWrapRef} searchWrapInputRef={searchWrapInputRef} setSelectPlaceListNo={setSelectPlaceListNo} openModal={openModal} setOpenModal={setOpenModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} />
+                    <SetDayWrap key={"day" + index} dayIndex={index} tripDays={tripDays[index]} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenSearchWrap={setOpenSearchWrap} setSelectPlaceListNo={setSelectPlaceListNo} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripTodo={setTripTodo} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} />
                   );
                 })
               }
@@ -185,53 +208,67 @@ const CreateTrips = () => {
             </div>
           </div>
 
-          <div className="search_wrap" style={{ display: "none" }} ref={searchWrapRef}>
-            <div className="search_input_wrap">
-              <div className="search_input">
-                <Input type="text" data={searchInput} setData={setSearchInput} placeholder="여행지나 숙소를 검색해보세요" inputRef={searchWrapInputRef} keyDownEvent={searchFunc} />
-                <button type="button" className="btn_search" onClick={searchFunc}><span className="hidden">검색</span></button>
-              </div>
-            </div>
-            <div className="search_result_wrap">
-              <div className="result_title">장소</div>
-              <div className="result_place_area">
-                <ul className="place_list">
-                  {
-                    placeResultList.map((place, index) => {
-                      return(
-                        <ItemTripPlace key={"place"+index} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" itemType="tripPlace" searchWrapRef={searchWrapRef} />
-                      );
-                    })
-                  }
-                </ul>
-              </div>
-              <div className="result_title">숙소</div>
-              <div className="result_inns_area">
-                <ul className="inn_list">
-                  <li>
-                    여기에 이제.. 숙소 정보를..
-                  </li>
-                </ul>
-                <div className="btn_area">
-                  <Button text="숙소 검색 결과 더보기" class="btn_primary outline md" />
+          {
+            openSearchWrap ? (
+              <div className="search_wrap">
+                <div className="search_input_wrap">
+                  <div className="search_input">
+                    <Input type="text" data={searchInput} setData={setSearchInput} placeholder="여행지나 숙소를 검색해보세요" keyDownEvent={searchFunc} />
+                    <button type="button" className="btn_search" onClick={searchFunc}><span className="hidden">검색</span></button>
+                  </div>
                 </div>
+                <div className="search_result_wrap">
+                  <div className="result_title">장소</div>
+                  <div className="result_place_area">
+                    <ul className="place_list">
+                      {
+                        placeResultList.map((place, index) => {
+                          return(
+                            <ItemTripPlace key={"place"+index} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" itemType="tripPlace" setOpenSearchWrap={setOpenSearchWrap} />
+                          );
+                        })
+                      }
+                    </ul>
+                  </div>
+                  <div className="result_title">숙소</div>
+                  <div className="result_inns_area">
+                    <ul className="inn_list">
+                      <li>
+                        여기에 이제.. 숙소 정보를..
+                      </li>
+                    </ul>
+                    <div className="btn_area">
+                      <Button text="숙소 검색 결과 더보기" class="btn_primary outline md" />
+                    </div>
+                  </div>
+                </div>
+                <button type="button" className="btn_close" onClick={closeSearchWrap}><span className="hidden">닫기</span></button>
               </div>
-            </div>
-            <button type="button" className="btn_close" onClick={closeSearchWrap}><span className="hidden">닫기</span></button>
-          </div>
+            ) : ""
+          }
+          
         </div>
 
         <div className="map_area" id="map"></div>
       </div>
 
-      <Modal class="modal lg" open={openModal} closeModal={closeTodoModal} title={modalTitle}>
-        <Textarea data={todoContent} setData={setTodoContent} placeholder="할 일을 입력해주세요" />
+      <Modal class="modal lg" open={openTodoModal} closeModal={closeTodoModalFunc} title={modalTitle}>
+        <Textarea data={tripTodo} setData={setTripTodo} placeholder="할 일을 입력해주세요" />
 
         <div className="btn_area">
-          <Button class="btn_secondary outline" text="취소" clickEvent={closeTodoModal} />
+          <Button class="btn_secondary outline" text="취소" clickEvent={closeTodoModalFunc} />
           <Button class="btn_secondary" text="확인" clickEvent={addTodoFunc} />
         </div>
       </Modal>
+
+      <Modal class="modal" open={openCostModal} closeModal={closeCostModalFunc} title={modalTitle} useCloseBtn={true}>
+        <Input type="number" data={tripCost} setData={setTripCost} placeholder="비용을 입력해주세요" />
+
+        <div className="btn_area">
+          <Button class="btn_secondary" text="확인" clickEvent={addCostFunc} />
+        </div>
+      </Modal>
+      
     </section>
   );
 }
@@ -241,27 +278,43 @@ const SetDayWrap = (props) => {
   const tripDays = props.tripDays;
   const selectPlaceList = props.selectPlaceList;
   const setSelectPlaceList = props.setSelectPlaceList;
-  const searchWrapRef = props.searchWrapRef;
-  const searchWrapInputRef = props.searchWrapInputRef;
+  const setOpenSearchWrap = props.setOpenSearchWrap;
   const setSelectPlaceListNo = props.setSelectPlaceListNo;
-  const setOpenModal = props.setOpenModal;
+  const setOpenTodoModal = props.setOpenTodoModal;
   const setModalTitle = props.setModalTitle;
   const setTodoDayIndex = props.setTodoDayIndex;
   const setTodoIndex = props.setTodoIndex;
   let routeIndex = 0;
   const setSearchInput = props.setSearchInput;
+  const setTripTodo = props.setTripTodo;
+  const setTripCost = props.setTripCost;
+  const setOpenCostModal = props.setOpenCostModal;
 
-  const openSearchWrap = () => {
-    searchWrapRef.current.style.display = "flex";
-    searchWrapInputRef.current.focus();
+  const openSearchWrapFunc = () => {
+    setOpenSearchWrap(true);
     setSelectPlaceListNo(dayIndex);
     setSearchInput("");
   }
+
+  const openCostModalFunc = () => {
+    document.body.classList.add("scroll_fixed");
+    setModalTitle("Day "+(dayIndex+1));
+    setTodoDayIndex(dayIndex);
+    setTripCost(selectPlaceList[dayIndex].tripCost);
+    setOpenCostModal(true);
+  }
+
   return(
     <div className="set_day_wrap">
       <div className="day_title_wrap">
         <div className="day_title">Day {dayIndex+1}<span className="tripDay">{tripDays}</span></div>
-        <button type="button" className="btn_tripCost">예산 추가</button>
+        {
+          selectPlaceList[dayIndex].tripCost ? (
+            <button type="button" className="btn_tripCost on" onClick={openCostModalFunc}>{selectPlaceList[dayIndex].tripCost}</button>
+          ) : (
+            <button type="button" className="btn_tripCost" onClick={openCostModalFunc}>비용 추가</button>
+          )
+        }
       </div>
       <div className="day_items_wrap">
         <ul className="place_list">
@@ -272,7 +325,7 @@ const SetDayWrap = (props) => {
                 routeIndex++;
               }
               return (
-                <ItemTripPlace key={"select" + index} routeIndex={routeIndex} thisIndex={dayIndex} itemIndex={index} place={item} listType="day_items" itemType={item.itemType} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenModal={setOpenModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} />
+                <ItemTripPlace key={"select" + index} routeIndex={routeIndex} thisIndex={dayIndex} itemIndex={index} place={item} listType="day_items" itemType={item.itemType} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
             })
           }
@@ -280,7 +333,7 @@ const SetDayWrap = (props) => {
       </div>
       <div className="day_btns_wrap">
         <div className="btn_area">
-          <Button text="장소 추가" class="btn_secondary md" clickEvent={openSearchWrap} />
+          <Button text="장소 추가" class="btn_secondary md" clickEvent={openSearchWrapFunc} />
         </div>
       </div>
     </div>
@@ -295,34 +348,41 @@ const ItemTripPlace = (props) => {
   const selectPlaceList = props.selectPlaceList;
   const setSelectPlaceList = props.setSelectPlaceList;
   const listType = props.listType;
-  const itemType = props.itemType;
-  const setOpenModal = props.setOpenModal;
+  const setOpenTodoModal = props.setOpenTodoModal;
   const setModalTitle = props.setModalTitle;
   const setTodoDayIndex = props.setTodoDayIndex;
   const setTodoIndex = props.setTodoIndex;
-  const searchWrapRef = props.searchWrapRef;
+  const setOpenSearchWrap = props.setOpenSearchWrap;
+  const setTripTodo = props.setTripTodo;
 
   const addPlaceFunc = () => {
     // place.tripRoute = routeIndex;
     selectPlaceList[thisIndex].push(place);
     setSelectPlaceList([...selectPlaceList]);
-    searchWrapRef.current.style.display = "none";
+    setOpenSearchWrap(false);
   }
 
-  const openTodoModal = () => {
+  const openTodoModalFunc = () => {
     document.body.classList.add("scroll_fixed");
     setModalTitle(place.place_name);
     setTodoDayIndex(thisIndex);
     setTodoIndex(itemIndex);
-    setOpenModal(true);
+    setOpenTodoModal(true);
   }
   
   const modifyTodo = () => {
-
+    document.body.classList.add("scroll_fixed");
+    setTripTodo(place.tripTodo);
+    setModalTitle(place.place_name);
+    setTodoDayIndex(thisIndex);
+    setTodoIndex(itemIndex);
+    setOpenTodoModal(true);
   }
 
   const deleteTodo = () => {
-
+    selectPlaceList[thisIndex][itemIndex].tripTodo = "";
+    setSelectPlaceList([...selectPlaceList]);
+    setTripTodo("");
   }
 
   return(
@@ -344,7 +404,7 @@ const ItemTripPlace = (props) => {
             </div>
             {!place.tripTodo ? (
               <div className="btn_area">
-                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModal} />
+                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
               </div>
             ) : ""}
           </div>

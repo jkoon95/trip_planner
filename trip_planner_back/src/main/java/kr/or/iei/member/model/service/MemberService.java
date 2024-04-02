@@ -51,11 +51,12 @@ public class MemberService {
 		return memberDao.selectOneMemberNickName(memberNickName);
 	}
 
-
+/*
 	public String getMemberNickName(String memberEmail) {
-		
-		return memberDao.getMemberNickName(memberEmail);
-
+		String memberNickName = memberDao.getMemberNickName(memberEmail);
+		return memberNickName;
+	}
+	*/
 	public int getMemberNo(String memberEmail) {
 		return memberDao.getMemberNo(memberEmail);
 

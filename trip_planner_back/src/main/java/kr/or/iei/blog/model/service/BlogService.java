@@ -13,8 +13,8 @@ public class BlogService {
 	private BlogDao blogDao;
 	
 	@Transactional
-	public int insertBlog(Blog blog, String memberEmail) {
-		int result = blogDao.insertBlog(blog, memberEmail);
+	public int insertBlog(Blog blog) {
+		int result = blogDao.insertBlog(blog);
 		if(result == 1) {
 			result = blogDao.insertBlogDate(blog);
 		}

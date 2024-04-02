@@ -19,4 +19,6 @@ public interface MemberDao {
 
 	int getMemberNo(String memberEmail);
 
+	String getMemberNickName(String memberEmail);
+
 }

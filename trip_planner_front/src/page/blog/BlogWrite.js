@@ -30,13 +30,13 @@ const BlogWrite = () => {
       const form = new FormData();
       form.append("blogTitle", blogTitle);
       form.append("blogDateDay", JSON.stringify(blogDateDay));
-      form.append("member", member);
-      form.append("blogThumbail", blogThumbnail);
+      form.append("memberNickName", member.memberNickName);
+      form.append("thumbnail", blogThumbnail);
       console.log(blogTitle);
       console.log(blogDateDay);
       console.log(blogThumbnail);
+      console.log(member.memberNickName);
 
-      /*
       axios
         .post(backServer + "/blog", form, {
           headers: {
@@ -54,7 +54,6 @@ const BlogWrite = () => {
         .catch((res) => {
           console.log(res);
         });
-        */
     }
   };
   return (

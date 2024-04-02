@@ -7,7 +7,7 @@ import kr.or.iei.blog.model.dto.Blog;
 @Mapper
 public interface BlogDao {
 
-	int insertBlog(Blog blog, String memberEmail);
+	int insertBlog(Blog blog);
 
 	int insertBlogDate(Blog blog);
 

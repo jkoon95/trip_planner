@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Alias(value="blog")
 public class Blog {
 	private int blogNo;
-	private String MemberNickname;
-	private String BlogTitle;
-	private String BlogDate;
-	private String BlogThumbnail;
+	private String memberNickname;
+	private String blogTitle;
+	private String blogDate;
+	private String blogThumbnail;
 }

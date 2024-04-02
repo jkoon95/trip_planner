@@ -3,7 +3,6 @@ import "./blog.css";
 import BlogFrm from "./BlogFrm";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
 const BlogWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -48,6 +47,7 @@ const BlogWrite = () => {
         .catch((res) => {
           console.log(res);
         });
+        */
     }
   };
   return (

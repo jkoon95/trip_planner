@@ -15,7 +15,7 @@ const BlogFrm = (props) => {
   const dayAddBox = () => {
     setBlogDateDay([...blogDateDay, new Array()]);
   };
-
+  //console.log(blogDateDay);
   return (
     <div className="blog-frm-wrap">
       <div className="blog-frm-contnet">
@@ -38,6 +38,7 @@ const BlogFrm = (props) => {
           {blogDateDay.map((day, index) => {
             return (
               <BlogDay
+                key={"blog-day-" + index}
                 index={index}
                 day={day}
                 blogDateDay={blogDateDay}
@@ -73,8 +74,8 @@ const BlogDay = (props) => {
     blogDateDay[index] = [...day, {}];
     setBlogDateDay([...blogDateDay]);
   };
-  console.log(day);
-  console.log(blogDateDay);
+  //console.log(day);
+  //console.log(blogDateDay);
   return (
     <div className="day-add-wrap">
       <div className="day-add-box">
@@ -87,7 +88,7 @@ const BlogDay = (props) => {
         </div>
       </div>
       <div className="day-add-btn-info">
-        추가<span class="material-icons">arrow_upward</span>
+        추가<span className="material-icons">arrow_upward</span>
       </div>
 
       {day.map((schedule, i) => {
@@ -116,11 +117,12 @@ const DaySchdule = (props) => {
   const blogDateDay = props.blogDateDay;
   const setBlogDateDay = props.setBlogDateDay;
   const index = props.index;
+
   useEffect(() => {
     day[i] = { scheduleTitle, scheduleContent };
     blogDateDay[index] = [...day];
     setBlogDateDay([...blogDateDay]);
-  }, []);
+  }, [scheduleTitle, scheduleContent]);
 
   return (
     <div className="blog-content-box">

@@ -14,7 +14,6 @@ public class Blog {
 	private int blogNo;
 	private String MemberNickname;
 	private String BlogTitle;
-	private String BlogContent;
 	private String BlogDate;
-	private String BlogFilepath;
+	private String BlogThumbnail;
 }

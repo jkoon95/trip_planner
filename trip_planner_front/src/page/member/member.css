@@ -57,8 +57,22 @@
     margin-left: 130px;
 }
 
+
 #agree1, #agree2 {
     appearance: checkbox;
     font-family: pt-b;
 }
 
+.auth{
+    margin-top: 24px;
+    display: flex;
+    justify-content:space-between
+}
+
+.b_input{
+    width: 80%;
+}
+
+.b_auth{
+    width: 120px;
+}

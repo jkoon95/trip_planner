@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.partner.model.dto.Partner;
 import lombok.Getter;
 
 @CrossOrigin("*")
@@ -99,6 +100,20 @@ public class MemberController {
 	@PostMapping(value="/join")
 	public ResponseEntity<ResponseDTO> join(@RequestBody Member member){
 		int result = memberService.insertMember(member);
+		if(result>0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value="/businessAuth")
+	public ResponseEntity<ResponseDTO> businessAuth(@RequestBody Partner partner){
+		Member member = memberService.selectOneMember(partner.getMemberEmail());
+		partner.setMemberNo(member.getMemberNo());
+		int result = memberService.insertPartner(partner);
 		if(result>0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

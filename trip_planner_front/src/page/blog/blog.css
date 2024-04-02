@@ -20,6 +20,17 @@
 .blogFrm {
   width: 680px;
 }
+.blog-thumbnail {
+  text-align: center;
+}
+.blog-thumbnail > img {
+  width: 450px;
+  height: 250px;
+}
+.blog-thumbnail-wrap {
+  text-align: right;
+  margin-bottom: 20px;
+}
 .blog-list-title-wrap {
   margin-left: 10px;
   overflow: hidden;

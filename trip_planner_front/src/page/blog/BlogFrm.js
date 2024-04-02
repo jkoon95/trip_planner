@@ -9,8 +9,28 @@ const BlogFrm = (props) => {
   const setBlogTitle = props.setBlogTitle;
   const blogDateDay = props.blogDateDay; //전체일정([ [일정1,일정2,일정3], [일정1,일정2,일정3],[일정1,일정2,일정3]])
   const setBlogDateDay = props.setBlogDateDay;
+  const thumbnail = props.thumbnail;
+  const setThumbnail = props.setThumbnail;
+
+  const blogImg = props.blogImg;
+  const setBlogImg = props.setBlogImg;
 
   const buttonFunction = props.buttonFunction;
+
+  const chageThumbnail = (e) => {
+    const files = e.currentTarget.files;
+    if (files.lenght !== 0 && files[0] != 0) {
+      setThumbnail(files[0]);
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = () => {
+        setBlogImg(reader.result);
+      };
+    } else {
+      setThumbnail(null);
+      setBlogImg(null);
+    }
+  };
 
   const dayAddBox = () => {
     setBlogDateDay([...blogDateDay, new Array()]);
@@ -19,6 +39,24 @@ const BlogFrm = (props) => {
   return (
     <div className="blog-frm-wrap">
       <div className="blog-frm-contnet">
+        <div className="blog-thumbnail-box">
+          <div className="blog-thumbnail">
+            {blogImg === null ? (
+              <img src="/images/blogDefault.png" />
+            ) : (
+              <img src={blogImg} />
+            )}
+          </div>
+          <div className="blog-thumbnail-wrap">
+            <label htmlFor="thumbnail">Main PHOTO</label>
+            <input
+              type="file"
+              id="thumbnail"
+              accept="image/*"
+              onChange={chageThumbnail}
+            />
+          </div>
+        </div>
         <div className="blog-title-wrap">
           <label htmlFor="blog-frm-title" className="blog-frm-title">
             제목

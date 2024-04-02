@@ -4,4 +4,4 @@
 .contents.mypage .side_menu > li{padding: 8px 0;}
 .contents.mypage .side_menu > li > a{display: block; font-size: 16px; line-height: 1.5;}
 .contents.mypage .side_menu > li > a.active{font-family: pt-b;}
-.contents.mypage .content_wrap{flex-grow: 1; border-radius: 30px; background-color: var(--main_03);}
+.contents.mypage .content_wrap{flex-grow: 1; border-radius: 30px;}

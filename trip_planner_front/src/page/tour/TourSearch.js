@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TourSearchBox from "../../component/TourSearchBox";
+import TourSearchBox from "./TourSearchBox";
 import { Button } from "../../component/FormFrm";
 
 const TourSearch = () => {

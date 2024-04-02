@@ -17,4 +17,7 @@ public class Room {
 	private int roomMaxPeople;
 	private String roomPrice;
 	private String etcOption;
+	
+	private String[] hashTagName;
+	private String[] optionNo;
 }

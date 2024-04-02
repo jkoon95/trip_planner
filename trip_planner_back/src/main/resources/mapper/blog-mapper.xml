@@ -8,4 +8,8 @@
   <insert id="insertBlogDate">
   	insert into blog_date values(blog_date_seq.nextval,#{blogNo},#{blogDateDay},#{blogDateSchedulTitle},#{blogDateScheduleContent})
   </insert>
+  
+  <select id="getMemberNickName" resultType="String">
+  	select member_nickname from member_tbl where member_email=#{memberEmail}
+  </select>
 </mapper>

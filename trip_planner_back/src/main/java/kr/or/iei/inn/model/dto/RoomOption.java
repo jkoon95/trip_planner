@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class RoomOption {
 	private int roomNo;
 	private int optionNo;
-	private int hashTagNo;
+
 }

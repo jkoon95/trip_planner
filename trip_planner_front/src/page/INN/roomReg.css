@@ -105,19 +105,19 @@
 
 .hashtag-box {
   display: flex;
-  border: 1px solid #ccc;
-  border-radius: 15px;
+  gap: 4px;
   padding: 10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   position: relative;
 }
-.hashtag-box > span:first-child {
+.hashtag-box > .btn_clear {
+  display: flex;
+  width: 16px;
+  height: 16px;
+}
+.hashtag-box > .btn_clear > span {
   color: #e9511c;
   font-size: 16px;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 .hashtag-box > span:last-child {
   font-family: pt-r;

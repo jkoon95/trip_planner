@@ -50,4 +50,14 @@ public class MemberService {
 	public Member selectOneMemberNickName(String memberNickName) {
 		return memberDao.selectOneMemberNickName(memberNickName);
 	}
+
+
+	public String getMemberNickName(String memberEmail) {
+		
+		return memberDao.getMemberNickName(memberEmail);
+
+	public int getMemberNo(String memberEmail) {
+		return memberDao.getMemberNo(memberEmail);
+
+	}
 }

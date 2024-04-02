@@ -4,4 +4,51 @@
 	<select id="selectRoomOption" resultType="option">
 		select * from option_tbl
 	</select>
+	
+	<insert id="insertInn">
+		insert into inn_tbl values
+			(inn_seq.nextval,
+			#{partnerNo},
+			#{innType},
+			#{innAddr},
+			#{innInfo},
+			#{innCheckInTime},
+			#{innCheckOutTime},
+			#{innIntro})
+			<selectKey resultType="int" keyProperty="innNo" order="AFTER">
+				select max(inn_no) from inn_tbl
+			</selectKey>
+	</insert>
+
+	<insert id="insertInnFile">
+		insert into inn_file_tbl values(inn_file_seq.nextval,#{innNo},null,#{innFilePath})
+	</insert>
+	
+	<select id="getInnNo" resultType="int">
+		select inn_no from inn_tbl where partner_no=#{partnerNo}
+	</select>
+	
+	<insert id="insertRoom">
+		insert into room_tbl values
+		(room_seq.nextval,
+		#{innNo},#{roomName},
+		#{roomMaxPeople},
+		#{roomPrice},
+		#{etcOption})
+		<selectKey resultType="int" keyProperty="roomNo" order="AFTER">
+			select max(room_no) from room_tbl
+		</selectKey>
+	</insert>
+	
+	<insert id="insertRoomFile">
+		insert into inn_file_tbl values(inn_file_seq.nextval,#{innNo},#{roomNo},#{innFilePath})
+	</insert>
+	
+	<insert id="insertRoomOption">
+		insert into room_option_tbl values(#{roomNo},#{optionNo})
+	</insert>
+	
+	<insert id="insertRoomHashTag">
+		insert into room_hashtag_tbl values(#{roomNo},#{hashTag})
+	</insert>
 </mapper>

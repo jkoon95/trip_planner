@@ -17,4 +17,6 @@ public interface MemberDao {
 
 	Member selectOneMemberNickName(String memberNickName);
 
+	int getMemberNo(String memberEmail);
+
 }

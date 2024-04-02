@@ -5,7 +5,7 @@
   	select * from partner_tbl where member_no=#{memberNo}
   </select>
   
-  <select id="getPartnerNo" resultType="partner">
+  <select id="getPartnerNo" resultType="int">
   	select partner_no from partner_tbl where member_no=#{memberNo}
   </select>
 </mapper>

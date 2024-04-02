@@ -4,7 +4,7 @@
     padding-bottom: 40px;
 }
 .contents.login .naver{
-    background-image: url(../../../public/image/btnG_축약형.png);
+    background-image: url(../../../public/images/btnG_축약형.png);
     width: 90px;
     height: 45px;
     background-repeat: no-repeat;
@@ -12,7 +12,7 @@
 }
 
 .contents.login .kakao{
-    background-image: url(../../../public/image/kakao_login_medium.png);
+    background-image: url(../../../public/images/kakao_login_medium.png);
     width: 90px;
     height: 45px;
     background-repeat: no-repeat;
@@ -61,3 +61,4 @@
     appearance: checkbox;
     font-family: pt-b;
 }
+

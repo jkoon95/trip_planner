@@ -138,13 +138,14 @@ const RoomRegFrm = (props) => {
               return (
                 <div key={"hashTag" + index} className="hashtag-box-wrap">
                   <div className="hashtag-box">
-                    <span
-                      className="material-icons"
+                    <span className="hashTagValue">{item}</span>
+                    <button
+                      type="button"
+                      className="btn_clear"
                       onClick={() => cancelTag(index)}
                     >
-                      clear
-                    </span>
-                    <span className="hashTagValue">{item}</span>
+                      <span className="material-icons">clear</span>
+                    </button>
                   </div>
                 </div>
               );

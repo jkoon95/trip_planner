@@ -17,4 +17,7 @@
 		select * from member_tbl where member_nickname=#{memberNickName}
 	</select>
 	
+	<select id="getMemberNo" resultType="int">
+		select member_no from member_tbl where member_email=#{memberEmail}
+	</select>
 </mapper>

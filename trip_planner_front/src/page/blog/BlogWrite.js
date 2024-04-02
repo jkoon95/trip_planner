@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./blog.css";
 import BlogFrm from "./BlogFrm";
 import axios from "axios";
@@ -7,15 +7,28 @@ import Swal from "sweetalert2";
 
 const BlogWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-
+  const [member, setMember] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDateDay, setBlogDateDay] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/member")
+      .then((res) => {
+        console.log(res.data.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   const write = () => {
     if (blogTitle !== "" && blogDateDay !== "") {
       const form = new FormData();
       form.append("blogTitle", blogTitle);
       form.append("blogDateDay", blogDateDay);
+      form.append("member", member);
 
       axios
         .post(backServer + "/blog", form, {

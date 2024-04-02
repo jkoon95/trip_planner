@@ -96,7 +96,7 @@ function App() {
           />
           <Route path="/createTrips" element={<CreateTrips />} />
           <Route path="/promotionList" element={<PromotionList />} />
-          <Route path="/blogWrite" element={<BlogWrite />} />
+          <Route path="/blogWrite" element={<BlogWrite isLogin={isLogin} />} />
           <Route path="/consult" element={<ConsultTalk />} />
           <Route path="/license" element={<License />} />
           <Route path="/businessAuth" element={<BusinessAuth />} />

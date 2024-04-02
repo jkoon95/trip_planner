@@ -42,78 +42,45 @@ const JoinInputWrap = (props) => {
     </div>
   );
 };
-
-const AddressInput = (props) => {
-  const [zonecode, setZonecode] = useState("");
-  const [address, setAddress] = useState("");
-  const [isOpen, setIsOpen] = useState("false");
-  const [detailedAddress, setDetailedAddress] = useState("");
-
-  const themeObj = {
-    bgColor: "#FFFFFF",
-    pageBgColor: "#FFFFFF",
-    postcodeTextColor: "#C05850",
-    emphTextColor: "#222222",
+{
+  /*
+const Post = (props) => {
+  const onCompletePost = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    onComplete({ zonecode: data.zonecode, address: fullAddress });
   };
 
   const postCodeStyle = {
-    width: "360px",
-    height: "480px",
-  };
-
-  const completeHandler = (data) => {
-    const { address, zonecode } = data;
-    setZonecode(zonecode);
-    setAddress(address);
-  };
-
-  const closeHandler = (state) => {
-    if (state === "FORCE_CLOSE") {
-      setIsOpen(false);
-    } else if (state === "COMPLETE_CLOSE") {
-      setIsOpen(false);
-    }
-  };
-
-  const toggleHandler = () => {
-    setIsOpen((prevOpenState) => !prevOpenState);
-  };
-
-  const inputChangeHandler = (event) => {
-    setDetailedAddress(event.target.value);
+    display: "block",
+    position: "absolute",
+    top: "20%",
+    width: "400px",
+    height: "400px",
+    padding: "7px",
+    zIndex: 100,
   };
 
   return (
-    <div>
-      <div>
-        <strong>주소찾기</strong>
-      </div>
-      <div>
-        <div>
-          <div>{zonecode}</div>
-          <button type="button" onClick={toggleHandler}>
-            주소 찾기
-          </button>
-        </div>
-        {isOpen && (
-          <div>
-            <DaumPostcode
-              theme={themeObj}
-              style={postCodeStyle}
-              onComplete={completeHandler}
-              onClose={closeHandler}
-            />
-          </div>
-        )}
-        <div>{address}</div>
-        <input
-          type="hidden"
-          value={detailedAddress}
-          onChange={inputChangeHandler}
-        />
-      </div>
-    </div>
+    <>
+      <DaumPostcode
+        style={postCodeStyle}
+        autoClose
+        onComplete={onCompletePost}
+      />
+    </>
   );
 };
-
-export { JoinInputWrap, AddressInput };
+*/
+}
+export { JoinInputWrap };

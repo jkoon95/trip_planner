@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Button } from "../../component/FormFrm";
-import { AddressInput, JoinInputWrap } from "./MemberForm";
+import { JoinInputWrap, Post } from "./MemberForm";
 
 const Join = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -20,11 +20,13 @@ const Join = () => {
   const [checkPwMsg, setCheckPwMsg] = useState("");
   const [checkPwReMsg, setCheckPwReMsg] = useState("");
   const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
+  const [zonecode, setZonecode] = useState("");
+  const [address, setAddress] = useState("");
+  const [detailAddr, setDetailAddr] = useState("");
+  const [popup, setPopup] = useState(false);
 
   const location = useLocation();
   const memberType = location.state.value;
-
-  console.log("join 전달 : " + memberType);
 
   const emailChk = () => {
     //이메일 형태가 맞는지 검증할 정규표현식
@@ -109,7 +111,13 @@ const Join = () => {
         .post(backServer + "/member/join", obj)
         .then((res) => {
           if (res.data.message === "success") {
-            navigate("/login");
+            if (memberType === 1) {
+              navigate("/login");
+            } else {
+              navigate("/businessAuth/", {
+                state: { memberEmail: memberEmail },
+              });
+            }
           } else {
             Swal.fire(
               "처리중 에러가 발생했습니다. 잠시후 다시 시도해주세요."
@@ -190,7 +198,38 @@ const Join = () => {
           data={memberAddr}
           setData={setMemberAddr}
         />
-        <AddressInput />
+        {/*
+        <JoinInputWrap
+          label="우편번호"
+          content="zonecode"
+          type="text"
+          data={zonecode}
+          setData={setZonecode}
+        />
+        <JoinInputWrap
+          label="주소"
+          content="addr"
+          type="text"
+          data={address}
+          setData={setAddress}
+        />
+        <JoinInputWrap
+          label="상세주소"
+          content="detailAddr"
+          type="text"
+          data={detailAddr}
+          setData={setDetailAddr}
+        />
+        <button
+          className="searchAddr"
+          onClick={() => {
+            setPopup(!popup);
+          }}
+        >
+          주소 검색
+        </button>
+        {popup && <Post onComplete={onCompletePost} />}
+        */}
         <div className="btn_area">
           <Button
             text="회원가입"

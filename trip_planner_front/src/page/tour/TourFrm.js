@@ -35,7 +35,7 @@ const TourFrm = (props) => {
   const changeThumbnail = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
-      if (type === "modify") {
+      if (type === "edit") {
         setThumbnailCheck(1);
       }
       setThumbnail(files[0]); // 전송용 state에 file객체를 세팅
@@ -54,7 +54,7 @@ const TourFrm = (props) => {
   const changeIntronail = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
-      if (type === "modify") {
+      if (type === "edit") {
         setIntronailCheck(1);
       }
       setIntronail(files[0]);
@@ -162,7 +162,7 @@ const TourFrm = (props) => {
                   <div className="tour-thumbnail">
                     {tourImg === null ? (
                       <img alt="기본이미지" src="/images/defaultTour.png" />
-                    ) : type === "modify" && thumbnailCheck === 0 ? (
+                    ) : type === "edit" && thumbnailCheck === 0 ? (
                       <img
                         alt="수정전이미지"
                         src={backServer + "/tour/thumbnail/" + tourImg}
@@ -188,7 +188,7 @@ const TourFrm = (props) => {
                   <div className="tour-intronail">
                     {tourIntro === null ? (
                       <img src="/images/defaultTour.png" />
-                    ) : type === "modify" && intronailCheck === 0 ? (
+                    ) : type === "edit" && intronailCheck === 0 ? (
                       <img src={backServer + "/tour/intronail/" + tourIntro} />
                     ) : (
                       <img src={tourIntro} />
@@ -203,7 +203,7 @@ const TourFrm = (props) => {
       <div className="tour-frm-btn-box">
         <Button
           class="btn_primary"
-          text={type === "modify" ? "수정하기" : "등록하기"}
+          text={type === "edit" ? "수정하기" : "등록하기"}
           clickEvent={buttonFunction}
         />
       </div>
@@ -227,7 +227,7 @@ const TypeInput = (props) => {
             id="tourT1"
             value="1"
             onChange={changeTourType}
-            checked={data === "1"}
+            checked={data === 1}
           />
           <label htmlFor="tourT1">전시회</label>
           <input
@@ -236,7 +236,7 @@ const TypeInput = (props) => {
             id="tourT2"
             value="2"
             onChange={changeTourType}
-            checked={data === "2"}
+            checked={data === 2}
           />
           <label htmlFor="tourT2">액티비티</label>
           <input
@@ -245,7 +245,7 @@ const TypeInput = (props) => {
             id="tourT3"
             value="3"
             onChange={changeTourType}
-            checked={data === "3"}
+            checked={data === 3}
           />
           <label htmlFor="tourT3">테마파크</label>
           <input
@@ -254,7 +254,7 @@ const TypeInput = (props) => {
             id="tourT4"
             value="4"
             onChange={changeTourType}
-            checked={data === "4"}
+            checked={data === 4}
           />
           <label htmlFor="tourT4">박람회</label>
           <input
@@ -263,7 +263,7 @@ const TypeInput = (props) => {
             id="tourT5"
             value="5"
             onChange={changeTourType}
-            checked={data === "5"}
+            checked={data === 5}
           />
           <label htmlFor="tourT5">입장권</label>
         </div>

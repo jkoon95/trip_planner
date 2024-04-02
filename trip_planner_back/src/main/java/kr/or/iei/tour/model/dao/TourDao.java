@@ -21,5 +21,9 @@ public interface TourDao {
 	int updateStatus(int tourNo, int updateStatus);
 
 	int deleteTour(int tourNo);
+
+	Tour selectOneTour(int tourNo);
+
+	int updateTour(Tour tour);
 	
 }

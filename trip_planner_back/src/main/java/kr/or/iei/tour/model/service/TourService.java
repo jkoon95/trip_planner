@@ -55,5 +55,14 @@ public class TourService {
 		return tourDao.deleteTour(tourNo);
 	}
 
+	public Tour selectOneTour(int tourNo) {
+		return tourDao.selectOneTour(tourNo);
+	}
+
+	@Transactional
+	public int updateTour(Tour tour) {
+		return tourDao.updateTour(tour);
+	}
+
 	
 }

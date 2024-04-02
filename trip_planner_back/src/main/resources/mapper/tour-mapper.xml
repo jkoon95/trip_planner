@@ -41,4 +41,27 @@
 	<delete id="deleteTour">
 		delete from tour_tbl where tour_no = #{tourNo}
 	</delete>
+	<select id="selectOneTour" resultType="tour">
+		select
+			tour_no,
+			tour_name,
+			tour_type,
+			tour_addr,
+			tour_img,
+			tour_intro,
+			sales_count,
+			to_char(sales_period,'yyyy-mm-dd') as sales_period
+		from tour_tbl where tour_no = #{tourNo}
+	</select>
+	<update id="updateTour">
+		update tour_tbl set
+			tour_name = #{tourName},
+			tour_type = #{tourType},
+			tour_addr = #{tourAddr},
+			tour_img = #{tourImg},
+			tour_intro = #{tourIntro},
+			sales_count = #{salesCount},
+			sales_period = #{salesPeriod}
+		where tour_no = #{tourNo}
+	</update>
 </mapper>

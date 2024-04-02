@@ -55,5 +55,11 @@ public class MemberService {
 	public int insertPartner(Partner partner) {
 		// TODO Auto-generated method stub
 		return memberDao.insertPartner(partner);
+
+
+	public String getMemberNickName(String memberEmail) {
+		
+		return memberDao.getMemberNickName(memberEmail);
+
 	}
 }

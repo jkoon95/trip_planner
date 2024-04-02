@@ -177,11 +177,11 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
         </div>
         <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div>
         <div className="tour-item-btn-box">
-          <button class="btn_primary sm" onClick={() => edit(tour.tourNo)}>
+          <button className="btn_primary sm" onClick={() => edit(tour.tourNo)}>
             수정
           </button>
           <button
-            class="btn_primary outline sm"
+            className="btn_primary outline sm"
             onClick={() => deleteTour(tour)}
           >
             삭제

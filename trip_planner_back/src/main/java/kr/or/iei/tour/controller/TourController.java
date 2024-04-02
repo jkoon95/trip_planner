@@ -87,8 +87,42 @@ public class TourController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
-		
 	}
 	
+	@GetMapping(value="/one/{tourNo}")
+	public ResponseEntity<ResponseDTO> selectOneTour(@PathVariable int tourNo){
+		Tour tour = tourService.selectOneTour(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PatchMapping
+	public ResponseEntity<ResponseDTO> modifyTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail){
+		String savepath = root+"/tour/";
+		if(tour.getThumbnailCheck() == 1) {		// 섬네일이 변경된 경우에만
+			if(thumbnail != null) {				// 새로 첨부한 경우
+				String filepath = fileUtils.upload(savepath, thumbnail);
+				tour.setTourImg(filepath);
+			} else {							// 기존파일을 지우기만 한 경우
+				tour.setTourImg(null);
+			}
+		}
+		if(tour.getIntronailCheck() == 1) {
+			if(intronail != null) {
+				String filepath = fileUtils.upload(savepath, intronail);
+				tour.setTourIntro(filepath);
+			} else {
+				tour.setTourIntro(null);
+			}
+		}
+		int result = tourService.updateTour(tour);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 	
 }

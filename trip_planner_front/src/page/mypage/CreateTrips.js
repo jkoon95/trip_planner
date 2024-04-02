@@ -272,11 +272,7 @@ const SetDayWrap = (props) => {
                 routeIndex++;
               }
               return (
-                item.itemType === "tripPlace" ? (
-                  <ItemTripPlace key={"select" + index} routeIndex={routeIndex} thisIndex={dayIndex} itemIndex={index} place={item} listType="day_items" itemType={item.itemType} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenModal={setOpenModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} />
-                ) : (
-                  <ItemTripPlace key={"select" + index} todo={item.itemContent} listType="day_items" itemType={item.itemType} />
-                )
+                <ItemTripPlace key={"select" + index} routeIndex={routeIndex} thisIndex={dayIndex} itemIndex={index} place={item} listType="day_items" itemType={item.itemType} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenModal={setOpenModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} />
               );
             })
           }
@@ -296,7 +292,6 @@ const ItemTripPlace = (props) => {
   const thisIndex = props.thisIndex;
   const itemIndex = props.itemIndex;
   const place = props.place;
-  const todo = props.todo;
   const selectPlaceList = props.selectPlaceList;
   const setSelectPlaceList = props.setSelectPlaceList;
   const listType = props.listType;
@@ -321,39 +316,49 @@ const ItemTripPlace = (props) => {
     setTodoIndex(itemIndex);
     setOpenModal(true);
   }
+  
+  const modifyTodo = () => {
+
+  }
+
+  const deleteTodo = () => {
+
+  }
 
   return(
-    listType === "day_items" && itemType === "tripPlace" ? (
-      <li className="item tripPlace">
-        <div className="tripRoute_no">{routeIndex}</div>
-        <div className="item_box">
-          <div className="item_box_content">
-            <div className="place_name">{place.place_name}</div>
-            <div className="place_info">
-              <span>{place.category_group_name !== "" ? place.category_group_name : place.category_name}</span>
-              <span>{place.address_name}</span>
+    listType === "day_items" ? (
+      <>
+        <li className="item tripPlace">
+          <div className="tripRoute_no">{routeIndex}</div>
+          <div className="item_box">
+            <div className="item_box_content">
+              <div className="place_name">{place.place_name}</div>
+              <div className="place_info">
+                <span>{place.category_group_name !== "" ? place.category_group_name : place.category_name}</span>
+                <span>{place.address_name}</span>
+              </div>
             </div>
+            <div className="item_btn_wrap">
+              <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
+              <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+            </div>
+            {!place.tripTodo ? (
+              <div className="btn_area">
+                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModal} />
+              </div>
+            ) : ""}
           </div>
-          <div className="item_btn_wrap">
-            <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
-            <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+        </li>
+        {place.tripTodo ? (
+          <li className="item tripTodo">
+          <div className="tripRoute_no"></div>
+          <div className="item_box">
+            <div className="item_box_content" onClick={modifyTodo}>{place.tripTodo}</div>
+            <button type="button" className="btn_delete" onClick={deleteTodo}><span className="hidden">삭제</span></button>
           </div>
-          <div className="btn_area">
-            <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModal} />
-          </div>
-        </div>
-      </li>
-    ) : listType === "day_items" && itemType === "tripTodo" ? (
-      <li className="item tripTodo">
-        <div className="tripRoute_no"></div>
-        <div className="item_box">
-          <div className="item_box_content">{todo}</div>
-          <div className="item_btn_wrap">
-            <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
-            <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
-          </div>
-        </div>
-      </li>
+        </li>
+        ) : ""}
+      </>
     ) : (
       <li className="item tripPlace">
         <div className="item_box">

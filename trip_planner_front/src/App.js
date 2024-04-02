@@ -22,6 +22,7 @@ import CreateTrips from "./page/mypage/CreateTrips";
 import ConsultTalk from "./page/member/ConsultTalk";
 import RoomReg from "./page/INN/RoomReg";
 import License from "./page/member/License";
+import BusinessAuth from "./page/member/BusinessAuth";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
@@ -98,6 +99,7 @@ function App() {
           <Route path="/blogWrite" element={<BlogWrite />} />
           <Route path="/consult" element={<ConsultTalk />} />
           <Route path="/license" element={<License />} />
+          <Route path="/businessAuth" element={<BusinessAuth />} />
         </Routes>
       </main>
       <Footer />

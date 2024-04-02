@@ -116,6 +116,13 @@
 .blog-date-day {
   text-align: center;
   color: var(--main_02);
+  margin-bottom: 5px;
+}
+#blog-date-day {
+  text-indent: 10px;
+  border: 1px solid var(--gray_04);
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 .blog-content-box .ql-editor {
   height: 300px;

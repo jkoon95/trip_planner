@@ -35,13 +35,14 @@ public class BlogController {
 	@Value("${file.root}")
 	private String root;
 	
+	/*
 	@GetMapping(value="/list/{reqPage}")
 	public ResponseEntity<ResponseDTO> blogList(@PathVariable int reqPage){
 		Map map = blogService.selelctBlogList(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
-	
+	*/
 	@PostMapping(value="/editor")
 	public ResponseEntity<ResponseDTO> editorUpload(@ModelAttribute MultipartFile image){
 		String savepath = root + "/blogEditor/";
@@ -53,12 +54,12 @@ public class BlogController {
 	
 	
 	@PostMapping
-	public ResponseEntity<ResponseDTO> insertBlog(@ModelAttribute Blog blog, @RequestAttribute String memberEmail){
-		String memberNickName = memberService.getMemberNickName(memberEmail);
-		System.out.println(memberNickName);
-		int result = blogService.insertBlog(blog, memberEmail);
+	public ResponseEntity<ResponseDTO> insertBlog(@ModelAttribute Blog blog, @ModelAttribute MultipartFile thumbnail){	
+		
+		System.out.println(blog);
 		String savepath = root + "/blogEditor/";	
 		blog.setBlogThumbnail(savepath);
+		int result = blogService.insertBlog(blog);
 		
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

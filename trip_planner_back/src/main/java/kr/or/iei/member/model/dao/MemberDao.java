@@ -21,4 +21,6 @@ public interface MemberDao {
 	int insertPartner(Partner partner);
 
 
+	String getMemberNickName(String memberEmail);
+
 }

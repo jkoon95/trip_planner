@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./FormFrm";
+import { Button } from "../../component/FormFrm";
 import dayjs, { Dayjs } from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

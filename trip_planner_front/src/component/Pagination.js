@@ -1,4 +1,4 @@
-import "./tourPagination.css";
+import "./pagination.css";
 
 const Pagination = (props) => {
   const pageInfo = props.pageInfo;
@@ -84,7 +84,7 @@ const Pagination = (props) => {
       last_page
     </span>
   );
-  return <div className="tour-paging-wrap">{arr}</div>;
+  return <div className="paging-wrap">{arr}</div>;
 };
 
 export default Pagination;

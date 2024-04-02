@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias("hashtag")
-public class HashTag {
-	private int hashTagNo;
-	private String hashTagName;
+@Alias("roomHashTag")
+public class RoomHashTag {
+	private int roomNo;
+	private String hashTag;
 }

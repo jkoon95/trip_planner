@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./innReg.css";
 import Swal from "sweetalert2";
 import InnRegFrm from "./InnRegFrm";
 import axios from "axios";
 
 const InnReg = (props) => {
+  const naviGate = useNavigate();
   const member = props.member;
   const isLogin = props.isLogin;
   console.log(isLogin);
@@ -59,7 +60,10 @@ const InnReg = (props) => {
         })
         .then((res) => {
           console.log(res.data);
-          Swal.fire("숙소 등록 완료");
+          if (res.data.message === "success") {
+            Swal.fire("숙소 등록 완료");
+          }
+          naviGate("/");
         })
         .catch((res) => {
           console.log(res);

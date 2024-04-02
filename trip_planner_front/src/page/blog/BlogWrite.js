@@ -9,7 +9,7 @@ const BlogWrite = () => {
   const [member, setMember] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDateDay, setBlogDateDay] = useState([]);
-  const [thumbnail, setThumbnail] = useState("");
+  const [blogThumbnail, setBlogThumbnail] = useState("");
 
   const [blogImg, setBlogImg] = useState(null);
 
@@ -29,10 +29,14 @@ const BlogWrite = () => {
     if (blogTitle !== "" && blogDateDay !== "") {
       const form = new FormData();
       form.append("blogTitle", blogTitle);
-      form.append("blogDateDay", blogDateDay);
+      form.append("blogDateDay", JSON.stringify(blogDateDay));
       form.append("member", member);
+      form.append("blogThumbail", blogThumbnail);
       console.log(blogTitle);
       console.log(blogDateDay);
+      console.log(blogThumbnail);
+
+      /*
       axios
         .post(backServer + "/blog", form, {
           headers: {
@@ -50,6 +54,7 @@ const BlogWrite = () => {
         .catch((res) => {
           console.log(res);
         });
+        */
     }
   };
   return (
@@ -60,8 +65,8 @@ const BlogWrite = () => {
         setBlogTitle={setBlogTitle}
         blogDateDay={blogDateDay}
         setBlogDateDay={setBlogDateDay}
-        thumbnail={thumbnail}
-        setThumbnail={setThumbnail}
+        BlogThumbnail={blogThumbnail}
+        setBlogThumbnail={setBlogThumbnail}
         blogImg={blogImg}
         setBlogImg={setBlogImg}
         buttonFunction={write}

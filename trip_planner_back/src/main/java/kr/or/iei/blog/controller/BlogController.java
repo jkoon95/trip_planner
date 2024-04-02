@@ -29,6 +29,8 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 	@Autowired
+	private MemberService memberService;
+	@Autowired
 	private FileUtils fileUtils;	
 	@Value("${file.root}")
 	private String root;
@@ -52,6 +54,8 @@ public class BlogController {
 	
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertBlog(@ModelAttribute Blog blog, @RequestAttribute String memberEmail){
+		String memberNickName = memberService.getMemberNickName(memberEmail);
+		System.out.println(memberNickName);
 		int result = blogService.insertBlog(blog, memberEmail);
 		String savepath = root + "/blogEditor/";	
 		blog.setBlogThumbnail(savepath);

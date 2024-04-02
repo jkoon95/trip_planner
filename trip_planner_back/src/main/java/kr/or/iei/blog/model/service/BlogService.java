@@ -13,6 +13,6 @@ public class BlogService {
 
 	public int insertBlog(Blog blog, String memberEmail) {
 		
-		return blogDao.insertBoard(blog);
+		return blogDao.insertBlog(blog, memberEmail);
 	}
 }

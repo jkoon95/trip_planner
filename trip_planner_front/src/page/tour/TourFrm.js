@@ -12,18 +12,22 @@ const TourFrm = (props) => {
   const setSalesCount = props.setSalesCount;
   const salesPeriod = props.salesPeriod;
   const setSalesPeriod = props.setSalesPeriod;
-  const thumbnail = props.thumbnail;
-  const setThumbnail = props.setThumbnail;
-
   const tourImg = props.tourImg;
   const setTourImg = props.setTourImg;
   const tourIntro = props.tourIntro;
   const setTourIntro = props.setTourIntro;
 
+  const thumbnail = props.thumbnail;
+  const setThumbnail = props.setThumbnail;
+  const intronail = props.intronail;
+  const setIntronail = props.setIntronail;
+
   const buttonFunction = props.buttonFunction;
   const type = props.type;
   const thumbnailCheck = props.thumbnailCheck;
   const setThumbnailCheck = props.setThumbnailCheck;
+  const intronailCheck = props.intronailCheck;
+  const setIntronailCheck = props.setIntronailCheck;
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
@@ -47,15 +51,21 @@ const TourFrm = (props) => {
     }
   };
 
-  const changeTourIntro = (e) => {
+  const changeIntronail = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
+      if (type === "modify") {
+        setIntronailCheck(1);
+      }
+      setIntronail(files[0]);
+      // 화면에 섬네일 미리보기
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
         setTourIntro(reader.result);
       };
     } else {
+      setIntronail(null);
       setTourIntro(null);
     }
   };
@@ -167,10 +177,20 @@ const TourFrm = (props) => {
                 <td>
                   <input
                     type="file"
+                    id="intronail"
                     accept="image/*"
-                    onChange={changeTourIntro}
+                    onChange={changeIntronail}
                     multiple={false}
                   />
+                  <div className="tour-intronail">
+                    {tourIntro === null ? (
+                      <img src="/images/defaultTour.png" />
+                    ) : type === "modify" && intronailCheck === 0 ? (
+                      <img src={backServer + "/tour/intronail/" + tourIntro} />
+                    ) : (
+                      <img src={tourIntro} />
+                    )}
+                  </div>
                 </td>
               </tr>
             </tbody>

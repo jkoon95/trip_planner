@@ -9,6 +9,7 @@ import { Button, Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
 const InnRegFrm = (props) => {
+  
   const innType = props.innType;
   const setInnType = props.setInnType;
   const innAddr = props.innAddr;
@@ -180,10 +181,14 @@ const InnImgReg = (props) => {
 
   const cancelImg = (e) => {
     const cancel = e.currentTarget.index;
-    innImg[index] = null;
-    setInnImg([...innImg]);
-    innFile[index] = null;
-    setInnFile([...innFile]);
+    innImg.splice(index, 1);
+    setInnImg([...innImg, null]);
+    innFile.splice(index, 1);
+    setInnFile([...innFile], null);
+    // innImg[index] = null;
+    // setInnImg([...innImg]);
+    // innFile[index] = null;
+    // setInnFile([...innFile]);
   };
   return (
     <>

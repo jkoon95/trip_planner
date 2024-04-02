@@ -9,4 +9,6 @@ public interface PartnerDao {
 
 	Partner selectPartner(int memberNo);
 
+	int getPartnerNo(int memberNo);
+
 }

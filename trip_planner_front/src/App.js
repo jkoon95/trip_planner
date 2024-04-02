@@ -88,7 +88,6 @@ function App() {
           <Route path="/blogList" element={<BlogList isLogin={isLogin} />} />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/tourSearch" element={<TourSearch />} />
-          <Route path="/tour/reg" element={<TourReg isLogin={isLogin} />} />
           <Route path="/ref" element={<Ref />} />
           <Route
             path="/mypage/*"

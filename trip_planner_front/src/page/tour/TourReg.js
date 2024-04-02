@@ -17,19 +17,15 @@ const TourReg = () => {
   const [tourImg, setTourImg] = useState(null);
   const [tourIntro, setTourIntro] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [intronail, setIntronail] = useState(null);
   const navigate = useNavigate();
 
   const reg = () => {
     console.log(tourName);
-    console.log(thumbnail);
     console.log(tourType);
     console.log(tourAddr);
-
-    // 빈칸일 경우 기본값 설정
-    const finalSalesCount = salesCount === "" ? 999999 : salesCount;
-    const finalSalesPeriod = salesPeriod === "" ? "2099-01-01" : salesPeriod;
-    console.log(finalSalesCount);
-    console.log(finalSalesPeriod);
+    console.log(thumbnail);
+    console.log(intronail);
 
     if (tourName !== "" && tourType !== "" && tourAddr !== "") {
       // 전송용 form객체 생성
@@ -37,19 +33,30 @@ const TourReg = () => {
       form.append("tourName", tourName);
       form.append("tourType", tourType);
       form.append("tourAddr", tourAddr);
-      form.append("salesCount", finalSalesCount);
-      form.append("salesPeriod", finalSalesPeriod);
+      form.append("salesCount", salesCount === "" ? 999999 : salesCount);
+      form.append(
+        "salesPeriod",
+        salesPeriod === "" ? "2099-01-01" : salesPeriod
+      );
       // 섬네일은 첨부한 경우에만 추가
       if (thumbnail !== null) {
         form.append("thumbnail", thumbnail);
       }
+      if (intronail !== null) {
+        form.append("intronail", intronail);
+      }
 
       axios
-        .post(backServer + "/tour", form)
+        .post(backServer + "/tour", form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
         .then((res) => {
           if (res.data.message === "success") {
             Swal.fire("이용권 등록을 위해 상품 수정 페이지로 이동합니다.");
-            navigate("/tour/edit");
+            navigate("/mypage/tour/edit");
           } else {
             Swal.fire("입력값을 다시 확인해주세요.");
           }
@@ -85,6 +92,8 @@ const TourReg = () => {
           setTourIntro={setTourIntro}
           thumbnail={thumbnail}
           setThumbnail={setThumbnail}
+          intronail={intronail}
+          setIntronail={setIntronail}
           buttonFunction={reg}
           type="reg"
         />

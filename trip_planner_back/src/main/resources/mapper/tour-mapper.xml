@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.tour.model.dao.TourDao">
-	<insert id="insertTour">
+	<select id="searchPartner" resultType="int">
+		select partner_no
+		from partner_tbl
+		where member_no=
+			(select member_no from member_tbl where member_email=#{memberEmail})
+	</select>
+  	<insert id="insertTour">
 		insert into tour_tbl values
 		(tour_seq.nextval,#{partnerNo},#{tourName},#{tourType},#{tourAddr},#{tourImg},#{tourIntro},#{salesCount},#{salesPeriod},2)
 		<selectKey resultType="int" keyProperty="tourNo" order="AFTER">
 			select max(tour_no) from tour_tbl
 		</selectKey>
 	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from tour_tbl
+	</select>
+	<select id="selectTourSale" resultType="tour">
+		select * from
+		    (select rownum as rnum, t.* from
+		        (select
+		            tour_no,
+		            tour_name,
+		            tour_img,
+		            sales_count,
+		            sales_status,
+		            to_char(sales_period,'yyyy-mm-dd') as sales_period
+		        from tour_tbl order by tour_no desc)t)
+		where rnum between #{start} and #{end}
+	</select>
 </mapper>

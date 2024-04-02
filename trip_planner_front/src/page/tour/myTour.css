@@ -25,6 +25,7 @@
 }
 .tour-info-tbl input {
   margin: 20px 0px;
+  background-color: transparent;
 }
 .tour-info-tbl label {
   font-family: pt-b;
@@ -66,6 +67,10 @@
 
 /* 투어 섬네일 */
 .tour-info-tbl .tour-thumbnail > img {
+  max-width: 360px;
+  max-height: 360px;
+}
+.tour-info-tbl .tour-intronail > img {
   max-width: 360px;
   max-height: 360px;
 }

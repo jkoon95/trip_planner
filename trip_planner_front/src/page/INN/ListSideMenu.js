@@ -98,10 +98,15 @@ const ListSideMenu = () => {
     {
       text: "레스토랑",
       active: false,
-      value: 4,
+      value: 3,
     },
     {
       text: "매점",
+      active: false,
+      value: 4,
+    },
+    {
+      text: "편의점",
       active: false,
       value: 5,
     },
@@ -121,7 +126,7 @@ const ListSideMenu = () => {
       value: 8,
     },
     {
-      text: "객실내취사",
+      text: "객실 내 취사",
       active: false,
       value: 9,
     },

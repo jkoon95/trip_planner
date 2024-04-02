@@ -33,9 +33,10 @@
 .createTrips_wrap .place_list>.item{display: flex; gap: 4px; justify-content: space-between;}
 .createTrips_wrap .place_list>.item .tripRoute_no{align-self: center; display: inline-block; width: 20px; height: 20px; margin: 0 4px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 12px; line-height: 20px; text-align: center; z-index: 10;}
 .createTrips_wrap .place_list>.item.tripTodo .tripRoute_no{width: 8px; height: 8px; margin: 0 auto; font-size: 0;}
-.createTrips_wrap .place_list>.item .item_box{flex: 1; display: flex; justify-content: space-between; padding: 15px 11px 15px 19px; border: 1px solid var(--line_03); border-radius: 8px;}
+.createTrips_wrap .place_list>.item .item_box{flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 15px 11px 15px 19px; border: 1px solid var(--line_03); border-radius: 8px;}
+.createTrips_wrap .place_list>.item .item_box>.btn_area{flex: 1;}
 .createTrips_wrap .day_items_wrap .place_list>li:first-child{margin-top: 12px;}
-.createTrips_wrap .day_items_wrap .place_list>.item .item_box{max-width: calc(100% - 32px); max-height: 77px;}
+.createTrips_wrap .day_items_wrap .place_list>.item .item_box{max-width: calc(100% - 32px);}
 .createTrips_wrap .day_items_wrap .place_list>.item .item_box .place_info{white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .createTrips_wrap .place_list>.item .item_box .place_name{font-family: pt-b; font-size: 14px; line-height: 1.5;}
 .createTrips_wrap .place_list>.item .item_box .place_info{margin-top: 4px; color: var(--gray_05); font-family: pt-b; font-size: 13px; line-height: 20px;}
@@ -44,6 +45,7 @@
 .createTrips_wrap .place_list>.item .item_box .place_info>span+span::before{content: ''; display: block; position: absolute; top: 8px; left: -7px; width: 2px; height: 2px; border-radius: 50%; background-color: var(--gray_05);}
 .createTrips_wrap .place_list>.item .item_box .place_phone{margin-top: 8px; padding-left: 20px; background: url(/public/images/icon_call_blue.svg) no-repeat left center / 16px ; color: var(--info); font-family: pt-b; font-size: 13px; line-height: 20px;}
 .createTrips_wrap .place_list>.item .item_box_content{flex-grow: 1; max-width: calc(100% - 54px);}
+.createTrips_wrap .result_place_area .place_list>.item .item_box_content{max-width: calc(100% - 74px);}
 .createTrips_wrap .place_list>.item.tripTodo .item_box .item_box_content{display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-overflow: ellipsis; overflow: hidden; font-size: 14px; line-height: 1.5;}
 .createTrips_wrap .place_list>.item .item_btn_wrap{display: flex; gap: 6px; align-self: center;}
 .createTrips_wrap .place_list>.item .item_btn_wrap .btn_addPlace{white-space: nowrap; padding: 4px 5px 4px 22px; background: url(/public/images/icon_calendar_sm_blue.svg) no-repeat 4px center / 16px; font-family: pt-b;}

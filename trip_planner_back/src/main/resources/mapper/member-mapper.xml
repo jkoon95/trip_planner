@@ -20,4 +20,7 @@
 		insert into partner_tbl values (partner_seq.nextval,#{memberNo},#{partnerName},#{partnerTel},#{partnerType},2,#{businessNo})
 	</insert>
 
+	<select id="getMemberNo" resultType="int">
+		select member_no from member_tbl where member_email=#{memberEmail}
+	</select>
 </mapper>

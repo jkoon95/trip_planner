@@ -20,6 +20,10 @@
   margin-bottom: 15px;
 }
 
+.tour-sale-wrap {
+  margin-bottom: 60px;
+}
+
 .tour-info-tbl span {
   color: red;
 }
@@ -90,18 +94,53 @@
   flex-grow: 1;
 }
 .tour-item .tour-item-img img {
-  width: 240px;
-  height: 180px;
+  width: 280px;
+  height: 210px;
   cursor: pointer;
 }
 .tour-item .tour-item-info {
+  padding-top: 5px;
+  padding-left: 60px;
   flex-grow: 9;
   display: flex;
   flex-direction: column;
-  padding: 10px;
 }
 .tour-item .tour-item-info .tour-item-name {
   font-family: pt-b;
   font-size: 24px;
   margin-bottom: 5px;
+}
+
+.tour-item .tour-item-info .tour-item-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.tour-item .tour-item-info .tour-item-period {
+  font-family: pt-b;
+  color: #666;
+  margin-right: 20px;
+}
+.tour-item .tour-item-info .tour-item-status {
+  font-family: pt-b;
+  font-size: 14px;
+  background-color: #ccc;
+  border-radius: 5px;
+  width: 60px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.tour-item .tour-item-info .tour-item-count {
+  margin-bottom: 48px;
+}
+
+.tour-item .tour-item-info .tour-item-details .tour-item-status:hover {
+  background-color: #999; /* 마우스를 올렸을 때 배경색 변화 */
+}
+
+.tour-item .tour-item-info .tour-item-btn-box > button {
+  margin-right: 10px;
 }

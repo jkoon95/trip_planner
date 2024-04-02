@@ -30,9 +30,9 @@ public class TourService {
 	}
 
 	public Map selectTourSale(int reqPage, int memberNo) {
-		int numPerPage = 10;
-		int pageNaviSize = 5;
-		int totalCount = tourDao.totalCount(memberNo);
+		int numPerPage = 3;		// 한 페이지당 게시물 수
+		int pageNaviSize = 5;	// 페이지 네비게이션 길이
+		int totalCount = tourDao.totalCount(memberNo);	// 전체 게시물 수
 		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		int end = reqPage*numPerPage;
@@ -42,6 +42,17 @@ public class TourService {
 		map.put("tourSale",list);
 		map.put("pi",pi);
 		return map;
+	}
+	
+	@Transactional
+	public int updateStatus(int tourNo, int salesStatus) {
+		int updateStatus = (salesStatus == 1) ? 2 : 1;
+		return tourDao.updateStatus(tourNo,updateStatus);
+	}
+	
+	@Transactional
+	public int deleteTour(int tourNo) {
+		return tourDao.deleteTour(tourNo);
 	}
 
 	

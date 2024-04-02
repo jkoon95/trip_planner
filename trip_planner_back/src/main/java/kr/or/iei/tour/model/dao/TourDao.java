@@ -17,5 +17,9 @@ public interface TourDao {
 	int totalCount(int memberNo);
 
 	List selectTourSale(int start, int end, int memberNo);
+
+	int updateStatus(int tourNo, int updateStatus);
+
+	int deleteTour(int tourNo);
 	
 }

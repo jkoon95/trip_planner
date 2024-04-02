@@ -31,8 +31,83 @@ const TourSale = ({ member }) => {
         console.log(res);
       });
   }, [memberNo, reqPage]);
-  const editBtn = () => {
-    navigate("/tour/edit");
+
+  const toggleStatus = (tourNo, salesStatus) => {
+    console.log(tourNo);
+    console.log(salesStatus);
+    Swal.fire({
+      icon: "question",
+      text: "판매 상태를 전환하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "전환",
+      cancelButtonText: "취소",
+    })
+      .then((res) => {
+        if (res.isConfirmed) {
+          axios
+            .patch(backServer + "/tour/status/" + tourNo + "/" + salesStatus)
+            .then((res) => {
+              console.log(res.data);
+              // 성공적으로 상태가 변경되면 해당 투어 상품을 업데이트
+              const updateStatus = tourSale.map((tour) => {
+                if (tour.tourNo === tourNo) {
+                  return {
+                    ...tour,
+                    salesStatus: tour.salesStatus === 2 ? 1 : 2,
+                  };
+                }
+                return tour;
+              });
+              setTourSale(updateStatus);
+              Swal.fire("변경되었습니다.");
+            })
+            .catch((res) => {
+              console.log(res);
+            });
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
+  const deleteTour = (tour) => {
+    console.log(tour.tourNo);
+    Swal.fire({
+      icon: "warning",
+      text: "상품을 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/tour/" + tour.tourNo)
+          .then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire("삭제되었습니다.");
+              // 삭제 후에 투어 목록 다시 불러옴
+              axios
+                .get(backServer + "/tour/sale/" + reqPage + "/" + memberNo)
+                .then((res) => {
+                  console.log(res.data);
+                  setTourSale(res.data.data.tourSale);
+                  setPageInfo(res.data.data.pi);
+                })
+                .catch((res) => {
+                  console.log(res);
+                });
+            }
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
+    });
+  };
+
+  const edit = (tourNo) => {
+    navigate("/mypage/tour/edit/" + tourNo);
   };
 
   return (
@@ -43,7 +118,15 @@ const TourSale = ({ member }) => {
         </div>
         <div className="tour-sale-wrap">
           {tourSale.map((tour, index) => {
-            return <TourItem key={"tour" + index} tour={tour} />;
+            return (
+              <TourItem
+                key={"tour" + index}
+                tour={tour}
+                toggleStatus={toggleStatus}
+                deleteTour={deleteTour}
+                edit={edit}
+              />
+            );
           })}
         </div>
         <div className="tour-page">
@@ -58,8 +141,7 @@ const TourSale = ({ member }) => {
   );
 };
 
-const TourItem = (props) => {
-  const tour = props.tour;
+const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const tourView = () => {
@@ -84,7 +166,27 @@ const TourItem = (props) => {
       </div>
       <div className="tour-item-info">
         <div className="tour-item-name">{tour.tourName}</div>
-        <div className="tour-item-period">~ {tour.salesPeriod}</div>
+        <div className="tour-item-details">
+          <div className="tour-item-period">~ {tour.salesPeriod}</div>
+          <div
+            className="tour-item-status"
+            onClick={() => toggleStatus(tour.tourNo, tour.salesStatus)}
+          >
+            {tour.salesStatus === 2 ? "준비중" : "판매중"}
+          </div>
+        </div>
+        <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div>
+        <div className="tour-item-btn-box">
+          <button class="btn_primary sm" onClick={() => edit(tour.tourNo)}>
+            수정
+          </button>
+          <button
+            class="btn_primary outline sm"
+            onClick={() => deleteTour(tour)}
+          >
+            삭제
+          </button>
+        </div>
       </div>
     </div>
   );

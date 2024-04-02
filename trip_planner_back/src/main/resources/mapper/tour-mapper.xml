@@ -35,4 +35,10 @@
 		        ORDER BY tour_no DESC) t)
 		where rnum between #{start} and #{end}
 	</select>
+	<update id="updateStatus">
+		update tour_tbl set sales_status = #{updateStatus} where tour_no = #{tourNo}
+	</update>
+	<delete id="deleteTour">
+		delete from tour_tbl where tour_no = #{tourNo}
+	</delete>
 </mapper>

@@ -122,7 +122,7 @@ const MypageMain = (props) => {
           <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
           <Route path="/tour/reg" element={<TourReg />} />
           <Route path="/tour/sale" element={<TourSale member={member} />} />
-          <Route path="/tour/edit" element={<TourEdit />} />
+          <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
         </Routes>
       </div>
     </section>

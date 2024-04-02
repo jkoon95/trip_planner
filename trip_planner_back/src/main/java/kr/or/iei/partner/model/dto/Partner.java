@@ -19,5 +19,6 @@ public class Partner {
 	private String partnerTel;
 	private int partnerType;
 	private int partnerStatus;
-	private String buinessNo;
+	private String businessNo;
+	private String memberEmail;
 }

@@ -17,4 +17,7 @@
 		select * from member_tbl where member_nickname=#{memberNickName}
 	</select>
 	
+	<insert id="insertPartner">
+		insert into partner_tbl values (partner_seq.nextval,#{memberNo},#{partnerName},#{partnerTel},#{partnerType},2,#{businessNo})
+	</insert>
 </mapper>

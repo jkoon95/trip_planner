@@ -83,4 +83,5 @@ const Post = (props) => {
 };
 */
 }
+
 export { JoinInputWrap };

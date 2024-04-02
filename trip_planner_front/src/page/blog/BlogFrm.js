@@ -9,8 +9,8 @@ const BlogFrm = (props) => {
   const setBlogTitle = props.setBlogTitle;
   const blogDateDay = props.blogDateDay; //전체일정([ [일정1,일정2,일정3], [일정1,일정2,일정3],[일정1,일정2,일정3]])
   const setBlogDateDay = props.setBlogDateDay;
-  const thumbnail = props.thumbnail;
-  const setThumbnail = props.setThumbnail;
+  const blogThumbnail = props.blogThumbnail;
+  const setBlogThumbnail = props.setBlogThumbnail;
 
   const blogImg = props.blogImg;
   const setBlogImg = props.setBlogImg;
@@ -20,14 +20,14 @@ const BlogFrm = (props) => {
   const chageThumbnail = (e) => {
     const files = e.currentTarget.files;
     if (files.lenght !== 0 && files[0] != 0) {
-      setThumbnail(files[0]);
+      setBlogThumbnail(files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
         setBlogImg(reader.result);
       };
     } else {
-      setThumbnail(null);
+      setBlogThumbnail(null);
       setBlogImg(null);
     }
   };
@@ -39,24 +39,23 @@ const BlogFrm = (props) => {
   return (
     <div className="blog-frm-wrap">
       <div className="blog-frm-contnet">
-        <div className="blog-thumbnail-box">
-          <div className="blog-thumbnail">
-            {blogImg === null ? (
-              <img src="/images/blogDefault.png" />
-            ) : (
-              <img src={blogImg} />
-            )}
-          </div>
-          <div className="blog-thumbnail-wrap">
-            <label htmlFor="thumbnail">Main PHOTO</label>
-            <input
-              type="file"
-              id="thumbnail"
-              accept="image/*"
-              onChange={chageThumbnail}
-            />
-          </div>
+        <div className="blog-thumbnail">
+          {blogImg === null ? (
+            <img src="/images/blogDefault.png" />
+          ) : (
+            <img src={blogImg} />
+          )}
         </div>
+        <div className="blog-thumbnail-wrap">
+          <label htmlFor="blogThumbnail">✅ 대표사진을 선택해주세요</label>
+          <input
+            type="file"
+            id="blogThumbnail"
+            accept="image/*"
+            onChange={chageThumbnail}
+          />
+        </div>
+
         <div className="blog-title-wrap">
           <label htmlFor="blog-frm-title" className="blog-frm-title">
             제목
@@ -150,17 +149,17 @@ const DaySchdule = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const i = props.i;
   const day = props.day;
-  const [scheduleTitle, setScheduleTitle] = useState("");
-  const [scheduleContent, setScheduleContent] = useState("");
+  const [blogDateScheduleTitle, setBlogDateScheduleTitle] = useState("");
+  const [blogDateScheduleContent, setBlogDateScheduleContent] = useState("");
   const blogDateDay = props.blogDateDay;
   const setBlogDateDay = props.setBlogDateDay;
   const index = props.index;
 
   useEffect(() => {
-    day[i] = { scheduleTitle, scheduleContent };
+    day[i] = { blogDateScheduleTitle, blogDateScheduleContent };
     blogDateDay[index] = [...day];
     setBlogDateDay([...blogDateDay]);
-  }, [scheduleTitle, scheduleContent]);
+  }, [blogDateScheduleTitle, blogDateScheduleContent]);
 
   return (
     <div className="blog-content-box">
@@ -169,14 +168,14 @@ const DaySchdule = (props) => {
       </div>
       <Input
         type="text"
-        data={scheduleTitle}
-        setData={setScheduleTitle}
+        data={blogDateScheduleTitle}
+        setData={setBlogDateScheduleTitle}
         placeholder="일정의 제목을 정해주세요"
         content="blog-date-day"
       />
       <TextEditor
-        data={scheduleContent}
-        setData={setScheduleContent}
+        data={blogDateScheduleContent}
+        setData={setBlogDateScheduleContent}
         url={backServer + "/blog/editor"}
       />
     </div>

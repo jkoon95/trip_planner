@@ -12,9 +12,15 @@ const Input = (props) => {
   const disabled = props.disabled;
   const inputRef = props.inputRef;
   const keyupEvent = props.keyupEvent;
-  const chageData = (e) => {
+  const keyDownEvent = props.keyDownEvent;
+  const changeData = (e) => {
     setData(e.target.value);
   };
+  const enterKeyEvent = (e) => {
+    if(e.key === "Enter"){
+      keyDownEvent();
+    }
+  }
   if (readonly === "readonly") {
     return (
       <input
@@ -47,26 +53,43 @@ const Input = (props) => {
         placeholder={placeholder}
         type={type}
         value={data || ""}
-        onChange={chageData}
+        onChange={changeData}
         ref={inputRef}
         onKeyUp={keyupEvent}
         onClick={clickEvent}
         onBlur={blurEvent}
+        onKeyDown={enterKeyEvent}
       />
     );
   }
 };
 
 const Button = (props) => {
+  const id = props.id;
   const text = props.text;
   const clickEvent = props.clickEvent;
   const className = props.class;
-
+  
   return (
-    <button type="button" className={className} onClick={clickEvent}>
+    <button type="button" id={id} className={className} onClick={clickEvent}>
       {text}
     </button>
   );
 };
 
-export { Input, Button };
+const Textarea = (props) => {
+  const data = props.data;
+  const setData = props.setData;
+  const placeholder = props.placeholder;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+
+  return(
+    <div className="textarea">
+      <textarea placeholder={placeholder} value={data || ""} onChange={changeData}></textarea>
+    </div>
+  );
+}
+
+export { Input, Button, Textarea };

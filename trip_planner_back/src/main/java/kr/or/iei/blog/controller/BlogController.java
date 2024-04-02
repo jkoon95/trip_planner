@@ -1,11 +1,15 @@
 package kr.or.iei.blog.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,13 @@ public class BlogController {
 	@Value("${file.root}")
 	private String root;
 	
+	@GetMapping(value="/list/{reqPage}")
+	public ResponseEntity<ResponseDTO> blogList(@PathVariable int reqPage){
+		Map map = blogService.selelctBlogList(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 	@PostMapping(value="/editor")
 	public ResponseEntity<ResponseDTO> editorUpload(@ModelAttribute MultipartFile image){
 		String savepath = root + "/blogEditor/";
@@ -42,7 +53,8 @@ public class BlogController {
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertBlog(@ModelAttribute Blog blog, @RequestAttribute String memberEmail){
 		int result = blogService.insertBlog(blog, memberEmail);
-		
+		String savepath = root + "/blogEditor/";	
+		blog.setBlogThumbnail(savepath);
 		
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

@@ -14,7 +14,6 @@ public class BlogDate {
 	private int blogDateNo;
 	private int blogNo;
 	private int blogDateDay;
-	private int blogDateSchedule;
-	private String blogDateImg;
-	private String blogDateContent;	
+	private String blogDateScheduleTitle;
+	private String blogDateScheduleContent;	
 }

@@ -54,8 +54,17 @@
   border: 1px solid #1e1e1e;
 }
 .blog-list-content {
+  height: 500px;
   padding: 100px;
   box-sizing: border-box;
+  float: left;
+  box-sizing: border-box;
+  width: calc(100% / 2);
+  padding: 30px;
+  cursor: pointer;
+}
+.blog-list-img {
+  height: 200px;
 }
 
 /*blogWrite*/

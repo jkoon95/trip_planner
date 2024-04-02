@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.util.JwtUtil;
 
 @Service
@@ -51,13 +52,8 @@ public class MemberService {
 		return memberDao.selectOneMemberNickName(memberNickName);
 	}
 
-
-	public String getMemberNickName(String memberEmail) {
-		
-		return memberDao.getMemberNickName(memberEmail);
-
-	public int getMemberNo(String memberEmail) {
-		return memberDao.getMemberNo(memberEmail);
-
+	public int insertPartner(Partner partner) {
+		// TODO Auto-generated method stub
+		return memberDao.insertPartner(partner);
 	}
 }

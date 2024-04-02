@@ -3,6 +3,7 @@ package kr.or.iei.member.model.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.partner.model.dto.Partner;
 
 @Mapper
 public interface MemberDao {
@@ -17,6 +18,7 @@ public interface MemberDao {
 
 	Member selectOneMemberNickName(String memberNickName);
 
-	int getMemberNo(String memberEmail);
+	int insertPartner(Partner partner);
+
 
 }

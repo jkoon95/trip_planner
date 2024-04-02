@@ -80,3 +80,28 @@
   text-align: center;
   padding: 48px 0px;
 }
+
+/* 투어 상품조회 */
+.tour-item {
+  display: flex;
+  margin-bottom: 30px;
+}
+.tour-item .tour-item-img {
+  flex-grow: 1;
+}
+.tour-item .tour-item-img img {
+  width: 240px;
+  height: 180px;
+  cursor: pointer;
+}
+.tour-item .tour-item-info {
+  flex-grow: 9;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.tour-item .tour-item-info .tour-item-name {
+  font-family: pt-b;
+  font-size: 24px;
+  margin-bottom: 5px;
+}

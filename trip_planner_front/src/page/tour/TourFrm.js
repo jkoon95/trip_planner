@@ -161,11 +161,14 @@ const TourFrm = (props) => {
                   />
                   <div className="tour-thumbnail">
                     {tourImg === null ? (
-                      <img src="/images/defaultTour.png" />
+                      <img alt="기본이미지" src="/images/defaultTour.png" />
                     ) : type === "modify" && thumbnailCheck === 0 ? (
-                      <img src={backServer + "/tour/thumbnail/" + tourImg} />
+                      <img
+                        alt="수정전이미지"
+                        src={backServer + "/tour/thumbnail/" + tourImg}
+                      />
                     ) : (
-                      <img src={tourImg} />
+                      <img alt="등록한이미지" src={tourImg} />
                     )}
                   </div>
                 </td>

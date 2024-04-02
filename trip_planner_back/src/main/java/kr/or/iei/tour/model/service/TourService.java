@@ -29,13 +29,15 @@ public class TourService {
 		return result;
 	}
 
-	public Map selectTourSale(int reqPage) {
+	public Map selectTourSale(int reqPage, int memberNo) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
-		int totalCount = tourDao.totalCount();
+		int totalCount = tourDao.totalCount(memberNo);
 		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list = tourDao.selectTourSale(pi);
+		int end = reqPage*numPerPage;
+		int start = end-numPerPage+1;
+		List list = tourDao.selectTourSale(start, end, memberNo);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("tourSale",list);
 		map.put("pi",pi);

@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Pagination {
-	public PageInfo getPageInfo
-	(int reqPage, int numPerPage, int pageNaviSize, int totalCount) {
+	
+	public PageInfo getPageInfo(int reqPage, int numPerPage, int pageNaviSize, int totalCount) {
 		int end = reqPage*numPerPage;
 		int start = end-numPerPage+1;
 		int totalPage = (int)Math.ceil(totalCount/(double)numPerPage);

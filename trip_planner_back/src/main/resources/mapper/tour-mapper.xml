@@ -16,6 +16,8 @@
 	</insert>
 	<select id="totalCount" resultType="int">
 		select count(*) from tour_tbl
+		JOIN PARTNER_TBL ON TOUR_TBL.PARTNER_NO = PARTNER_TBL.PARTNER_NO
+		WHERE PARTNER_TBL.MEMBER_NO = #{memberNo}
 	</select>
 	<select id="selectTourSale" resultType="tour">
 		select * from
@@ -27,7 +29,10 @@
 		            sales_count,
 		            sales_status,
 		            to_char(sales_period,'yyyy-mm-dd') as sales_period
-		        from tour_tbl order by tour_no desc)t)
+		        from tour_tbl
+		        JOIN PARTNER_TBL ON TOUR_TBL.PARTNER_NO = PARTNER_TBL.PARTNER_NO
+		        WHERE PARTNER_TBL.MEMBER_NO = #{memberNo}
+		        ORDER BY tour_no DESC) t)
 		where rnum between #{start} and #{end}
 	</select>
 </mapper>

@@ -14,8 +14,8 @@ public interface TourDao {
 	
 	int insertTour(Tour tour);
 
-	int totalCount();
+	int totalCount(int memberNo);
 
-	List selectTourSale(PageInfo pi);
+	List selectTourSale(int start, int end, int memberNo);
 	
 }

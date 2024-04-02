@@ -2,16 +2,26 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../component/TourPagination";
+import Swal from "sweetalert2";
 
-const TourSale = () => {
+const TourSale = ({ member }) => {
+  const memberNo = member.memberNo;
   const [tourSale, setTourSale] = useState([]);
   // 페이징 구현에 필요한 데이터들을 객체로 받음
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
   useEffect(() => {
+    console.log("회원번호 : " + memberNo);
+    if (!member) {
+      navigate("/");
+      return;
+    }
+
     axios
-      .get(backServer + "/tour/sale/" + reqPage)
+      .get(backServer + "/tour/sale/" + reqPage + "/" + memberNo)
       .then((res) => {
         console.log(res.data);
         setTourSale(res.data.data.tourSale);
@@ -20,8 +30,7 @@ const TourSale = () => {
       .catch((res) => {
         console.log(res);
       });
-  }, [reqPage]);
-  const navigate = useNavigate();
+  }, [memberNo, reqPage]);
   const editBtn = () => {
     navigate("/tour/edit");
   };
@@ -57,17 +66,25 @@ const TourItem = (props) => {
     navigate("/tour/view/" + tour.tourNo);
   };
   return (
-    <div className="tour-item" onClick={tourView}>
+    <div className="tour-item">
       <div className="tour-item-img">
         {tour.tourImg === null ? (
-          <img src="/images/defaultTour.png" />
+          <img
+            onClick={tourView}
+            alt="기본이미지"
+            src="/images/defaultTour.png"
+          />
         ) : (
-          <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+          <img
+            onClick={tourView}
+            alt="메인이미지"
+            src={backServer + "/tour/thumbnail/" + tour.tourImg}
+          />
         )}
       </div>
       <div className="tour-item-info">
         <div className="tour-item-name">{tour.tourName}</div>
-        <div className="tour-item-period">{tour.salesPeriod}</div>
+        <div className="tour-item-period">~ {tour.salesPeriod}</div>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +33,17 @@ public class TourController {
 	@Value("${file.root}")
 	private String root;
 	
+	@GetMapping(value="/sale/{reqPage}/{memberNo}")
+	public ResponseEntity<ResponseDTO> tourSale(@PathVariable int reqPage, @PathVariable int memberNo){
+		Map map = tourService.selectTourSale(reqPage, memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 	@PostMapping
 	public ResponseEntity<ResponseDTO> insertTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
 		String savepath = root+"/tour/";
-		
+
 		if(thumbnail != null) {
 			String filepath = fileUtils.upload(savepath, thumbnail);
 			tour.setTourImg(filepath);
@@ -55,11 +63,5 @@ public class TourController {
 		}
 	}
 	
-	@GetMapping(value="/sale/{reqPage}")
-	public ResponseEntity<ResponseDTO> tourSale(@PathVariable int reqPage){
-		Map map = tourService.selectTourSale(reqPage);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
-		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-	}
 	
 }

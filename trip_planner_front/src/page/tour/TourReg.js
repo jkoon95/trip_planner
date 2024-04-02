@@ -86,14 +86,14 @@ const TourReg = () => {
           setSalesCount={setSalesCount}
           salesPeriod={salesPeriod}
           setSalesPeriod={setSalesPeriod}
-          tourImg={tourImg}
-          setTourImg={setTourImg}
-          tourIntro={tourIntro}
-          setTourIntro={setTourIntro}
           thumbnail={thumbnail}
           setThumbnail={setThumbnail}
           intronail={intronail}
           setIntronail={setIntronail}
+          tourImg={tourImg}
+          setTourImg={setTourImg}
+          tourIntro={tourIntro}
+          setTourIntro={setTourIntro}
           buttonFunction={reg}
           type="reg"
         />

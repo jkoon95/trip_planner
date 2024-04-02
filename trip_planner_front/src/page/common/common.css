@@ -46,6 +46,7 @@
 /* layout */
 html{font-family: pt-r;}
 .hidden{position: absolute; left: -9999%; font-size: 0; line-height: 0; text-indent: -9999%; overflow: hidden;}
+/* .scroll_fixed{position: fixed; left: 0; right: 0; top: 0; bottom: 0;} */
 
 .wrap{display: flex; flex-direction: column; min-height: 100vh;}
 .container{flex: 1; padding: 0 40px;}
@@ -86,3 +87,20 @@ h5{margin-bottom: 8px; color: #000; font-family: pt-b; font-size: 14px; font-wei
 .badge.green{border: 1px solid var(--success); background-color: rgba(48, 228, 98, 0.1); color: var(--success);}
 .badge.gray{border: 1px solid var(--gray_02); background-color: rgba(85, 85, 85, 0.1); color: var(--gray_02);}
 .badges{display: flex; flex-wrap: wrap; gap: 8px;}
+
+/* modal */
+.modal{position:fixed; left:0; right:0; top:0; bottom:0; background-color:rgba(0,0,0,0.5); z-index:1002;}
+.modal .modal_wrap{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; gap:20px; width:444px; max-height:375px; padding:40px 20px; background-color:#fff; border-radius:8px;}
+.modal.lg .modal_wrap{width:512px; max-height:480px;}
+.modal .modal_title{font-size:20px; font-weight:bold; line-height:30px; text-align:center;}
+.modal .title_sub{margin-top:12px; color:var(--gray_04); font-size:14px; line-height:1.5; text-align:center;}
+.modal .modal_container{/*height:114px;*/ padding:0 20px; overflow-y:auto;}
+.modal .modal_content{display:flex; flex-direction:column; justify-content:center; min-height:100%; font-size:16px; line-height:1.5;}
+.modal .modal_content .center{text-align:center;}
+.modal .modal_content .result_info>li{display:flex; gap:12px; align-items:center; padding:4px 0;}
+.modal .modal_content .result_info>li>span{min-width:120px;}
+.modal .modal_content .result_info>li>strong{font-weight:normal;}
+.modal .modal_content .result_info>li>strong>span:last-child{margin-left:4px;}
+.modal .modal_content .img_wrap>img{display:block; width:100%;}
+.modal .btn_area{margin-top:20px;}
+.modal .btn_close{position:absolute; top:12px; right:12px; display:block; width:36px; height:36px; background:url(/public/images/icon_close.svg) no-repeat center / 14px;}

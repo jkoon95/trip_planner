@@ -5,9 +5,11 @@ import "./blog.css";
 const BlogList = (props) => {
   const isLogin = props.isLogin;
   const navigate = useNavigate();
+
   const writeBtn = () => {
     navigate("/blogWrite");
   };
+
   return (
     <section className="contents blogList">
       <div className="blog-list-wrap">

@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Input } from "./component/FormFrm";
 import "./ref.css";
+import Modal from "./component/Modal";
 
 const Ref = () => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
+
+  // 모달1
+  const [open, setOpen] = useState(false);
+  const openModal = () => {
+    document.body.classList.add("scroll_fixed");
+    setOpen(true);
+  }
+  
+  // 모달2
+  const [open2, setOpen2] = useState(false);
+  const openModal2 = () => {
+    document.body.classList.add("scroll_fixed");
+    setOpen2(true);
+  }
 
   return (
     <section className="contents">
@@ -181,6 +196,18 @@ const Ref = () => {
           <span className="badge gray">gray</span>
         </div>
       </section>
+
+      <h3>modal</h3>
+      <section className="ref_section">
+        <h4>각 모달마다 open에 대한 state와 openModal 함수가 필요함(상단 코드 참고)</h4>
+        <p>class에 modal이 기본, lg 넣으면 큰 사이즈</p>
+        <Button class="btn_primary" text="모달 기본사이즈" clickEvent={openModal} />
+        <Button class="btn_primary outline" text="모달 큰 사이즈" clickEvent={openModal2} />
+      </section>
+
+      <Modal class="modal" open={open} setOpen={setOpen} />
+      <Modal class="modal lg" open={open2} setOpen={setOpen2} />
+
     </section>
   );
 };

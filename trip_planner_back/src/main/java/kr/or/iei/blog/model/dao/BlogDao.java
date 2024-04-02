@@ -9,4 +9,6 @@ public interface BlogDao {
 
 	int insertBlog(Blog blog, String memberEmail);
 
+	int insertBlogDate(Blog blog);
+
 }

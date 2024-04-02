@@ -9,6 +9,9 @@ const BlogWrite = () => {
   const [member, setMember] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDateDay, setBlogDateDay] = useState([]);
+  const [thumbnail, setThumbnail] = useState("");
+
+  const [blogImg, setBlogImg] = useState(null);
 
   useEffect(() => {
     axios
@@ -28,7 +31,8 @@ const BlogWrite = () => {
       form.append("blogTitle", blogTitle);
       form.append("blogDateDay", blogDateDay);
       form.append("member", member);
-
+      console.log(blogTitle);
+      console.log(blogDateDay);
       axios
         .post(backServer + "/blog", form, {
           headers: {
@@ -41,13 +45,11 @@ const BlogWrite = () => {
           if (res.data.message === "success") {
             Navigate("/blogList");
           } else {
-            Swal.fire("메롱");
           }
         })
         .catch((res) => {
           console.log(res);
         });
-        */
     }
   };
   return (
@@ -58,8 +60,11 @@ const BlogWrite = () => {
         setBlogTitle={setBlogTitle}
         blogDateDay={blogDateDay}
         setBlogDateDay={setBlogDateDay}
+        thumbnail={thumbnail}
+        setThumbnail={setThumbnail}
+        blogImg={blogImg}
+        setBlogImg={setBlogImg}
         buttonFunction={write}
-        type="write"
       />
     </section>
   );

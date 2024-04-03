@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class TourTicket {
 	private int tourNo;
 	private int ticketAdult;
-	private int ticketTeen;
+	private int ticketYouth;
 	private int ticketChild;
 }

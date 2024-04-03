@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -25,5 +26,13 @@ public interface TourDao {
 	Tour selectOneTour(int tourNo);
 
 	int updateTour(Tour tour);
+
+	int getLastInsertTourNo();
+
+	int insertTourTicket(TourTicket tourTicket);
+
+	TourTicket selectTourTicket(int tourNo);
+
+	int modifyTourTicket(TourTicket tourTicket);
 	
 }

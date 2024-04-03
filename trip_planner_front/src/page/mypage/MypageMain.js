@@ -16,6 +16,8 @@ import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
 import CreateTrips from "./CreateTrips";
+import TourTicket from "./../tour/TourTicket";
+import TourTicketModify from "./../tour/TourTicketModify";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -128,6 +130,11 @@ const MypageMain = (props) => {
             <Route path="/tour/reg" element={<TourReg />} />
             <Route path="/tour/sale" element={<TourSale member={member} />} />
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
+            <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
+            <Route
+              path="/tour/ticket/modify/:tourNo"
+              element={<TourTicketModify />}
+            />
           </Routes>
         </div>
       </section>

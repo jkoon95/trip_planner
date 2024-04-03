@@ -8,4 +8,14 @@
   <select id="getPartnerNo" resultType="int">
   	select partner_no from partner_tbl where member_no=#{memberNo}
   </select>
+  
+  <select id="selectInnInfo" resultType="selectInnInfo">
+  	SELECT 
+	    ROOM_NO, ROOM_NAME, ROOM_MIN_PEOPLE, ROOM_MAX_PEOPLE, ROOM_PRICE,
+	    (SELECT PARTNER_NAME FROM PARTNER_TBL WHERE PARTNER_NO=(SELECT PARTNER_NO FROM INN_TBL WHERE INN_NO=#{innNo})) PARTNER_NAME,
+	    (SELECT INN_CHECK_IN_TIME FROM INN_TBL WHERE INN_NO=#{innNo}) INN_CHECK_IN_TIME,
+	    (SELECT INN_CHECK_OUT_TIME FROM INN_TBL WHERE INN_NO=#{innNo}) INN_CHECK_OUT_TIME,
+	    (SELECT INN_FILEPATH FROM INN_FILE_TBL WHERE INN_FILE_NO = (SELECT MIN(INN_FILE_NO) FROM INN_FILE_TBL WHERE INN_NO=#{innNo})) INN_FILEPATH
+	FROM ROOM_TBL WHERE ROOM_NO=#{roomNo}
+  </select>
 </mapper>

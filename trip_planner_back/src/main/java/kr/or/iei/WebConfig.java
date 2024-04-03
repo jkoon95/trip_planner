@@ -31,12 +31,15 @@ public class WebConfig implements WebMvcConfigurer{
 		registry
 		.addResourceHandler("/tour/thumbnail/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/tour/");
+		registry
+		.addResourceHandler("/inn/reservationInn/**")
+		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**")				
-				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth","/bloglist/*","/tour/thumbnail/*","/blog/editor/*","/inn/innList/*");
+				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth","/bloglist/*","/tour/thumbnail/*","/blog/editor/*","/inn/innList/*","/inn/reservationInn/*");
 
 	}
 	

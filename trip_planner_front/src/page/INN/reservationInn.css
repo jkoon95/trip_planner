@@ -1,0 +1,112 @@
+.reservation-all-wrap {
+  width: 1250px;
+  margin: 0 auto;
+}
+.reservation-wrap > div:last-child {
+  display: flex;
+}
+.reservation-content-wrap {
+  width: 800px;
+}
+.reservation-top {
+  display: flex;
+}
+.reservation-top > a > span {
+  line-height: 31px;
+}
+.reservation-top > .toMain {
+  font-size: 24px;
+}
+.reservation-guest-zone {
+  margin-top: 50px;
+}
+.reservation-guest-zone > .reservation-guest-zone-top {
+  font-family: pt-b;
+  font-size: 20px;
+}
+.reservation-guest-name {
+  margin-top: 50px;
+}
+.reservation-guest-name > .guest-name {
+  font-family: pt-b;
+}
+.reservation-guest-zone input {
+  padding-left: 5px;
+  width: 600px;
+}
+.reservation-guest-zone input::placeholder {
+  font-size: 14px;
+}
+.reservation-guest-phone {
+  margin-top: 50px;
+}
+.reservation-guest-phone > .guest-phone {
+  font-family: pt-b;
+}
+.reservation-guest-wish {
+  margin-top: 50px;
+}
+.reservation-guest-wish > .guest-wish {
+  font-family: pt-b;
+}
+.reservation-promotion-connect {
+  margin-top: 50px;
+}
+.promotion-connect-box {
+  background-color: #e9511c;
+  border: 1px solid #e9511c;
+  padding: 20px;
+  color: #ffffffec;
+  border-radius: 15px;
+  position: relative;
+  font-family: pt-r;
+  width: 750px;
+}
+.promotion-connect-box > p {
+  font-size: 14px;
+}
+.promotion-connect {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 40px;
+  cursor: pointer;
+}
+.reservation-payment-zone {
+  margin: 50px 0px;
+}
+.reservation-payment-zone > .payment-title {
+  display: block;
+  margin-bottom: 20px;
+  font-family: pt-b;
+}
+.payment-box {
+  display: flex;
+  height: 50px;
+}
+.payment-box > div {
+  width: 120px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.payment-box > div > img {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  height: 100%;
+  object-fit: contain;
+}
+.payment-box > div > .tosspay {
+  padding: 10px;
+}
+.payment-box > .danal-pay > .danal {
+  display: block;
+  text-align: center;
+  line-height: 50px;
+}
+.payment-box > div:hover {
+  background-color: #f5f5f5ec;
+  transition-duration: 0.3s;
+}

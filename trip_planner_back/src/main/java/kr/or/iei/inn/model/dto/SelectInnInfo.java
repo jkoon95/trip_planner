@@ -1,24 +1,21 @@
 package kr.or.iei.inn.model.dto;
 
-import org.apache.ibatis.type.Alias;
-
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias("room")
-public class Room {
+
+public class SelectInnInfo {
 	private int roomNo;
-	private int innNo;
 	private String roomName;
+	private int roomMinPeople;
 	private int roomMaxPeople;
 	private String roomPrice;
-	private String etcOption;
-	private int roomMinPeople;
-	
-	private String[] hashTagName;
-	private String[] optionNo;
+	private String partnerName;
+	private String innCheckInTime;
+	private String innCheckOutTime;
+	private String innFilepath;
 }

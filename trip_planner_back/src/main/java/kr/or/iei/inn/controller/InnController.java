@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import kr.or.iei.inn.model.dto.Option;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
+import kr.or.iei.inn.model.dto.SelectInnInfo;
 import kr.or.iei.inn.model.service.InnService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
@@ -52,7 +54,7 @@ public class InnController {
 		int partnerNo = partnerService.getPartnerNo(memberNo);
 		inn.setPartnerNo(partnerNo);
 	
-		String savepath = root+"/inn";
+		String savepath = root+"/inn/";
 		ArrayList<InnFile> fileList = new ArrayList<InnFile>();
 		if(innFile != null) {
 			for(MultipartFile file : innFile) {
@@ -91,7 +93,7 @@ public class InnController {
 		int partnerNo = partnerService.getPartnerNo(memberNo);
 		int innNo = innService.getInnNo(partnerNo);
 		room.setInnNo(innNo);
-		String savepath = root+"/room";
+		String savepath = root+"/room/";
 		String[] optionNo = room.getOptionNo();
 		String[] hashTagName = room.getHashTagName();
 		int[] newOptionNo = Arrays.stream(optionNo).mapToInt(Integer::parseInt).toArray();
@@ -108,6 +110,18 @@ public class InnController {
 		int result = innService.insertRoom(room,fileList,newOptionNo,hashTagName, roomOption, roomHashTag);
 		if(result == 1+fileList.size()+newOptionNo.length+hashTagName.length) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping("/selectInnInfo/{roomNo}/{innNo}")
+	public ResponseEntity<ResponseDTO> selectInnInfo(@PathVariable int roomNo, @PathVariable int innNo){
+		SelectInnInfo si = partnerService.selectInnInfo(roomNo, innNo);
+		if(si != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", si);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

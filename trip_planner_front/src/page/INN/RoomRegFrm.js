@@ -28,6 +28,8 @@ const RoomRegFrm = (props) => {
   const optionList = props.option;
   const newOptionValue = props.newOptionValue;
   const setNewOptionValue = props.setNewOptionValue;
+  const roomMinPeople = props.roomMinPeople;
+  const setRoomMinPeople = props.setRoomMinPeople;
 
   console.log(optionList);
   const roomImg = props.roomImg;
@@ -57,11 +59,11 @@ const RoomRegFrm = (props) => {
         <Link to="/">
           <span className="material-icons">arrow_back</span>
         </Link>
-        <div className="toMain">방등록</div>
+        <div className="toMain">객실 등록</div>
       </div>
       <div className="room-reg-content">
         <div className="room-name-zone">
-          <div className="room-name-title">룸 이름</div>
+          <div className="room-name-title">객실 이름</div>
           <RoomInput
             type="text"
             data={roomName}
@@ -71,7 +73,7 @@ const RoomRegFrm = (props) => {
         </div>
         <div className="room-reg-img-wrap">
           <div className="room-reg-image-wrap-title">
-            룸 사진등록<sub>(최대 6장 등록 가능)</sub>
+            객실 사진등록<sub>(최대 6장 등록 가능)</sub>
           </div>
           <div className="room-reg-image">
             {roomImg.map((item, index) => {
@@ -89,15 +91,21 @@ const RoomRegFrm = (props) => {
             })}
           </div>
         </div>
+        <div className="room-reg-min-people-wrap">
+          <div className="room-reg-min-people-wrap-title">기준 인원수</div>
+          <div>
+            <SelectMinPeople data={roomMinPeople} setData={setRoomMinPeople} />
+          </div>
+        </div>
         <div className="room-reg-max-people-wrap">
-          <div className="room-reg-max-people-wrap-title">룸 최대 인원수</div>
+          <div className="room-reg-max-people-wrap-title">객실 최대 인원수</div>
           <div>
             <SelectMaxPeople data={roomMaxPeople} setData={setRoomMaxPeople} />
           </div>
         </div>
         <div className="room-reg-price-wrap">
           <div className="room-reg-price-title">
-            룸 가격 <sub>(* 1박 기준)</sub>
+            객실 가격 <sub>(* 1박 기준)</sub>
           </div>
           <div>
             <RoomInput
@@ -112,8 +120,8 @@ const RoomRegFrm = (props) => {
         </div>
         <div className="room-reg-hashtag-wrap">
           <div className="room-reg-hashtag-title">
-            룸 해시테그
-            <sub> (* 해당 룸에 대한 해시태그를 작성해주세요)</sub>
+            객실 해시테그
+            <sub> (* 해당 객실에 대한 해시태그를 작성해주세요)</sub>
           </div>
           <div>
             <div className="room-reg-hashtag-input">
@@ -154,7 +162,7 @@ const RoomRegFrm = (props) => {
         </div>
         <div className="room-reg-option-wrap">
           <div className="room-reg-option-title">
-            룸 기본옵션 <sub>(* 기본 옵션을 선택해주세요)</sub>
+            객실 기본옵션 <sub>(* 기본 옵션을 선택해주세요)</sub>
           </div>
           <div className="option-box">
             <div className="room-reg-option-content">
@@ -265,7 +273,32 @@ const RoomImgReg = (props) => {
     </>
   );
 };
-
+const SelectMinPeople = (props) => {
+  const data = props.data;
+  const setData = props.setData;
+  const changeValue = (e) => {
+    setData(e.target.value);
+  };
+  return (
+    <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">인원</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={data}
+          label="인원"
+          onChange={changeValue}
+        >
+          <MenuItem value={2}>2인</MenuItem>
+          <MenuItem value={4}>4인</MenuItem>
+          <MenuItem value={6}>6인</MenuItem>
+          <MenuItem value={8}>8인</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
+};
 const SelectMaxPeople = (props) => {
   const data = props.data;
   const setData = props.setData;

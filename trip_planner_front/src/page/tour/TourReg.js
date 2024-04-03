@@ -7,6 +7,7 @@ import TourFrm from "./TourFrm";
 
 const TourReg = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   // 이름,유형,주소,판매수량,판매기간 -> 사용자에게 받아야하는 정보 -> state생성(데이터 전송용)
   const [tourName, setTourName] = useState("");
   const [tourType, setTourType] = useState("");
@@ -18,7 +19,6 @@ const TourReg = () => {
   const [tourIntro, setTourIntro] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [intronail, setIntronail] = useState(null);
-  const navigate = useNavigate();
 
   const reg = () => {
     // console.log(tourName);
@@ -55,8 +55,9 @@ const TourReg = () => {
         })
         .then((res) => {
           if (res.data.message === "success") {
-            Swal.fire("이용권 등록을 위해 상품 수정 페이지로 이동합니다.");
-            navigate("/mypage/tour/edit");
+            const tourNo = res.data.data; // 등록한 투어의 tourNo를 서버 응답에서 받아옴
+            Swal.fire("이용권 등록을 위해 이용권 등록 페이지로 이동합니다.");
+            navigate("/mypage/tour/ticket/" + tourNo);
           } else {
             Swal.fire("입력값을 다시 확인해주세요.");
           }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.tour.model.dao.TourDao;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -62,6 +63,24 @@ public class TourService {
 	@Transactional
 	public int updateTour(Tour tour) {
 		return tourDao.updateTour(tour);
+	}
+
+	public int getLastInsertTourNo() {
+		return tourDao.getLastInsertTourNo();
+	}
+	
+	@Transactional
+	public int insertTourTicket(TourTicket tourTicket) {
+		return tourDao.insertTourTicket(tourTicket);
+	}
+
+	public TourTicket selectTourTicket(int tourNo) {
+		return tourDao.selectTourTicket(tourNo);
+	}
+
+	@Transactional
+	public int modifyTourTicket(TourTicket tourTicket) {
+		return tourDao.modifyTourTicket(tourTicket);
 	}
 
 	

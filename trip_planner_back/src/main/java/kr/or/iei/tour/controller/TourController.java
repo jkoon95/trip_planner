@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.tour.model.service.TourService;
 import kr.or.iei.util.FileUtils;
 
@@ -57,7 +58,10 @@ public class TourController {
 		
 		int result = tourService.insertTour(tour,memberEmail);
 		if(result == 1) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			// 등록한 투어상품 번호를 찾기
+			int tourNo = tourService.getLastInsertTourNo();
+			
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tourNo);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		} else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
@@ -116,6 +120,38 @@ public class TourController {
 			}
 		}
 		int result = tourService.updateTour(tour);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping(value="/ticket")
+	public ResponseEntity<ResponseDTO> insertTourTicket(@ModelAttribute TourTicket tourTicket){
+//		System.out.println(tourTicket);
+		int result = tourService.insertTourTicket(tourTicket);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping(value="/ticket/{tourNo}")
+	public ResponseEntity<ResponseDTO> selectTourTicket(@PathVariable int tourNo){
+		TourTicket tourTicket = tourService.selectTourTicket(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tourTicket);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PatchMapping(value="/ticket")
+	public ResponseEntity<ResponseDTO> modifyTourTicket(@ModelAttribute TourTicket tourTicket){
+		int result = tourService.modifyTourTicket(tourTicket);
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

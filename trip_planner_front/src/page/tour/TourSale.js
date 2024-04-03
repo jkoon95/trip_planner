@@ -110,6 +110,10 @@ const TourSale = ({ member }) => {
     navigate("/mypage/tour/edit/" + tourNo);
   };
 
+  const goToTicketPage = (tourNo) => {
+    navigate("/mypage/tour/ticket/modify/" + tourNo);
+  };
+
   return (
     <section className="contents">
       <div className="tour-reg-wrap">
@@ -125,6 +129,7 @@ const TourSale = ({ member }) => {
                 toggleStatus={toggleStatus}
                 deleteTour={deleteTour}
                 edit={edit}
+                goToTicketPage={goToTicketPage}
               />
             );
           })}
@@ -141,7 +146,7 @@ const TourSale = ({ member }) => {
   );
 };
 
-const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
+const TourItem = ({ tour, toggleStatus, deleteTour, edit, goToTicketPage }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const tourView = () => {
@@ -180,6 +185,14 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
           </div>
         </div>
         <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div>
+        <div className="tour-item-ticket">
+          <button
+            className="btn_secondary sm"
+            onClick={() => goToTicketPage(tour.tourNo)}
+          >
+            이용권 관리
+          </button>
+        </div>
         <div className="tour-item-btn-box">
           <button className="btn_primary sm" onClick={() => edit(tour.tourNo)}>
             수정

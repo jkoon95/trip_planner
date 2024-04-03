@@ -144,7 +144,7 @@ const SelectPartnerType = (props) => {
           onChange={changePartnerType}
         >
           <MenuItem value={1}>숙소</MenuItem>
-          <MenuItem value={2}>레저</MenuItem>
+          <MenuItem value={2}>투어</MenuItem>
         </Select>
       </FormControl>
     </div>

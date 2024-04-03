@@ -76,7 +76,7 @@ const TourEdit = () => {
       .then((res) => {
         if (res.data.message === "success") {
           Swal.fire("정상적으로 수정되었습니다.");
-          navigate("/");
+          navigate("/mypage/tour/sale");
         }
       })
       .catch((res) => {

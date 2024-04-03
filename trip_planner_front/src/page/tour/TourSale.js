@@ -14,7 +14,7 @@ const TourSale = ({ member }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("회원번호 : " + memberNo);
+    // console.log("회원번호 : " + memberNo);
     if (!member) {
       navigate("/");
       return;
@@ -23,7 +23,7 @@ const TourSale = ({ member }) => {
     axios
       .get(backServer + "/tour/sale/" + reqPage + "/" + memberNo)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setTourSale(res.data.data.tourSale);
         setPageInfo(res.data.data.pi);
       })
@@ -33,8 +33,8 @@ const TourSale = ({ member }) => {
   }, [memberNo, reqPage]);
 
   const toggleStatus = (tourNo, salesStatus) => {
-    console.log(tourNo);
-    console.log(salesStatus);
+    // console.log(tourNo);
+    // console.log(salesStatus);
     Swal.fire({
       icon: "question",
       text: "판매 상태를 전환하시겠습니까?",
@@ -47,7 +47,7 @@ const TourSale = ({ member }) => {
           axios
             .patch(backServer + "/tour/status/" + tourNo + "/" + salesStatus)
             .then((res) => {
-              console.log(res.data);
+              // console.log(res.data);
               // 성공적으로 상태가 변경되면 해당 투어 상품을 업데이트
               const updateStatus = tourSale.map((tour) => {
                 if (tour.tourNo === tourNo) {
@@ -72,7 +72,7 @@ const TourSale = ({ member }) => {
   };
 
   const deleteTour = (tour) => {
-    console.log(tour.tourNo);
+    // console.log(tour.tourNo);
     Swal.fire({
       icon: "warning",
       text: "상품을 삭제하시겠습니까?",
@@ -90,7 +90,7 @@ const TourSale = ({ member }) => {
               axios
                 .get(backServer + "/tour/sale/" + reqPage + "/" + memberNo)
                 .then((res) => {
-                  console.log(res.data);
+                  // console.log(res.data);
                   setTourSale(res.data.data.tourSale);
                   setPageInfo(res.data.data.pi);
                 })
@@ -150,7 +150,7 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
   return (
     <div className="tour-item">
       <div className="tour-item-img">
-        {tour.tourImg === null ? (
+        {tour.tourImg === null || tour.tourImg === "null" ? (
           <img
             onClick={tourView}
             alt="기본이미지"
@@ -172,7 +172,11 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit }) => {
             className="tour-item-status"
             onClick={() => toggleStatus(tour.tourNo, tour.salesStatus)}
           >
-            {tour.salesStatus === 2 ? "준비중" : "판매중"}
+            {tour.salesStatus === 2 ? (
+              <span className="badge gray">준비중</span>
+            ) : (
+              <span className="badge blue">판매중</span>
+            )}
           </div>
         </div>
         <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div>

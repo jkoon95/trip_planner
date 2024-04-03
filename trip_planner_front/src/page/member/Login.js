@@ -15,14 +15,11 @@ const Login = (props) => {
   const login = () => {
     if (memberEmail !== "" && memberPw !== "") {
       const obj = { memberEmail, memberPw };
-      console.log(backServer);
       axios
         .post(backServer + "/member/login", obj)
         .then((res) => {
           if (res.data.message === "success") {
-            console.log("로그인 성공");
             loginFunction(res.data.data);
-            console.log(res.data.data);
             Swal.fire({
               title: "로그인 성공",
               text: "로그인을 성공했습니다",
@@ -53,19 +50,16 @@ const Login = (props) => {
       window.Kakao.Auth.login({
         scope: "account_email",
         success: function (authObj) {
-          console.log(authObj);
           window.Kakao.API.request({
             url: "/v2/user/me",
             success: (res) => {
               const kakaoEmail = res.kakao_account.email;
               const obj = kakaoEmail.split("@");
               const arr = { memberId: obj[0], memberDomain: obj[1] };
-              console.log(obj);
               axios
                 .post(backServer + "/member/kakaoLogin", arr)
                 .then((res) => {
                   if (res.data.message === "success") {
-                    console.log("카카오 로그인 성공");
                     loginFunction(res.data.data);
                     navigate("/");
                   }
@@ -95,6 +89,7 @@ const Login = (props) => {
               placeholder="abc@google.com"
               data={memberEmail}
               setData={setMemberEmail}
+              keyDownEvent={login}
             />
           </div>
         </div>
@@ -108,6 +103,7 @@ const Login = (props) => {
               content="memberPw"
               data={memberPw}
               setData={setMemberPw}
+              keyDownEvent={login}
             />
           </div>
         </div>

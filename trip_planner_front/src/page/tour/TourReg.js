@@ -21,11 +21,11 @@ const TourReg = () => {
   const navigate = useNavigate();
 
   const reg = () => {
-    console.log(tourName);
-    console.log(tourType);
-    console.log(tourAddr);
-    console.log(thumbnail);
-    console.log(intronail);
+    // console.log(tourName);
+    // console.log(tourType);
+    // console.log(tourAddr);
+    // console.log(thumbnail);
+    // console.log(intronail);
 
     if (tourName !== "" && tourType !== "" && tourAddr !== "") {
       // 전송용 form객체 생성

@@ -10,6 +10,7 @@ const RoomReg = (props) => {
   const isLogin = props.isLogin;
   const [roomName, setRoomName] = useState("");
   const [roomMaxPeople, setRoomMaxPeople] = useState("");
+  const [roomMinPeople, setRoomMinPeople] = useState("");
   const [roomPrice, setRoomPrice] = useState("");
   const [etcOption, setEtcOption] = useState("");
   const [hashTagOption, setHashTagOption] = useState([]);
@@ -46,6 +47,7 @@ const RoomReg = (props) => {
     console.log(newOptionValue);
     const form = new FormData();
     form.append("roomName", roomName);
+    form.append("roomMinPeople", roomMinPeople);
     form.append("roomMaxPeople", roomMaxPeople);
     form.append("roomPrice", roomPrice);
     for (let i = 0; i < hashTagOption.length; i++) {
@@ -90,6 +92,8 @@ const RoomReg = (props) => {
       <RoomRegFrm
         roomName={roomName}
         setRoomName={setRoomName}
+        roomMinPeople={roomMinPeople}
+        setRoomMinPeople={setRoomMinPeople}
         roomMaxPeople={roomMaxPeople}
         setRoomMaxPeople={setRoomMaxPeople}
         roomPrice={roomPrice}

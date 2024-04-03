@@ -31,10 +31,12 @@
 	<insert id="insertRoom">
 		insert into room_tbl values
 		(room_seq.nextval,
-		#{innNo},#{roomName},
+		#{innNo},
+		#{roomName},
 		#{roomMaxPeople},
 		#{roomPrice},
-		#{etcOption})
+		#{etcOption},
+		#{roomMinPeople})
 		<selectKey resultType="int" keyProperty="roomNo" order="AFTER">
 			select max(room_no) from room_tbl
 		</selectKey>

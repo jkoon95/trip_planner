@@ -50,7 +50,8 @@
 			tour_img,
 			tour_intro,
 			sales_count,
-			to_char(sales_period,'yyyy-mm-dd') as sales_period
+			to_char(sales_period,'yyyy-mm-dd') as sales_period,
+			sales_status
 		from tour_tbl where tour_no = #{tourNo}
 	</select>
 	<update id="updateTour">
@@ -62,6 +63,23 @@
 			tour_intro = #{tourIntro},
 			sales_count = #{salesCount},
 			sales_period = #{salesPeriod}
+		where tour_no = #{tourNo}
+	</update>
+	<select id="getLastInsertTourNo" resultType="int">
+		SELECT MAX(TOUR_NO) AS LAST_INSERTED_TOUR_NO FROM TOUR_TBL
+	</select>
+	<insert id="insertTourTicket">
+		insert into tour_ticket_tbl values
+		(#{tourNo}, #{ticketAdult}, #{ticketYouth}, #{ticketChild})
+	</insert>
+	<select id="selectTourTicket" resultType="tourTicket">
+		SELECT tour_no, ticket_adult, ticket_youth, ticket_child FROM TOUR_TICKET_TBL WHERE TOUR_NO = #{tourNo}
+	</select>
+	<update id="modifyTourTicket">
+		update tour_ticket_tbl set
+			ticket_adult = #{ticketAdult},
+			ticket_youth = #{ticketYouth},
+			ticket_child = #{ticketChild}
 		where tour_no = #{tourNo}
 	</update>
 </mapper>

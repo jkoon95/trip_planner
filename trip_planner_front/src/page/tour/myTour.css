@@ -125,9 +125,52 @@
   cursor: pointer;
 }
 .tour-item .tour-item-info .tour-item-count {
-  margin-bottom: 48px;
+  font-family: pt-b;
+  color: #e9511c;
+  margin-bottom: 24px;
+}
+
+.tour-item-ticket > button {
+  margin-bottom: 10px;
 }
 
 .tour-item .tour-item-info .tour-item-btn-box > button {
   margin-right: 10px;
+}
+
+/* 투어 이용권 관리 */
+.tour-ticket-info-tbl {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.tour-ticket-info-tbl tr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  margin: 24px 0;
+}
+.tour-ticket-info-tbl td:first-child {
+  min-width: 280px;
+  font-family: pt-b;
+  flex-grow: 1; /* 첫 번째 td는 왼쪽에 위치하도록 설정 */
+}
+.tour-ticket-info-tbl td:last-child {
+  width: auto;
+  flex-grow: 2; /* 두 번째 td는 오른쪽에 위치하도록 설정 */
+}
+.tour-ticket-info-tbl td input {
+  border-bottom: 1px solid #000;
+  padding: 10px 0;
+  font-size: 18px;
+  width: 160px;
+}
+
+/* 티켓 등록버튼 */
+.tour-reg-wrap .handle-ticket-btn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
 }

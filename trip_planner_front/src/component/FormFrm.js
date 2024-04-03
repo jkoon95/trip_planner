@@ -16,11 +16,6 @@ const Input = (props) => {
   const changeData = (e) => {
     setData(e.target.value);
   };
-  const enterKeyEvent = (e) => {
-    if(e.key === "Enter"){
-      keyDownEvent();
-    }
-  }
   if (readonly === "readonly") {
     return (
       <input
@@ -58,7 +53,7 @@ const Input = (props) => {
         onKeyUp={keyupEvent}
         onClick={clickEvent}
         onBlur={blurEvent}
-        onKeyDown={enterKeyEvent}
+        onKeyDown={keyDownEvent}
       />
     );
   }

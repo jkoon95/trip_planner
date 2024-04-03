@@ -73,6 +73,11 @@ const Login = (props) => {
       });
     };
   };
+  const loginKeyDownEvnet = (e) => {
+    if(e.key === "Enter"){
+      login();
+    }
+  }
   console.clear();
   return (
     <section className="contents login">
@@ -89,7 +94,7 @@ const Login = (props) => {
               placeholder="abc@google.com"
               data={memberEmail}
               setData={setMemberEmail}
-              keyDownEvent={login}
+              keyDownEvent={loginKeyDownEvnet}
             />
           </div>
         </div>
@@ -103,7 +108,7 @@ const Login = (props) => {
               content="memberPw"
               data={memberPw}
               setData={setMemberPw}
-              keyDownEvent={login}
+              keyDownEvent={loginKeyDownEvnet}
             />
           </div>
         </div>

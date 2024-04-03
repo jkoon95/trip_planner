@@ -16,6 +16,9 @@ import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
 import CreateTrips from "./CreateTrips";
+import TourTicket from "./../tour/TourTicket";
+import TourTicketModify from "./../tour/TourTicketModify";
+import CouponReg from "../admin/CouponReg";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -46,7 +49,7 @@ const MypageMain = (props) => {
             { url: "memberMgmt", text: "회원 관리", active: true },
             { url: "partnerMgmt", text: "업체 관리", active: false },
             { url: "promotionMgmt", text: "프로모션 관리", active: false },
-            { url: "couponReg", text: "쿠폰 등록", active: false },
+            { url: "admin/couponReg", text: "쿠폰 등록", active: false },
           ]);
           // navigate("/mypage/memberMgmt");
         } else if (res.data.data.memberType === 2) {
@@ -135,6 +138,12 @@ const MypageMain = (props) => {
             <Route path="/tour/reg" element={<TourReg />} />
             <Route path="/tour/sale" element={<TourSale member={member} />} />
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
+            <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
+            <Route
+              path="/tour/ticket/modify/:tourNo"
+              element={<TourTicketModify />}
+            />
+            <Route path="/admin/couponReg" element={<CouponReg />} />
           </Routes>
         </div>
       </section>

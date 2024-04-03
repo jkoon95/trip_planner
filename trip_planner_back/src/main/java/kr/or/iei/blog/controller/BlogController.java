@@ -59,14 +59,7 @@ public class BlogController {
 		System.out.println(blog);
 		String savepath = root + "/blogEditor/";	
 		blog.setBlogThumbnail(savepath);
-		int result = blogService.insertBlog(blog);
 		
-		if(result == 1) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		}else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		}
+		return null;
 	}
 }

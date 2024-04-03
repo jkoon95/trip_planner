@@ -15,6 +15,7 @@ import RoomReg from "../INN/RoomReg";
 import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
+import CreateTrips from "./CreateTrips";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -105,27 +106,32 @@ const MypageMain = (props) => {
   ]);
 
   return (
-    <section className="contents mypage">
-      <div className="side_wrap">
-        <h2>마이페이지</h2>
-        <MypageSideMenu menus={menus} setMenus={setMenus} />
-      </div>
-      <div className="content_wrap">
-        <Routes>
-          <Route path="/myBooks" element={<MyBooks />} />
-          <Route path="/myTrips" element={<MyTrips />} />
-          <Route path="/myCoupons" element={<MyCoupons />} />
-          <Route path="/myLikes" element={<MyLikes />} />
-          <Route path="/myReviews" element={<MyReviews />} />
-          <Route path="/myInfo" element={<MyInfo />} />
-          <Route path="/innReg" element={<InnReg member={member} />} />
-          <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
-          <Route path="/tour/reg" element={<TourReg />} />
-          <Route path="/tour/sale" element={<TourSale member={member} />} />
-          <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
-        </Routes>
-      </div>
-    </section>
+    <>
+      <Routes>
+        <Route path="/createTrips" element={<CreateTrips />} />
+      </Routes>
+      <section className="contents mypage">
+        <div className="side_wrap">
+          <h2>마이페이지</h2>
+          <MypageSideMenu menus={menus} setMenus={setMenus} />
+        </div>
+        <div className="content_wrap">
+          <Routes>
+            <Route path="/myBooks" element={<MyBooks />} />
+            <Route path="/myTrips" element={<MyTrips />} />
+            <Route path="/myCoupons" element={<MyCoupons />} />
+            <Route path="/myLikes" element={<MyLikes />} />
+            <Route path="/myReviews" element={<MyReviews />} />
+            <Route path="/myInfo" element={<MyInfo />} />
+            <Route path="/innReg" element={<InnReg member={member} />} />
+            <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
+            <Route path="/tour/reg" element={<TourReg />} />
+            <Route path="/tour/sale" element={<TourSale member={member} />} />
+            <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
+          </Routes>
+        </div>
+      </section>
+    </>
   );
 };
 

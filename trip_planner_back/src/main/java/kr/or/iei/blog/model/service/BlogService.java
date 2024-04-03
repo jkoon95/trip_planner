@@ -12,12 +12,4 @@ public class BlogService {
 	@Autowired
 	private BlogDao blogDao;
 	
-	@Transactional
-	public int insertBlog(Blog blog) {
-		int result = blogDao.insertBlog(blog);
-		if(result == 1) {
-			result = blogDao.insertBlogDate(blog);
-		}
-		return result;
-	}
 }

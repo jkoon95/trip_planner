@@ -21,9 +21,8 @@ const CreateTrips = (props) => {
   const [searchPlaces, setSearchPlaces] = useState("");
   const [openSearchWrap, setOpenSearchWrap] = useState(false);
   const [placeResultList, setPlaceResultList] = useState([]);
-  const [selectPlaceList, setSelectPlaceList] = useState([]);
-  const [selectPlaceListNo, setSelectPlaceListNo] = useState(-1);
-  const [tripRoute, setTripRoute] = useState(0);
+  const [detailListNo, setDetailListNo] = useState(-1);
+  const [tripRoute, setTripRoute] = useState(-1);
   const [openTodoModal, setOpenTodoModal] = useState(false);
   const [openCostModal, setOpenCostModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -49,17 +48,13 @@ const CreateTrips = (props) => {
   }
 
   const addTodoFunc = () => {
-    // console.log(todoDayIndex);
-    // console.log(todoIndex);
-    selectPlaceList[todoDayIndex][todoIndex].tripTodo = tripTodo;
-    setSelectPlaceList([...selectPlaceList]);
+    tripDetailList[todoDayIndex].selectPlaceList[todoIndex].tripTodo = tripTodo;
     setTripTodo("");
     setOpenTodoModal(false);
   }
 
   const addCostFunc = () => {
-    selectPlaceList[todoDayIndex].tripCost = tripCost;
-    setSelectPlaceList([...selectPlaceList])
+    tripDetailList[todoDayIndex].tripCost = tripCost;
     setTripCost("");
     setOpenCostModal(false);
   }
@@ -73,6 +68,12 @@ const CreateTrips = (props) => {
       setPlaceResultList([]);
     }
     setSearchPlaces(searchInput);
+  }
+
+  const searchKeyDownEvnet = (e) => {
+    if(e.key === "Enter"){
+      searchFunc();
+    }
   }
 
   // 지도
@@ -140,17 +141,12 @@ const CreateTrips = (props) => {
       });
       tripDays.length = 0;
       tripDetailList.length = 0;
-      // console.log(copyTripDetailList)
-      
-      
+
       const newTripDetailList = new Array();
-
-
       const newTripDate = new Array();
       const endDate = tripEndDate.format("YYYY-MM-DD");
       let tripDayCount = 0;
       while(true){
-        // console.log(tripDayCount,copyTripDetailList.length)
         const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");
         newTripDate.push(tripDate);
         if(tripDayCount < copyTripDetailList.length){
@@ -158,22 +154,17 @@ const CreateTrips = (props) => {
             const array = new Array();
 
             for(let i=tripDayCount;i<copyTripDetailList.length;i++){
-              for(let j=0;j<copyTripDetailList[i].length;j++){
-                array.push(copyTripDetailList[i][j]);
+              for(let j=0;j<copyTripDetailList[i].selectPlaceList.length;j++){
+                array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
-            // console.log(2)
             newTripDetailList.push({selectPlaceList : array});
           }else{
-            // console.log(1)
-
-            newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount]});
+            newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList});
           }
         }else{
-          // console.log(3);
-          newTripDetailList.push({})
+          newTripDetailList.push({selectPlaceList: []})
         }
-        
         if(tripDate === endDate){
           break;
         }
@@ -188,8 +179,6 @@ const CreateTrips = (props) => {
   const createTrips = () => {
     console.log("여행 등록하기!!!");
     console.log(tripList);
-    // console.log(selectPlaceList);
-    // console.log(tripDetailList[0]);
   }
   
   return (
@@ -212,7 +201,7 @@ const CreateTrips = (props) => {
                     }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
-                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
+                    }} format="YYYY-MM-DD" disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
@@ -221,7 +210,7 @@ const CreateTrips = (props) => {
               {
                 tripDetailList.map((item, index) => {
                   return(
-                    <SetDayWrap key={"day" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenSearchWrap={setOpenSearchWrap} setSelectPlaceListNo={setSelectPlaceListNo} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripTodo={setTripTodo} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} />
+                    <SetDayWrap key={"day" + index} tripDetailItem={item} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripTodo={setTripTodo} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} />
                   );
                 })
               }
@@ -236,7 +225,7 @@ const CreateTrips = (props) => {
               <div className="search_wrap">
                 <div className="search_input_wrap">
                   <div className="search_input">
-                    <Input type="text" data={searchInput} setData={setSearchInput} placeholder="여행지나 숙소를 검색해보세요" keyDownEvent={searchFunc} />
+                    <Input type="text" data={searchInput} setData={setSearchInput} placeholder="여행지나 숙소를 검색해보세요" keyDownEvent={searchKeyDownEvnet} />
                     <button type="button" className="btn_search" onClick={searchFunc}><span className="hidden">검색</span></button>
                   </div>
                 </div>
@@ -247,7 +236,7 @@ const CreateTrips = (props) => {
                       {
                         placeResultList.map((place, index) => {
                           return(
-                            <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} />
+                            <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );
                         })
                       }
@@ -297,14 +286,12 @@ const CreateTrips = (props) => {
 }
 
 const SetDayWrap = (props) => {
+  const tripDetailItem = props.tripDetailItem;
   const tripDetailList = props.tripDetailList;
   const setTripDetailList = props.setTripDetailList;
   const dayIndex = props.dayIndex;
   const tripDays = props.tripDays;
-  const selectPlaceList = props.selectPlaceList;
-  const setSelectPlaceList = props.setSelectPlaceList;
   const setOpenSearchWrap = props.setOpenSearchWrap;
-  const setSelectPlaceListNo = props.setSelectPlaceListNo;
   const setOpenTodoModal = props.setOpenTodoModal;
   const setModalTitle = props.setModalTitle;
   const setTodoDayIndex = props.setTodoDayIndex;
@@ -313,10 +300,11 @@ const SetDayWrap = (props) => {
   const setTripTodo = props.setTripTodo;
   const setTripCost = props.setTripCost;
   const setOpenCostModal = props.setOpenCostModal;
+  const setDetailListNo = props.setDetailListNo;
 
   const openSearchWrapFunc = () => {
     setOpenSearchWrap(true);
-    setSelectPlaceListNo(dayIndex);
+    setDetailListNo(dayIndex);
     setSearchInput("");
   }
 
@@ -324,7 +312,7 @@ const SetDayWrap = (props) => {
     document.body.classList.add("scroll_fixed");
     setModalTitle("Day "+(dayIndex+1));
     setTodoDayIndex(dayIndex);
-    setTripCost(selectPlaceList[dayIndex].tripCost);
+    setTripCost(tripDetailItem.tripCost);
     setOpenCostModal(true);
   }
 
@@ -334,20 +322,20 @@ const SetDayWrap = (props) => {
     <div className="set_day_wrap">
       <div className="day_title_wrap">
         <div className="day_title">Day {dayIndex+1}<span className="tripDay">{tripDays}</span></div>
-        {/* {
-          selectPlaceList[dayIndex].tripCost ? (
-            <button type="button" className="btn_tripCost on" onClick={openCostModalFunc}>{selectPlaceList[dayIndex].tripCost}</button>
+        {
+          tripDetailItem.tripCost ? (
+            <button type="button" className="btn_tripCost on" onClick={openCostModalFunc}>{tripDetailItem.tripCost}</button>
           ) : (
             <button type="button" className="btn_tripCost" onClick={openCostModalFunc}>비용 추가</button>
           )
-        } */}
+        }
       </div>
       <div className="day_items_wrap">
         <ul className="place_list">
           {
-            selectPlaceList.map((item, index) => {
+            tripDetailItem.selectPlaceList.map((item, index) => {
               return (
-                <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
+                <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
             })
           }
@@ -368,8 +356,6 @@ const ItemTripPlace = (props) => {
   const routeIndex = props.routeIndex;
   const thisIndex = props.thisIndex;
   const place = props.place;
-  const selectPlaceList = props.selectPlaceList;
-  const setSelectPlaceList = props.setSelectPlaceList;
   const listType = props.listType;
   const setOpenTodoModal = props.setOpenTodoModal;
   const setModalTitle = props.setModalTitle;
@@ -377,18 +363,18 @@ const ItemTripPlace = (props) => {
   const setTodoIndex = props.setTodoIndex;
   const setOpenSearchWrap = props.setOpenSearchWrap;
   const setTripTodo = props.setTripTodo;
+  const tripDays = props.tripDays;
 
   const addPlaceFunc = () => {
-    setSelectPlaceList([...selectPlaceList, {tripDetailNo: thisIndex, tripRoute: routeIndex, tripPlace: place}]);
-    tripDetailList[thisIndex].selectPlaceList = {tripDetailNo: thisIndex, tripRoute: routeIndex, tripPlace: place};
+    tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
+    tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
-    setSelectPlaceList([]);
   }
 
   const openTodoModalFunc = () => {
     document.body.classList.add("scroll_fixed");
-    setModalTitle(place.place_name);
+    setModalTitle(place.tripPlace.place_name);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
@@ -397,15 +383,15 @@ const ItemTripPlace = (props) => {
   const modifyTodo = () => {
     document.body.classList.add("scroll_fixed");
     setTripTodo(place.tripTodo);
-    setModalTitle(place.place_name);
+    setModalTitle(place.tripPlace.place_name);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
   }
 
   const deleteTodo = () => {
-    selectPlaceList[thisIndex][routeIndex].tripTodo = "";
-    setSelectPlaceList([...selectPlaceList]);
+    tripDetailList[thisIndex].selectPlaceList[routeIndex].tripTodo = "";
+    setTripDetailList([...tripDetailList]);
     setTripTodo("");
   }
 

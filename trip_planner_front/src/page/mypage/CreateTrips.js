@@ -88,7 +88,7 @@ const CreateTrips = () => {
           if(openSearchWrap){
             displayMarker(place);
           }
-          place.itemType = "tripPlace";
+          // place.itemType = "tripPlace";
           placeResultList.push(place);
           setPlaceResultList([...placeResultList]);
           bounds.extend(new kakao.maps.LatLng(place.y, place.x));
@@ -224,7 +224,7 @@ const CreateTrips = () => {
                       {
                         placeResultList.map((place, index) => {
                           return(
-                            <ItemTripPlace key={"place"+index} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" itemType="tripPlace" setOpenSearchWrap={setOpenSearchWrap} />
+                            <ItemTripPlace key={"place"+index} thisIndex={selectPlaceListNo} place={place} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} />
                           );
                         })
                       }
@@ -284,7 +284,6 @@ const SetDayWrap = (props) => {
   const setModalTitle = props.setModalTitle;
   const setTodoDayIndex = props.setTodoDayIndex;
   const setTodoIndex = props.setTodoIndex;
-  let routeIndex = 0;
   const setSearchInput = props.setSearchInput;
   const setTripTodo = props.setTripTodo;
   const setTripCost = props.setTripCost;
@@ -320,12 +319,8 @@ const SetDayWrap = (props) => {
         <ul className="place_list">
           {
             selectPlaceList[dayIndex].map((item, index) => {
-              if(item.itemType === "tripPlace"){
-                item.tripRoute = routeIndex;
-                routeIndex++;
-              }
               return (
-                <ItemTripPlace key={"select" + index} routeIndex={routeIndex} thisIndex={dayIndex} itemIndex={index} place={item} listType="day_items" itemType={item.itemType} selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
+                <ItemTripPlace key={"select" + index} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" selectPlaceList={selectPlaceList} setSelectPlaceList={setSelectPlaceList} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
             })
           }
@@ -343,7 +338,6 @@ const SetDayWrap = (props) => {
 const ItemTripPlace = (props) => {
   const routeIndex = props.routeIndex;
   const thisIndex = props.thisIndex;
-  const itemIndex = props.itemIndex;
   const place = props.place;
   const selectPlaceList = props.selectPlaceList;
   const setSelectPlaceList = props.setSelectPlaceList;
@@ -356,7 +350,6 @@ const ItemTripPlace = (props) => {
   const setTripTodo = props.setTripTodo;
 
   const addPlaceFunc = () => {
-    // place.tripRoute = routeIndex;
     selectPlaceList[thisIndex].push(place);
     setSelectPlaceList([...selectPlaceList]);
     setOpenSearchWrap(false);
@@ -366,7 +359,7 @@ const ItemTripPlace = (props) => {
     document.body.classList.add("scroll_fixed");
     setModalTitle(place.place_name);
     setTodoDayIndex(thisIndex);
-    setTodoIndex(itemIndex);
+    setTodoIndex(routeIndex);
     setOpenTodoModal(true);
   }
   
@@ -375,12 +368,12 @@ const ItemTripPlace = (props) => {
     setTripTodo(place.tripTodo);
     setModalTitle(place.place_name);
     setTodoDayIndex(thisIndex);
-    setTodoIndex(itemIndex);
+    setTodoIndex(routeIndex);
     setOpenTodoModal(true);
   }
 
   const deleteTodo = () => {
-    selectPlaceList[thisIndex][itemIndex].tripTodo = "";
+    selectPlaceList[thisIndex][routeIndex].tripTodo = "";
     setSelectPlaceList([...selectPlaceList]);
     setTripTodo("");
   }
@@ -389,7 +382,7 @@ const ItemTripPlace = (props) => {
     listType === "day_items" ? (
       <>
         <li className="item tripPlace">
-          <div className="tripRoute_no">{routeIndex}</div>
+          <div className="tripRoute_no">{(routeIndex+1)}</div>
           <div className="item_box">
             <div className="item_box_content">
               <div className="place_name">{place.place_name}</div>

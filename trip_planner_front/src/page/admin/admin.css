@@ -1,0 +1,29 @@
+/*
+메인 색상
+#005caa 파랑  #e9511c 주황  #f4f5ef 베이지  #000000 검정
+#30e462 성공  #ff2803 에러  #f9b71b 경고    #1795f0 인포
+기타 #89cff0 #f4f5ef #8f705b #035e7b
+*/
+
+.contents.couponReg .couponReg-input-wrap{
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    min-height: 600px;
+    margin: 0 auto;
+    width: 800px;
+}
+
+.contents.couponReg .couponReg-input{
+    width: 80%;
+    padding: 40px;
+}
+
+.input_wrap.coupon-input .input{
+    text-indent: 10px;
+    font-family: pt-r;
+}
+
+.input_wrap.coupon-input .input:focus{
+    background-color: rgba(0, 92, 170, 0.2); 
+}
+

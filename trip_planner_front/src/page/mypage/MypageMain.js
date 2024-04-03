@@ -18,6 +18,7 @@ import TourSale from "../tour/TourSale";
 import CreateTrips from "./CreateTrips";
 import TourTicket from "./../tour/TourTicket";
 import TourTicketModify from "./../tour/TourTicketModify";
+import CouponReg from "../admin/CouponReg";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -48,7 +49,7 @@ const MypageMain = (props) => {
             { url: "memberMgmt", text: "회원 관리", active: true },
             { url: "partnerMgmt", text: "업체 관리", active: false },
             { url: "promotionMgmt", text: "프로모션 관리", active: false },
-            { url: "couponReg", text: "쿠폰 등록", active: false },
+            { url: "admin/couponReg", text: "쿠폰 등록", active: false },
           ]);
           // navigate("/mypage/memberMgmt");
         } else if (res.data.data.memberType === 2) {
@@ -75,14 +76,21 @@ const MypageMain = (props) => {
                   { url: "tour/mgmt", text: "투어 예약관리", active: true },
                   { url: "tour/reg", text: "투어 상품등록", active: false },
                   { url: "tour/sale", text: "투어 상품조회", active: false },
+                  { url: "myInfo", text: "내 정보 수정", active: false },
                 ]);
                 // navigate("/mypage/tour/mgmt");
               } else {
                 //업체인데 등록한 업체가 없을 경우
-                setMenus([
-                  { url: "myInfo", text: "내 정보 수정", active: true },
-                ]);
-                navigate("/mypage/myInfo");
+                axios
+                  .get(backServer + "/member")
+                  .then((res) => {
+                    navigate("/businessAuth/", {
+                      state: { memberEmail: res.data.data.memberEmail },
+                    });
+                  })
+                  .catch((res) => {
+                    console.log(res);
+                  });
               }
             })
             .catch((res2) => {
@@ -90,7 +98,7 @@ const MypageMain = (props) => {
             });
         } else {
           //회원으로 로그인 시
-          navigate("/mypage/myBooks");
+          // navigate("/mypage/myBooks");
         }
       })
       .catch((res) => {
@@ -110,7 +118,7 @@ const MypageMain = (props) => {
   return (
     <>
       <Routes>
-        <Route path="/createTrips" element={<CreateTrips />} />
+        <Route path="/createTrips" element={<CreateTrips member={member} />} />
       </Routes>
       <section className="contents mypage">
         <div className="side_wrap">
@@ -135,6 +143,7 @@ const MypageMain = (props) => {
               path="/tour/ticket/modify/:tourNo"
               element={<TourTicketModify />}
             />
+            <Route path="/admin/couponReg" element={<CouponReg />} />
           </Routes>
         </div>
       </section>

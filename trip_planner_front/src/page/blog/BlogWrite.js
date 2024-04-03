@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "./blog.css";
 import BlogFrm from "./BlogFrm";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BlogWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -12,6 +13,8 @@ const BlogWrite = () => {
   const [blogThumbnail, setBlogThumbnail] = useState("");
 
   const [blogImg, setBlogImg] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -32,10 +35,6 @@ const BlogWrite = () => {
       form.append("blogDateDay", JSON.stringify(blogDateDay));
       form.append("memberNickName", member.memberNickName);
       form.append("thumbnail", blogThumbnail);
-      console.log(blogTitle);
-      console.log(blogDateDay);
-      console.log(blogThumbnail);
-      console.log(member.memberNickName);
 
       axios
         .post(backServer + "/blog", form, {
@@ -47,12 +46,18 @@ const BlogWrite = () => {
         .then((res) => {
           console.log(res);
           if (res.data.message === "success") {
-            Navigate("/blogList");
+            Swal.fire("블로그가 등록되었습니다 :)");
+            navigate("/blogList");
           } else {
           }
         })
         .catch((res) => {
           console.log(res);
+          Swal.fire({
+            icon: "error",
+            title: "ERROR",
+            text: "입력란을 확인하세요 :)",
+          });
         });
     }
   };

@@ -16,4 +16,5 @@ public class BlogDate {
 	private int blogDateDay;
 	private String blogDateScheduleTitle;
 	private String blogDateScheduleContent;	
+	
 }

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.blog.model.dao.BlogDao">
-
+	<insert id="insertBlog">
+		insert into blog_tbl values
+		(blog_seq.nextval,#{memberNickName},#{blogTitle},sysdate,#{blogThumbnail})
+		<selectKey resultType="int" keyProperty="blogNo" order="AFTER">
+  			select max(blog_no) from blog_tbl
+  		</selectKey>
+	</insert>
+	<insert id="insertBlogDate">
+		insert into blog_Date_tbl values
+		(blog_date_seq.nextval,#{blogNo},#{blogDateDay},#{blogDateScheduleTitle},#{blogDateScheduleContent})
+	</insert>
 </mapper>

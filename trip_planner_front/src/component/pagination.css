@@ -5,13 +5,13 @@
 기타 #89cff0 #f4f5ef #8f705b #035e7b
 */
 
-.tour-paging-wrap {
+.paging-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
-.tour-paging-wrap > .page-item {
+.paging-wrap > .page-item {
   min-width: 40px;
   /* height: 20px; */
   text-align: center;
@@ -21,7 +21,7 @@
   border: 1px solid #005caa;
   color: #005caa;
 }
-.tour-paging-wrap > .page-item.active-page {
+.paging-wrap > .page-item.active-page {
   background-color: #005caa;
   color: #fff;
 }

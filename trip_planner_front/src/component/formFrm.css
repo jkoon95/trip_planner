@@ -28,5 +28,5 @@ button[disabled]{opacity: 0.2;}
 .btn_link:active,
 .btn_link:visited{text-decoration: underline; text-underline-offset: 4px;}
 
-.textarea{display:flex; border:1px solid #000; border-radius:8px; overflow:hidden;}
-.textarea textarea{width:100%; height:156px; padding:15px; resize:none; font-size:16px; line-height:24px;} 
+.textarea{display: flex; border: 1px solid var(--line_03); border-radius: 8px; overflow: hidden;}
+.textarea textarea{width: 100%; height: 157px; padding: 15px; resize: none; font-size: 16px; line-height: 1.5;} 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Pagination from "../../component/TourPagination";
+import Pagination from "../../component/Pagination";
 import Swal from "sweetalert2";
 
 const TourSale = ({ member }) => {

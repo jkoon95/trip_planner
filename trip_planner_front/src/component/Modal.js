@@ -1,11 +1,10 @@
-import { Button } from "./FormFrm";
-
 const Modal = (props) => {
   const className = props.class;
   const open = props.open;
   const closeModal = props.closeModal;
   const title = props.title;
   const content = props.children;
+  const useCloseBtn = props.useCloseBtn;
 
   return (
     open ? (
@@ -24,8 +23,12 @@ const Modal = (props) => {
           <div className="modal_footer">
             {content[1]}
           </div>
-
-          <button type="button" onClick={closeModal} className="btn_close"><span className="hidden">닫기</span></button>
+          {
+            useCloseBtn ? (
+              <button type="button" onClick={closeModal} className="btn_close"><span className="hidden">닫기</span></button>
+            ) : ""
+          }
+          
         </div>
       </div>
     ) : ""

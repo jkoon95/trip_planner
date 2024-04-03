@@ -46,10 +46,10 @@ public class InnService {
 			innfile.setInnNo(room.getInnNo());
 			result += innDao.insertRoomFile(innfile);
 		}
-		for(int optionNo : newOptionNo) { // 수정된 부분
+		for(int optionNo : newOptionNo) { 
 			roomOption.setRoomNo(room.getRoomNo());
 			roomOption.setOptionNo(optionNo);
-	        result += innDao.insertRoomOption(roomOption); // 수정된 부분
+	        result += innDao.insertRoomOption(roomOption);
 	    }
 		for(String hashTag : hashTagName) {
 			roomHashTag.setRoomNo(room.getRoomNo());

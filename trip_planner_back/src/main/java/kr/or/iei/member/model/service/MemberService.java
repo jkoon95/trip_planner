@@ -66,4 +66,9 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.insertPartner(partner);
 	}
+
+	public int updateMember(Member member) {
+		// TODO Auto-generated method stub
+		return memberDao.updateMember(member);
+	}
 }

@@ -89,7 +89,7 @@ const Login = (props) => {
               placeholder="abc@google.com"
               data={memberEmail}
               setData={setMemberEmail}
-              onKeyDown={login}
+              keyDownEvent={login}
             />
           </div>
         </div>
@@ -103,7 +103,7 @@ const Login = (props) => {
               content="memberPw"
               data={memberPw}
               setData={setMemberPw}
-              onKeyDown={login}
+              keyDownEvent={login}
             />
           </div>
         </div>

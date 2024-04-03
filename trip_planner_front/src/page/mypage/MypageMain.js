@@ -88,7 +88,7 @@ const MypageMain = (props) => {
             });
         } else {
           //회원으로 로그인 시
-          navigate("/mypage/myBooks");
+          // navigate("/mypage/myBooks");
         }
       })
       .catch((res) => {
@@ -108,7 +108,7 @@ const MypageMain = (props) => {
   return (
     <>
       <Routes>
-        <Route path="/createTrips" element={<CreateTrips />} />
+        <Route path="/createTrips" element={<CreateTrips member={member} />} />
       </Routes>
       <section className="contents mypage">
         <div className="side_wrap">

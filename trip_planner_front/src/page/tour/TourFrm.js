@@ -160,7 +160,7 @@ const TourFrm = (props) => {
                     multiple={false}
                   />
                   <div className="tour-thumbnail">
-                    {tourImg === null ? (
+                    {tourImg === null || tourImg === "null" ? (
                       <img alt="기본이미지" src="/images/defaultTour.png" />
                     ) : type === "edit" && thumbnailCheck === 0 ? (
                       <img
@@ -186,12 +186,15 @@ const TourFrm = (props) => {
                     multiple={false}
                   />
                   <div className="tour-intronail">
-                    {tourIntro === null ? (
-                      <img src="/images/defaultTour.png" />
+                    {tourIntro === null || tourIntro === "null" ? (
+                      <img alt="기본이미지" src="/images/defaultTour.png" />
                     ) : type === "edit" && intronailCheck === 0 ? (
-                      <img src={backServer + "/tour/intronail/" + tourIntro} />
+                      <img
+                        alt="수정전이미지"
+                        src={backServer + "/tour/intronail/" + tourIntro}
+                      />
                     ) : (
-                      <img src={tourIntro} />
+                      <img alt="등록한이미지" src={tourIntro} />
                     )}
                   </div>
                 </td>
@@ -215,57 +218,83 @@ const TypeInput = (props) => {
   const data = props.data;
   const setData = props.setData;
   const changeTourType = (e) => {
+    // console.log(e.target.value);
     setData(e.target.value); // 선택한 라디오 버튼의 값으로 상위 컴포넌트의 상태 업데이트
   };
+  // 선택한 라디오 버튼 스타일
+  const selectRadio = (value) => {
+    return data === value ? { backgroundColor: "#005caa", color: "#fff" } : {};
+  };
+
   return (
     <div className="tour-radio-wrap">
       <div>
         <div className="tour-type">
-          <input
-            type="radio"
-            name="tourType"
-            id="tourT1"
-            value="1"
-            onChange={changeTourType}
-            checked={data === 1}
-          />
-          <label htmlFor="tourT1">전시회</label>
-          <input
-            type="radio"
-            name="tourType"
-            id="tourT2"
-            value="2"
-            onChange={changeTourType}
-            checked={data === 2}
-          />
-          <label htmlFor="tourT2">액티비티</label>
-          <input
-            type="radio"
-            name="tourType"
-            id="tourT3"
-            value="3"
-            onChange={changeTourType}
-            checked={data === 3}
-          />
-          <label htmlFor="tourT3">테마파크</label>
-          <input
-            type="radio"
-            name="tourType"
-            id="tourT4"
-            value="4"
-            onChange={changeTourType}
-            checked={data === 4}
-          />
-          <label htmlFor="tourT4">박람회</label>
-          <input
-            type="radio"
-            name="tourType"
-            id="tourT5"
-            value="5"
-            onChange={changeTourType}
-            checked={data === 5}
-          />
-          <label htmlFor="tourT5">입장권</label>
+          <div className="tour-type-1">
+            <input
+              type="radio"
+              name="tourType"
+              id="tourT1"
+              defaultValue="1"
+              onChange={changeTourType}
+              checked={data === 1}
+            />
+            <label htmlFor="tourT1" style={selectRadio("1")}>
+              전시회
+            </label>
+          </div>
+          <div className="tour-type-2">
+            <input
+              type="radio"
+              name="tourType"
+              id="tourT2"
+              defaultValue="2"
+              onChange={changeTourType}
+              checked={data === 2}
+            />
+            <label htmlFor="tourT2" style={selectRadio("2")}>
+              액티비티
+            </label>
+          </div>
+          <div className="tour-type-3">
+            <input
+              type="radio"
+              name="tourType"
+              id="tourT3"
+              defaultValue="3"
+              onChange={changeTourType}
+              checked={data === 3}
+            />
+            <label htmlFor="tourT3" style={selectRadio("3")}>
+              테마파크
+            </label>
+          </div>
+          <div className="tour-type-4">
+            <input
+              type="radio"
+              name="tourType"
+              id="tourT4"
+              defaultValue="4"
+              onChange={changeTourType}
+              checked={data === 4}
+            />
+            <label htmlFor="tourT4" style={selectRadio("4")}>
+              박람회
+            </label>
+          </div>
+          <div className="tour-type-5">
+            <input
+              type="radio"
+              name="tourType"
+              id="tourT5"
+              defaultValue="5"
+              onChange={changeTourType}
+              checked={data === 5}
+            />
+            <label htmlFor="tourT5" style={selectRadio("5")}>
+              입장권
+            </label>
+          </div>
         </div>
       </div>
     </div>

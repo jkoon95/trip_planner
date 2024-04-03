@@ -24,7 +24,7 @@ public class TourService {
 	public int insertTour(Tour tour, String memberEmail) {
 		int partnerNo = tourDao.searchPartner(memberEmail);
 		tour.setPartnerNo(partnerNo);
-		System.out.println("업체번호 : "+tour.getPartnerNo());
+//		System.out.println("업체번호 : "+tour.getPartnerNo());
 		int result = tourDao.insertTour(tour);
 		return result;
 	}

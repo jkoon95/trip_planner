@@ -44,7 +44,6 @@ const BusinessAuth = () => {
       partnerType,
       businessNo,
     };
-    console.log(obj);
     if (
       memberEmail !== "" &&
       partnerName !== "" &&
@@ -54,7 +53,6 @@ const BusinessAuth = () => {
       checkbusinessMsg === "유효한 사업자입니다"
     ) {
       {
-        console.log(obj);
         axios
           .post(backServer + "/member/businessAuth", obj)
           .then((res) => {
@@ -146,7 +144,7 @@ const SelectPartnerType = (props) => {
           onChange={changePartnerType}
         >
           <MenuItem value={1}>숙소</MenuItem>
-          <MenuItem value={2}>레저</MenuItem>
+          <MenuItem value={2}>투어</MenuItem>
         </Select>
       </FormControl>
     </div>

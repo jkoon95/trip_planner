@@ -25,4 +25,6 @@ public interface MemberDao {
 
 	int getMemberNo(String memberEmail);
 
+	int updateMember(Member member);
+
 }

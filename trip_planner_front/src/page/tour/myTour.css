@@ -41,15 +41,15 @@
   display: flex;
   flex-direction: column;
 }
-.tour-radio-wrap > div {
+.tour-radio-wrap div {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.tour-radio-wrap > div > .tour-type > input {
+.tour-radio-wrap > div > .tour-type input {
   display: none;
 }
-.tour-radio-wrap > div > .tour-type > label {
+.tour-radio-wrap > div > .tour-type label {
   display: inline-block;
   width: 70px;
   text-align: center;
@@ -60,11 +60,11 @@
   cursor: pointer;
   background-color: #d9d9d9;
 }
-.tour-radio-wrap > div > .tour-type > label:hover {
+.tour-radio-wrap > div > .tour-type label:hover {
   background-color: #005caa;
   color: #fff;
 }
-.tour-radio-wrap > div > .tour-type > input:checked + label {
+.tour-radio-wrap > div > .tour-type input:checked + label {
   background-color: #005caa;
   color: #fff;
 }
@@ -121,24 +121,11 @@
   color: #666;
   margin-right: 20px;
 }
-.tour-item .tour-item-info .tour-item-status {
-  font-family: pt-b;
-  font-size: 14px;
-  background-color: #ccc;
-  border-radius: 5px;
-  width: 60px;
-  height: 28px;
-  text-align: center;
-  line-height: 28px;
+.tour-item .tour-item-info .tour-item-status > span {
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 .tour-item .tour-item-info .tour-item-count {
   margin-bottom: 48px;
-}
-
-.tour-item .tour-item-info .tour-item-details .tour-item-status:hover {
-  background-color: #999; /* 마우스를 올렸을 때 배경색 변화 */
 }
 
 .tour-item .tour-item-info .tour-item-btn-box > button {

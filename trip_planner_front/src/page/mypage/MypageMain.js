@@ -122,7 +122,7 @@ const MypageMain = (props) => {
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes />} />
             <Route path="/myReviews" element={<MyReviews />} />
-            <Route path="/myInfo" element={<MyInfo />} />
+            <Route path="/myInfo" element={<MyInfo member={member} />} />
             <Route path="/innReg" element={<InnReg member={member} />} />
             <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
             <Route path="/tour/reg" element={<TourReg />} />

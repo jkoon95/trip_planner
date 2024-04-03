@@ -24,6 +24,7 @@ import License from "./page/member/License";
 import BusinessAuth from "./page/member/BusinessAuth";
 import BlogMain from "./page/blog/blogMain";
 import ReservationInn from "./page/INN/ReservationInn";
+import CreateTrips from "./page/mypage/CreateTrips";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
@@ -101,6 +102,7 @@ function App() {
           <Route path="/license" element={<License />} />
           <Route path="/businessAuth" element={<BusinessAuth />} />
           <Route path="/reservationInn" element={<ReservationInn />} />
+          <Route path="/mypage/myTrips/createTrips" element={<CreateTrips isLogin={isLogin} />} />
         </Routes>
       </main>
       <Footer />

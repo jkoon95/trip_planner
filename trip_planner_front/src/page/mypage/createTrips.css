@@ -37,7 +37,7 @@
 .createTrips_wrap .place_list>.item .item_box{position: relative; flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 15px 11px 15px 19px; border: 1px solid var(--line_03); border-radius: 8px;}
 .createTrips_wrap .place_list>.item .item_box>.btn_area{flex: 1;}
 .createTrips_wrap .day_items_wrap .place_list>li:first-child{margin-top: 12px;}
-.createTrips_wrap .day_items_wrap .place_list>.item .item_box{max-width: calc(100% - 32px);}
+.createTrips_wrap .day_items_wrap .place_list>.item .item_box{max-width: calc(100% - 32px); padding: 15px 19px;}
 .createTrips_wrap .day_items_wrap .place_list>.item.tripTodo .item_box{padding-right: 30px;}
 .createTrips_wrap .day_items_wrap .place_list>.item .item_box .place_info{white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .createTrips_wrap .place_list>.item .item_box .place_name{font-family: pt-b; font-size: 14px; line-height: 1.5;}
@@ -54,7 +54,7 @@
 .createTrips_wrap .place_list>.item .item_btn_wrap .btn_changeOrder{display: block; width: 24px; height: 24px; border: 1px solid var(--line_02); border-radius: 50%;}
 .createTrips_wrap .place_list>.item .item_btn_wrap .btn_changeOrder.down{background: url(/public/images/icon_changeOrder_down.svg) no-repeat center / contain;}
 .createTrips_wrap .place_list>.item .item_btn_wrap .btn_changeOrder.up{background: url(/public/images/icon_changeOrder_up.svg) no-repeat center / contain;}
-.tripTodo .btn_delete{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / 24px;}
+.createTrips_wrap .place_list .btn_delete{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / 24px;}
 
 .createTrips_wrap .trips_wrap>.btn_area{position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 20px;}
 .createTrips_wrap .trips_wrap>.btn_area::before{content: ''; display: block; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1));}

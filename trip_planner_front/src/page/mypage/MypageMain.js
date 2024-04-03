@@ -15,7 +15,6 @@ import RoomReg from "../INN/RoomReg";
 import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
-import CreateTrips from "./CreateTrips";
 import TourTicket from "./../tour/TourTicket";
 import TourTicketModify from "./../tour/TourTicketModify";
 import CouponReg from "../admin/CouponReg";
@@ -115,11 +114,10 @@ const MypageMain = (props) => {
     { url: "myInfo", text: "내 정보 수정", active: false },
   ]);
 
+  console.log(menus);
+
   return (
     <>
-      <Routes>
-        <Route path="/createTrips" element={<CreateTrips member={member} />} />
-      </Routes>
       <section className="contents mypage">
         <div className="side_wrap">
           <h2>마이페이지</h2>
@@ -128,7 +126,7 @@ const MypageMain = (props) => {
         <div className="content_wrap">
           <Routes>
             <Route path="/myBooks" element={<MyBooks />} />
-            <Route path="/myTrips" element={<MyTrips />} />
+            <Route path="/myTrips" element={<MyTrips member={member} />} />
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes />} />
             <Route path="/myReviews" element={<MyReviews />} />

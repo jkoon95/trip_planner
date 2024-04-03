@@ -12,6 +12,8 @@ const JoinInputWrap = (props) => {
     placeholder,
     blurEvent,
     checkMsg,
+    disabled,
+    readonly,
   } = props;
 
   const chageData = (e) => {
@@ -33,6 +35,8 @@ const JoinInputWrap = (props) => {
             placeholder={placeholder}
             type={type}
             data={data}
+            disabled={disabled}
+            readonly={readonly}
             setData={setData}
             blurEvent={blurEvent}
           />

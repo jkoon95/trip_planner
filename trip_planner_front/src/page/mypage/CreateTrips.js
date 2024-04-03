@@ -7,10 +7,25 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Modal from "../../component/Modal";
+import axios from "axios";
 const { kakao } = window;
 
 const CreateTrips = (props) => {
-  const member = props.member;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const isLogin = props.isLogin;
+  const [member, setMember] = useState("");
+  useEffect(() => {
+    axios
+      .get(backServer + "/member")
+      .then((res) => {
+        console.log(res.data.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [])
+
   const [tripList, setTripList] = useState({}); //최종 데이터
   const [tripDetailList, setTripDetailList] = useState([]);
   const [tripTitle, setTripTitle] = useState("");
@@ -22,7 +37,7 @@ const CreateTrips = (props) => {
   const [openSearchWrap, setOpenSearchWrap] = useState(false);
   const [placeResultList, setPlaceResultList] = useState([]);
   const [detailListNo, setDetailListNo] = useState(-1);
-  const [tripRoute, setTripRoute] = useState(-1);
+  const [tripRoute, setTripRoute] = useState(0);
   const [openTodoModal, setOpenTodoModal] = useState(false);
   const [openCostModal, setOpenCostModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -30,6 +45,7 @@ const CreateTrips = (props) => {
   const [todoDayIndex, setTodoDayIndex] = useState(-1);
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
+  let ii = 0;
 
   useEffect(() => {
     setTripList({memberNo: member.memberNo, tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: tripDetailList});
@@ -65,7 +81,8 @@ const CreateTrips = (props) => {
 
   const searchFunc = () => {
     if(searchInput !== searchPlaces){
-      setPlaceResultList([]);
+      placeResultList.length = 0;
+      setPlaceResultList([...placeResultList]);
     }
     setSearchPlaces(searchInput);
   }
@@ -88,6 +105,9 @@ const CreateTrips = (props) => {
 
     const ps = new kakao.maps.services.Places();
     const placesSearchCB = (data, status, pagination) => {
+      placeResultList.length = 0;
+      setPlaceResultList([...placeResultList]);
+
       if(status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
         
@@ -96,9 +116,17 @@ const CreateTrips = (props) => {
           if(openSearchWrap){
             displayMarker(place);
           }
-          // place.itemType = "tripPlace";
-          placeResultList.push(place);
+          
+          placeResultList.push({
+            tripPlaceName : place.place_name,
+            tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
+            tripPlaceAddress : place.address_name,
+            tripPlacePhone : place.phone,
+            tripPlaceLat : place.y,
+            tripPlaceLng : place.x
+          });
           setPlaceResultList([...placeResultList]);
+
           bounds.extend(new kakao.maps.LatLng(place.y, place.x));
         })
 
@@ -110,16 +138,16 @@ const CreateTrips = (props) => {
       ps.keywordSearch(searchPlaces, placesSearchCB);
     }
 
-    // if(selectPlaceList.length !== 0 && !openSearchWrap){
-    //   selectPlaceList.forEach((item) => {
-    //     item.forEach((place) => {
-    //       new kakao.maps.Marker({
-    //         map: map,
-    //         position: new kakao.maps.LatLng(place.y, place.x) 
-    //       })
-    //     })
-    //   })
-    // }
+    if(!openSearchWrap){
+      tripDetailList.forEach((detail) => {
+        detail.selectPlaceList.forEach((place) => {
+          new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlace.tripPlaceLat, place.tripPlace.tripPlaceLng) 
+          });
+        })
+      })
+    }
 
     const displayMarker = (place) => {
       const marker = new kakao.maps.Marker({
@@ -236,7 +264,7 @@ const CreateTrips = (props) => {
                       {
                         placeResultList.map((place, index) => {
                           return(
-                            <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
+                            <ItemTripPlace tripRoute={tripRoute} setTripRoute={setTripRoute} key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );
                         })
                       }
@@ -334,6 +362,7 @@ const SetDayWrap = (props) => {
         <ul className="place_list">
           {
             tripDetailItem.selectPlaceList.map((item, index) => {
+              item.tripRoute = index;
               return (
                 <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
@@ -364,8 +393,11 @@ const ItemTripPlace = (props) => {
   const setOpenSearchWrap = props.setOpenSearchWrap;
   const setTripTodo = props.setTripTodo;
   const tripDays = props.tripDays;
+  const tripRoute = props.tripRoute;
+  const setTripRoute = props.setTripRoute;
 
   const addPlaceFunc = () => {
+    console.log(tripRoute);
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
     setTripDetailList([...tripDetailList]);
@@ -374,7 +406,7 @@ const ItemTripPlace = (props) => {
 
   const openTodoModalFunc = () => {
     document.body.classList.add("scroll_fixed");
-    setModalTitle(place.tripPlace.place_name);
+    setModalTitle(place.tripPlace.tripPlaceName);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
@@ -383,7 +415,7 @@ const ItemTripPlace = (props) => {
   const modifyTodo = () => {
     document.body.classList.add("scroll_fixed");
     setTripTodo(place.tripTodo);
-    setModalTitle(place.tripPlace.place_name);
+    setModalTitle(place.tripPlace.tripPlaceName);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
@@ -395,6 +427,13 @@ const ItemTripPlace = (props) => {
     setTripTodo("");
   }
 
+  const deletePlace = () => {
+    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    setTripDetailList([...tripDetailList]);
+  }
+
+  console.log(place);
+
   return(
     listType === "day_items" ? (
       <>
@@ -402,10 +441,10 @@ const ItemTripPlace = (props) => {
           <div className="tripRoute_no">{(routeIndex+1)}</div>
           <div className="item_box">
             <div className="item_box_content">
-              <div className="place_name">{place.tripPlace.place_name}</div>
+              <div className="place_name">{place.tripPlace.tripPlaceName}</div>
               <div className="place_info">
-                <span>{place.tripPlace.category_group_name !== "" ? place.tripPlace.category_group_name : place.tripPlace.category_name}</span>
-                <span>{place.tripPlace.address_name}</span>
+                <span>{place.tripPlace.tripPlaceCategory}</span>
+                <span>{place.tripPlace.tripPlaceAddress}</span>
               </div>
             </div>
             <div className="item_btn_wrap">
@@ -417,6 +456,7 @@ const ItemTripPlace = (props) => {
                 <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
               </div>
             ) : ""}
+            <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
           </div>
         </li>
         {place.tripTodo ? (
@@ -433,12 +473,12 @@ const ItemTripPlace = (props) => {
       <li className="item tripPlace">
         <div className="item_box">
           <div className="item_box_content">
-            <div className="place_name">{place.place_name}</div>
+            <div className="place_name">{place.tripPlaceName}</div>
             <div className="place_info">
-              <span>{place.category_group_name !== "" ? place.category_group_name : place.category_name}</span>
-              <span>{place.address_name}</span>
+              <span>{place.tripPlaceCategory}</span>
+              <span>{place.tripPlaceAddress}</span>
             </div>
-            <div className="place_phone">{place.phone}</div>
+            <div className="place_phone">{place.tripPlacePhone}</div>
           </div>
           <div className="item_btn_wrap">
             <Button text="일정 추가" class="btn_primary outline sm btn_addPlace" clickEvent={addPlaceFunc} />

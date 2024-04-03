@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.or.iei.blog.model.dao.BlogDao">
+
+	 <select id="totalCount" resultType="int">
+	  	select count(*) from blog_tbl
+	 </select>  
+	 <select id="selectBlogList" resultType="blog">
+	 	select * from
+		    (select rownum as rnum, b.*from
+		        (select
+		            blog_no, 
+		            member_nickname, 
+		            blog_title, 
+		            to_char(blog_date,'yyyy-mm-dd') as blog_date, blog_thumbnail 
+		        from blog_tbl order by blog_no desc)b)
+		where rnum between #{start} and #{end}
+	 </select>
 	<insert id="insertBlog">
 		insert into blog_tbl values
 		(blog_seq.nextval,#{memberNickName},#{blogTitle},sysdate,#{blogThumbnail})

@@ -19,7 +19,7 @@ const BlogFrm = (props) => {
 
   const chageThumbnail = (e) => {
     const files = e.currentTarget.files;
-    if (files.lenght !== 0 && files[0] != 0) {
+    if (files.length !== 0 && files[0] != 0) {
       setBlogThumbnail(files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
@@ -35,7 +35,6 @@ const BlogFrm = (props) => {
   const dayAddBox = () => {
     setBlogDateDay([...blogDateDay, new Array()]);
   };
-  //console.log(blogDateDay);
   return (
     <div className="blog-frm-wrap">
       <div className="blog-frm-contnet">

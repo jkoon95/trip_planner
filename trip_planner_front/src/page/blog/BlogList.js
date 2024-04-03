@@ -1,17 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
 import "./blog.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Pagination from "../../component/Pagination";
 
 const BlogList = (props) => {
-  const isLogin = props.isLogin;
-  const navigate = useNavigate();
-
-  const writeBtn = () => {
-    navigate("/blogWrite");
-  };
+  const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [blogList, setBlogList] = useState([]);
+  const [pageInfo, setPageInfo] = useState([]);
+  const [reqPage, setReqPage] = useState(1);
+
+  const isLogin = props.isLogin;
+
+  const navigate = useNavigate();
+  const writeBtn = () => {
+    navigate("/blogwrite");
+  };
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/blog/list/" + reqPage)
+      .then((res) => {
+        console.log(res.data);
+        setBlogList(res.data.data.blogList);
+        setPageInfo(res.data.data.pi);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [reqPage]);
 
   return (
     <section className="contents blogList">
@@ -36,25 +55,45 @@ const BlogList = (props) => {
             </>
           </div>
         </div>
-        <div className="blog-list-main-wrap">
-          {blogList.map((blog, index) => {
-            return <BlogItem key={"blog" + index} blog={blog} />;
-          })}
-        </div>
+
+        {blogList.map((blog, index) => {
+          return <BlogItem key={"blog" + index} blog={blog} />;
+        })}
+      </div>
+      <div className="page-box">
+        <Pagination
+          pageInfo={pageInfo}
+          reqPage={reqPage}
+          setReqPage={setReqPage}
+        />
       </div>
     </section>
   );
 };
 
-const BlogItem = () => {
+const BlogItem = (props) => {
+  const blog = props.blog;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   return (
-    <div className="blog-list-content">
-      <div className="blog-list-img">
-        <img src="/images/blogDefault.png" />
+    <div className="blog-item">
+      <div className="blog-item-img">
+        {blog.blogThumbnail === null ? (
+          <img src="/images/blogDefault.png" />
+        ) : (
+          <div>
+            <img
+              src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
+            />
+          </div>
+        )}
       </div>
-      <div className="blog-list-info">
-        <div className="blog-info-title">블로그제목</div>
-        <div className="blog-lnfo-content">블로그소개글</div>
+      <div className="blog-item-info">
+        <div className="blog-info-title">{blog.blogTitle}</div>
+        <div className="blog-user-info">
+          <div className="blog-info-nickname">{blog.memberNickName}</div>
+          <div className="blog-info-date">{blog.blogDate}</div>
+        </div>
       </div>
     </div>
   );

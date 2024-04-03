@@ -51,7 +51,6 @@ function App() {
     setIsLogin(true);
 
     const remainingTime = tokenExpired.getTime() - new Date().getTime();
-    console.log(remainingTime);
     setTimeout(logout, remainingTime);
   };
   const logout = () => {

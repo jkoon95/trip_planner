@@ -68,7 +68,6 @@ const Join = () => {
     }
   };
   const nickNameChk = () => {
-    console.log(memberNickName);
     axios
       .get(backServer + "/member/nickName/" + memberNickName)
       .then((res) => {
@@ -92,7 +91,6 @@ const Join = () => {
       memberAddr,
       memberType,
     };
-    console.log(obj);
     if (
       memberEmail !== "" &&
       memberPw !== "" &&
@@ -105,8 +103,6 @@ const Join = () => {
       checkPwReMsg === "" &&
       checkNickNameMsg === ""
     ) {
-      console.log(obj);
-      console.log(memberPw);
       axios
         .post(backServer + "/member/join", obj)
         .then((res) => {

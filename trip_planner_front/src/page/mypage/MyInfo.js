@@ -30,7 +30,6 @@ const MyInfo = ({ member }) => {
       axios
         .patch(backServer + "/member/updateMember", obj)
         .then((res) => {
-          console.log(res.data);
           navigate("/");
         })
         .catch((res) => {

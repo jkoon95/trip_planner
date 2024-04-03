@@ -12,6 +12,4 @@ public class BlogService {
 	@Autowired
 	private BlogDao blogDao;
 	
-	
-	}
 }

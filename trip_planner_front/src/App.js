@@ -18,7 +18,6 @@ import TourSearch from "./page/tour/TourSearch";
 import InnReg from "./page/INN/InnReg";
 import TourReg from "./page/tour/TourReg";
 import PromotionList from "./page/promotion/PromotionList";
-import CreateTrips from "./page/mypage/CreateTrips";
 import ConsultTalk from "./page/member/ConsultTalk";
 import RoomReg from "./page/INN/RoomReg";
 import License from "./page/member/License";
@@ -94,7 +93,6 @@ function App() {
             path="/mypage/*"
             element={<MypageMain isLogin={isLogin} logout={logout} />}
           />
-          <Route path="/createTrips" element={<CreateTrips />} />
           <Route path="/promotionList" element={<PromotionList />} />
           <Route path="/blogWrite" element={<BlogWrite isLogin={isLogin} />} />
           <Route path="/consult" element={<ConsultTalk />} />

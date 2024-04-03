@@ -17,7 +17,7 @@ const BusinessAuth = () => {
   const [partnerType, setPartnerType] = useState(1);
   const [businessNo, setBusinessNo] = useState("");
   const [checkbusinessMsg, setBusinessMsg] = useState("");
-
+  console.log(memberEmail);
   const businessAuthApi = () => {
     const apiKey = process.env.REACT_APP_BUSINESS_API_KEY;
     // API URL 생성

@@ -14,6 +14,7 @@ const MyInfo = ({ member }) => {
   const [memberNickName, setMemberNickName] = useState(member.memberNickName);
   const [memberPhone, setMemberPhone] = useState(member.memberPhone);
   const [checkPwMsg, setCheckPwMsg] = useState("");
+  const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
   const pwChk = () => {
     //정규표현식으로 유효성 검사
     const pwReg = /^(?=.*[a-zA-Z])(?=.*[\W_]).{8,20}$/;
@@ -24,6 +25,20 @@ const MyInfo = ({ member }) => {
       //정규표현식 만족하지 못했을때
       setCheckPwMsg("비밀번호 조건을 다시 확인해주세요.");
     }
+  };
+  const nickNameChk = () => {
+    axios
+      .get(backServer + "/member/nickName/" + memberNickName)
+      .then((res) => {
+        if (res.data.message === "duplication") {
+          setCheckNickNameMsg("이미 사용중인 닉네임입니다.");
+        } else {
+          setCheckNickNameMsg("");
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
 
   const updateMyInfo = () => {
@@ -40,7 +55,8 @@ const MyInfo = ({ member }) => {
       checkPwMsg === "" &&
       memberName !== "" &&
       memberNickName !== "" &&
-      memberPhone !== ""
+      memberPhone !== "" &&
+      checkNickNameMsg === ""
     ) {
       axios
         .patch(backServer + "/member/updateMember", obj)
@@ -93,6 +109,8 @@ const MyInfo = ({ member }) => {
           type="text"
           data={memberNickName}
           setData={setMemberNickName}
+          checkMsg={checkNickNameMsg}
+          blurEvent={nickNameChk}
         />
         <JoinInputWrap
           label="전화번호"

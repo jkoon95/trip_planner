@@ -73,14 +73,21 @@ const MypageMain = (props) => {
                   { url: "tour/mgmt", text: "투어 예약관리", active: true },
                   { url: "tour/reg", text: "투어 상품등록", active: false },
                   { url: "tour/sale", text: "투어 상품조회", active: false },
+                  { url: "myInfo", text: "내 정보 수정", active: false },
                 ]);
                 // navigate("/mypage/tour/mgmt");
               } else {
                 //업체인데 등록한 업체가 없을 경우
-                setMenus([
-                  { url: "myInfo", text: "내 정보 수정", active: true },
-                ]);
-                navigate("/mypage/myInfo");
+                axios
+                  .get(backServer + "/member")
+                  .then((res) => {
+                    navigate("/businessAuth/", {
+                      state: { memberEmail: res.data.data.memberEmail },
+                    });
+                  })
+                  .catch((res) => {
+                    console.log(res);
+                  });
               }
             })
             .catch((res2) => {

@@ -95,7 +95,7 @@ const CreateTrips = (props) => {
 
   // 지도
   useEffect(() => {
-    const infowindow = new kakao.maps.InfoWindow({zIndex:1});
+    // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
     const container = document.getElementById('map');
     const options = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -112,7 +112,6 @@ const CreateTrips = (props) => {
         const bounds = new kakao.maps.LatLngBounds();
         
         data.forEach((place) => {
-          // console.log(place);
           if(openSearchWrap){
             displayMarker(place);
           }
@@ -128,25 +127,28 @@ const CreateTrips = (props) => {
           setPlaceResultList([...placeResultList]);
 
           bounds.extend(new kakao.maps.LatLng(place.y, place.x));
-        })
 
+        })
+        
+        if(!openSearchWrap){
+          tripDetailList.forEach((detail) => {
+            detail.selectPlaceList.forEach((place) => {
+              // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
+              const marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.tripPlace.tripPlaceLat, place.tripPlace.tripPlaceLng) 
+              });
+              // infowindow.setContent("<div class='infowindow'>"+(place.tripRoute+1)+"</div>");
+              // infowindow.open(map, marker);
+            })
+          })
+        }
         map.setBounds(bounds);
       }
     }
 
     if(searchPlaces !== ""){
       ps.keywordSearch(searchPlaces, placesSearchCB);
-    }
-
-    if(!openSearchWrap){
-      tripDetailList.forEach((detail) => {
-        detail.selectPlaceList.forEach((place) => {
-          new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(place.tripPlace.tripPlaceLat, place.tripPlace.tripPlaceLng) 
-          });
-        })
-      })
     }
 
     const displayMarker = (place) => {
@@ -156,7 +158,7 @@ const CreateTrips = (props) => {
       });
     }
 
-  }, [searchPlaces, openSearchWrap]);
+  }, [searchPlaces, openSearchWrap, tripDetailList]);
 
   // datepicker
   useEffect(()=>{
@@ -238,7 +240,7 @@ const CreateTrips = (props) => {
               {
                 tripDetailList.map((item, index) => {
                   return(
-                    <SetDayWrap key={"day" + index} tripDetailItem={item} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripTodo={setTripTodo} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} />
+                    <SetDayWrap key={"day" + index} tripDetailItem={item} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} setTripTodo={setTripTodo} />
                   );
                 })
               }
@@ -264,7 +266,7 @@ const CreateTrips = (props) => {
                       {
                         placeResultList.map((place, index) => {
                           return(
-                            <ItemTripPlace tripRoute={tripRoute} setTripRoute={setTripRoute} key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
+                            <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );
                         })
                       }
@@ -325,10 +327,10 @@ const SetDayWrap = (props) => {
   const setTodoDayIndex = props.setTodoDayIndex;
   const setTodoIndex = props.setTodoIndex;
   const setSearchInput = props.setSearchInput;
-  const setTripTodo = props.setTripTodo;
   const setTripCost = props.setTripCost;
   const setOpenCostModal = props.setOpenCostModal;
   const setDetailListNo = props.setDetailListNo;
+  const setTripTodo = props.setTripTodo;
 
   const openSearchWrapFunc = () => {
     setOpenSearchWrap(true);
@@ -393,11 +395,8 @@ const ItemTripPlace = (props) => {
   const setOpenSearchWrap = props.setOpenSearchWrap;
   const setTripTodo = props.setTripTodo;
   const tripDays = props.tripDays;
-  const tripRoute = props.tripRoute;
-  const setTripRoute = props.setTripRoute;
 
   const addPlaceFunc = () => {
-    console.log(tripRoute);
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
     setTripDetailList([...tripDetailList]);
@@ -432,7 +431,21 @@ const ItemTripPlace = (props) => {
     setTripDetailList([...tripDetailList]);
   }
 
-  console.log(place);
+  const tripRouteDown = () => {
+    const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex+1,0,thisItem[0]);
+    setTripDetailList([...tripDetailList]);
+  }
+
+  const tripRouteUp = () => {
+    const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    let newIndex = routeIndex-1;
+    if(routeIndex === 0){
+      newIndex = 0
+    }
+    tripDetailList[thisIndex].selectPlaceList.splice(newIndex,0,thisItem[0]);
+    setTripDetailList([...tripDetailList]);
+  }
 
   return(
     listType === "day_items" ? (
@@ -448,8 +461,18 @@ const ItemTripPlace = (props) => {
               </div>
             </div>
             <div className="item_btn_wrap">
-              <button type="button" className="btn_changeOrder down"><span className="hidden">내리기</span></button>
-              <button type="button" className="btn_changeOrder up"><span className="hidden">올리기</span></button>
+              {
+                routeIndex === 0 ? (
+                  <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
+                  <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
+                ) : (
+                  <>
+                    <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                    <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
+                  </>
+                )
+              }
             </div>
             {!place.tripTodo ? (
               <div className="btn_area">

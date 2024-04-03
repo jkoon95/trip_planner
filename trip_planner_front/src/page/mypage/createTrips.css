@@ -57,7 +57,7 @@
 .createTrips_wrap .place_list .btn_delete{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / 24px;}
 
 .createTrips_wrap .trips_wrap>.btn_area{position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 20px;}
-.createTrips_wrap .trips_wrap>.btn_area::before{content: ''; display: block; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1));}
+.createTrips_wrap .trips_wrap>.btn_area::before{content: ''; display: block; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));}
 .createTrips_wrap .btn_area{margin-top: 24px;}
 .createTrips_wrap .btn_area [class^=btn_]{flex-grow: 1;}
 

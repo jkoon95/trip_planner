@@ -7,6 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useState } from "react";
+import { Input } from "../../component/FormFrm";
 
 const SelectType = (props) => {
   const data = props.data;
@@ -43,13 +44,22 @@ const SelectType = (props) => {
 };
 
 const RadioType = (props) => {
+  const data = props.data;
+  const setData = props.setData;
+  const placeholder1 = props.placeholder1;
+  const placeholder2 = props.placeholder2;
   const label = props.label;
   const value1 = props.value1;
   const value2 = props.value2;
   const value = props.value;
   const setValue = props.setValue;
+  const label1 = props.label1;
+  const label2 = props.label2;
   const changeType = (e) => {
     setValue(e.target.value);
+  };
+  const changeData = (e) => {
+    setData(e.target.value);
   };
   return (
     <FormControl>

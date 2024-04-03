@@ -46,6 +46,10 @@ const CouponReg = () => {
               value={discount}
               setValue={setDiscount}
             ></RadioType>
+            {discount === 1 && (
+              <Input placeholer="'￦' 단위 제외">할인액</Input>
+            )}
+            {discount === 2 && <Input placeholer="단위 %, 1~99">할인율</Input>}
           </div>
         </div>
       </div>
@@ -96,7 +100,6 @@ const CouponRegInputWrap = (props) => {
             blurEvent={blurEvent}
           />
         </div>
-        {checkMsg && <p className="msg error">{checkMsg}</p>}
       </div>
     </div>
   );

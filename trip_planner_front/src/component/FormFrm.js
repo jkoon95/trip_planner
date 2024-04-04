@@ -8,7 +8,7 @@ const Input = (props) => {
   const setData = props.setData; //state 값 변경 함수
   const clickEvent = props.clickEvent;
   const blurEvent = props.blurEvent;
-  const readonly = props.readonly;
+  const readOnly = props.readOnly;
   const disabled = props.disabled;
   const inputRef = props.inputRef;
   const keyupEvent = props.keyupEvent;
@@ -16,47 +16,23 @@ const Input = (props) => {
   const changeData = (e) => {
     setData(e.target.value);
   };
-  if (readonly === "readonly") {
-    return (
-      <input
-        className="input"
-        id={content}
-        type={type}
-        value={data || ""}
-        readOnly
-        ref={inputRef}
-        onKeyUp={keyupEvent}
-      />
-    );
-  } else if (disabled === "disabled") {
-    return (
-      <input
-        className="input"
-        id={content}
-        tnype={type}
-        value={data || ""}
-        disabled
-        ref={inputRef}
-        onKeyUp={keyupEvent}
-      />
-    );
-  } else {
-    return (
-      <input
-        className="input"
-        id={content}
-        placeholder={placeholder}
-        type={type}
-        value={data || ""}
-        onChange={changeData}
-        ref={inputRef}
-        onKeyUp={keyupEvent}
-        onClick={clickEvent}
-        onBlur={blurEvent}
-        onKeyDown={keyDownEvent}
-      />
-    );
-  }
+  return (
+    <input
+      className="input"
+      id={content}
+      placeholder={placeholder}
+      type={type}
+      value={data || ""}
+      onChange={changeData}
+      ref={inputRef}
+      onKeyUp={keyupEvent}
+      onClick={clickEvent}
+      onBlur={blurEvent}
+      onKeyDown={keyDownEvent}
+      disabled={disabled}
+      readOnly={readOnly}
+    />
+  );
 };
 
 const Button = (props) => {
@@ -64,9 +40,10 @@ const Button = (props) => {
   const text = props.text;
   const clickEvent = props.clickEvent;
   const className = props.class;
+  const disabled = props.disabled;
   
   return (
-    <button type="button" id={id} className={className} onClick={clickEvent}>
+    <button type="button" id={id} className={className} onClick={clickEvent} disabled={disabled}>
       {text}
     </button>
   );

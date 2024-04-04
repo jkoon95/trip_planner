@@ -7,6 +7,8 @@ const Ref = () => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
+  const [inputDisabled, setInputDisabled] = useState(true);
+  const [inputReadOnly, setInputReadOnly] = useState(true);
 
   // 모달1
   const [open, setOpen] = useState(false);
@@ -151,17 +153,17 @@ const Ref = () => {
           <p className="msg success">비밀번호가 일치합니다.</p>
         </div>
 
-        <h4>readonly</h4>
+        <h4>readOnly</h4>
         <div className="input_wrap">
           <div className="input_title">
-            <label htmlFor="input4">readonly label</label>
+            <label htmlFor="input4">readOnly label</label>
           </div>
           <div className="input_item">
             <Input
               type="text"
               content="input4"
-              data="인풋 readonly"
-              readonly="readonly"
+              data="인풋 readOnly"
+              readOnly={inputReadOnly}
             />
           </div>
         </div>
@@ -176,7 +178,7 @@ const Ref = () => {
               type="text"
               content="input5"
               data="인풋 disabled"
-              disabled="disabled"
+              disabled={inputDisabled}
             />
           </div>
         </div>

@@ -15,6 +15,7 @@ const MyInfo = ({ member }) => {
   const [memberPhone, setMemberPhone] = useState(member.memberPhone);
   const [checkPwMsg, setCheckPwMsg] = useState("");
   const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
+  const [inputDisabled, setInputDisabled] = useState(true);
   const pwChk = () => {
     //정규표현식으로 유효성 검사
     const pwReg = /^(?=.*[a-zA-Z])(?=.*[\W_]).{8,20}$/;
@@ -77,14 +78,14 @@ const MyInfo = ({ member }) => {
           content="memberNo"
           type="text"
           data={memberNo}
-          disabled="disabled"
+          disabled={inputDisabled}
         />
         <JoinInputWrap
           label="이메일"
           content="memberEmail"
           type="text"
           data={memberEmail}
-          disabled="disabled"
+          disabled={inputDisabled}
         />
         <JoinInputWrap
           label="비밀번호"

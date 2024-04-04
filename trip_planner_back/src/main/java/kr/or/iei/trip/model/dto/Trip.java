@@ -1,0 +1,22 @@
+package kr.or.iei.trip.model.dto;
+
+import org.apache.ibatis.type.Alias;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Alias("/trip")
+@Schema(description = "여행일지 객체")
+public class Trip {
+	private int tripNo;
+	private int memberNo;
+	private String tripTitle;
+	private String tripStartDate;
+	private String tripEndDate;
+	private String tripDetailList;
+}

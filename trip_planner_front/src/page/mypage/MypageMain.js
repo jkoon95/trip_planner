@@ -26,15 +26,15 @@ const MypageMain = (props) => {
   const [member, setMember] = useState("");
   const navigate = useNavigate();
 
-  // if (!isLogin) {
-  //   Swal.fire({
-  //     icon: "warning",
-  //     text: "로그인 후 이용이 가능합니다.",
-  //     confirmButtonText: "닫기",
-  //   }).then(
-  //     navigate("/")
-  //   );
-  // }
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(
+      navigate("/")
+    );
+  }
 
   useEffect(() => {
     axios

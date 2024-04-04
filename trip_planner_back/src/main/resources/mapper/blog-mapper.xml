@@ -27,4 +27,22 @@
 		insert into blog_Date_tbl values
 		(blog_date_seq.nextval,#{blogNo},#{blogDateDay},#{blogDateScheduleTitle},#{blogDateScheduleContent})
 	</insert>
+	<select id="selectOneBlog" resultType="blog">
+	select
+		blog_no, 
+		member_nickname, 
+		blog_title, 
+		to_char(blog_date,'yyyy-mm-dd') as blog_date,
+		blog_thumbnail
+	from blog_tbl where blog_no = #{blogNo}  
+	</select>
+	<select id="selectOneBlogDate" resultType="blogDate">
+	select 
+		blog_date_no,
+		blog_no,
+		blog_date_day,
+		blog_date_schedule_title,
+		blog_date_schedule_content
+		 from blog_date_tbl where blog_no=#{blogNo}
+	</select>
 </mapper>

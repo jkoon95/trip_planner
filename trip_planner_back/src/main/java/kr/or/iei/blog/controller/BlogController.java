@@ -75,7 +75,6 @@ public class BlogController {
 		blog.setBlogThumbnail(filepath);
 		
 		boolean result = blogService.insertBlog(blog,blogDateList);
-		System.out.println(result);
 		if(result == true) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -84,5 +83,12 @@ public class BlogController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}		
 		
+	}
+	
+	@GetMapping(value="/one/{blogNo}")
+	public ResponseEntity<ResponseDTO> selectOneBlog(@PathVariable int blogNo){
+		Map<String, Object> blog = blogService.selectOneBlog(blogNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", blog);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 }

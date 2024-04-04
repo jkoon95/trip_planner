@@ -22,7 +22,7 @@ public class BlogService {
 	@Autowired
 	private Pagination pagination;	
 	
-	public Map selectBlogList(int reqPage) {
+	public Map<String, Object> selectBlogList(int reqPage) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
 		int totalCount = blogDao.totalCount();
@@ -59,6 +59,17 @@ public class BlogService {
 		}		
 		
 		return true;
+	}
+
+	public Map<String, Object> selectOneBlog(int blogNo) {		
+		Blog blog = blogDao.selectOneBlog(blogNo);
+		System.out.println(blog);
+		List<BlogDate> list = blogDao.selectOneBlogDate(blogNo);
+		Map<String, Object> result = new HashMap<>();
+		System.out.println(list);
+		result.put("blog", blog);
+		result.put("list", list);		
+		return result;
 	}
 	
 }

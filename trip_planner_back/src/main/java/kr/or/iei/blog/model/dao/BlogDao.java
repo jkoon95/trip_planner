@@ -20,6 +20,10 @@ public interface BlogDao {
 
 	List selectBlogList(PageInfo pi);
 
+	Blog selectOneBlog(int blogNo);
+
+	List selectOneBlogDate(int blogNo);
+
 
 
 }

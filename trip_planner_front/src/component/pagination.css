@@ -13,15 +13,14 @@
 }
 .paging-wrap > .page-item {
   min-width: 40px;
-  /* height: 20px; */
   text-align: center;
   line-height: 20px;
   padding: 5px;
   cursor: pointer;
-  border: 1px solid #005caa;
   color: #005caa;
 }
 .paging-wrap > .page-item.active-page {
-  background-color: #005caa;
-  color: #fff;
+  border: 2px solid var(--main_01);
+  border-radius: 10px;
+  color: var(--main_04);
 }

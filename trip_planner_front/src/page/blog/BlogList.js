@@ -34,28 +34,27 @@ const BlogList = (props) => {
 
   return (
     <section className="contents blogList">
-      <div className="blog-list-wrap">
-        <div className="blog-list-title-wrap">
-          <div className="blog-list-title-one">Trip Planner</div>
-          <div className="blog-list-title-two">추천 여행지</div>
-          <div className="blog-list-title-three">
-            <p>🔥 HOT한 국내 여행지를 추천해드려요</p>
-            <>
-              {isLogin ? (
-                <div className="blog-write-btn">
-                  <Button
-                    text="글쓰기"
-                    class="btn_secondary"
-                    clickEvent={writeBtn}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
-            </>
-          </div>
+      <div className="blog-list-title-wrap">
+        <div className="blog-list-title-one">Trip Planner</div>
+        <div className="blog-list-title-two">추천 여행지</div>
+        <div className="blog-list-title-three">
+          <p>🔥 HOT한 국내 여행지를 추천해드려요</p>
+          <>
+            {isLogin ? (
+              <div className="blog-write-btn">
+                <Button
+                  text="글쓰기"
+                  class="btn_secondary"
+                  clickEvent={writeBtn}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </>
         </div>
-
+      </div>
+      <div className="blog-list-wrap">
         {blogList.map((blog, index) => {
           return <BlogItem key={"blog" + index} blog={blog} />;
         })}
@@ -74,18 +73,19 @@ const BlogList = (props) => {
 const BlogItem = (props) => {
   const blog = props.blog;
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
+  const blogView = () => {
+    navigate("/blogView/" + blog.blogNo);
+  };
 
   return (
-    <div className="blog-item">
+    <div className="blog-item" onClick={blogView}>
       <div className="blog-item-img">
         {blog.blogThumbnail === null ? (
           <img src="/images/blogDefault.png" />
         ) : (
-          <div>
-            <img
-              src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
-            />
-          </div>
+          <img src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail} />
         )}
       </div>
       <div className="blog-item-info">

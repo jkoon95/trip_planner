@@ -46,7 +46,7 @@ const BlogFrm = (props) => {
           )}
         </div>
         <div className="blog-thumbnail-wrap">
-          <label htmlFor="blogThumbnail">✅ 대표사진을 선택해주세요</label>
+          <label htmlFor="blogThumbnail">✅ 대표사진(필수)</label>
           <input
             type="file"
             id="blogThumbnail"

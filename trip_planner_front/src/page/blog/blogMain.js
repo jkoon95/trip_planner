@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import BlogList from "./BlogList";
+import BlogView from "./BlogView";
 
 const BlogMain = (props) => {
   const isLogin = props.isLogin;
   return (
     <Routes>
-      <Route path="/list" element={<BlogList isLogin={isLogin} />} />
+      <Route path="/blogList" element={<BlogList isLogin={isLogin} />} />
     </Routes>
   );
 };

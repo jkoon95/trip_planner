@@ -24,6 +24,8 @@ public interface BlogDao {
 
 	List selectOneBlogDate(int blogNo);
 
+	int deleteBlog(int blogNo);
+
 
 
 }

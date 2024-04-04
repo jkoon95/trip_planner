@@ -23,7 +23,7 @@ public class BlogService {
 	private Pagination pagination;	
 	
 	public Map<String, Object> selectBlogList(int reqPage) {
-		int numPerPage = 10;
+		int numPerPage = 9;
 		int pageNaviSize = 5;
 		int totalCount = blogDao.totalCount();
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
@@ -68,6 +68,15 @@ public class BlogService {
 		result.put("blog", blog);
 		result.put("list", list);		
 		return result;
+	}
+	@Transactional
+	public List<BlogDate> deleteBlog(int blogNo) {
+		List<BlogDate> list = blogDao.selectOneBlogDate(blogNo);
+		int result = blogDao.deleteBlog(blogNo);
+		if(result > 0 ) {
+			return list;
+		}
+		return null;
 	}
 	
 }

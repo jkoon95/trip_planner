@@ -45,4 +45,7 @@
 		blog_date_schedule_content
 		 from blog_date_tbl where blog_no=#{blogNo}
 	</select>
+	<delete id="deleteBlog">
+		delete from blog_tbl where blog_no = #{blogNo}
+	</delete>
 </mapper>

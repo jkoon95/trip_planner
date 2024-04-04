@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BlogView = (props) => {
   const isLogin = props.isLogin;
@@ -10,6 +11,7 @@ const BlogView = (props) => {
   const [blog, setBlog] = useState({});
   const [list, setlist] = useState([]);
   const [member, setMember] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(backServer + "/blog/one/" + blogNo)
@@ -20,13 +22,61 @@ const BlogView = (props) => {
       .catch((res) => {
         console.log(res);
       });
+    if (isLogin) {
+      axios.get(backServer + "/member").then((res) => {
+        console.log(res.data.data);
+        setMember(res.data.data);
+      });
+    }
   }, []);
-  console.log(blog);
-  console.log(list);
+  const deleteBoard = () => {
+    Swal.fire({
+      icon: "warning",
+      text: "블로그를 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancleButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/blog/" + blog.blogNo)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.message === "success") {
+              navigate("/blogList");
+            }
+          })
+          .catch((res) => {
+            console.log(res.data);
+          });
+      }
+    });
+  };
+
   return (
     <section className="contents blogList">
       <div className="blog-view-wrap">
         <h2>BLOG </h2>
+        {isLogin ? (
+          <div className="btn-box">
+            {member && member.memberNickName == blog.memberNickName ? (
+              <>
+                <button
+                  type="button"
+                  class="btn_secondary outline md"
+                  onClick={deleteBoard}
+                >
+                  삭제
+                </button>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="blog-view-info">
           <div>닉네임 : {blog.memberNickName}</div>
           <div>작성일자 : {blog.blogDate}</div>
@@ -42,17 +92,14 @@ const BlogView = (props) => {
 
           <div className="blog-view-title">{blog.blogTitle}</div>
         </div>
-
         <div className="blog-view-content">
           {list.map((day, index) => {
-            return <DayItem key={"list" + index} day={day} />;
+            return (
+              <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
+            );
           })}
         </div>
-      </div>
-      <div className="btn-box">
-        <button type="button" class="btn_secondary md">
-          삭제
-        </button>
+        <h1>댓글</h1>
       </div>
     </section>
   );
@@ -60,8 +107,10 @@ const BlogView = (props) => {
 
 const DayItem = (props) => {
   const day = props.day;
+  const dayNumber = props.dayNumber;
   return (
     <div className="day-list">
+      <div className="date-day">{"🚕 " + " day " + dayNumber + " 💨"} </div>
       <span className="schedule-title">{day.blogDateScheduleTitle}</span>
       <span
         className="schedule-content"

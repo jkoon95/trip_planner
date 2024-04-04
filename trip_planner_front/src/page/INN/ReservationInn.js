@@ -9,6 +9,7 @@ const ReservationInn = () => {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [bookStatus, setBookStatus] = useState(0);
   const [bookGuest, setBookGuest] = useState(0);
+
   return (
     <div className="reservation-all-wrap">
       <div className="reservation-title hidden">

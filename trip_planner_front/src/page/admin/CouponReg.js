@@ -3,6 +3,8 @@ import "./admin.css";
 import { Button, Input } from "../../component/FormFrm";
 import { ExpireDatePicker, RadioType, SelectType } from "./AdminFrm";
 import axios from "axios";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 const CouponReg = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -11,26 +13,42 @@ const CouponReg = () => {
   const [discountRate, setDiscountRate] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [discount, setDiscount] = useState(1);
-  const [expireDate, setExpireDate] = useState();
+  const [expireDate, setExpireDate] = useState(dayjs(new Date()));
   const assignCoupon = () => {
-    console.log("만료일" + expireDate);
+    const inputDate = dayjs(expireDate).format("YYYY-MM-DD");
+    const inputDateString = inputDate.trim(); // 입력된 날짜 문자열 양쪽의 공백 제거
+    const parts = inputDateString.split("-"); // 날짜 문자열을 '-' 기준으로 분리하여 배열로 만듦
+    if (parts.length === 3) {
+      // 배열의 길이가 3이면 유효한 날짜 형식
+      const year = parseInt(parts[0], 10); // 연도 부분을 정수로 변환
+      const month = parseInt(parts[1], 10) - 1; // 월 부분을 정수로 변환하고 1을 빼서 JavaScript Date 객체의 월 값에 맞춤
+      const day = parseInt(parts[2], 10); // 일 부분을 정수로 변환
+      const expiredDate = new Date(year, month, day); // Date 객체 생성
+      console.log(expiredDate, typeof expiredDate);
+    }
+    /*
     const obj = {
       couponName,
       couponRange,
       discountRate,
       discountAmount,
       discount,
-      expireDate,
+      expiredDate,
     };
 
     axios
       .post(backServer + "/admin/couponReg/", obj)
       .then((res) => {
-        console.log(res.data);
+        Swal.fire({
+          title: "쿠폰등록 완료",
+          text: "쿠폰등록 성공",
+          icon: "success",
+        });
       })
       .catch((res) => {
         console.log(res);
       });
+      */
   };
   return (
     <section className="contents couponReg">

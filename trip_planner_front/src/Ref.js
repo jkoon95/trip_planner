@@ -11,17 +11,25 @@ const Ref = () => {
   const [inputReadOnly, setInputReadOnly] = useState(true);
 
   // 모달1
-  const [open, setOpen] = useState(false);
-  const openModal = () => {
+  const [openModal1, setOpenModal1] = useState(false);
+  const openModalFunc1 = () => {
     document.body.classList.add("scroll_fixed");
-    setOpen(true);
+    setOpenModal1(true);
+  }
+  const closeModalFunc1 = () => {
+    document.body.classList.remove("scroll_fixed");
+    setOpenModal1(false);
   }
   
   // 모달2
-  const [open2, setOpen2] = useState(false);
-  const openModal2 = () => {
+  const [openModal2, setOpenModal2] = useState(false);
+  const openModalFunc2 = () => {
     document.body.classList.add("scroll_fixed");
-    setOpen2(true);
+    setOpenModal2(true);
+  }
+  const closeModalFunc2 = () => {
+    document.body.classList.remove("scroll_fixed");
+    setOpenModal2(false);
   }
 
   return (
@@ -202,13 +210,33 @@ const Ref = () => {
       <h3>modal</h3>
       <section className="ref_section">
         <h4>각 모달마다 open에 대한 state와 openModal 함수가 필요함(상단 코드 참고)</h4>
-        <p>class에 modal이 기본, lg 넣으면 큰 사이즈</p>
-        <Button class="btn_primary" text="모달 기본사이즈" clickEvent={openModal} />
-        <Button class="btn_primary outline" text="모달 큰 사이즈" clickEvent={openModal2} />
+        <h5>- class에는 모달 사이즈 지정(.modal / .modal.lg)</h5>
+        <h5>- title에는 모달 타이틀 지정(생략 가능)</h5>
+        <Button class="btn_primary" text="모달 기본사이즈" clickEvent={openModalFunc1} />
+        <Button class="btn_primary outline" text="모달 큰 사이즈" clickEvent={openModalFunc2} />
+
+        <Modal class="modal" open={openModal1} title="모달1">
+          <div>
+            첫 번째 영역에는 모달의 컨텐츠를 넣고,<br /> 두 번째 영역에는 모달 푸터에 들어갈 버튼 등을 넣는다.
+          </div>
+
+          <div className="btn_area">
+            <Button class="btn_secondary outline" text="취소" clickEvent={closeModalFunc1} />
+            <Button class="btn_secondary" text="확인" clickEvent={closeModalFunc1} />
+          </div>
+        </Modal>
+
+        <Modal class="modal lg" open={openModal2} title="모달2" useCloseBtn={true}>
+          <div>
+            첫 번째 영역에는 모달의 컨텐츠를 넣고,<br /> 두 번째 영역에는 모달 푸터에 들어갈 버튼 등을 넣는다.
+          </div>
+
+          <div className="btn_area">
+            <Button class="btn_secondary" text="확인" clickEvent={closeModalFunc2} />
+          </div>
+        </Modal>
       </section>
 
-      <Modal class="modal" open={open} setOpen={setOpen} />
-      <Modal class="modal lg" open={open2} setOpen={setOpen2} />
 
     </section>
   );

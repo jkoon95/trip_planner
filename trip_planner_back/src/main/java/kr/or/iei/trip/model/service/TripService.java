@@ -39,12 +39,11 @@ public class TripService {
 	}
 
 	public List<Trip> selectMyTripList(int reqPage, String memberEmail) {
-		int numPerPage = 10;
-		int end = reqPage * numPerPage;
-		int start = end - numPerPage + 1;
+		int amount = 5;
+		int end = reqPage * amount;
+		int start = end - amount + 1;
 		List<Trip> tripList = tripDao.selectMyTripList(memberEmail, start, end);
 		return tripList;
 	}
-
 	
 }

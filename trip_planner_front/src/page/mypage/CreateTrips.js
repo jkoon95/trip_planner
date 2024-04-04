@@ -231,7 +231,7 @@ const CreateTrips = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker onChange={(newValue)=>{
-                      if(dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
+                      if(tripEndDate != null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
                         setTripStartDate(newValue);
                       }
                     }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />

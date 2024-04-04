@@ -1,9 +1,13 @@
 .reservation-all-wrap {
   width: 1250px;
   margin: 0 auto;
+  margin-top: 30px;
 }
 .reservation-wrap > div:last-child {
   display: flex;
+}
+.select-inn-wrap {
+  width: 322px;
 }
 .reservation-content-wrap {
   width: 800px;
@@ -109,4 +113,103 @@
 .payment-box > div:hover {
   background-color: #f5f5f5ec;
   transition-duration: 0.3s;
+}
+.reservation-pay-zone {
+  margin: 40px 0px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+}
+.reservation-pay-zone > .reservation-pay-title {
+  font-family: pt-b;
+}
+.reservation-pay-price {
+  display: flex;
+  justify-content: space-between;
+}
+.reservation-pay-price > .room-price {
+  font-family: pt-b;
+  color: #8f8f8f;
+  padding: 20px 0px;
+  font-size: 14px;
+}
+.reservation-pay-price > .one-day-price {
+  font-size: 14px;
+  padding: 20px 0px;
+}
+.reservation-pay-price > .room-price > sub {
+  color: #e9511c;
+  font-family: pt-b;
+  font-size: 11px;
+}
+.reservation-pay-total {
+  display: flex;
+  justify-content: space-between;
+}
+.total-price-toitle {
+  font-family: pt-b;
+  color: #8f8f8f;
+  padding: 20px 0px;
+  font-size: 14px;
+}
+.total-price {
+  font-size: 24px;
+  padding: 11px 0px;
+  color: #e9511c;
+  font-family: pt-eb;
+}
+.reservation-terms-wrap {
+  background-color: #f3eeee;
+  display: flex;
+  border: 1px solid #f3eeee;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+  margin-top: 15px;
+}
+.reservation-terms-wrap > #terms-all {
+  display: block;
+  appearance: checkbox;
+  margin-right: 5px;
+}
+.reservation-terms-wrap > label {
+  font-size: 15px;
+}
+.reservation-terms-wrap > .next-terms {
+  position: absolute;
+  right: 5px;
+  line-height: 21px;
+  color: #717171;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.terms-wrap-zone {
+  display: flex;
+  padding: 8px;
+}
+.terms-wrap-box > .terms-wrap-zone > input {
+  display: block;
+  appearance: checkbox;
+  margin-right: 5px;
+}
+.terms-wrap-zone > label {
+  font-size: 13px;
+}
+.terms-wrap-zone > .next-terms {
+  line-height: 21px;
+  color: #717171;
+  cursor: pointer;
+}
+.terms-wrap-box {
+  margin-top: 15px;
+}
+.reservation-pay-zone > .btn-area {
+  text-align: center;
+  margin-top: 30px;
+}
+.reservation-pay-zone > .btn-area > button {
+  width: 100%;
+  font-family: pt-b;
+  font-size: 16px;
 }

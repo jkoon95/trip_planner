@@ -83,8 +83,8 @@ const ExpireDatePicker = (props) => {
   const expireDate = props.expireDate;
   const setExpireDate = props.setExpireDate;
   const changeExpireDate = (newValue) => {
-    console.log(new Date(newValue.$d.getTime()));
-    setExpireDate(new Date(newValue.$d.getTime()));
+    //setExpireDate(newValue);
+    setExpireDate(dayjs(newValue));
   };
   return (
     <LocalizationProvider
@@ -96,7 +96,7 @@ const ExpireDatePicker = (props) => {
         <DatePicker
           label="만료일"
           format="YYYY-MM-DD"
-          value={expireDate}
+          value={expireDate ? expireDate : dayjs("2024-04-04")}
           onChange={changeExpireDate}
           disablePast
         />

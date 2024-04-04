@@ -15,8 +15,17 @@ const CouponReg = () => {
   const [discount, setDiscount] = useState(1);
   const [expireDate, setExpireDate] = useState(dayjs(new Date()));
   const assignCoupon = () => {
-    const expiredDate = dayjs(expireDate).format("YYYY-MM-DD");
-    console.log(expiredDate, typeof expiredDate);
+    const inputDate = dayjs(expireDate).format("YYYY-MM-DD");
+    const inputDateString = inputDate.trim(); // 입력된 날짜 문자열 양쪽의 공백 제거
+    const parts = inputDateString.split("-"); // 날짜 문자열을 '-' 기준으로 분리하여 배열로 만듦
+    if (parts.length === 3) {
+      // 배열의 길이가 3이면 유효한 날짜 형식
+      const year = parseInt(parts[0], 10); // 연도 부분을 정수로 변환
+      const month = parseInt(parts[1], 10) - 1; // 월 부분을 정수로 변환하고 1을 빼서 JavaScript Date 객체의 월 값에 맞춤
+      const day = parseInt(parts[2], 10); // 일 부분을 정수로 변환
+      const expiredDate = new Date(year, month, day); // Date 객체 생성
+      console.log(expiredDate, typeof expiredDate);
+    }
     /*
     const obj = {
       couponName,

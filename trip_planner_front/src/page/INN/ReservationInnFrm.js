@@ -3,7 +3,6 @@ import "./reservationInn.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { useEffect, useRef, useState } from "react";
-import { loadPaymentWidget, ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 import axios, { all } from "axios";
 import { Portal } from "@mui/material";
 import { Button } from "../../component/FormFrm";

@@ -95,7 +95,8 @@ h5{margin-bottom: 8px; color: #000; font-family: pt-b; font-size: 14px; line-hei
 .modal .modal_title{font-family: pt-b; font-size: 20px; line-height: 1.5; text-align:center;}
 .modal .title_sub{margin-top: 12px; color: var(--gray_04); font-size: 14px; line-height: 1.5; text-align: center;}
 .modal .modal_container{/*height:114px;*/ padding: 0 20px; overflow-y: auto;}
-.modal .modal_content{display: flex; flex-direction: column; justify-content: center; min-height: 00%; font-size: 16px; line-height: 1.5;}
+.modal .modal_content{display: flex; flex-direction: column; justify-content: center; min-height: 80px; font-size: 16px; line-height: 1.5;}
+.modal.lg .modal_content{min-height: 180px;}
 .modal .modal_content .center{text-align: enter;}
 .modal .modal_content .img_wrap>img{display: block; width: 100%;}
 .modal .btn_area{margin-top: 20px;}

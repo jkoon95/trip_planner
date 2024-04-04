@@ -26,8 +26,11 @@ import BlogMain from "./page/blog/blogMain";
 import ReservationInn from "./page/INN/ReservationInn";
 import CreateTrips from "./page/mypage/CreateTrips";
 import BlogView from "./page/blog/BlogView";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
+  const navigate = useNavigate();
   const obj = JSON.parse(window.localStorage.getItem("member"));
   const [isLogin, setIsLogin] = useState(obj ? true : false); //로그인상태를 체크하는 state, obj가 있으면 로그인 true/없으면 false
   const [token, setToken] = useState(obj ? obj.accessToken : ""); //토큰값
@@ -64,6 +67,12 @@ function App() {
     window.localStorage.removeItem("member");
     axios.defaults.headers.common["Authorization"] = null;
     setIsLogin(false);
+    Swal.fire({
+      title: "로그아웃 성공",
+      text: "로그아웃이 성공하였습니다.",
+      icon: "success",
+    });
+    navigate("/");
   };
   //페이지가 로드되면,새로고침되면
   useEffect(() => {

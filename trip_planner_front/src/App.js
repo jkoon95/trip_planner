@@ -114,7 +114,10 @@ function App() {
           <Route path="/blogWrite" element={<BlogWrite isLogin={isLogin} />} />
           <Route path="/consult" element={<ConsultTalk />} />
           <Route path="/license" element={<License />} />
-          <Route path="/businessAuth" element={<BusinessAuth />} />
+          <Route
+            path="/businessAuth"
+            element={<BusinessAuth isLogin={isLogin} />}
+          />
           <Route path="/inn/reservationInn" element={<ReservationInn />} />
           <Route
             path="/mypage/myTrips/createTrips"

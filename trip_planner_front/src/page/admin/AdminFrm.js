@@ -6,8 +6,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useState } from "react";
-import { Input } from "../../component/FormFrm";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const SelectType = (props) => {
   const data = props.data;
@@ -19,7 +21,7 @@ const SelectType = (props) => {
   const value4 = props.value4;
   const label = props.label;
   const changeType = (e) => {
-    setData(e.target.value);
+    setData(Number(e.target.value));
   };
 
   return (
@@ -56,10 +58,10 @@ const RadioType = (props) => {
   const label1 = props.label1;
   const label2 = props.label2;
   const changeType = (e) => {
-    setValue(e.target.value);
+    setValue(Number(e.target.value));
   };
   const changeData = (e) => {
-    setData(e.target.value);
+    setData(Number(e.target.value));
   };
   return (
     <FormControl>
@@ -77,4 +79,30 @@ const RadioType = (props) => {
   );
 };
 
-export { SelectType, RadioType };
+const ExpireDatePicker = (props) => {
+  const expireDate = props.expireDate;
+  const setExpireDate = props.setExpireDate;
+  const changeExpireDate = (newValue) => {
+    console.log(new Date(newValue.$d.getTime()));
+    setExpireDate(new Date(newValue.$d.getTime()));
+  };
+  return (
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      dateFormats={{ fullDate: "M" }}
+      adapterLocale="ko"
+    >
+      <DemoContainer components={["DatePicker"]}>
+        <DatePicker
+          label="만료일"
+          format="YYYY-MM-DD"
+          value={expireDate}
+          onChange={changeExpireDate}
+          disablePast
+        />
+      </DemoContainer>
+    </LocalizationProvider>
+  );
+};
+
+export { SelectType, RadioType, ExpireDatePicker };

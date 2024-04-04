@@ -10,9 +10,8 @@ import Modal from "../../component/Modal";
 import axios from "axios";
 const { kakao } = window;
 
-const CreateTrips = (props) => {
+const CreateTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const isLogin = props.isLogin;
   const [member, setMember] = useState("");
   useEffect(() => {
     axios
@@ -26,7 +25,8 @@ const CreateTrips = (props) => {
       });
   }, [])
 
-  const [tripList, setTripList] = useState({}); //최종 데이터
+  const [trip, setTrip] = useState({}); //최종 데이터
+  const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
   const [tripTitle, setTripTitle] = useState("");
   const [tripStartDate, setTripStartDate] = useState(dayjs(new Date()));
@@ -37,7 +37,6 @@ const CreateTrips = (props) => {
   const [openSearchWrap, setOpenSearchWrap] = useState(false);
   const [placeResultList, setPlaceResultList] = useState([]);
   const [detailListNo, setDetailListNo] = useState(-1);
-  const [tripRoute, setTripRoute] = useState(0);
   const [openTodoModal, setOpenTodoModal] = useState(false);
   const [openCostModal, setOpenCostModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -45,10 +44,26 @@ const CreateTrips = (props) => {
   const [todoDayIndex, setTodoDayIndex] = useState(-1);
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
-  let ii = 0;
+
+  // 여행 등록하기
+  const createTrips = () => {
+    console.log("여행 등록하기!!!");
+    if(tripTitle === ""){
+      trip.tripTitle = "국내 여행";
+      setTripTitle("국내 여행");
+    }
+    console.log(trip);
+    axios.post(backServer + "/trip", trip)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }
 
   useEffect(() => {
-    setTripList({memberNo: member.memberNo, tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: tripDetailList});
+    setTrip({memberNo: member.memberNo, tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: JSON.stringify(tripDetailList)});
   }, [tripTitle, tripStartDate, tripEndDate, tripDetailList])
 
   const closeTodoModalFunc = () => {
@@ -65,12 +80,14 @@ const CreateTrips = (props) => {
 
   const addTodoFunc = () => {
     tripDetailList[todoDayIndex].selectPlaceList[todoIndex].tripTodo = tripTodo;
+    setTripDetailList([...tripDetailList]);
     setTripTodo("");
     setOpenTodoModal(false);
   }
 
   const addCostFunc = () => {
     tripDetailList[todoDayIndex].tripCost = tripCost;
+    setTripDetailList([...tripDetailList]);
     setTripCost("");
     setOpenCostModal(false);
   }
@@ -188,12 +205,12 @@ const CreateTrips = (props) => {
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
-            newTripDetailList.push({selectPlaceList : array});
+            newTripDetailList.push({selectPlaceList : array, tripDay: tripDate});
           }else{
-            newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList});
+            newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList, tripDay: tripDate});
           }
         }else{
-          newTripDetailList.push({selectPlaceList: []})
+          newTripDetailList.push({selectPlaceList: [], tripDay: tripDate});
         }
         if(tripDate === endDate){
           break;
@@ -204,12 +221,6 @@ const CreateTrips = (props) => {
       setTripDetailList(newTripDetailList);
     }
   },[tripStartDate, tripEndDate])
-
-  // 여행 등록하기
-  const createTrips = () => {
-    console.log("여행 등록하기!!!");
-    console.log(tripList);
-  }
   
   return (
     <section className="contents createTrips">
@@ -231,6 +242,7 @@ const CreateTrips = (props) => {
                     }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
+                      setTripBtnDisabled(false);
                     }} format="YYYY-MM-DD" disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -246,7 +258,7 @@ const CreateTrips = (props) => {
               }
             </div>
             <div className="btn_area">
-              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTrips} />
+              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTrips} disabled={tripBtnDisabled} />
             </div>
           </div>
 

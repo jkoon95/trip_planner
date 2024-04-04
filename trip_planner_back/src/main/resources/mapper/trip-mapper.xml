@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.or.iei.trip.model.dao.TripDao">
+  <insert id="insertTrip">
+  	insert into trip_tbl values(trip_seq.nextval, #{memberNo}, #{tripTitle}, #{tripStartDate}, #{tripEndDate})
+  	<selectKey resultType="int" keyProperty="tripNo" order="AFTER">
+  		select max(trip_no) from trip_tbl
+  	</selectKey>
+  </insert>
+  
+  <insert id="insertTripDetail">
+  	insert into trip_detail_tbl values(trip_detail_seq.nextval, #{tripNo}, #{tripDay}, #{tripCost})
+  	<selectKey resultType="int" keyProperty="tripDetailNo" order="AFTER">
+  		select max(trip_detail_no) from trip_detail_tbl
+  	</selectKey>
+  </insert>
+  
+  <insert id="insertTripPlace">
+  	insert into trip_place_tbl values(#{tripDetailNo}, #{tripRoute}, #{tripPlaceName}, #{tripPlaceCategory}, #{tripPlaceAddress}, #{tripPlacePhone}, #{tripPlaceLat}, #{tripPlaceLng}, #{tripTodo})
+  </insert>
+</mapper>

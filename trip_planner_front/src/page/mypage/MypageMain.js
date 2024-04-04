@@ -127,7 +127,10 @@ const MypageMain = (props) => {
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes />} />
             <Route path="/myReviews" element={<MyReviews />} />
-            <Route path="/myInfo" element={<MyInfo member={member} />} />
+            <Route
+              path="/myInfo"
+              element={<MyInfo isLogin={isLogin} member={member} />}
+            />
             <Route path="/innReg" element={<InnReg member={member} />} />
             <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
             <Route path="/tour/reg" element={<TourReg />} />
@@ -135,7 +138,10 @@ const MypageMain = (props) => {
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
             {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
-            <Route path="/admin/couponReg" element={<CouponReg />} />
+            <Route
+              path="/admin/couponReg"
+              element={<CouponReg isLogin={isLogin} member={member} />}
+            />
           </Routes>
         </div>
       </section>

@@ -1,12 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./admin.css";
 import { Button, Input } from "../../component/FormFrm";
 import { ExpireDatePicker, RadioType, SelectType } from "./AdminFrm";
 import axios from "axios";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const CouponReg = () => {
+const CouponReg = ({ member, isLogin }) => {
+  const memberType = member.memberType;
+  const navigate = useNavigate();
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(navigate("/"));
+  }
+  if (memberType !== 3) {
+    Swal.fire({
+      title: "접근거부",
+      text: "관리자 페이지입니다.",
+      icon: "warning",
+    });
+    navigate("/");
+  }
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [couponName, setCouponName] = useState("");
   const [couponRange, setCouponRange] = useState(1);
@@ -35,6 +53,7 @@ const CouponReg = () => {
             text: "쿠폰등록 성공",
             icon: "success",
           });
+          navigate("/");
         } else {
           Swal.fire({
             title: "쿠폰등록 실패",

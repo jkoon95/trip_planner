@@ -63,10 +63,8 @@ public class BlogService {
 
 	public Map<String, Object> selectOneBlog(int blogNo) {		
 		Blog blog = blogDao.selectOneBlog(blogNo);
-		System.out.println(blog);
 		List<BlogDate> list = blogDao.selectOneBlogDate(blogNo);
 		Map<String, Object> result = new HashMap<>();
-		System.out.println(list);
 		result.put("blog", blog);
 		result.put("list", list);		
 		return result;

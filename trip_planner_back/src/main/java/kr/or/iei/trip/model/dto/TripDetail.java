@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias("/tripDetail")
+@Alias(value="tripDetail")
 @Schema(description = "여행일지 상세 객체")
 public class TripDetail {
 	private int tripDetailNo;

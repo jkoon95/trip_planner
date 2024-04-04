@@ -1,5 +1,5 @@
 import "./createTrips.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Input, Textarea } from "../../component/FormFrm";
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -8,22 +8,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Modal from "../../component/Modal";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const { kakao } = window;
 
 const CreateTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [member, setMember] = useState("");
-  useEffect(() => {
-    axios
-      .get(backServer + "/member")
-      .then((res) => {
-        console.log(res.data.data);
-        setMember(res.data.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, [])
+  const navigate = useNavigate();
 
   const [trip, setTrip] = useState({}); //최종 데이터
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
@@ -47,7 +38,7 @@ const CreateTrips = () => {
 
   // 여행 등록하기
   const createTrips = () => {
-    console.log("여행 등록하기!!!");
+    const backServer = process.env.REACT_APP_BACK_SERVER;
     if(tripTitle === ""){
       trip.tripTitle = "국내 여행";
       setTripTitle("국내 여행");
@@ -55,15 +46,19 @@ const CreateTrips = () => {
     console.log(trip);
     axios.post(backServer + "/trip", trip)
     .then((res) => {
-      console.log(res.data);
+      if(res.data.message === "success"){
+        Swal.fire({icon: "success", title: "등록 완료", text: "일정 등록이 완료됐습니다.", confirmButtonText: "닫기"});
+        navigate("/");
+      }
     })
     .catch((res) => {
       console.log(res);
+      Swal.fire({icon: "warning", text: "문제가 발생했습니다. 잠시 후 다시 시도해주세요.", confirmButtonText: "닫기"})
     })
   }
 
   useEffect(() => {
-    setTrip({memberNo: member.memberNo, tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: JSON.stringify(tripDetailList)});
+    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: JSON.stringify(tripDetailList)});
   }, [tripTitle, tripStartDate, tripEndDate, tripDetailList])
 
   const closeTodoModalFunc = () => {

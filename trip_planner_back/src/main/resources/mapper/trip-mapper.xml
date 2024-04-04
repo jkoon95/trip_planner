@@ -18,4 +18,8 @@
   <insert id="insertTripPlace">
   	insert into trip_place_tbl values(#{tripDetailNo}, #{tripRoute}, #{tripPlaceName}, #{tripPlaceCategory}, #{tripPlaceAddress}, #{tripPlacePhone}, #{tripPlaceLat}, #{tripPlaceLng}, #{tripTodo})
   </insert>
+  
+  <select id="selectMyTripList" resultType="trip">
+  	select * from (select rownum rnum, t.* from (select * from trip_tbl where member_no in(select member_no from member_tbl where member_email=#{memberEmail}))t order by 1 desc) where rnum between #{start} and #{end}
+  </select>
 </mapper>

@@ -3,6 +3,8 @@ import "./admin.css";
 import { Button, Input } from "../../component/FormFrm";
 import { ExpireDatePicker, RadioType, SelectType } from "./AdminFrm";
 import axios from "axios";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 const CouponReg = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -11,26 +13,33 @@ const CouponReg = () => {
   const [discountRate, setDiscountRate] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [discount, setDiscount] = useState(1);
-  const [expireDate, setExpireDate] = useState();
+  const [expireDate, setExpireDate] = useState(dayjs(new Date()));
   const assignCoupon = () => {
-    console.log("만료일" + expireDate);
+    const expiredDate = dayjs(expireDate).format("YYYY-MM-DD");
+    console.log(expiredDate, typeof expiredDate);
+    /*
     const obj = {
       couponName,
       couponRange,
       discountRate,
       discountAmount,
       discount,
-      expireDate,
+      expiredDate,
     };
 
     axios
       .post(backServer + "/admin/couponReg/", obj)
       .then((res) => {
-        console.log(res.data);
+        Swal.fire({
+          title: "쿠폰등록 완료",
+          text: "쿠폰등록 성공",
+          icon: "success",
+        });
       })
       .catch((res) => {
         console.log(res);
       });
+      */
   };
   return (
     <section className="contents couponReg">

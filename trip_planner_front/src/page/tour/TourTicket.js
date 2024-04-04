@@ -18,45 +18,6 @@ const TourTicket = () => {
   const [ticketYouth, setTicketYouth] = useState("");
   const [ticketChild, setTicketChild] = useState("");
 
-  const handleTicket = () => {
-    if (!ticketAdult || !ticketYouth || !ticketChild) {
-      // 알림 메시지 표시
-      Swal.fire({
-        title: "모든 티켓 가격을 입력해주세요.",
-        icon: "error",
-      });
-      return;
-    }
-
-    // 전송용 form객체 생성
-    const form = new FormData();
-    form.append("tourNo", tourNo);
-    form.append("ticketAdult", ticketAdult);
-    form.append("ticketYouth", ticketYouth);
-    form.append("ticketChild", ticketChild);
-
-    axios
-      .post(backServer + "/tour/ticket", form, {
-        headers: {
-          contentType: "multipart/form-data",
-          processData: false,
-        },
-      })
-      .then((res) => {
-        if (res.data.message === "success") {
-          Swal.fire(
-            "정상적으로 등록되었습니다. 준비중 버튼을 눌러 판매를 시작하세요!"
-          );
-          navigate("/mypage/tour/sale");
-        } else {
-          Swal.fire("등록 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
-
   useEffect(() => {
     axios
       .get(backServer + "/tour/one/" + tourNo)
@@ -86,6 +47,42 @@ const TourTicket = () => {
         console.log(res);
       });
   }, []);
+
+  const modifyTicket = () => {
+    if (!ticketAdult || !ticketYouth || !ticketChild) {
+      // 알림 메시지 표시
+      Swal.fire({
+        title: "모든 티켓 가격을 입력해주세요.",
+        icon: "error",
+      });
+      return;
+    }
+    const form = new FormData();
+    form.append("tourNo", tourNo);
+    form.append("ticketAdult", ticketAdult);
+    form.append("ticketYouth", ticketYouth);
+    form.append("ticketChild", ticketChild);
+
+    console.log(form);
+    axios
+      .patch(backServer + "/tour/ticket", form, {
+        headers: {
+          contentType: "multipart/form-data",
+          processData: false,
+        },
+      })
+      .then((res) => {
+        if (res.data.message === "success") {
+          Swal.fire("정상적으로 등록되었습니다.");
+          navigate("/mypage/tour/sale");
+        } else {
+          Swal.fire("등록 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <section className="contents">
@@ -161,7 +158,7 @@ const TourTicket = () => {
         </div>
         <button
           className="btn_primary handle-ticket-btn"
-          onClick={handleTicket}
+          onClick={modifyTicket}
         >
           티켓 등록
         </button>

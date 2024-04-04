@@ -129,18 +129,18 @@ public class TourController {
 		}
 	}
 	
-	@PostMapping(value="/ticket")
-	public ResponseEntity<ResponseDTO> insertTourTicket(@ModelAttribute TourTicket tourTicket){
+//	@PostMapping(value="/ticket")
+//	public ResponseEntity<ResponseDTO> insertTourTicket(@ModelAttribute TourTicket tourTicket){
 //		System.out.println(tourTicket);
-		int result = tourService.insertTourTicket(tourTicket);
-		if(result == 1) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		}
-	}
+//		int result = tourService.insertTourTicket(tourTicket);
+//		if(result == 1) {
+//			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+//			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+//		} else {
+//			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+//			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+//		}
+//	}
 	
 	@GetMapping(value="/ticket/{tourNo}")
 	public ResponseEntity<ResponseDTO> selectTourTicket(@PathVariable int tourNo){

@@ -16,7 +16,6 @@ import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
 import TourTicket from "./../tour/TourTicket";
-import TourTicketModify from "./../tour/TourTicketModify";
 import CouponReg from "../admin/CouponReg";
 
 const MypageMain = (props) => {
@@ -31,9 +30,7 @@ const MypageMain = (props) => {
       icon: "warning",
       text: "로그인 후 이용이 가능합니다.",
       confirmButtonText: "닫기",
-    }).then(
-      navigate("/")
-    );
+    }).then(navigate("/"));
   }
 
   useEffect(() => {
@@ -136,11 +133,8 @@ const MypageMain = (props) => {
             <Route path="/tour/reg" element={<TourReg />} />
             <Route path="/tour/sale" element={<TourSale member={member} />} />
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
+            {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
-            <Route
-              path="/tour/ticket/modify/:tourNo"
-              element={<TourTicketModify />}
-            />
             <Route path="/admin/couponReg" element={<CouponReg />} />
           </Routes>
         </div>

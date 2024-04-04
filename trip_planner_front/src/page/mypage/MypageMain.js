@@ -114,7 +114,7 @@ const MypageMain = (props) => {
     { url: "myInfo", text: "내 정보 수정", active: false },
   ]);
 
-  console.log(menus);
+  // console.log(menus);
 
   return (
     <>
@@ -126,7 +126,7 @@ const MypageMain = (props) => {
         <div className="content_wrap">
           <Routes>
             <Route path="/myBooks" element={<MyBooks />} />
-            <Route path="/myTrips" element={<MyTrips member={member} />} />
+            <Route path="/myTrips" element={<MyTrips />} />
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes />} />
             <Route path="/myReviews" element={<MyReviews />} />

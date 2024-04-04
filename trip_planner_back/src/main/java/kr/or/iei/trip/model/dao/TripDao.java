@@ -1,5 +1,7 @@
 package kr.or.iei.trip.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.trip.model.dto.Trip;
@@ -14,5 +16,7 @@ public interface TripDao {
 	int insertTripDetail(TripDetail td);
 
 	int insertTripPlace(TripPlace tp);
+
+	List<Trip> selectMyTripList(String memberEmail, int start, int end);
 
 }

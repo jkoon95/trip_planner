@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +25,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.trip.model.dto.TripDetail;
 import kr.or.iei.trip.model.dto.TripPlace;
@@ -40,7 +44,7 @@ public class TripController {
 		@ApiResponse(responseCode = "500", description = "서버 에러")
 	})
 	@PostMapping()
-	public ResponseEntity<ResponseDTO> insertTrip(@RequestBody Trip trip) throws JsonMappingException, JsonProcessingException{
+	public ResponseEntity<ResponseDTO> insertTrip(@RequestBody Trip trip, @RequestAttribute String memberEmail) throws JsonMappingException, JsonProcessingException{
 		//System.out.println(trip);
 		ObjectMapper om = new ObjectMapper();
 		List<TripDetail> tripDetailList = new ArrayList<TripDetail>();
@@ -55,7 +59,6 @@ public class TripController {
 			if(tripCostStr != null) {
 				tdl.setTripCost(Integer.parseInt(tripCostStr));
 			}
-			
 			//System.out.println(tdl);
 			List<LinkedHashMap<String, Object>> spl = (List<LinkedHashMap<String, Object>>)map.get("selectPlaceList");
 			
@@ -81,15 +84,13 @@ public class TripController {
 				tp.setTripPlaceLat(tripPlaceLat);
 				tp.setTripPlaceLng(tripPlaceLng);
 				
-				
 				selectPlaceList.add(tp);
 				tdl.setSelectPlaceList(selectPlaceList);
 			}
 			tripDetailList.add(tdl);
-			
 		}
 		System.out.println(tripDetailList);
-		int result = tripService.insertTrip(trip, tripDetailList);
+		int result = tripService.insertTrip(trip, tripDetailList, memberEmail);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -97,6 +98,18 @@ public class TripController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
+	}
+	
+	@Operation(summary = "여행 일정 리스트 조회", description = "다가오는 여행/지난 여행 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping(value="/list/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectMyTripList(@PathVariable int reqPage, @RequestAttribute String memberEmail){
+		List<Trip> tripList = tripService.selectMyTripList(reqPage, memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tripList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 }
 

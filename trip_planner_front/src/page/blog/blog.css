@@ -228,3 +228,43 @@ blog-list-box {
 .date-add-btn {
   text-align: center;
 }
+
+/* BlogView*/
+.blog-view-wrap {
+  width: 800px;
+  margin: 0 auto;
+}
+.blog-view-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  color: var(--gray_04);
+  font-family: pt-eb;
+}
+.blog-view-top {
+  overflow: hidden;
+  line-height: 300px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.blog-view-top img {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  float: left;
+  border: 5px solid #c1c1c1;
+}
+
+.blog-view-title {
+  font-family: pt-eb;
+  font-size: 150%;
+  color: var(--main_01);
+}
+.day-list {
+  border-top: 1px solid #c1c1c1;
+  text-align: center;
+  padding: 30px;
+}
+.btn-box {
+  text-align: right;
+}

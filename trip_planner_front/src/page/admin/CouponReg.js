@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./admin.css";
 import { Button, Input } from "../../component/FormFrm";
-import { RadioType, SelectType } from "./AdminFrm";
+import { ExpireDatePicker, RadioType, SelectType } from "./AdminFrm";
+import axios from "axios";
 
 const CouponReg = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [couponName, setCouponName] = useState("");
   const [couponRange, setCouponRange] = useState(1);
-  const [discount, setDiscount] = useState(0);
+  const [discountRate, setDiscountRate] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [discount, setDiscount] = useState(1);
+  const [expireDate, setExpireDate] = useState();
   const assignCoupon = () => {
-    console.log("할인 " + discount);
-    console.log("쿠폰범위 " + couponRange);
-    console.log("쿠폰이름 " + couponName);
+    console.log("만료일" + expireDate);
+    const obj = {
+      couponName,
+      couponRange,
+      discountRate,
+      discountAmount,
+      discount,
+      expireDate,
+    };
+
+    axios
+      .post(backServer + "/admin/couponReg/", obj)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
   return (
     <section className="contents couponReg">
@@ -46,10 +65,40 @@ const CouponReg = () => {
               value={discount}
               setValue={setDiscount}
             ></RadioType>
-            {discount === 1 && (
-              <Input placeholer="'￦' 단위 제외">할인액</Input>
+          </div>
+          <div className="couponReg-iput">
+            {discount === 2 && (
+              <div className="couponReg-input">
+                <CouponRegInputWrap
+                  label="할인액"
+                  className="coupon-input"
+                  placeholder="'￦' 단위 제외"
+                  content="couponName"
+                  type="text"
+                  data={discountAmount}
+                  setData={setDiscountAmount}
+                />
+              </div>
             )}
-            {discount === 2 && <Input placeholer="단위 %, 1~99">할인율</Input>}
+            {discount === 1 && (
+              <div className="couponReg-input">
+                <CouponRegInputWrap
+                  label="할인율"
+                  placeholder="단위 %, 1~99"
+                  className="coupon-input"
+                  content="couponName"
+                  type="text"
+                  data={discountRate}
+                  setData={setDiscountRate}
+                />
+              </div>
+            )}
+          </div>
+          <div className="couponReg-input">
+            <ExpireDatePicker
+              expireDate={expireDate}
+              setExpireDate={setExpireDate}
+            />
           </div>
         </div>
       </div>

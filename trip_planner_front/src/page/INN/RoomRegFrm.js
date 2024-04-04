@@ -113,9 +113,9 @@ const RoomRegFrm = (props) => {
               data={roomPrice}
               setData={setRoomPrice}
               content="roomPrice"
-              placeholder="EX. 300,000 형식으로 작성해주세요"
+              placeholder="EX. 300000 형식으로 작성해주세요"
             />
-            <span>만원</span>
+            <span>원</span>
           </div>
         </div>
         <div className="room-reg-hashtag-wrap">

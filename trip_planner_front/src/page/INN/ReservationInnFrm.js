@@ -15,8 +15,8 @@ const ReservationInnFrm = (props) => {
   const guestWish = props.guestWish;
   const setGuestWish = props.setGuestWish;
   const [innNo, setInnNo] = useState(21);
-  const [checkInDate, setCheckInDate] = useState("2024-04-10");
-  const [checkOutDate, setCheckOutDate] = useState("2024-04-13");
+  const [checkInDate, setCheckInDate] = useState("2024-04-10 (수)");
+  const [checkOutDate, setCheckOutDate] = useState("2024-04-13 (토)");
   const [roomNo, setRoomNo] = useState(43);
   const [partnerName, setPartnerName] = useState("");
   const [memberNo, setMemberNo] = useState(29);
@@ -27,6 +27,7 @@ const ReservationInnFrm = (props) => {
   const [innCheckInTime, setInnCheckInTime] = useState("14:00");
   const [innCheckOutTime, setInnCheckOutTime] = useState("12:00");
   const [selectInn, setSelectInn] = useState([{}]);
+  const [bookGuest, setBookGuest] = useState(3);
 
   /*
   const checkInDate = props.checkInDate;
@@ -96,23 +97,6 @@ const ReservationInnFrm = (props) => {
               </span>
             </div>
           </div>
-          <div className="reservation-payment-zone">
-            <span className="payment-title">결제방법</span>
-            <div className="payment-box">
-              <div className="kakao-pay">
-                <img src="images/kakao.png" className="kakao"></img>
-              </div>
-              <div className="toss-pay">
-                <img src="images/tosspay.png" className="tosspay"></img>
-              </div>
-              <div className="danal-pay">
-                <span className="danal">신용/체크 카드</span>
-              </div>
-              <div className="naver-pay">
-                <img src="images/npay2.png" className="naverpay"></img>
-              </div>
-            </div>
-          </div>
         </div>
         <div className="reservation-select-inn-wrap">
           <div className="select-inn-wrap">
@@ -143,6 +127,8 @@ const ReservationInnFrm = (props) => {
               setPartnerName={setPartnerName}
               selectInn={selectInn}
               setSelectInn={setSelectInn}
+              bookGuest={bookGuest}
+              setBookGuest={setBookGuest}
             />
           </div>
         </div>
@@ -199,6 +185,9 @@ const SelectInnInfo = (props) => {
   const setPartnerName = props.setPartnerName;
   const selectInn = props.selectInn;
   const setSelectInn = props.setSelectInn;
+  const bookGuest = props.bookGuest;
+  const setBookGuest = props.setBookGuest;
+  console.log(checkInDate - checkOutDate);
 
   useEffect(() => {
     axios
@@ -212,16 +201,38 @@ const SelectInnInfo = (props) => {
       });
   }, []);
   return (
-    <div className="select-inn-top">
-      <div className="select-room-name">
-        <span>{selectInn.partnerName}</span>
+    <>
+      <div className="select-inn-top">
+        <div className="select-inn-name">
+          <span>{selectInn.partnerName}</span>
+        </div>
+        <div className="select-img-box">
+          <img
+            src={backServer + "/inn/reservationInn/" + selectInn.innFilepath}
+          />
+        </div>
+        <table className="select-room-info-tbl">
+          <tbody>
+            <tr>
+              <td width={"40%"}>예약객실</td>
+              <td width={"60%"}>{selectInn.roomName}</td>
+            </tr>
+            <tr>
+              <td>예약일정</td>
+              <td>
+                {checkInDate} {innCheckInTime} ~ <br />
+                {checkOutDate} {innCheckOutTime}
+              </td>
+            </tr>
+            <tr>
+              <td>예약인원</td>
+              <td>{bookGuest} 인</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div className="select-img-box">
-        <img
-          src={backServer + "/inn/reservationInn/" + selectInn.innFilepath}
-        />
-      </div>
-    </div>
+      <div className="reservation-pay-zone"></div>
+    </>
   );
 };
 export default ReservationInnFrm;

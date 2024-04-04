@@ -174,22 +174,36 @@
 .room-reg-wrap .btn-area > button {
   width: 100%;
 }
-.select-room-name > span {
+.select-inn-name > span {
   font-family: pt-b;
 }
 .select-inn-top {
   border: 1px solid #eee;
   padding: 15px;
+  border-radius: 15px;
 }
-.select-room-name {
+.select-inn-name {
   margin-bottom: 10px;
 }
 .select-img-box {
   width: 290px;
-  height: 200px;
+  height: 150px;
 }
 .select-img-box > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
+}
+.select-room-info-tbl {
+  margin-top: 10px;
+}
+.select-room-info-tbl tr td:first-child {
+  font-family: pt-b;
+  color: #8f8f8f;
+  padding: 10px 0px;
+  font-size: 14px;
+}
+.select-room-info-tbl tr td:last-child {
+  font-size: 14px;
 }

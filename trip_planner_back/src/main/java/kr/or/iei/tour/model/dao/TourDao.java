@@ -40,5 +40,7 @@ public interface TourDao {
 	int checkPartnerNo(int tourNo);
 
 	List selectTourList();
+
+	List selectTicketList();
 	
 }

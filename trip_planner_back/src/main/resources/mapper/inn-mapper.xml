@@ -53,4 +53,9 @@
 	<insert id="insertRoomHashTag">
 		insert into room_hashtag_tbl values(#{roomNo},#{hashTag})
 	</insert>
+	
+	<select id="selectInnDetail" resultType="inn">
+		select * from inn_tbl where inn_no=#{innNo}
+		
+	</select>
 </mapper>

@@ -177,6 +177,9 @@ const DaySchdule = (props) => {
         setData={setBlogDateScheduleContent}
         url={backServer + "/blog/editor"}
       />
+      <div className="content-warning">
+        <sup>*</sup> 입력하신 그대로 입력되오니 유의하시기 바랍니다.
+      </div>
     </div>
   );
 };

@@ -31,6 +31,8 @@ public interface InnDao {
 
 	int insertRoomHashTag(RoomHashTag roomHashTag);
 
+	Inn selectInnDetail(int innNo);
+
 
 
 }

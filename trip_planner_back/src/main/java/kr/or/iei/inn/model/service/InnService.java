@@ -58,4 +58,7 @@ public class InnService {
 		}
 		return result;
 	}
+	public Inn selectInnDetail(int innNo) {
+		return innDao.selectInnDetail(innNo);
+	}
 }

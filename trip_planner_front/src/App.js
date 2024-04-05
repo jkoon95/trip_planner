@@ -26,6 +26,7 @@ import BlogMain from "./page/blog/blogMain";
 import ReservationInn from "./page/INN/ReservationInn";
 import CreateTrips from "./page/mypage/CreateTrips";
 import BlogView from "./page/blog/BlogView";
+import InnDetailView from "./page/INN/InnDetailView";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const obj = JSON.parse(window.localStorage.getItem("member"));
@@ -79,6 +80,10 @@ function App() {
       <Header isLogin={isLogin} logout={logout} />
       <main className="container">
         <Routes>
+          <Route
+            path="/innDetailView"
+            element={<InnDetailView isLogin={isLogin} />}
+          />
           <Route
             path="/"
             element={<Main isLogin={isLogin} logout={logout} />}

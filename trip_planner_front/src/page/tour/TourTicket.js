@@ -122,36 +122,63 @@ const TourTicket = () => {
                   <tr>
                     <td>성인 티켓 가격</td>
                     <td>
-                      <input
-                        type="number"
-                        value={ticketAdult}
-                        onChange={(e) => setTicketAdult(e.target.value)}
-                        placeholder="가격을 적어주세요"
-                      />
+                      {ticketAdult === 0 ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => setTicketAdult(e.target.value)}
+                          placeholder="가격을 적어주세요"
+                        />
+                      ) : (
+                        <input
+                          type="number"
+                          value={ticketAdult}
+                          onChange={(e) => setTicketAdult(e.target.value)}
+                          placeholder="가격을 적어주세요"
+                        />
+                      )}
                       원
                     </td>
                   </tr>
                   <tr>
                     <td>청소년 티켓 가격</td>
                     <td>
-                      <input
-                        type="number"
-                        value={ticketYouth}
-                        onChange={(e) => setTicketYouth(e.target.value)}
-                        placeholder="숫자만 입력 가능"
-                      />
+                      {ticketYouth === 0 ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => setTicketYouth(e.target.value)}
+                          placeholder="숫자만 입력 가능"
+                        />
+                      ) : (
+                        <input
+                          type="number"
+                          value={ticketYouth}
+                          onChange={(e) => setTicketYouth(e.target.value)}
+                          placeholder="숫자만 입력 가능"
+                        />
+                      )}
                       원
                     </td>
                   </tr>
                   <tr>
                     <td>소인 티켓 가격</td>
                     <td>
-                      <input
-                        type="number"
-                        value={ticketChild}
-                        onChange={(e) => setTicketChild(e.target.value)}
-                        placeholder="빈칸 입력시 무료"
-                      />
+                      {ticketChild === 0 ? (
+                        <input
+                          type="text"
+                          value=""
+                          onChange={(e) => setTicketChild(e.target.value)}
+                          placeholder="빈 칸 입력시 무료"
+                        />
+                      ) : (
+                        <input
+                          type="number"
+                          value={ticketChild}
+                          onChange={(e) => setTicketChild(e.target.value)}
+                          placeholder="빈 칸 입력시 무료"
+                        />
+                      )}
                       원
                     </td>
                   </tr>

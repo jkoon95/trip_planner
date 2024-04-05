@@ -75,7 +75,7 @@ const TourEdit = () => {
       form.append("intronail", intronail);
     }
     axios
-      .patch(backServer + "/tour", form, {
+      .patch(backServer + "/tour/edit", form, {
         headers: {
           contentType: "multipart/form-data",
           processData: false,

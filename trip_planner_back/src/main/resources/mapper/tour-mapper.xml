@@ -96,5 +96,8 @@
 	    FROM TOUR_TBL
 	    WHERE TOUR_NO = #{tourNo}
 	</select>
+	<select id="selectTourList" resultType="tour">
+		select * from tour_tbl where sales_status=1
+	</select>
 	
 </mapper>

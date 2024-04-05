@@ -47,7 +47,7 @@ const TourReg = () => {
       }
 
       axios
-        .post(backServer + "/tour", form, {
+        .post(backServer + "/tour/reg", form, {
           headers: {
             contentType: "multipart/form-data",
             processData: false,

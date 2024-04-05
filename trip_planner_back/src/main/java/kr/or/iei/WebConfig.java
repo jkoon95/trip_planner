@@ -48,7 +48,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**", "/admin/**")				
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
-						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/"
+						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/","/tour"
 								+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
 		
 		//관리자

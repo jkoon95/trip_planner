@@ -7,14 +7,22 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "./tour.css";
 import TourSearchBox from "./TourSearchBox";
+import axios from "axios";
 
 const TourList = () => {
-  const [tourProd, setTourProd] = useState([]);
+  const [tourList, setTourList] = useState([]);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  useEffect(() => {
+    axios
+      .get(backServer + "/tour")
+      .then((res) => {
+        setTourList(res.data.data.tourList);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
   const navigate = useNavigate();
-
-  useEffect(() => {});
-
   return (
     <section className="contents">
       <div className="tour-list-title">
@@ -24,9 +32,13 @@ const TourList = () => {
       <TourIconBox />
       <TourSwiper />
       <div className="tour-list-prod">
-        <h2>추천 티켓</h2>
+        <h2>추천 투어 · 티켓</h2>
       </div>
-      <TourProd />
+      <div className="tour-prod-wrap">
+        {tourList.map((tour, index) => {
+          return <TourProd key={"tour" + index} tour={tour} />;
+        })}
+      </div>
     </section>
   );
 };
@@ -89,55 +101,33 @@ const TourSwiper = () => {
   );
 };
 
-const TourProd = () => {
+const TourProd = (props) => {
+  const tour = props.tour;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const tourView = () => {
+    navigate("/tour/view/" + tour.tourNo);
+  };
   return (
-    <div className="tour-prod-wrap">
+    <>
       <div className="tour-prod">
         <div className="tour-bookmark">
-          <img alt="찜" src="images/찜버튼.png" />
+          <img alt="찜" src="images/투어찜.png" />
         </div>
-        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-prod-name">[서울] 테마 파크</div>
-        <div className="tour-prod-info">강릉 입장권</div>
-        <div className="tour-prod-price">10,000원</div>
-      </div>
-      <div className="tour-prod">
-        <div className="tour-bookmark">
-          <img alt="찜" src="images/찜버튼.png" />
+        <div className="tour-prod-img">
+          {tour.tourImg === null || tour.tourImg === "null" ? (
+            <img src="/images/테마파크.jpg" />
+          ) : (
+            <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+          )}
         </div>
-        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-prod-name">[서울] 테마 파크</div>
-        <div className="tour-prod-info">강릉 입장권</div>
-        <div className="tour-prod-price">10,000원</div>
-      </div>
-      <div className="tour-prod">
-        <div className="tour-bookmark">
-          <img alt="찜" src="images/찜버튼.png" />
+        <div className="tour-prod-info">
+          <div className="tour-prod-name">{tour.tourName}</div>
+          <div className="tour-prod-type">{tour.type}</div>
+          <div className="tour-prod-price"></div>
         </div>
-        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-prod-name">[서울] 테마 파크</div>
-        <div className="tour-prod-info">강릉 입장권</div>
-        <div className="tour-prod-price">10,000원</div>
       </div>
-      <div className="tour-prod">
-        <div className="tour-bookmark">
-          <img alt="찜" src="images/찜버튼.png" />
-        </div>
-        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-prod-name">[서울] 테마 파크</div>
-        <div className="tour-prod-info">강릉 입장권</div>
-        <div className="tour-prod-price">10,000원</div>
-      </div>
-      <div className="tour-prod">
-        <div className="tour-bookmark">
-          <img alt="찜" src="images/찜버튼.png" />
-        </div>
-        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-prod-name">[서울] 테마 파크</div>
-        <div className="tour-prod-info">강릉 입장권</div>
-        <div className="tour-prod-price">10,000원</div>
-      </div>
-    </div>
+    </>
   );
 };
 

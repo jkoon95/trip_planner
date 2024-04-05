@@ -26,6 +26,10 @@
     border-top-right-radius: 20px;
 }
 
+.contents.notice tbody>tr:nth-child(2n){
+    background-color: #f4f5ef;
+}
+
 .contents.notice td{
     text-align: center;
 }

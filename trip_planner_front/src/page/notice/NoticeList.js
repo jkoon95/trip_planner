@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "../../component/Pagination";
 import "./notice.css";
 import { Button } from "../../component/FormFrm";
@@ -10,7 +10,6 @@ const NoticeList = (props) => {
   const [noticeList, setNoticeList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
-  const navigate = useNavigate();
   const member = props.member;
   const isLogin = props.isLogin;
   const writeBtn = () => {
@@ -29,7 +28,7 @@ const NoticeList = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [reqPage]);
+  }, [reqPage, member]);
   return (
     <section className="contents notice">
       <h2>공지사항</h2>

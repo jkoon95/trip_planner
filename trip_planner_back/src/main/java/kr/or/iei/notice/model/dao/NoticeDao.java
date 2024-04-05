@@ -13,4 +13,6 @@ public interface NoticeDao {
 
 	List selectNoticeList(PageInfo pi);
 
+	int deleteNotice(int noticeNo);
+
 }

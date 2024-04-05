@@ -30,5 +30,10 @@ public class NoticeService {
 		map.put("noticeList",list);
 		map.put("pi",pi);
 		return map;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		// TODO Auto-generated method stub
+		return noticeDao.deleteNotice(noticeNo);
 	}	
 }

@@ -38,11 +38,11 @@ const ReservationInnFrm = (props) => {
   const [openModal1, setOpenModal1] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [couponList, setCouponList] = useState([]);
-
-  const [price, setPrice] = useState(selectInn.roomPrice);
+  const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
+  const [price, setPrice] = useState(selectInn.roomPrice * lodgment);
 
   useEffect(() => {
-    setPrice(selectInn.roomPrice);
+    setPrice(selectInn.roomPrice * lodgment);
   }, [selectInn]);
 
   const closeModalFunc1 = () => {
@@ -242,7 +242,6 @@ const ReservationInnFrm = (props) => {
 
   const checkInDay = dayjs(checkInDate).format("ddd"); //date picker로 받아온 체크인 날짜
   const checkOutDay = dayjs(checkOutDate).format("ddd"); //date picker로 받아온 체크아웃 날짜
-  const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
 
   /*
   const checkInDate = props.checkInDate;
@@ -257,9 +256,10 @@ const ReservationInnFrm = (props) => {
 
   const discountPrice = (discountAmount, discountRate, couponList, index) => {
     const selectCouponNo = couponList[index].couponNo;
-    const discountRateValue = price * lodgment * (discountRate / 100);
+    const discountRateValue =
+      selectInn.roomPrice * lodgment * (discountRate / 100);
     console.log(discountRateValue);
-    const totalPrice = price * lodgment - discountRateValue;
+    const totalPrice = price - discountRateValue;
     console.log(totalPrice);
     setPrice(totalPrice);
   };

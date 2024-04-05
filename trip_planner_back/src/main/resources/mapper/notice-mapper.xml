@@ -17,4 +17,7 @@
 		        	on member_tbl.member_no = notice_tbl.member_no order by notice_no desc)b)
 		where rnum between #{start} and #{end}
 	 </select>
+	 <delete id="deleteNotice">
+	 	delete notice_tbl where notice_no = #{noticeNo}
+	 </delete>
 </mapper>

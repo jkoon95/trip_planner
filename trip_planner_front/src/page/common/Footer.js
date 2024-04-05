@@ -8,7 +8,7 @@ const Footer = () => {
         <nav className="menu_list">
           <ul>
             <li>
-              <Link to="#">공지사항</Link>
+              <Link to="/notice/noticeList">공지사항</Link>
             </li>
             <li>
               <Link to="#">이용약관</Link>

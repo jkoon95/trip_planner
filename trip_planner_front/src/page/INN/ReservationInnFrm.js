@@ -7,6 +7,7 @@ import axios, { all } from "axios";
 import { Portal } from "@mui/material";
 import { Button } from "../../component/FormFrm";
 import Swal from "sweetalert2";
+import Modal from "../../component/Modal";
 
 const ReservationInnFrm = (props) => {
   dayjs.locale("ko");
@@ -17,6 +18,7 @@ const ReservationInnFrm = (props) => {
   const setGuestPhone = props.setGuestPhone;
   const guestWish = props.guestWish;
   const setGuestWish = props.setGuestWish;
+
   const [innNo, setInnNo] = useState(22);
   const [checkInDate, setCheckInDate] = useState("2024-04-10");
   const [checkOutDate, setCheckOutDate] = useState("2024-04-13");
@@ -31,6 +33,18 @@ const ReservationInnFrm = (props) => {
   const [innCheckOutTime, setInnCheckOutTime] = useState("12:00");
   const [selectInn, setSelectInn] = useState([{}]);
   const [bookGuest, setBookGuest] = useState(3);
+  const [termsIndex, setTermsIndex] = useState(0);
+  const [openModal1, setOpenModal1] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
+  const closeModalFunc1 = () => {
+    document.body.classList.remove("scroll_fixed");
+    setOpenModal1(false);
+  };
+  const closeModalFunc2 = () => {
+    document.body.classList.remove("scroll_fixed");
+    setOpenModal2(false);
+  };
+
   const [allChecked, setAllChecked] = useState({
     type: "checkbox",
     text: "이용약관 전체동의",
@@ -64,6 +78,161 @@ const ReservationInnFrm = (props) => {
     },
   ]);
 
+  const [modalInfo, setModalInfo] = useState([
+    {
+      title: "숙소 이용규칙 및 취소/환불 규정 동의 (필수)",
+      content: (
+        <div>
+          <h4>이용규칙</h4>
+          <p>
+            19세 미만 청소년의 혼숙은 법적으로 불가하며, 이에 대한 숙소의 입실
+            거부 시 취소/환불이 불가합니다.
+          </p>
+          <p>
+            19세 미만 청소년 예약에 대한 숙소의 입실 거부 시 취소/환불이
+            불가하오니, 예약 전 반드시 숙소에 확인하시기 바랍니다
+          </p>
+          <p>
+            업체 현장에서 객실 컨디션 및 서비스로 인해 발생된 분쟁을
+            Trip_planner에서 책임지지 않습니다.
+          </p>
+          <br />
+          <h4>취소/환불규정</h4>
+          <p>숙소 사정에 의해 취소 발생 시 100% 환불이 가능합니다.</p>
+          <p>
+            취소/환불 규정에 따라 취소 수수료가 발생하는 경우, 취소 수수료는
+            판매가(상품가격) 기준으로 계산됩니다.
+          </p>
+        </div>
+      ),
+    },
+    {
+      title: "개인정보 수집 동의 및 이용 동의 (필수)",
+      content: (
+        <>
+          <table>
+            <thead>
+              <th width="10%">구분</th>
+              <th width="20%">수집목적</th>
+              <th width="50%">수집항목</th>
+              <th width="20%">보유 및 이용기간</th>
+            </thead>
+            <tbody>
+              <td>필수</td>
+              <td>예약/구매 서비스 제공 상담 및 부정거래 기록확인</td>
+              <td>
+                <div>
+                  <b>[예약▪구매]</b>
+                </div>
+                <div>예약자 정보(이름, 휴대전화번호)</div>
+                <div>
+                  <b>[결제]</b>
+                </div>
+                <div>
+                  거래내역
+                  <br />
+                  <sup>*</sup>결제 시 개인정보는 PG사(결제대행업체)에서 수집 및
+                  저장하고 있으며, 회사는 PG사에서 제공하는 거래 내역만 제공받음
+                </div>
+                <div>
+                  <b>[거레명세서 발급]</b>
+                </div>
+                <div>이메일 주소</div>
+                <div>
+                  <b>[현금영수증 발급]</b>
+                </div>
+                <div>휴대전화번호, 이메일주소</div>
+                <div>
+                  <b>[취소▪환불]</b>
+                </div>
+                <div>은행명, 계좌번호, 예금주명</div>
+              </td>
+              <td>
+                <b>
+                  <u>- 회원 탈퇴 시 까지</u>
+                </b>
+                <div>
+                  <sup>*</sup> 관계 법력에 따라 보존할 필요가 있는 경우 해당
+                  법령에서 요구하는 기한까지 보유
+                </div>
+              </td>
+            </tbody>
+          </table>
+          <p>
+            ✅ 위 동의 내용을 거부하실 수 있으나, 동의를 거부하실 경우 서비스를
+            이용하실 수 없습니다.
+          </p>
+          <p>
+            ✅ 개인정보 처리와 관련된 상세 내용은 '개인정보처리방침'을
+            참고하시기 바랍니다.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "개인정보 제3자 제공 동의 (필수)",
+      content: (
+        <>
+          <table>
+            <tbody>
+              <tr>
+                <th width={"40%"}>제공받는자</th>
+                <td width={"60%"}>{selectInn.partnerName}</td>
+              </tr>
+              <tr>
+                <th>제공목적</th>
+                <td>
+                  숙박예약서비스 이용계약 이행
+                  <br />
+                  (서비스 제공, 확인, 이용자 정보확인)
+                </td>
+              </tr>
+              <tr>
+                <th>제공하는 항목</th>
+                <td>
+                  예약한 숙박서비스의 이용자 정보(예약자 이름, 휴대폰번호,
+                  예약번호, 예약 업체명, 예약한 객실명, 결제금액)
+                </td>
+              </tr>
+              <tr>
+                <th>제공받는 자의 개인정보 보유 및 이용기간</th>
+                <td>예약서비스 제공 완료 후 6개월</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            ✅ 위 동의 내용을 거부하실 수 있으나, 동의를 거부하실 경우 서비스를
+            이용하실 수 없습니다.
+          </p>
+          <p>
+            ✅ 개인정보 처리와 관련된 상세 내용은 '개인정보처리방침'을
+            참고하시기 바랍니다.
+          </p>
+        </>
+      ),
+    },
+    {
+      title: "개인정보 제3자 제공 동의 (필수)",
+      content: (
+        <>
+          <p className="ageTerms" style={{ color: "red" }}>
+            Trip Planner는 만 14세 미만 아동의 서비스 이용을 제한하고 있습니다.
+          </p>
+          <p>
+            개인정보 보호법에는 만 14세 미만 아동의 개인정보 수집 시 법정대리인
+            동의를 받도록 규정하고 있으며,{" "}
+            <strong>
+              만 14세 미만 아동이 법정대리인 동의없이 서비스 이용이 확인된 경우
+              서비스 이용이 제한될 수 있음을 알려드립니다.
+            </strong>
+          </p>
+        </>
+      ),
+    },
+  ]);
+
+  const [couponList, setCouponList] = useState([]);
+
   const checkInDay = dayjs(checkInDate).format("ddd"); //date picker로 받아온 체크인 날짜
   const checkOutDay = dayjs(checkOutDate).format("ddd"); //date picker로 받아온 체크아웃 날짜
   const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
@@ -86,7 +255,7 @@ const ReservationInnFrm = (props) => {
         </Link>
         <div className="toMain">예약확인 및 결제</div>
       </div>
-      <div>
+      <div className="reservation-content-all-wrap">
         <div className="reservation-content-wrap">
           <div className="reservation-guest-zone">
             <div className="reservation-guest-zone-top">예약자 정보</div>
@@ -175,10 +344,66 @@ const ReservationInnFrm = (props) => {
               setCheckTerms={setCheckTerms}
               allChecked={allChecked}
               setAllChecked={setAllChecked}
+              setOpenModal1={setOpenModal1}
+              setTermsIndex={setTermsIndex}
+              guestName={guestName}
+              setGuestName={setGuestName}
+              guestPhone={guestPhone}
+              setGuestPhone={setGuestPhone}
+              guestWish={guestWish}
+              setGuestWish={setGuestWish}
+              setOpenModal2={setOpenModal2}
+              couponList={couponList}
+              setCouponList={setCouponList}
             />
           </div>
         </div>
       </div>
+
+      <Modal
+        class="modal lg"
+        open={openModal1}
+        title={modalInfo[termsIndex].title}
+        useCloseBtn={true}
+        closeModal={closeModalFunc1}
+      >
+        {modalInfo[termsIndex].content}
+        <div className="btn_area">
+          <Button
+            class="btn_secondary outline"
+            text="취소"
+            clickEvent={closeModalFunc1}
+          />
+          <Button
+            class="btn_secondary"
+            text="확인"
+            clickEvent={closeModalFunc1}
+          />
+        </div>
+      </Modal>
+      <Modal
+        class="modal lg"
+        open={openModal2}
+        title="내 쿠폰함"
+        useCloseBtn={true}
+        closeModal={closeModalFunc2}
+      >
+        <div className="coupon_wrap">
+          <div className="coupon-list-wrap"></div>
+        </div>
+        <div className="btn_area">
+          <Button
+            class="btn_secondary outline"
+            text="취소"
+            clickEvent={closeModalFunc2}
+          />
+          <Button
+            class="btn_secondary"
+            text="확인"
+            clickEvent={closeModalFunc2}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
@@ -205,6 +430,9 @@ const ReservationInput = (props) => {
 
 const SelectInnInfo = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const guestPhone = props.guestPhone;
+  const guestWish = props.guestWish;
+  const guestName = props.guestName;
   const checkInDate = props.checkInDate;
   const setCheckInDate = props.setCheckInDate;
   const checkOutDate = props.checkOutDate;
@@ -240,7 +468,11 @@ const SelectInnInfo = (props) => {
   const setCheckTerms = props.setCheckTerms;
   const allChecked = props.allChecked;
   const setAllChecked = props.setAllChecked;
-
+  const setOpenModal1 = props.setOpenModal1;
+  const setTermsIndex = props.setTermsIndex;
+  const setOpenModal2 = props.setOpenModal2;
+  const couponList = props.couponList;
+  const setCouponList = props.setCouponList;
   useEffect(() => {
     axios
       .get(backServer + "/inn/selectInnInfo/" + roomNo + "/" + innNo)
@@ -321,6 +553,13 @@ const SelectInnInfo = (props) => {
   const CheckBoxTerms = (props) => {
     const checkTerms = props.checkTerms;
     const setCheckTerms = props.setCheckTerms;
+    const setOpenModal1 = props.setOpenModal1;
+
+    const openModalFunc1 = (index) => {
+      document.body.classList.add("scroll_fixed");
+      setOpenModal1(true);
+      setTermsIndex(index);
+    };
 
     const Checked = (index) => {
       const copyCheckTerms = [...checkTerms];
@@ -339,6 +578,7 @@ const SelectInnInfo = (props) => {
         copyAllChecked.active = false;
       }
     };
+
     return (
       <>
         {checkTerms.map((item, index) => {
@@ -351,12 +591,32 @@ const SelectInnInfo = (props) => {
                 onClick={() => Checked(index)}
               />
               <label htmlFor={item.id}>{item.text}</label>
-              <span className="material-icons next-terms">chevron_right</span>
+              <span
+                className="material-icons next-terms"
+                onClick={() => {
+                  openModalFunc1(index);
+                }}
+              >
+                chevron_right
+              </span>
             </div>
           );
         })}
       </>
     );
+  };
+  const openModalFunc2 = () => {
+    const setOpenModal2 = props.setOpenModal2;
+    document.body.classList.add("scroll_fixed");
+    setOpenModal2(true);
+    axios
+      .get(backServer + "/inn/couponList")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
   return (
     <>
@@ -420,13 +680,14 @@ const SelectInnInfo = (props) => {
           <CheckBoxTerms
             checkTerms={checkTerms}
             setCheckTerms={setCheckTerms}
+            setOpenModal1={setOpenModal1}
           />
         </div>
         <div className="btn-area">
           <Button
             text={selectInn.roomPrice * lodgment + "원 결제하기"}
             class="btn_primary md"
-            clickEvent={pay}
+            clickEvent={openModalFunc2}
           />
         </div>
       </div>

@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import kr.or.iei.util.AdminInterceptor;
 import kr.or.iei.util.LoginInterceptor;
 
 
@@ -17,9 +16,7 @@ import kr.or.iei.util.LoginInterceptor;
 public class WebConfig implements WebMvcConfigurer{
 	@Autowired
 	private LoginInterceptor loginInterceptor;
-	
-	@Autowired
-	private AdminInterceptor adminInterceptor;
+
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -48,12 +45,8 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**", "/admin/**","/coupon/**")				
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
-						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/"
+						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/","/tour"
 								+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
-		
-		//관리자
-		//registry.addInterceptor(adminInterceptor)
-		//.addPathPatterns("/admin/**");
 
 	}
 	

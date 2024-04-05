@@ -98,5 +98,15 @@ public class TourService {
 		return checkNo;
 	}
 
+	public Map selectTourList() {
+		List tourList = tourDao.selectTourList();
+		List ticketList = tourDao.selectTicketList();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
+		return map;
+	}
+
 	
 }

@@ -38,5 +38,9 @@ public interface TourDao {
 	int searchTourNo(int tourNo, String memberEmail);
 
 	int checkPartnerNo(int tourNo);
+
+	List selectTourList();
+
+	List selectTicketList();
 	
 }

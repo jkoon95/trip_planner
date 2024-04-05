@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +43,7 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@PostMapping
+	@PostMapping(value="/reg")
 	public ResponseEntity<ResponseDTO> insertTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
 		String savepath = root+"/tour/";
 
@@ -109,7 +110,7 @@ public class TourController {
 		}
 	}
 	
-	@PatchMapping
+	@PatchMapping(value="/edit")
 	public ResponseEntity<ResponseDTO> modifyTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail){
 		String savepath = root+"/tour/";
 		if(tour.getThumbnailCheck() == 1) {		// 섬네일이 변경된 경우에만
@@ -155,6 +156,13 @@ public class TourController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<ResponseDTO> tourList(){
+		Map map = tourService.selectTourList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
 }

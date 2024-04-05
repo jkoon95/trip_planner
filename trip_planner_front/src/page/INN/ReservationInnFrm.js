@@ -2,15 +2,16 @@ import { Link } from "react-router-dom";
 import "./reservationInn.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
-import { Portal } from "@mui/material";
+import { Portal, colors } from "@mui/material";
 import { Button } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Modal from "../../component/Modal";
 
 const ReservationInnFrm = (props) => {
   dayjs.locale("ko");
+
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const guestName = props.guestName;
   const setGuestName = props.setGuestName;
@@ -43,6 +44,9 @@ const ReservationInnFrm = (props) => {
   const closeModalFunc2 = () => {
     document.body.classList.remove("scroll_fixed");
     setOpenModal2(false);
+    if (openModal2) {
+      Swal.fire("쿠폰을 적용하시겠습니까?");
+    }
   };
 
   const [allChecked, setAllChecked] = useState({
@@ -389,20 +393,54 @@ const ReservationInnFrm = (props) => {
         closeModal={closeModalFunc2}
       >
         <div className="coupon_wrap">
-          <div className="coupon-list-wrap"></div>
+          <div className="discount-box-wrap">
+            {couponList.map((item, index) => {
+              return (
+                <React.Fragment key={"coupon-" + index}>
+                  <input
+                    name="choice-coupon"
+                    className="choice-coupon"
+                    type="radio"
+                    id={"coupon-" + item.couponNo}
+                    defaultValue={item.couponNo}
+                  />
+                  <label
+                    className="discount-box"
+                    htmlFor={"coupon-" + item.couponNo}
+                  >
+                    <div className="discount" key={"item" + index}>
+                      {item.discountRate !== 0
+                        ? item.discountRate + "% 할인 쿠폰 🎁"
+                        : item.discountAmount + "원 할인 쿠폰 🎁"}
+                    </div>
+                    <div className="expired-date">
+                      <span>✅만료날짜 </span>
+                      {item.expiredDate}
+                    </div>
+                  </label>
+                </React.Fragment>
+              );
+            })}
+          </div>
         </div>
-        <div className="btn_area">
-          <Button
-            class="btn_secondary outline"
-            text="취소"
-            clickEvent={closeModalFunc2}
-          />
-          <Button
-            class="btn_secondary"
-            text="확인"
-            clickEvent={closeModalFunc2}
-          />
-        </div>
+        <>
+          <div className="discount-room-price-box">
+            <div className="prev-discount-room-price">할인적용 전 금액</div>
+            <div className="room-price">{selectInn.roomPrice}</div>
+          </div>
+          <div className="btn_area">
+            <Button
+              class="btn_secondary outline"
+              text="취소"
+              clickEvent={closeModalFunc2}
+            />
+            <Button
+              class="btn_secondary"
+              text="적용하기"
+              clickEvent={closeModalFunc2}
+            />
+          </div>
+        </>
       </Modal>
     </div>
   );
@@ -471,13 +509,11 @@ const SelectInnInfo = (props) => {
   const setOpenModal1 = props.setOpenModal1;
   const setTermsIndex = props.setTermsIndex;
   const setOpenModal2 = props.setOpenModal2;
-  const couponList = props.couponList;
   const setCouponList = props.setCouponList;
   useEffect(() => {
     axios
       .get(backServer + "/inn/selectInnInfo/" + roomNo + "/" + innNo)
       .then((res) => {
-        console.log(res.data);
         setSelectInn(res.data.data);
         setRoomPrice(res.data.data.roomPrice);
       })
@@ -587,7 +623,7 @@ const SelectInnInfo = (props) => {
               <input
                 type={item.type}
                 id={item.id}
-                checked={item.active}
+                defaultChecked={item.active}
                 onClick={() => Checked(index)}
               />
               <label htmlFor={item.id}>{item.text}</label>
@@ -610,9 +646,10 @@ const SelectInnInfo = (props) => {
     document.body.classList.add("scroll_fixed");
     setOpenModal2(true);
     axios
-      .get(backServer + "/inn/couponList")
+      .get(backServer + "/admin/selectCouponList")
       .then((res) => {
         console.log(res.data);
+        setCouponList(res.data.data);
       })
       .catch((res) => {
         console.log(res);
@@ -670,7 +707,7 @@ const SelectInnInfo = (props) => {
           <input
             type={allChecked.type}
             id={allChecked.id}
-            checked={allChecked.active}
+            defaultChecked={allChecked.active}
           />
           <label htmlFor={allChecked.id} onClick={checkAll}>
             이용약관 전체동의

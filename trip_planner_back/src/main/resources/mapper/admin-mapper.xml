@@ -4,4 +4,11 @@
   <insert id="insertCouponList">
   	insert into coupon_List_tbl values (coupon_seq.nextval,#{couponName},#{couponRange},#{discountRate},#{discountAmount},#{expiredDate})
   </insert>
+  
+  <select id="selectCouponList" resultType="couponList">
+  	SELECT COUPON_NO, coupon_name, discount_rate, discount_amount, TO_CHAR(expired_date, 'YYYY-MM-DD') AS expired_date 
+	FROM COUPON_LIST_TBL 
+	JOIN COUPON_TBL USING (COUPON_NO) 
+	WHERE (COUPON_RANGE = 1 OR COUPON_RANGE = 4) AND MEMBER_NO = #{memberNo}
+  </select>
 </mapper>

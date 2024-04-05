@@ -1,5 +1,7 @@
 package kr.or.iei.admin.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class AdminService {
 	public int insertCounponList(CouponList couponList) {
 		// TODO Auto-generated method stub
 		return adminDao.insertCouponList(couponList);
+	}
+
+	public List selectCouponList(int memberNo) {
+		List list = adminDao.selectCouponList(memberNo);
+		return list;
 	}
 }

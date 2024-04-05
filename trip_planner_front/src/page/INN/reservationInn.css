@@ -255,3 +255,36 @@
   font-family: pt-eb;
   padding: 10px 0px;
 }
+.modal_content .discount-box-wrap > .discount-box {
+  display: flex;
+  padding: 25px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 10px;
+}
+.modal_content .discount-box-wrap > .discount-box > .discount {
+  font-family: pt-b;
+  font-size: 18px;
+}
+.modal_content .discount-box-wrap > .discount-box > .expired-date {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  font-size: 13px;
+  font-family: pt-b;
+}
+.modal_content .discount-box-wrap > .discount-box > .expired-date > span {
+  font-size: 13px;
+  font-family: pt-b;
+  color: #e9511c;
+}
+.modal_content .discount-box-wrap > .discount-box:hover {
+  transition-duration: 0.2s;
+  background-color: #1795f0;
+  color: #fff;
+}
+.modal_content .discount-box-wrap .choice-coupon:checked + .discount-box {
+  background-color: #1795f0;
+  color: #fff;
+}

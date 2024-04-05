@@ -18,5 +18,5 @@ public class CouponList {
 	private int couponRange;
 	private int discountRate;
 	private int DiscountAmount;
-	private Date expiredDate;
+	private String expiredDate;
 }

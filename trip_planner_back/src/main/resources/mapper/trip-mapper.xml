@@ -67,13 +67,13 @@
   <update id="updateTrip">
   	update trip_tbl
   	<trim prefix="set" prefixOverrides=",">
-		<if test="!tripTitle.equals('')">
+		<if test="tripTitle != null">
 			trip_title=#{tripTitle}
 		</if>
-		<if	test="!tripStartDate.equals('')">
+		<if	test="tripStartDate != null">
 			, trip_start_date=#{tripStartDate}
 		</if>
-		<if	test="!tripEndDate.equals('')">
+		<if	test="tripEndDate != null">
 			, trip_end_date=#{tripEndDate}
 		</if>
   	</trim>

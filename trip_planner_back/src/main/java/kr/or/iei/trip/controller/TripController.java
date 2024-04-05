@@ -129,8 +129,9 @@ public class TripController {
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러")
 	})
-	@PatchMapping(value="/trip")
+	@PatchMapping(value="/tripTbl")
 	public ResponseEntity<ResponseDTO> updateTrip(@RequestBody Trip trip){
+		System.out.println(trip);
 		int result = tripService.updateTrip(trip);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

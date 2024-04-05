@@ -1,1 +1,31 @@
-.myTrips_wrap{min-height: 100%; border-radius: 30px; background-color: var(--main_03);}
+.myTrips_wrap{padding: 24px; border-radius: 30px; background-color: var(--main_03);} 
+.myTrips_tab{display: flex; flex-direction: column;}
+.myTrips_tab .tab_btns{display: flex;}
+.myTrips_tab .tab_btns .tab_btn{flex: 1; display: block; border-radius: 16px 16px 0 0; background-color: #89CFF0; color: #fff; font-family: pt-b; font-size: 16px; line-height: 60px;}
+.myTrips_tab .tab_btns .tab_btn.active{background-color: #fff; color: #50B8EA;}
+.myTrips_tab .tab_contents{min-height: 620px; padding: 24px 20px 40px 20px; background-color: #fff; border-radius: 0 0 16px 16px;}
+
+.myTrips_wrap .creatTrips_btn{display: flex; justify-content: center; align-items: center; gap: 20px; padding: 16px; border: 1px dashed var(--line_02); border-radius: 8px; background-color: #F2F2F2;}
+.myTrips_wrap .creatTrips_btn .icon_plus{width: 36px; height: 36px; border: 1px solid var(--line_02); border-radius: 50%; background: #fff url(/public/images/icon_plus_gray.svg) no-repeat center / 24px;}
+.myTrips_wrap .creatTrips_btn .text>strong{display: block; font-family: pt-b; font-size: 16px; font-weight: normal; line-height: 24px;}
+.myTrips_wrap .creatTrips_btn .text>span{display: block; margin-top: 8px; font-size: 14px; line-height: 21px;}
+.myTrips_wrap h4{margin-top: 32px;}
+
+.myTrips_wrap .myTrips_list>li>a{position: relative; display: block; padding: 23px 72px 23px 23px; border: 1px solid var(--line_02); border-radius: 8px; background-color: #fff;}
+.myTrips_wrap .myTrips_list>li+li{margin-top: 20px;}
+.myTrips_wrap .myTrips_list>li .trip_info>.trip_title{margin-bottom: 4px; font-family: pt-b; font-size: 16px; font-weight: normal; line-height: 24px;}
+.myTrips_wrap .myTrips_list>li .trip_info>.trip_date{margin-bottom: 4px; color: var(--gray_05); font-family: pt-b; font-size: 14px; line-height: 21px;}
+.myTrips_wrap .myTrips_list>li .trip_info>.btm_info{display: flex; gap: 16px; font-size: 14px; line-height: 21px;}
+.myTrips_wrap .myTrips_list>li .trip_info .trip_place_count{color: var(--gray_05); font-family: pt-b;}
+.myTrips_wrap .myTrips_list>li .trip_info .book_inn{color: var(--gray_03); font-family: pt-b;}
+.myTrips_wrap .myTrips_list>li .trip_info .book_tour{position: relative; color: var(--gray_03); font-family: pt-b;}
+.myTrips_wrap .myTrips_list>li .trip_info .book_tour::before{content: ""; display: block; position: absolute; top: 4px; left: -8px; width: 1px; height: 12px; background-color: var(--line_02);}
+.myTrips_wrap .myTrips_list>li .btn_wrap{position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; z-index: 100;}
+.myTrips_wrap .small_menu_wrap{position: relative; display: flex;}
+.myTrips_wrap .small_menu_wrap .menu_list{position: absolute; right: 0; top: 30px; padding: 12px 0; border: 1px solid #000; border-radius: 12px; background-color: #fff;}
+.myTrips_wrap .small_menu_wrap>.menu_list a,
+.myTrips_wrap .small_menu_wrap>.menu_list button{display: block; min-width: 140px; padding: 0 38px; font-size: 16px; line-height: 40px; text-align: center;}
+.myTrips_wrap .small_menu_wrap>.menu_list a:hover,
+.myTrips_wrap .small_menu_wrap>.menu_list button:hover{background-color: var(--main_03);}
+.myTrips_wrap .myTrips_list>li .btn_wrap .btn_menu{width: 24px; height: 24px; background: url(/public/images/icon_small_menu_gray.svg) no-repeat center / contain;}
+.myTrips_wrap .myTrips_list>li .btn_wrap .btn_share{width: 24px; height: 24px; background: url(/public/images/icon_share.svg) no-repeat center / contain;}

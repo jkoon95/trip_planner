@@ -128,5 +128,9 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	@GetMapping("/couponList")
+	public ResponseEntity<ResponseDTO> selectCouponList(@RequestAttribute String memberEmail){
+		int memberNo = memberService.getMemberNo(memberEmail);
+	}
 	
 }

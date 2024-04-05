@@ -51,9 +51,6 @@ public class WebConfig implements WebMvcConfigurer{
 		//관리자
 		//registry.addInterceptor(adminInterceptor)
 		//.addPathPatterns("/admin/**");
-						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/","/tour"
-								+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
-
 	}
 	
 	@Bean

@@ -69,11 +69,6 @@ public class TourService {
 		return tourDao.getLastInsertTourNo();
 	}
 	
-	@Transactional
-	public int insertTourTicket(TourTicket tourTicket) {
-		return tourDao.insertTourTicket(tourTicket);
-	}
-
 	public TourTicket selectTourTicket(int tourNo) {
 		return tourDao.selectTourTicket(tourNo);
 	}
@@ -81,6 +76,41 @@ public class TourService {
 	@Transactional
 	public int modifyTourTicket(TourTicket tourTicket) {
 		return tourDao.modifyTourTicket(tourTicket);
+	}
+
+	@Transactional
+	public int tempTourTicket(int tourNo) {
+		return tourDao.tempTourTicket(tourNo);
+	}
+
+	public int searchTourNo(int tourNo, String memberEmail) {
+		int result = tourDao.searchTourNo(tourNo, memberEmail);
+		return result;
+	}
+
+	public int searchPartnerNo(String memberEmail) {
+		int partnerNo = tourDao.searchPartner(memberEmail);
+		return partnerNo;
+	}
+
+	public int checkPartnerNo(int tourNo) {
+		int checkNo = tourDao.checkPartnerNo(tourNo);
+		return checkNo;
+	}
+
+	public Map selectTourList() {
+		List tourList = tourDao.selectTourList();
+		List ticketList = tourDao.selectTicketList();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
+		return map;
+	}
+
+	public Map searchTour(Tour tour) {
+		
+		return null;
 	}
 
 	

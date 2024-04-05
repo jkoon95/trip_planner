@@ -1,8 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TourSearchBox from "./TourSearchBox";
 import { Button } from "../../component/FormFrm";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const TourSearch = () => {
+const TourSearch = (props) => {
+  const location = useLocation;
+  const tourType = props.tourType;
+  const [tourList, setTourList] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
+  const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/tour/tourSearch/type")
+      .then((res) => {
+        setTourList(res.data.data.tourList);
+        setTicketList(res.data.data.ticketList);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
+  const handleTourMore = () => {
+    setVisibleTour((prevCount) => prevCount + 5); // 5개씩 추가
+  };
+
   return (
     <section className="contents">
       <div className="tour-list-title">
@@ -49,44 +75,44 @@ const TourSearchOption = () => {
 
 const TourItem = () => {
   return (
-    <div className="tour-item-zone">
-      <div className="tour-item">
+    <div className="tour-prod-zone">
+      <div className="tour-prod">
         <img alt="박람회" src="images/테마파크.jpg" />
-        <div className="tour-item-info">
-          <div className="tour-item-name">[서울] 테마파크 입장권</div>
-          <div className="tour-item-subname">서울 티켓·입장권</div>
-          <div className="tour-item-limit">~2024.06.30</div>
-          <div className="tour-item-price">10,000원</div>
+        <div className="tour-prod-info">
+          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
+          <div className="tour-prod-subname">서울 티켓·입장권</div>
+          <div className="tour-prod-limit">~2024.06.30</div>
+          <div className="tour-prod-price">10,000원</div>
           <img
-            className="tour-item-bookmark"
+            className="tour-prod-bookmark"
             alt="찜"
             src="images/찜버튼.png"
           />
         </div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <img alt="박람회" src="images/테마파크.jpg" />
-        <div className="tour-item-info">
-          <div className="tour-item-name">[서울] 테마파크 입장권</div>
-          <div className="tour-item-subname">서울 티켓·입장권</div>
-          <div className="tour-item-limit">~2024.06.30</div>
-          <div className="tour-item-price">10,000원</div>
+        <div className="tour-prod-info">
+          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
+          <div className="tour-prod-subname">서울 티켓·입장권</div>
+          <div className="tour-prod-limit">~2024.06.30</div>
+          <div className="tour-prod-price">10,000원</div>
           <img
-            className="tour-item-bookmark"
+            className="tour-prod-bookmark"
             alt="찜"
             src="images/찜버튼.png"
           />
         </div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <img alt="박람회" src="images/테마파크.jpg" />
-        <div className="tour-item-info">
-          <div className="tour-item-name">[서울] 테마파크 입장권</div>
-          <div className="tour-item-subname">서울 티켓·입장권</div>
-          <div className="tour-item-limit">~2024.06.30</div>
-          <div className="tour-item-price">10,000원</div>
+        <div className="tour-prod-info">
+          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
+          <div className="tour-prod-subname">서울 티켓·입장권</div>
+          <div className="tour-prod-limit">~2024.06.30</div>
+          <div className="tour-prod-price">10,000원</div>
           <img
-            className="tour-item-bookmark"
+            className="tour-prod-bookmark"
             alt="찜"
             src="images/찜버튼.png"
           />

@@ -1,4 +1,4 @@
-import "./createTrips.css";
+import { SetDayWrap, ItemTripPlace } from "./CreateTrips";
 import { useEffect, useState } from "react";
 import { Button, Input, Textarea } from "../../component/FormFrm";
 import dayjs from 'dayjs';
@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 const { kakao } = window;
 
-const CreateTrips = () => {
+const ModifyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -36,8 +36,8 @@ const CreateTrips = () => {
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
 
-  // 여행 등록하기
-  const createTripsFunc = () => {
+  // 여행 수정하기
+  const modifyTripsFunc = () => {
     if(tripTitle === ""){
       trip.tripTitle = "국내 여행";
       setTripTitle("국내 여행");
@@ -252,7 +252,7 @@ const CreateTrips = () => {
               }
             </div>
             <div className="btn_area">
-              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} disabled={tripBtnDisabled} />
+              <Button text="여행 등록하기" class="btn_primary" clickEvent={modifyTripsFunc} disabled={tripBtnDisabled} />
             </div>
           </div>
 
@@ -321,201 +321,4 @@ const CreateTrips = () => {
   );
 }
 
-const SetDayWrap = (props) => {
-  const tripDetailItem = props.tripDetailItem;
-  const tripDetailList = props.tripDetailList;
-  const setTripDetailList = props.setTripDetailList;
-  const dayIndex = props.dayIndex;
-  const tripDays = props.tripDays;
-  const setOpenSearchWrap = props.setOpenSearchWrap;
-  const setOpenTodoModal = props.setOpenTodoModal;
-  const setModalTitle = props.setModalTitle;
-  const setTodoDayIndex = props.setTodoDayIndex;
-  const setTodoIndex = props.setTodoIndex;
-  const setSearchInput = props.setSearchInput;
-  const setTripCost = props.setTripCost;
-  const setOpenCostModal = props.setOpenCostModal;
-  const setDetailListNo = props.setDetailListNo;
-  const setTripTodo = props.setTripTodo;
-
-  const openSearchWrapFunc = () => {
-    setOpenSearchWrap(true);
-    setDetailListNo(dayIndex);
-    setSearchInput("");
-  }
-
-  const openCostModalFunc = () => {
-    document.body.classList.add("scroll_fixed");
-    setModalTitle("Day "+(dayIndex+1));
-    setTodoDayIndex(dayIndex);
-    setTripCost(tripDetailItem.tripCost);
-    setOpenCostModal(true);
-  }
-
-  // console.log(dayIndex, tripDetailList[dayIndex]);
-
-  return(
-    <div className="set_day_wrap">
-      <div className="day_title_wrap">
-        <div className="day_title">Day {dayIndex+1}<span className="tripDay">{tripDays}</span></div>
-        {
-          tripDetailItem.tripCost ? (
-            <button type="button" className="btn_tripCost on" onClick={openCostModalFunc}>{tripDetailItem.tripCost}</button>
-          ) : (
-            <button type="button" className="btn_tripCost" onClick={openCostModalFunc}>비용 추가</button>
-          )
-        }
-      </div>
-      <div className="day_items_wrap">
-        <ul className="place_list">
-          {
-            tripDetailItem.selectPlaceList.map((item, index) => {
-              item.tripRoute = index;
-              return (
-                <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
-              );
-            })
-          }
-        </ul>
-      </div>
-      <div className="day_btns_wrap">
-        <div className="btn_area">
-          <Button text="장소 추가" class="btn_secondary md" clickEvent={openSearchWrapFunc} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const ItemTripPlace = (props) => {
-  const tripDetailList = props.tripDetailList;
-  const setTripDetailList = props.setTripDetailList;
-  const routeIndex = props.routeIndex;
-  const thisIndex = props.thisIndex;
-  const place = props.place;
-  const listType = props.listType;
-  const setOpenTodoModal = props.setOpenTodoModal;
-  const setModalTitle = props.setModalTitle;
-  const setTodoDayIndex = props.setTodoDayIndex;
-  const setTodoIndex = props.setTodoIndex;
-  const setOpenSearchWrap = props.setOpenSearchWrap;
-  const setTripTodo = props.setTripTodo;
-  const tripDays = props.tripDays;
-
-  const addPlaceFunc = () => {
-    tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
-    tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
-    setTripDetailList([...tripDetailList]);
-    setOpenSearchWrap(false);
-  }
-
-  const openTodoModalFunc = () => {
-    document.body.classList.add("scroll_fixed");
-    setModalTitle(place.tripPlace.tripPlaceName);
-    setTodoDayIndex(thisIndex);
-    setTodoIndex(routeIndex);
-    setOpenTodoModal(true);
-  }
-  
-  const modifyTodo = () => {
-    document.body.classList.add("scroll_fixed");
-    setTripTodo(place.tripTodo);
-    setModalTitle(place.tripPlace.tripPlaceName);
-    setTodoDayIndex(thisIndex);
-    setTodoIndex(routeIndex);
-    setOpenTodoModal(true);
-  }
-
-  const deleteTodo = () => {
-    tripDetailList[thisIndex].selectPlaceList[routeIndex].tripTodo = "";
-    setTripDetailList([...tripDetailList]);
-    setTripTodo("");
-  }
-
-  const deletePlace = () => {
-    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
-    setTripDetailList([...tripDetailList]);
-  }
-
-  const tripRouteDown = () => {
-    const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
-    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex+1,0,thisItem[0]);
-    setTripDetailList([...tripDetailList]);
-  }
-
-  const tripRouteUp = () => {
-    const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
-    let newIndex = routeIndex-1;
-    if(routeIndex === 0){
-      newIndex = 0
-    }
-    tripDetailList[thisIndex].selectPlaceList.splice(newIndex,0,thisItem[0]);
-    setTripDetailList([...tripDetailList]);
-  }
-
-  return(
-    listType === "day_items" ? (
-      <>
-        <li className="item tripPlace">
-          <div className="tripRoute_no">{(routeIndex+1)}</div>
-          <div className="item_box">
-            <div className="item_box_content">
-              <div className="place_name">{place.tripPlace.tripPlaceName}</div>
-              <div className="place_info">
-                <span>{place.tripPlace.tripPlaceCategory}</span>
-                <span>{place.tripPlace.tripPlaceAddress}</span>
-              </div>
-            </div>
-            <div className="item_btn_wrap">
-              {
-                routeIndex === 0 ? (
-                  <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
-                ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
-                  <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                ) : (
-                  <>
-                    <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
-                    <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                  </>
-                )
-              }
-            </div>
-            {!place.tripTodo ? (
-              <div className="btn_area">
-                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
-              </div>
-            ) : ""}
-            <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
-          </div>
-        </li>
-        {place.tripTodo ? (
-          <li className="item tripTodo">
-          <div className="tripRoute_no"></div>
-          <div className="item_box">
-            <div className="item_box_content" onClick={modifyTodo}>{place.tripTodo}</div>
-            <button type="button" className="btn_delete" onClick={deleteTodo}><span className="hidden">삭제</span></button>
-          </div>
-        </li>
-        ) : ""}
-      </>
-    ) : (
-      <li className="item tripPlace">
-        <div className="item_box">
-          <div className="item_box_content">
-            <div className="place_name">{place.tripPlaceName}</div>
-            <div className="place_info">
-              <span>{place.tripPlaceCategory}</span>
-              <span>{place.tripPlaceAddress}</span>
-            </div>
-            <div className="place_phone">{place.tripPlacePhone}</div>
-          </div>
-          <div className="item_btn_wrap">
-            <Button text="일정 추가" class="btn_primary outline sm btn_addPlace" clickEvent={addPlaceFunc} />
-          </div>
-        </div>
-      </li>
-    )
-  )
-}
-
-export {CreateTrips, SetDayWrap, ItemTripPlace};
+export default ModifyTrips;

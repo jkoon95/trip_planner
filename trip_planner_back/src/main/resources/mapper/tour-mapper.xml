@@ -68,10 +68,6 @@
 	<select id="getLastInsertTourNo" resultType="int">
 		SELECT MAX(TOUR_NO) AS LAST_INSERTED_TOUR_NO FROM TOUR_TBL
 	</select>
-	<insert id="insertTourTicket">
-		insert into tour_ticket_tbl values
-		(#{tourNo}, #{ticketAdult}, #{ticketYouth}, #{ticketChild})
-	</insert>
 	<select id="selectTourTicket" resultType="tourTicket">
 		SELECT tour_no, ticket_adult, ticket_youth, ticket_child FROM TOUR_TICKET_TBL WHERE TOUR_NO = #{tourNo}
 	</select>
@@ -82,4 +78,30 @@
 			ticket_child = #{ticketChild}
 		where tour_no = #{tourNo}
 	</update>
+	<insert id="tempTourTicket">
+		insert into tour_ticket_tbl values
+		(#{tourNo}, 0, 0, 0)
+	</insert>
+	<select id="searchTourNo" parameterType="map" resultType="int">
+	    SELECT TOUR_NO
+	    FROM TOUR_TBL
+	    WHERE TOUR_NO = #{tourNo} AND PARTNER_NO = (
+	        SELECT PARTNER_NO
+	        FROM MEMBER_TBL
+	        WHERE MEMBER_EMAIL = #{memberEmail}
+	    )
+	</select>
+	<select id="checkPartnerNo" resultType="int" parameterType="int">
+	    SELECT PARTNER_NO
+	    FROM TOUR_TBL
+	    WHERE TOUR_NO = #{tourNo}
+	</select>
+	<select id="selectTourList" resultType="tour">
+		SELECT * FROM tour_tbl WHERE sales_status = 1 AND sales_period >= SYSDATE ORDER BY 1 DESC
+	</select>
+	<select id="selectTicketList" resultType="tourTicket">
+		SELECT * FROM TOUR_TICKET_TBL 
+	    WHERE TOUR_NO IN (SELECT tour_no FROM tour_tbl WHERE sales_status = 1 AND sales_period >= SYSDATE) 
+	    ORDER BY 1 DESC
+	</select>
 </mapper>

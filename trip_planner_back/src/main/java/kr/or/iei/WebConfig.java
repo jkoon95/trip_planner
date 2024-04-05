@@ -17,6 +17,7 @@ public class WebConfig implements WebMvcConfigurer{
 	@Autowired
 	private LoginInterceptor loginInterceptor;
 
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
@@ -40,12 +41,16 @@ public class WebConfig implements WebMvcConfigurer{
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		//로그인
 		registry.addInterceptor(loginInterceptor)
-				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**")				
+				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**", "/admin/**","/coupon/**")				
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
-						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/"
-								+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
-
+						"/bloglist/*","/tour/thumbnail/*","/tour/intronail/","/tour","/tour/tourSearch"
+						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
+		
+		//관리자
+		//registry.addInterceptor(adminInterceptor)
+		//.addPathPatterns("/admin/**");
 	}
 	
 	@Bean

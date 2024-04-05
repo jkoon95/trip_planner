@@ -111,7 +111,7 @@ const TourSale = ({ member }) => {
   };
 
   const goToTicketPage = (tourNo) => {
-    navigate("/mypage/tour/ticket/modify/" + tourNo);
+    navigate("/mypage/tour/ticket/" + tourNo);
   };
 
   return (

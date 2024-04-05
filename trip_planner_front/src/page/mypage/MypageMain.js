@@ -16,7 +16,6 @@ import TourReg from "./../tour/TourReg";
 import TourEdit from "../tour/TourEdit";
 import TourSale from "../tour/TourSale";
 import TourTicket from "./../tour/TourTicket";
-import TourTicketModify from "./../tour/TourTicketModify";
 import CouponReg from "../admin/CouponReg";
 
 const MypageMain = (props) => {
@@ -31,9 +30,7 @@ const MypageMain = (props) => {
       icon: "warning",
       text: "로그인 후 이용이 가능합니다.",
       confirmButtonText: "닫기",
-    }).then(
-      navigate("/")
-    );
+    }).then(navigate("/"));
   }
 
   useEffect(() => {
@@ -130,18 +127,21 @@ const MypageMain = (props) => {
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes />} />
             <Route path="/myReviews" element={<MyReviews />} />
-            <Route path="/myInfo" element={<MyInfo member={member} />} />
+            <Route
+              path="/myInfo"
+              element={<MyInfo isLogin={isLogin} member={member} />}
+            />
             <Route path="/innReg" element={<InnReg member={member} />} />
             <Route path="/roomReg" element={<RoomReg isLogin={isLogin} />} />
             <Route path="/tour/reg" element={<TourReg />} />
             <Route path="/tour/sale" element={<TourSale member={member} />} />
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
+            {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
             <Route
-              path="/tour/ticket/modify/:tourNo"
-              element={<TourTicketModify />}
+              path="/admin/couponReg"
+              element={<CouponReg isLogin={isLogin} member={member} />}
             />
-            <Route path="/admin/couponReg" element={<CouponReg />} />
           </Routes>
         </div>
       </section>

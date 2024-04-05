@@ -24,11 +24,16 @@ import License from "./page/member/License";
 import BusinessAuth from "./page/member/BusinessAuth";
 import BlogMain from "./page/blog/blogMain";
 import ReservationInn from "./page/INN/ReservationInn";
-import CreateTrips from "./page/mypage/CreateTrips";
+import { CreateTrips } from "./page/mypage/CreateTrips";
 import BlogView from "./page/blog/BlogView";
 import InnDetailView from "./page/INN/InnDetailView";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import ModifyTrips from "./page/mypage/ModifyTrips";
+import NoticeMain from "./page/notice/NoticeMain";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
+  const navigate = useNavigate();
   const obj = JSON.parse(window.localStorage.getItem("member"));
   const [isLogin, setIsLogin] = useState(obj ? true : false); //로그인상태를 체크하는 state, obj가 있으면 로그인 true/없으면 false
   const [token, setToken] = useState(obj ? obj.accessToken : ""); //토큰값
@@ -65,6 +70,12 @@ function App() {
     window.localStorage.removeItem("member");
     axios.defaults.headers.common["Authorization"] = null;
     setIsLogin(false);
+    Swal.fire({
+      title: "로그아웃",
+      text: "로그인이 풀렸습니다.",
+      icon: "success",
+    });
+    navigate("/");
   };
   //페이지가 로드되면,새로고침되면
   useEffect(() => {
@@ -109,12 +120,20 @@ function App() {
           <Route path="/blogWrite" element={<BlogWrite isLogin={isLogin} />} />
           <Route path="/consult" element={<ConsultTalk />} />
           <Route path="/license" element={<License />} />
-          <Route path="/businessAuth" element={<BusinessAuth />} />
+          <Route
+            path="/businessAuth"
+            element={<BusinessAuth isLogin={isLogin} />}
+          />
           <Route path="/inn/reservationInn" element={<ReservationInn />} />
           <Route
             path="/mypage/myTrips/createTrips"
             element={<CreateTrips isLogin={isLogin} />}
           />
+          <Route
+            path="/mypage/myTrips/modifyTrips/:tripNo"
+            element={<ModifyTrips />}
+          />
+          <Route path="/notice/*" element={<NoticeMain isLogin={isLogin} />} />
         </Routes>
       </main>
       <Footer />

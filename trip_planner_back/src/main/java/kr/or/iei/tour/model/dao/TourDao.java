@@ -29,10 +29,18 @@ public interface TourDao {
 
 	int getLastInsertTourNo();
 
-	int insertTourTicket(TourTicket tourTicket);
-
 	TourTicket selectTourTicket(int tourNo);
 
 	int modifyTourTicket(TourTicket tourTicket);
+
+	int tempTourTicket(int tourNo);
+
+	int searchTourNo(int tourNo, String memberEmail);
+
+	int checkPartnerNo(int tourNo);
+
+	List selectTourList();
+
+	List selectTicketList();
 	
 }

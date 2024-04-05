@@ -43,7 +43,7 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@PostMapping
+	@PostMapping(value="/reg")
 	public ResponseEntity<ResponseDTO> insertTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
 		String savepath = root+"/tour/";
 
@@ -60,7 +60,8 @@ public class TourController {
 		if(result == 1) {
 			// 등록한 투어상품 번호를 찾기
 			int tourNo = tourService.getLastInsertTourNo();
-			
+			// 투어 등록하는 동시에 임시 이용권 금액 입력(0원)
+			tourService.tempTourTicket(tourNo);
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tourNo);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		} else {
@@ -94,13 +95,22 @@ public class TourController {
 	}
 	
 	@GetMapping(value="/one/{tourNo}")
-	public ResponseEntity<ResponseDTO> selectOneTour(@PathVariable int tourNo){
-		Tour tour = tourService.selectOneTour(tourNo);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
-		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	public ResponseEntity<ResponseDTO> selectOneTour(@PathVariable int tourNo, @RequestAttribute String memberEmail){
+		// 메일 -> 회원번호 -> 업체번호 -> 투어번호 체크
+		int partnerNo = tourService.searchPartnerNo(memberEmail);
+		int checkNo = tourService.checkPartnerNo(tourNo);
+//		System.out.println("내 업체번호 : " +partnerNo+", 들어온 업체번호 : "+checkNo);
+		if(partnerNo == checkNo) {
+			Tour tour = tourService.selectOneTour(tourNo);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());			
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 	}
 	
-	@PatchMapping
+	@PatchMapping(value="/edit")
 	public ResponseEntity<ResponseDTO> modifyTour(@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail){
 		String savepath = root+"/tour/";
 		if(tour.getThumbnailCheck() == 1) {		// 섬네일이 변경된 경우에만
@@ -129,19 +139,6 @@ public class TourController {
 		}
 	}
 	
-	@PostMapping(value="/ticket")
-	public ResponseEntity<ResponseDTO> insertTourTicket(@ModelAttribute TourTicket tourTicket){
-//		System.out.println(tourTicket);
-		int result = tourService.insertTourTicket(tourTicket);
-		if(result == 1) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		} else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		}
-	}
-	
 	@GetMapping(value="/ticket/{tourNo}")
 	public ResponseEntity<ResponseDTO> selectTourTicket(@PathVariable int tourNo){
 		TourTicket tourTicket = tourService.selectTourTicket(tourNo);
@@ -159,6 +156,20 @@ public class TourController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<ResponseDTO> tourList(){
+		Map map = tourService.selectTourList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping(value="/tourSearch")
+	public ResponseEntity<ResponseDTO> searchTour(@ModelAttribute Tour tour){
+		Map map = tourService.searchTour(tour);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
 }

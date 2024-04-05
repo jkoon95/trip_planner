@@ -3,7 +3,7 @@
   margin: 0 auto;
   margin-top: 30px;
 }
-.reservation-wrap > div:last-child {
+.reservation-wrap > .reservation-content-all-wrap {
   display: flex;
 }
 .select-inn-wrap {
@@ -212,4 +212,79 @@
   width: 100%;
   font-family: pt-b;
   font-size: 16px;
+}
+
+.modal_content table {
+  padding: 20px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  border-collapse: collapse;
+}
+.modal_content > table > thead > th {
+  background-color: #ece5e5;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+}
+.modal_content > table > tbody > td {
+  font-size: 12px;
+  padding: 10px;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+.modal_content p {
+  font-size: 12px;
+}
+.modal_content > table > tbody > tr {
+  border-bottom: 1px solid #eee;
+}
+.modal_content > table > tbody > tr > th {
+  font-size: 14px;
+  padding: 15px;
+  vertical-align: middle;
+  border: 1px solid #eee;
+  background-color: #ece5e5;
+}
+.modal_content > table > tbody > tr > td {
+  font-size: 13px;
+  padding: 10px;
+  vertical-align: middle;
+}
+.modal_content .ageTerms {
+  font-size: 15px;
+  font-family: pt-eb;
+  padding: 10px 0px;
+}
+.modal_content .discount-box-wrap > .discount-box {
+  display: flex;
+  padding: 25px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 10px;
+}
+.modal_content .discount-box-wrap > .discount-box > .discount {
+  font-family: pt-b;
+  font-size: 18px;
+}
+.modal_content .discount-box-wrap > .discount-box > .expired-date {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  font-size: 13px;
+  font-family: pt-b;
+}
+.modal_content .discount-box-wrap > .discount-box > .expired-date > span {
+  font-size: 13px;
+  font-family: pt-b;
+  color: #e9511c;
+}
+.modal_content .discount-box-wrap > .discount-box:hover {
+  transition-duration: 0.2s;
+  background-color: #1795f0;
+  color: #fff;
+}
+.modal_content .discount-box-wrap .choice-coupon:checked + .discount-box {
+  background-color: #1795f0;
+  color: #fff;
 }

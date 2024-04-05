@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 			throws Exception {
 		//로그인을 성공한 이후에 요청이 들어오면 header에서 인증 토큰을 꺼냄
 		String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
-		System.out.println("헤더에서 꺼낸 정보 : "+auth);//Bearer 토큰값
+		System.out.println("헤더에서 꺼낸 정보 : "+auth);//Bearer 토큰값 //로그인 인터셉터에 걸렸는지 확인하는 용도
 		//1. 인증토큰이 없거나 또는 잘못된값을 보낸 경우
 		if(auth == null || auth.indexOf("null") != -1 || !auth.startsWith("Bearer ")) {
 			System.out.println("인증이 없거나, 잘못된경우");
@@ -29,7 +29,6 @@ public class LoginInterceptor implements HandlerInterceptor{
 		//2. 인증시간이 만료되었는지 체크
 		String token = auth.split(" ")[1];//토큰값만 분리해서 가져옴
 		if(jwtUtil.isExpired(token)) {
-			System.out.println("인증시간이 만료된 경우");
 			return false;
 		}
 		

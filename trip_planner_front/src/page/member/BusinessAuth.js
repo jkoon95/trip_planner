@@ -7,10 +7,17 @@ import { Button } from "../../component/FormFrm";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Swal from "sweetalert2";
 
-const BusinessAuth = () => {
+const BusinessAuth = (isLogin) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const location = useLocation();
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(navigate("/"));
+  }
   const memberEmail = location.state.memberEmail;
   const [partnerName, setPartnerName] = useState("");
   const [partnerTel, setPartnerTel] = useState("");

@@ -3,10 +3,18 @@ import { Button, Input } from "../../component/FormFrm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { JoinInputWrap } from "../member/MemberForm";
+import Swal from "sweetalert2";
 
-const MyInfo = ({ member }) => {
+const MyInfo = ({ member, isLogin }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(navigate("/"));
+  }
   const memberEmail = member.memberEmail;
   const memberNo = member.memberNo;
   const [memberPw, setMemberPw] = useState("");

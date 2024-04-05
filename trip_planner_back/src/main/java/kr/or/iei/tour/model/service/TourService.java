@@ -108,5 +108,10 @@ public class TourService {
 		return map;
 	}
 
+	public Map searchTour(Tour tour) {
+		
+		return null;
+	}
+
 	
 }

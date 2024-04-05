@@ -41,7 +41,7 @@ const TourList = () => {
       <TourIconBox />
       <TourSwiper />
       <div className="tour-list-prod">
-        <h2>추천 투어 · 티켓</h2>
+        <h2>NEW TOUR</h2>
       </div>
       <div className="tour-prod-wrap">
         {tourList.slice(0, visibleTour).map((tour, index) => {
@@ -63,7 +63,7 @@ const TourList = () => {
 const TourIconBox = () => {
   return (
     <div className="tour-icon-wrap">
-      <Link to="#">
+      <Link to="/tourSearch">
         <img alt="입장권" src="images/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
       </Link>

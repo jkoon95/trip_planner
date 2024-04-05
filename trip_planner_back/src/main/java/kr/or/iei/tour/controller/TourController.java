@@ -165,4 +165,11 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@GetMapping(value="/tourSearch")
+	public ResponseEntity<ResponseDTO> searchTour(@ModelAttribute Tour tour){
+		Map map = tourService.searchTour(tour);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 }

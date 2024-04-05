@@ -226,7 +226,7 @@ const Ref = () => {
           </div>
         </Modal>
 
-        <Modal class="modal lg" open={openModal2} title="모달2" useCloseBtn={true}>
+        <Modal class="modal lg" open={openModal2} title="모달2" useCloseBtn={true} closeModal={closeModalFunc2}>
           <div>
             첫 번째 영역에는 모달의 컨텐츠를 넣고,<br /> 두 번째 영역에는 모달 푸터에 들어갈 버튼 등을 넣는다.
           </div>

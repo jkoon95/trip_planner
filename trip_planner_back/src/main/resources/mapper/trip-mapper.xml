@@ -20,6 +20,6 @@
   </insert>
   
   <select id="selectMyTripList" resultType="trip">
-  	select * from (select rownum rnum, t.* from (select * from trip_tbl where member_no in(select member_no from member_tbl where member_email=#{memberEmail}) order by 1 desc)t) where rnum between #{start} and #{end}
+  	select * from (select rownum rnum, t.* from (select trip_no, member_no, trip_title, to_char(trip_start_date,'YYYY-MM-DD') trip_start_date, to_char(trip_end_date,'YYYY-MM-DD') trip_end_date from trip_tbl where member_no in(select member_no from member_tbl where member_email=#{memberEmail}) order by 1 desc)t) where rnum between #{start} and #{end}
   </select>
 </mapper>

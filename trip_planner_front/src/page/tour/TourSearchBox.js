@@ -16,18 +16,21 @@ const TourSearchBox = (props) => {
 
   const [searchText, setSearchText] = useState("");
   const [startDate, setStartDate] = React.useState(dayjs());
+  const [tourList, setTourList] = useState("");
 
   const searchBtn = () => {
     if (searchText !== "") {
-      const form = new FormData();
-      form.append("tourName", searchText);
-      form.append("salesPeriod", startDate);
+      const data = {
+        searchText: searchText,
+        startDate: startDate.format("YYYY-MM-DD"),
+      };
 
       axios
-        .get(backServer, "/tour/tourSearch", form)
+        .post(backServer + "/tour/tourSearch", data)
         .then((res) => {
           if (res.data.message === "success") {
-            console.log(res.data.message);
+            setTourList(res.data.data.tourList);
+            console.log(res.data.data);
           } else {
             Swal.fire("검색중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
           }

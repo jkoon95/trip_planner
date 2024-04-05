@@ -69,11 +69,6 @@ public class TourService {
 		return tourDao.getLastInsertTourNo();
 	}
 	
-	@Transactional
-	public int insertTourTicket(TourTicket tourTicket) {
-		return tourDao.insertTourTicket(tourTicket);
-	}
-
 	public TourTicket selectTourTicket(int tourNo) {
 		return tourDao.selectTourTicket(tourNo);
 	}
@@ -81,6 +76,11 @@ public class TourService {
 	@Transactional
 	public int modifyTourTicket(TourTicket tourTicket) {
 		return tourDao.modifyTourTicket(tourTicket);
+	}
+
+	@Transactional
+	public int tempTourTicket(int tourNo) {
+		return tourDao.tempTourTicket(tourNo);
 	}
 
 	

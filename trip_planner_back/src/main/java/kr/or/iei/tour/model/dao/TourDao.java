@@ -29,10 +29,10 @@ public interface TourDao {
 
 	int getLastInsertTourNo();
 
-	int insertTourTicket(TourTicket tourTicket);
-
 	TourTicket selectTourTicket(int tourNo);
 
 	int modifyTourTicket(TourTicket tourTicket);
+
+	int tempTourTicket(int tourNo);
 	
 }

@@ -29,6 +29,7 @@ import BlogView from "./page/blog/BlogView";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import NoticeList from "./page/notice/NoticeList";
+import NoticeMain from "./page/notice/NoticeMain";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ function App() {
             path="/mypage/myTrips/createTrips"
             element={<CreateTrips isLogin={isLogin} />}
           />
-          <Route path="/noticeList" element={<NoticeList />} />
+          <Route path="/notice/*" element={<NoticeMain isLogin={isLogin} />} />
         </Routes>
       </main>
       <Footer />

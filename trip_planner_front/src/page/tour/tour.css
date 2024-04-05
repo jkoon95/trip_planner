@@ -97,6 +97,9 @@
   margin-bottom: 10px;
 }
 
+.tour-prod-wrap > .tour-prod > .tour-prod-info {
+  padding-left: 10px;
+}
 .tour-prod-wrap > .tour-prod > .tour-prod-info > .tour-prod-name {
   font-size: 1.2em;
   margin-top: auto; /* tour-item-name을 아래쪽으로 이동시킴 */
@@ -115,6 +118,19 @@
   font-weight: bold;
   color: #e9511c; /* 주황색 */
   margin-top: 5px;
+}
+
+/* 더보기 */
+.tour-prod-wrap > .show-tour-more {
+  margin-top: 84px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tour-prod-wrap > .show-tour-more > button {
+  width: 40%;
+  margin: 0 auto;
 }
 
 /* 추천순, 가격낮은순 */

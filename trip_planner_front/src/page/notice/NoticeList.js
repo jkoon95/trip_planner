@@ -23,7 +23,6 @@ const NoticeList = (props) => {
         console.log(res.data);
         setNoticeList(res.data.data.noticeList);
         setPageInfo(res.data.data.pi);
-        console.log(member);
       })
       .catch((res) => {
         console.log(res);

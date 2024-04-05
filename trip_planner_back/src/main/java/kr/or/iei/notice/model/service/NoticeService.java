@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.notice.model.dao.NoticeDao;
+import kr.or.iei.notice.model.dto.Notice;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -31,9 +33,14 @@ public class NoticeService {
 		map.put("pi",pi);
 		return map;
 	}
-
+	
+	@Transactional
 	public int deleteNotice(int noticeNo) {
 		// TODO Auto-generated method stub
 		return noticeDao.deleteNotice(noticeNo);
+	}
+
+	public Notice selectOneNotice(int noticeNo) {
+		return noticeDao.selectOneNotice(noticeNo);
 	}	
 }

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,6 +9,12 @@ import "./tour.css";
 import TourSearchBox from "./TourSearchBox";
 
 const TourList = () => {
+  const [tourProd, setTourProd] = useState([]);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
+  useEffect(() => {});
+
   return (
     <section className="contents">
       <div className="tour-list-title">
@@ -17,10 +23,10 @@ const TourList = () => {
       <TourSearchBox />
       <TourIconBox />
       <TourSwiper />
-      <div className="tour-list-item">
+      <div className="tour-list-prod">
         <h2>추천 티켓</h2>
       </div>
-      <TourItem />
+      <TourProd />
     </section>
   );
 };
@@ -83,53 +89,53 @@ const TourSwiper = () => {
   );
 };
 
-const TourItem = () => {
+const TourProd = () => {
   return (
-    <div className="tour-item-wrap">
-      <div className="tour-item">
+    <div className="tour-prod-wrap">
+      <div className="tour-prod">
         <div className="tour-bookmark">
           <img alt="찜" src="images/찜버튼.png" />
         </div>
-        <img className="tour-item-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-item-name">[서울] 테마 파크</div>
-        <div className="tour-item-info">강릉 입장권</div>
-        <div className="tour-item-price">10,000원</div>
+        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
+        <div className="tour-prod-name">[서울] 테마 파크</div>
+        <div className="tour-prod-info">강릉 입장권</div>
+        <div className="tour-prod-price">10,000원</div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <div className="tour-bookmark">
           <img alt="찜" src="images/찜버튼.png" />
         </div>
-        <img className="tour-item-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-item-name">[서울] 테마 파크</div>
-        <div className="tour-item-info">강릉 입장권</div>
-        <div className="tour-item-price">10,000원</div>
+        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
+        <div className="tour-prod-name">[서울] 테마 파크</div>
+        <div className="tour-prod-info">강릉 입장권</div>
+        <div className="tour-prod-price">10,000원</div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <div className="tour-bookmark">
           <img alt="찜" src="images/찜버튼.png" />
         </div>
-        <img className="tour-item-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-item-name">[서울] 테마 파크</div>
-        <div className="tour-item-info">강릉 입장권</div>
-        <div className="tour-item-price">10,000원</div>
+        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
+        <div className="tour-prod-name">[서울] 테마 파크</div>
+        <div className="tour-prod-info">강릉 입장권</div>
+        <div className="tour-prod-price">10,000원</div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <div className="tour-bookmark">
           <img alt="찜" src="images/찜버튼.png" />
         </div>
-        <img className="tour-item-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-item-name">[서울] 테마 파크</div>
-        <div className="tour-item-info">강릉 입장권</div>
-        <div className="tour-item-price">10,000원</div>
+        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
+        <div className="tour-prod-name">[서울] 테마 파크</div>
+        <div className="tour-prod-info">강릉 입장권</div>
+        <div className="tour-prod-price">10,000원</div>
       </div>
-      <div className="tour-item">
+      <div className="tour-prod">
         <div className="tour-bookmark">
           <img alt="찜" src="images/찜버튼.png" />
         </div>
-        <img className="tour-item-img" alt="#" src="images/테마파크.jpg" />
-        <div className="tour-item-name">[서울] 테마 파크</div>
-        <div className="tour-item-info">강릉 입장권</div>
-        <div className="tour-item-price">10,000원</div>
+        <img className="tour-prod-img" alt="#" src="images/테마파크.jpg" />
+        <div className="tour-prod-name">[서울] 테마 파크</div>
+        <div className="tour-prod-info">강릉 입장권</div>
+        <div className="tour-prod-price">10,000원</div>
       </div>
     </div>
   );

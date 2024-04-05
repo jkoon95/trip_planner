@@ -52,19 +52,26 @@ const ModifyTrips = () => {
       console.log(res);
     })
   }, [])
-  // console.log(tripStartDate);
+  // console.log(tripTitle);
 
   // 제목 수정
   useEffect(() => {
-    const tripObj = {tripNo, tripTitle}
-    axios.patch(backServer + "/trip", tripObj)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((res) => {
-      console.log(res);
-    })
+    if(tripTitle !== ""){
+      const tripObj = {tripNo, tripTitle}
+      axios.patch(backServer + "/trip/tripTbl", tripObj)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+    }
   }, [tripTitle])
+
+
+  const changeTripTitleFunc = () => {
+    
+  }
 
   // 여행 등록하기
   const createTripsFunc = () => {
@@ -256,7 +263,7 @@ const ModifyTrips = () => {
           <div className="trips_wrap">
             <div className="trips_input_wrap">
               <div className="set_title_wrap">
-                <Input type="text" data={tripTitle} setData={setTripTitle} placeholder="여행 제목을 입력해주세요" />
+                <Input type="text" data={tripTitle} setData={setTripTitle} placeholder="여행 제목을 입력해주세요" onChange={changeTripTitleFunc} />
               </div>
               <div className="set_date_wrap">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

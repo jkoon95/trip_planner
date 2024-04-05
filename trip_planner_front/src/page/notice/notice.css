@@ -1,0 +1,31 @@
+/*
+메인 색상
+#005caa 파랑  #e9511c 주황  #f4f5ef 베이지  #000000 검정
+#30e462 성공  #ff2803 에러  #f9b71b 경고    #1795f0 인포
+기타 #89cff0 #f4f5ef #8f705b #035e7b
+*/
+
+.contents.notice .notice-tbl{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.contents.notice tr{
+    height: 50px;
+    line-height: 50px;
+}
+
+.contents.notice tbody>tr:hover{
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid #c1c1c1;
+}
+
+.contents.notice thead>tr{
+    background-color: #89cff0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.contents.notice td{
+    text-align: center;
+}

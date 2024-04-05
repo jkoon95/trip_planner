@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -48,7 +49,7 @@ public class TripController {
 		//System.out.println(trip);
 		ObjectMapper om = new ObjectMapper();
 		List<TripDetail> tripDetailList = new ArrayList<TripDetail>();
-		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)om.readValue(trip.getTripDetailList(), List.class);
+		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)om.readValue(trip.getTripDetailListStr(), List.class);
 		for(LinkedHashMap<String, Object> map : list) {
 			TripDetail tdl = new TripDetail();
 			//System.out.println(map);
@@ -65,24 +66,23 @@ public class TripController {
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
 			for(LinkedHashMap<String, Object> data : spl) {
 				TripPlace tp = new TripPlace();
-				int tripRoute = (Integer)data.get("tripRoute");
-				tp.setTripRoute(tripRoute);
-				String tripTodo = (String)data.get("tripTodo");
-				tp.setTripTodo(tripTodo);
-				LinkedHashMap<String, String> tripPlace = (LinkedHashMap<String, String>)data.get("tripPlace");
+				tp.setTripRoute((Integer)data.get("tripRoute"));
+				tp.setTripTodo((String)data.get("tripTodo"));
 				
-				String tripPlaceName = tripPlace.get("tripPlaceName");
-				String tripPlaceCategory = tripPlace.get("tripPlaceCategory");
-				String tripPlaceAddress = tripPlace.get("tripPlaceAddress");
-				String tripPlacePhone = tripPlace.get("tripPlacePhone");
-				String tripPlaceLat = tripPlace.get("tripPlaceLat");
-				String tripPlaceLng = tripPlace.get("tripPlaceLng");
-				tp.setTripPlaceName(tripPlaceName);
-				tp.setTripPlaceCategory(tripPlaceCategory);
-				tp.setTripPlaceAddress(tripPlaceAddress);
-				tp.setTripPlacePhone(tripPlacePhone);
-				tp.setTripPlaceLat(tripPlaceLat);
-				tp.setTripPlaceLng(tripPlaceLng);
+//				LinkedHashMap<String, String> tripPlace = (LinkedHashMap<String, String>)data.get("tripPlace");
+//				String tripPlaceName = tripPlace.get("tripPlaceName");
+//				String tripPlaceCategory = tripPlace.get("tripPlaceCategory");
+//				String tripPlaceAddress = tripPlace.get("tripPlaceAddress");
+//				String tripPlacePhone = tripPlace.get("tripPlacePhone");
+//				String tripPlaceLat = tripPlace.get("tripPlaceLat");
+//				String tripPlaceLng = tripPlace.get("tripPlaceLng");
+				
+				tp.setTripPlaceName((String)data.get("tripPlaceName"));
+				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
+				tp.setTripPlaceAddress((String)data.get("tripPlaceAddress"));
+				tp.setTripPlacePhone((String)data.get("tripPlacePhone"));
+				tp.setTripPlaceLat((String)data.get("tripPlaceLat"));
+				tp.setTripPlaceLng((String)data.get("tripPlaceLng"));
 				
 				selectPlaceList.add(tp);
 				tdl.setSelectPlaceList(selectPlaceList);
@@ -110,6 +110,35 @@ public class TripController {
 		List<Trip> tripList = tripService.selectMyTripList(reqPage, memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tripList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@Operation(summary = "여행 일정 상세 조회", description = "다가오는 여행/지난 여행 상세 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping(value="/view/{tripNo}")
+	public ResponseEntity<ResponseDTO> selectOneTrip(@PathVariable int tripNo){
+		Trip trip = tripService.selectOneTrip(tripNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", trip);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@Operation(summary = "여행 일정 상세 trip_tbl 수정", description = "여행 일정 상세 trip_tbl 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@PatchMapping(value="/trip")
+	public ResponseEntity<ResponseDTO> updateTrip(@RequestBody Trip trip){
+		int result = tripService.updateTrip(trip);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 }
 

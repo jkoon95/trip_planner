@@ -45,5 +45,13 @@ public class TripService {
 		List<Trip> tripList = tripDao.selectMyTripList(memberEmail, start, end);
 		return tripList;
 	}
-	
+
+	public Trip selectOneTrip(int tripNo) {
+		return tripDao.selectOneTrip(tripNo);
+	}
+
+	public int updateTrip(Trip trip) {
+		return tripDao.updateTrip(trip);
+	}
+
 }

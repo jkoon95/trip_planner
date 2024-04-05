@@ -57,7 +57,7 @@ const CreateTrips = () => {
   }
 
   useEffect(() => {
-    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: JSON.stringify(tripDetailList)});
+    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailListStr: JSON.stringify(tripDetailList)});
   }, [tripTitle, tripStartDate, tripEndDate, tripDetailList])
 
   const closeTodoModalFunc = () => {
@@ -147,7 +147,7 @@ const CreateTrips = () => {
               // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
               const marker = new kakao.maps.Marker({
                 map: map,
-                position: new kakao.maps.LatLng(place.tripPlace.tripPlaceLat, place.tripPlace.tripPlaceLng) 
+                position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
               });
               // infowindow.setContent("<div class='infowindow'>"+(place.tripRoute+1)+"</div>");
               // infowindow.open(map, marker);
@@ -233,7 +233,7 @@ const CreateTrips = () => {
                       if(tripEndDate != null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
                         setTripStartDate(newValue);
                       }
-                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
+                    }} format="YYYY-MM-DD" value={tripStartDate} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
                       setTripBtnDisabled(false);
@@ -271,6 +271,7 @@ const CreateTrips = () => {
                     <ul className="place_list">
                       {
                         placeResultList.map((place, index) => {
+                          // console.log(place);
                           return(
                             <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );
@@ -404,14 +405,15 @@ const ItemTripPlace = (props) => {
 
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
-    tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
+    // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
+    tripDetailList[thisIndex].selectPlaceList.push({...place});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }
 
   const openTodoModalFunc = () => {
     document.body.classList.add("scroll_fixed");
-    setModalTitle(place.tripPlace.tripPlaceName);
+    setModalTitle(place.tripPlaceName);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
@@ -420,7 +422,7 @@ const ItemTripPlace = (props) => {
   const modifyTodo = () => {
     document.body.classList.add("scroll_fixed");
     setTripTodo(place.tripTodo);
-    setModalTitle(place.tripPlace.tripPlaceName);
+    setModalTitle(place.tripPlaceName);
     setTodoDayIndex(thisIndex);
     setTodoIndex(routeIndex);
     setOpenTodoModal(true);
@@ -452,6 +454,7 @@ const ItemTripPlace = (props) => {
     tripDetailList[thisIndex].selectPlaceList.splice(newIndex,0,thisItem[0]);
     setTripDetailList([...tripDetailList]);
   }
+  // console.log(tripDetailList[thisIndex])
 
   return(
     listType === "day_items" ? (
@@ -460,10 +463,10 @@ const ItemTripPlace = (props) => {
           <div className="tripRoute_no">{(routeIndex+1)}</div>
           <div className="item_box">
             <div className="item_box_content">
-              <div className="place_name">{place.tripPlace.tripPlaceName}</div>
+              <div className="place_name">{place.tripPlaceName}</div>
               <div className="place_info">
-                <span>{place.tripPlace.tripPlaceCategory}</span>
-                <span>{place.tripPlace.tripPlaceAddress}</span>
+                <span>{place.tripPlaceCategory}</span>
+                <span>{place.tripPlaceAddress}</span>
               </div>
             </div>
             <div className="item_btn_wrap">

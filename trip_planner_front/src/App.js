@@ -26,6 +26,7 @@ import BlogMain from "./page/blog/blogMain";
 import ReservationInn from "./page/INN/ReservationInn";
 import { CreateTrips } from "./page/mypage/CreateTrips";
 import BlogView from "./page/blog/BlogView";
+import InnDetailView from "./page/INN/InnDetailView";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ModifyTrips from "./page/mypage/ModifyTrips";
@@ -90,6 +91,10 @@ function App() {
       <Header isLogin={isLogin} logout={logout} />
       <main className="container">
         <Routes>
+          <Route
+            path="/innDetailView"
+            element={<InnDetailView isLogin={isLogin} />}
+          />
           <Route
             path="/"
             element={<Main isLogin={isLogin} logout={logout} />}

@@ -19,4 +19,8 @@ public interface TripDao {
 
 	List<Trip> selectMyTripList(String memberEmail, int start, int end);
 
+	Trip selectOneTrip(int tripNo);
+
+	int updateTrip(Trip trip);
+
 }

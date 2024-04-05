@@ -128,6 +128,17 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	@GetMapping("/detail/{innNo}")
+	public ResponseEntity<ResponseDTO> selectInnDetail(@PathVariable int innNo){
+		Inn inn = innService.selectInnDetail(innNo);
+		if(inn != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", inn);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 	
 	
 }

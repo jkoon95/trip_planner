@@ -26,7 +26,8 @@ const MyTrips = () => {
     axios
       .get(backServer + "/trip/list/" + reqPage)
       .then((res) => {
-        setTripList([...res.data.data]);
+        tripList.push(...res.data.data);
+        setTripList([...tripList]);
         if(res.data.data.length < 5){
           setBtnMoreShow(false);
         }
@@ -104,31 +105,31 @@ const TripListItem = (props) => {
   }
   return(
     <li>
-      <Link>
+      <Link to={"/mypage/myTrips/viewTrips/"+item.tripNo}>
         <div className="trip_info">
           <div className="trip_title">{item.tripTitle}</div>
-          <div className="trip_date">{item.tripStartDate} - {item.tripEndDate}</div>
+          <div className="trip_date">{item.tripStartDate.replaceAll("-",".")} - {item.tripEndDate.replaceAll("-",".")}</div>
           <div className="btm_info">
             <span className="trip_place_count">1개 장소</span>
             <span className="book_inn">예약한 숙소: 1</span>
             <span className="book_tour">예약한 투어: 1</span>
           </div>
         </div>
-        <div className="btn_wrap">
-          <button type="button" className="btn_share"><span className="hidden">공유하기</span></button>
-          <div className="small_menu_wrap">
-            <button className="btn_menu" onClick={menuOpenFunc}><span className="hidden">메뉴</span></button>
-            {
-              openMenu ? (
-                <ul className="menu_list">
-                  <li><Link to={"/mypage/myTrips/modifyTrips/"+item.tripNo}>수정하기</Link></li>
-                  <li><button type="button">삭제</button></li>
-                </ul>
-              ) : ""
-            }
-          </div>
-        </div>
       </Link>
+      <div className="btn_wrap">
+        <button type="button" className="btn_share"><span className="hidden">공유하기</span></button>
+        <div className="small_menu_wrap">
+          <button className="btn_menu" onClick={menuOpenFunc}><span className="hidden">메뉴</span></button>
+          {
+            openMenu ? (
+              <ul className="menu_list">
+                <li><Link to={"/mypage/myTrips/modifyTrips/"+item.tripNo}>수정하기</Link></li>
+                <li><button type="button">삭제</button></li>
+              </ul>
+            ) : ""
+          }
+        </div>
+      </div>
     </li>
   )
 }

@@ -2,17 +2,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import TextEditor from "../../component/TextEditor";
 
 const NoticeView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const noticeNo = params.noticeNo;
+  const [notice, setNotice] = useState({});
+  useEffect(() => {
+    axios
+      .post(backServer + "/notice/selectOneNotice/" + noticeNo)
+      .then((res) => {
+        console.log(res.data.data);
+        setNotice(res.data.data);
+      })
+      .catch((res) => {});
+  }, []);
   const member = props.member;
   const navigate = useNavigate();
   const checkBtn = () => {
+    //확인용
     console.log(member);
-    console.log(noticeNo);
+    console.log(notice);
   };
+  const updateBtn = () => {};
 
   const deleteBtn = () => {
     Swal.fire({
@@ -45,7 +59,20 @@ const NoticeView = (props) => {
   return (
     <section className="contents notice">
       <h2>공지사항 상세</h2>
+      <div className="notice-input-wrap">
+        <table>
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>
+                <TextEditor data={notice.noticeContent} />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <Button text="확인" class="btn_secondary" clickEvent={checkBtn} />
+      <Button text="수정" class="btn_secondary" clickEvent={updateBtn} />
       <Button text="삭제" class="btn_secondary" clickEvent={deleteBtn} />
     </section>
   );

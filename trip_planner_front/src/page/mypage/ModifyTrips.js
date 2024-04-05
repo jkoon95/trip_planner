@@ -9,18 +9,20 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Modal from "../../component/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const { kakao } = window;
 
 const ModifyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const params = useParams();
+  const tripNo = params.tripNo;
 
   const [trip, setTrip] = useState({}); //최종 데이터
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
   const [tripTitle, setTripTitle] = useState("");
-  const [tripStartDate, setTripStartDate] = useState(dayjs(new Date()));
+  const [tripStartDate, setTripStartDate] = useState();
   const [tripEndDate, setTripEndDate] = useState();
   const [tripDays, setTripDays] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -36,28 +38,58 @@ const ModifyTrips = () => {
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
 
-  // 여행 수정하기
-  const modifyTripsFunc = () => {
+  useEffect(() => {
+    axios.get(backServer + "/trip/view/" + tripNo)
+    .then((res) => {
+      console.log(res.data.data);
+      setTrip(res.data.data);
+      setTripTitle(res.data.data.tripTitle);
+      setTripStartDate(dayjs(res.data.data.tripStartDate));
+      setTripEndDate(dayjs(res.data.data.tripEndDate));
+      setTripDetailList(res.data.data.tripDetailList);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }, [])
+  // console.log(tripStartDate);
+
+  // 제목 수정
+  useEffect(() => {
+    const tripObj = {tripNo, tripTitle}
+    axios.patch(backServer + "/trip", tripObj)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }, [tripTitle])
+
+  // 여행 등록하기
+  const createTripsFunc = () => {
     if(tripTitle === ""){
       trip.tripTitle = "국내 여행";
       setTripTitle("국내 여행");
     }
     console.log(trip);
-    axios.post(backServer + "/trip", trip)
-    .then((res) => {
-      if(res.data.message === "success"){
-        Swal.fire({icon: "success", title: "등록 완료", text: "여행 일정이 등록되었습니다.", confirmButtonText: "닫기"});
-        navigate("/");
-      }
-    })
-    .catch((res) => {
-      console.log(res);
-      Swal.fire({icon: "warning", text: "문제가 발생했습니다. 잠시 후 다시 시도해주세요.", confirmButtonText: "닫기"})
-    })
+    // axios.post(backServer + "/trip", trip)
+    // .then((res) => {
+    //   if(res.data.message === "success"){
+    //     Swal.fire({icon: "success", title: "등록 완료", text: "여행 일정이 등록되었습니다.", confirmButtonText: "닫기"});
+    //     navigate("/");
+    //   }
+    // })
+    // .catch((res) => {
+    //   console.log(res);
+    //   Swal.fire({icon: "warning", text: "문제가 발생했습니다. 잠시 후 다시 시도해주세요.", confirmButtonText: "닫기"})
+    // })
   }
 
+
+
   useEffect(() => {
-    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailList: JSON.stringify(tripDetailList)});
+    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailListStr: tripDetailList});
   }, [tripTitle, tripStartDate, tripEndDate, tripDetailList])
 
   const closeTodoModalFunc = () => {
@@ -147,7 +179,7 @@ const ModifyTrips = () => {
               // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
               const marker = new kakao.maps.Marker({
                 map: map,
-                position: new kakao.maps.LatLng(place.tripPlace.tripPlaceLat, place.tripPlace.tripPlaceLng) 
+                position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
               });
               // infowindow.setContent("<div class='infowindow'>"+(place.tripRoute+1)+"</div>");
               // infowindow.open(map, marker);
@@ -232,12 +264,14 @@ const ModifyTrips = () => {
                     <DatePicker onChange={(newValue)=>{
                       if(tripEndDate != null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
                         setTripStartDate(newValue);
+                        // console.log(trip);
                       }
-                    }} format="YYYY-MM-DD" defaultValue={dayjs(new Date())} disablePast />
+                    }} format="YYYY-MM-DD" value={tripStartDate || dayjs(new Date())} disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
                       setTripBtnDisabled(false);
-                    }} format="YYYY-MM-DD" disablePast />
+                      // console.log(trip);
+                    }} format="YYYY-MM-DD" value={tripEndDate || dayjs(new Date())} disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
@@ -252,7 +286,8 @@ const ModifyTrips = () => {
               }
             </div>
             <div className="btn_area">
-              <Button text="여행 등록하기" class="btn_primary" clickEvent={modifyTripsFunc} disabled={tripBtnDisabled} />
+              {/* <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} disabled={tripBtnDisabled} /> */}
+              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} />
             </div>
           </div>
 
@@ -271,6 +306,7 @@ const ModifyTrips = () => {
                     <ul className="place_list">
                       {
                         placeResultList.map((place, index) => {
+                          // console.log(place);
                           return(
                             <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );

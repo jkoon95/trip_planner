@@ -29,7 +29,7 @@ const TourList = () => {
   }, []);
 
   const handleTourMore = () => {
-    setVisibleTour((prevCount) => prevCount + 8);
+    setVisibleTour((prevCount) => prevCount + 4); // 4개씩 추가
   };
 
   return (
@@ -63,7 +63,7 @@ const TourList = () => {
 const TourIconBox = () => {
   return (
     <div className="tour-icon-wrap">
-      <Link to="/tourSearch">
+      <Link to="#">
         <img alt="입장권" src="images/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
       </Link>

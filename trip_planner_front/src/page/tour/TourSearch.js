@@ -1,8 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TourSearchBox from "./TourSearchBox";
 import { Button } from "../../component/FormFrm";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const TourSearch = () => {
+const TourSearch = (props) => {
+  const location = useLocation;
+  const tourType = props.tourType;
+  const [tourList, setTourList] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
+  const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/tour/tourSearch/type")
+      .then((res) => {
+        setTourList(res.data.data.tourList);
+        setTicketList(res.data.data.ticketList);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
+  const handleTourMore = () => {
+    setVisibleTour((prevCount) => prevCount + 5); // 5개씩 추가
+  };
+
   return (
     <section className="contents">
       <div className="tour-list-title">

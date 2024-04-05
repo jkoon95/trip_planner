@@ -69,8 +69,8 @@ function App() {
     axios.defaults.headers.common["Authorization"] = null;
     setIsLogin(false);
     Swal.fire({
-      title: "로그아웃 성공",
-      text: "로그아웃이 성공하였습니다.",
+      title: "로그아웃",
+      text: "로그인이 풀렸습니다.",
       icon: "success",
     });
     navigate("/");

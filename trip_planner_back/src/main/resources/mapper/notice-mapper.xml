@@ -11,7 +11,8 @@
 		        	notice_no, 
 		        	member_tbl.member_no, 
 		        	member_nickname, 
-		        	notice_title, 
+		        	notice_title,
+		        	notice_content,
 		        	to_char(notice_date, 'yyyy-mm-dd') as notice_date 
 		        	from notice_tbl join member_tbl 
 		        	on member_tbl.member_no = notice_tbl.member_no order by notice_no desc)b)
@@ -20,4 +21,15 @@
 	 <delete id="deleteNotice">
 	 	delete notice_tbl where notice_no = #{noticeNo}
 	 </delete>
+	 <select id="selectOneNotice" resultType="notice">
+	 	select 
+		        	notice_no, 
+		        	member_tbl.member_no, 
+		        	member_nickname, 
+		        	notice_title,
+		        	notice_content,
+		        	to_char(notice_date, 'yyyy-mm-dd') as notice_date 
+		        	from notice_tbl join member_tbl 
+		        	on member_tbl.member_no = notice_tbl.member_no where notice_no =#{notice_no}
+	 </select>
 </mapper>

@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.notice.model.dto.Notice;
 import kr.or.iei.notice.model.service.NoticeService;
 
 @CrossOrigin("*")
@@ -27,6 +29,13 @@ public class NoticeController {
 	public ResponseEntity<ResponseDTO> noticeList(@PathVariable int reqPage) {
 		Map map = noticeService.selectNoticeList(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PostMapping(value="selectOneNotice/{noticeNo}")
+	public ResponseEntity<ResponseDTO> selectOneNotice(@PathVariable int noticeNo){
+		Notice notice = noticeService.selectOneNotice(noticeNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", notice);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	

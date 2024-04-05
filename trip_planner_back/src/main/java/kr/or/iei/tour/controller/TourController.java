@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -161,6 +162,13 @@ public class TourController {
 	@GetMapping
 	public ResponseEntity<ResponseDTO> tourList(){
 		Map map = tourService.selectTourList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PostMapping(value="/tourSearch")
+	public ResponseEntity<ResponseDTO> searchTour(@RequestBody Tour tour){
+		Map map = tourService.searchTour(tour);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}

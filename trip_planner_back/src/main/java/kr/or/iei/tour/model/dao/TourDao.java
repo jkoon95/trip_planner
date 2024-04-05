@@ -42,5 +42,7 @@ public interface TourDao {
 	List selectTourList();
 
 	List selectTicketList();
+
+	List searchTour(Tour tour);
 	
 }

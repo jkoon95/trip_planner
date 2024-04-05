@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
+import "react-quill/dist/quill.snow.css";
+
 const BlogView = (props) => {
   const isLogin = props.isLogin;
   const params = useParams();
@@ -113,7 +115,7 @@ const DayItem = (props) => {
       <div className="date-day">{"🚕 " + " day " + dayNumber + " 💨"} </div>
       <span className="schedule-title">{day.blogDateScheduleTitle}</span>
       <span
-        className="schedule-content"
+        className="schedule-content ql-editor"
         dangerouslySetInnerHTML={{ __html: day.blogDateScheduleContent }}
       ></span>
     </div>

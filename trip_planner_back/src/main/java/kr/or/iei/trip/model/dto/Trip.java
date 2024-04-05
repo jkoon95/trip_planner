@@ -1,5 +1,7 @@
 package kr.or.iei.trip.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,5 +20,6 @@ public class Trip {
 	private String tripTitle;
 	private String tripStartDate;
 	private String tripEndDate;
-	private String tripDetailList;
+	private String tripDetailListStr;
+	private List<TripDetail> tripDetailList;
 }

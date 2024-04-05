@@ -179,6 +179,13 @@ blog-list-box {
 .blog-content-box label {
   font-family: pt-b;
 }
+
+.content-warning {
+  text-align: right;
+  color: #fc0000;
+  font-family: pt-l;
+  font-size: 90%;
+}
 .blog-date-day {
   text-align: center;
   color: var(--main_02);

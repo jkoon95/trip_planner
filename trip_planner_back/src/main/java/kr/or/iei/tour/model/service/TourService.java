@@ -83,5 +83,20 @@ public class TourService {
 		return tourDao.tempTourTicket(tourNo);
 	}
 
+	public int searchTourNo(int tourNo, String memberEmail) {
+		int result = tourDao.searchTourNo(tourNo, memberEmail);
+		return result;
+	}
+
+	public int searchPartnerNo(String memberEmail) {
+		int partnerNo = tourDao.searchPartner(memberEmail);
+		return partnerNo;
+	}
+
+	public int checkPartnerNo(int tourNo) {
+		int checkNo = tourDao.checkPartnerNo(tourNo);
+		return checkNo;
+	}
+
 	
 }

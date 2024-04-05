@@ -34,5 +34,9 @@ public interface TourDao {
 	int modifyTourTicket(TourTicket tourTicket);
 
 	int tempTourTicket(int tourNo);
+
+	int searchTourNo(int tourNo, String memberEmail);
+
+	int checkPartnerNo(int tourNo);
 	
 }

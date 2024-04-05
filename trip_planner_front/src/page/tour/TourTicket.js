@@ -22,12 +22,20 @@ const TourTicket = () => {
     axios
       .get(backServer + "/tour/one/" + tourNo)
       .then((res) => {
-        const tour = res.data.data;
-        setTourName(tour.tourName);
-        setTourAddr(tour.tourAddr);
-        setSalesCount(tour.salesCount);
-        setSalesPeriod(tour.salesPeriod);
-        setSalesStatus(tour.salesStatus);
+        if (res.data.message === "success") {
+          const tour = res.data.data;
+          setTourName(tour.tourName);
+          setTourAddr(tour.tourAddr);
+          setSalesCount(tour.salesCount);
+          setSalesPeriod(tour.salesPeriod);
+          setSalesStatus(tour.salesStatus);
+        } else {
+          Swal.fire({
+            title: "권한이 없습니다.",
+            icon: "error",
+          });
+          navigate("/");
+        }
       })
       .catch((res) => {
         console.log(res);
@@ -49,21 +57,17 @@ const TourTicket = () => {
   }, []);
 
   const modifyTicket = () => {
-    if (!ticketAdult || !ticketYouth || !ticketChild) {
-      // 알림 메시지 표시
-      Swal.fire({
-        title: "모든 티켓 가격을 입력해주세요.",
-        icon: "error",
-      });
-      return;
-    }
+    // 빈칸일 경우 0으로 설정
+    const adultPrice = ticketAdult === "" ? 0 : ticketAdult;
+    const youthPrice = ticketYouth === "" ? 0 : ticketYouth;
+    const childPrice = ticketChild === "" ? 0 : ticketChild;
+
     const form = new FormData();
     form.append("tourNo", tourNo);
-    form.append("ticketAdult", ticketAdult);
-    form.append("ticketYouth", ticketYouth);
-    form.append("ticketChild", ticketChild);
+    form.append("ticketAdult", adultPrice);
+    form.append("ticketYouth", youthPrice);
+    form.append("ticketChild", childPrice);
 
-    console.log(form);
     axios
       .patch(backServer + "/tour/ticket", form, {
         headers: {
@@ -122,7 +126,7 @@ const TourTicket = () => {
                         type="number"
                         value={ticketAdult}
                         onChange={(e) => setTicketAdult(e.target.value)}
-                        placeholder="가격을 적어주세요."
+                        placeholder="가격을 적어주세요"
                       />
                       원
                     </td>
@@ -134,7 +138,7 @@ const TourTicket = () => {
                         type="number"
                         value={ticketYouth}
                         onChange={(e) => setTicketYouth(e.target.value)}
-                        placeholder="숫자만 입력해주세요."
+                        placeholder="숫자만 입력 가능"
                       />
                       원
                     </td>
@@ -146,7 +150,7 @@ const TourTicket = () => {
                         type="number"
                         value={ticketChild}
                         onChange={(e) => setTicketChild(e.target.value)}
-                        placeholder="미입력시 구매불가"
+                        placeholder="빈칸 입력시 무료"
                       />
                       원
                     </td>

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,7 +59,8 @@ public class TourController {
 		if(result == 1) {
 			// 등록한 투어상품 번호를 찾기
 			int tourNo = tourService.getLastInsertTourNo();
-			int result2 = tourService.tempTourTicket(tourNo);
+			// 투어 등록하는 동시에 임시 이용권 금액 입력(0원)
+			tourService.tempTourTicket(tourNo);
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tourNo);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		} else {
@@ -94,10 +94,19 @@ public class TourController {
 	}
 	
 	@GetMapping(value="/one/{tourNo}")
-	public ResponseEntity<ResponseDTO> selectOneTour(@PathVariable int tourNo){
-		Tour tour = tourService.selectOneTour(tourNo);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
-		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	public ResponseEntity<ResponseDTO> selectOneTour(@PathVariable int tourNo, @RequestAttribute String memberEmail){
+		// 메일 -> 회원번호 -> 업체번호 -> 투어번호 체크
+		int partnerNo = tourService.searchPartnerNo(memberEmail);
+		int checkNo = tourService.checkPartnerNo(tourNo);
+//		System.out.println("내 업체번호 : " +partnerNo+", 들어온 업체번호 : "+checkNo);
+		if(partnerNo == checkNo) {
+			Tour tour = tourService.selectOneTour(tourNo);
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());			
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 	}
 	
 	@PatchMapping

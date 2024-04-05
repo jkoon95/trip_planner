@@ -31,16 +31,24 @@ const TourEdit = () => {
     axios
       .get(backServer + "/tour/one/" + tourNo)
       .then((res) => {
-        const tour = res.data.data;
-        setTourName(tour.tourName);
-        setTourType(tour.tourType);
-        setTourAddr(tour.tourAddr);
-        setSalesCount(tour.salesCount);
-        setSalesPeriod(tour.salesPeriod);
-        setTourImg(tour.tourImg);
-        setTourIntro(tour.tourIntro);
-        setOldThumbnail(tour.tourImg);
-        setOldIntronail(tour.tourIntro);
+        if (res.data.message === "success") {
+          const tour = res.data.data;
+          setTourName(tour.tourName);
+          setTourType(tour.tourType);
+          setTourAddr(tour.tourAddr);
+          setSalesCount(tour.salesCount);
+          setSalesPeriod(tour.salesPeriod);
+          setTourImg(tour.tourImg);
+          setTourIntro(tour.tourIntro);
+          setOldThumbnail(tour.tourImg);
+          setOldIntronail(tour.tourIntro);
+        } else {
+          Swal.fire({
+            title: "권한이 없습니다.",
+            icon: "error",
+          });
+          navigate("/");
+        }
       })
       .catch((res) => {
         console.log(res);

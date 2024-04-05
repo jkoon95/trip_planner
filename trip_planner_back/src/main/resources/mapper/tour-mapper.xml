@@ -82,5 +82,19 @@
 		insert into tour_ticket_tbl values
 		(#{tourNo}, 0, 0, 0)
 	</insert>
+	<select id="searchTourNo" parameterType="map" resultType="int">
+	    SELECT TOUR_NO
+	    FROM TOUR_TBL
+	    WHERE TOUR_NO = #{tourNo} AND PARTNER_NO = (
+	        SELECT PARTNER_NO
+	        FROM MEMBER_TBL
+	        WHERE MEMBER_EMAIL = #{memberEmail}
+	    )
+	</select>
+	<select id="checkPartnerNo" resultType="int" parameterType="int">
+	    SELECT PARTNER_NO
+	    FROM TOUR_TBL
+	    WHERE TOUR_NO = #{tourNo}
+	</select>
 	
 </mapper>

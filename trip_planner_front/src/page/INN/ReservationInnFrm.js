@@ -37,6 +37,14 @@ const ReservationInnFrm = (props) => {
   const [termsIndex, setTermsIndex] = useState(0);
   const [openModal1, setOpenModal1] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
+  const [couponList, setCouponList] = useState([]);
+  const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
+  const [price, setPrice] = useState(selectInn.roomPrice * lodgment);
+
+  useEffect(() => {
+    setPrice(selectInn.roomPrice * lodgment);
+  }, [selectInn]);
+
   const closeModalFunc1 = () => {
     document.body.classList.remove("scroll_fixed");
     setOpenModal1(false);
@@ -44,9 +52,6 @@ const ReservationInnFrm = (props) => {
   const closeModalFunc2 = () => {
     document.body.classList.remove("scroll_fixed");
     setOpenModal2(false);
-    if (openModal2) {
-      Swal.fire("쿠폰을 적용하시겠습니까?");
-    }
   };
 
   const [allChecked, setAllChecked] = useState({
@@ -235,11 +240,8 @@ const ReservationInnFrm = (props) => {
     },
   ]);
 
-  const [couponList, setCouponList] = useState([]);
-
   const checkInDay = dayjs(checkInDate).format("ddd"); //date picker로 받아온 체크인 날짜
   const checkOutDay = dayjs(checkOutDate).format("ddd"); //date picker로 받아온 체크아웃 날짜
-  const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
 
   /*
   const checkInDate = props.checkInDate;
@@ -251,6 +253,17 @@ const ReservationInnFrm = (props) => {
   const bookGuest = props.bookGuest;
   const setBookGuest = props.setBookGuest;
   */
+
+  const discountPrice = (discountAmount, discountRate, couponList, index) => {
+    const selectCouponNo = couponList[index].couponNo;
+    const discountRateValue =
+      selectInn.roomPrice * lodgment * (discountRate / 100);
+    console.log(discountRateValue);
+    const totalPrice = price - discountRateValue;
+    console.log(totalPrice);
+    setPrice(totalPrice);
+  };
+
   return (
     <div className="reservation-wrap">
       <div className="reservation-top">
@@ -359,6 +372,8 @@ const ReservationInnFrm = (props) => {
               setOpenModal2={setOpenModal2}
               couponList={couponList}
               setCouponList={setCouponList}
+              price={price}
+              setPrice={setPrice}
             />
           </div>
         </div>
@@ -407,6 +422,14 @@ const ReservationInnFrm = (props) => {
                   <label
                     className="discount-box"
                     htmlFor={"coupon-" + item.couponNo}
+                    onClick={() =>
+                      discountPrice(
+                        item.discountAmount,
+                        item.discountRate,
+                        couponList,
+                        index
+                      )
+                    }
                   >
                     <div className="discount" key={"item" + index}>
                       {item.discountRate !== 0
@@ -425,8 +448,14 @@ const ReservationInnFrm = (props) => {
         </div>
         <>
           <div className="discount-room-price-box">
-            <div className="prev-discount-room-price">할인적용 전 금액</div>
-            <div className="room-price">{selectInn.roomPrice}</div>
+            <div className="prev-discount-room-price">쿠폰적용 전 금액</div>
+            <div className="prev-room-price">
+              {selectInn.roomPrice * lodgment}원
+            </div>
+          </div>
+          <div className="discount-room-price-box">
+            <div className="post-discount-room-price">쿠폰적용 후 금액</div>
+            <div className="post-room-price">{price}</div>
           </div>
           <div className="btn_area">
             <Button
@@ -436,7 +465,7 @@ const ReservationInnFrm = (props) => {
             />
             <Button
               class="btn_secondary"
-              text="적용하기"
+              text="결제하기"
               clickEvent={closeModalFunc2}
             />
           </div>
@@ -510,6 +539,7 @@ const SelectInnInfo = (props) => {
   const setTermsIndex = props.setTermsIndex;
   const setOpenModal2 = props.setOpenModal2;
   const setCouponList = props.setCouponList;
+
   useEffect(() => {
     axios
       .get(backServer + "/inn/selectInnInfo/" + roomNo + "/" + innNo)
@@ -537,53 +567,49 @@ const SelectInnInfo = (props) => {
   const { IMP } = window;
   IMP.init("imp82445436");
   const pay = () => {
-    if (copyAllChecked.active !== true) {
-      Swal.fire("이용약관에 동의해주세요");
-    } else {
-      const price = selectInn.roomPrice * lodgment;
-      const date = new Date();
-      const dateString =
-        date.getFullYear() +
-        "" +
-        (date.getMonth() + 1) +
-        "" +
-        date.getDate() +
-        "" +
-        date.getHours() +
-        "" +
-        date.getMinutes() +
-        "" +
-        date.getSeconds();
-      IMP.request_pay(
-        {
-          pg: "danal_tpay.9810030929",
-          pay_method: "card",
-          merchant_uid: "product_no_" + dateString, // 상점에서 생성한 고유 주문번호
-          name: "주문명:결제테스트",
-          amount: price,
-          buyer_email: "test@portone.io",
-          buyer_name: "구매자이름",
-          buyer_tel: "010-1234-5678",
-          buyer_addr: "서울특별시 강남구 삼성동",
-          buyer_postcode: "123-456",
-        },
-        function (rsp) {
-          if (rsp.success) {
-            Swal.fire({
-              title: "결제 완료",
-              text: "결제가 완료되었습니다.",
-              icon: "success",
-            });
-          } else {
-            Swal.fire({
-              title: "결제 실패",
-              text: "잠시후 다시 시도해주세요",
-              icon: "error",
-            });
-          }
+    const price = selectInn.roomPrice * lodgment;
+    const date = new Date();
+    const dateString =
+      date.getFullYear() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getDate() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds();
+    IMP.request_pay(
+      {
+        pg: "danal_tpay.9810030929",
+        pay_method: "card",
+        merchant_uid: "product_no_" + dateString, // 상점에서 생성한 고유 주문번호
+        name: "주문명:결제테스트",
+        amount: price,
+        buyer_email: "test@portone.io",
+        buyer_name: "구매자이름",
+        buyer_tel: "010-1234-5678",
+        buyer_addr: "서울특별시 강남구 삼성동",
+        buyer_postcode: "123-456",
+      },
+      function (rsp) {
+        if (rsp.success) {
+          Swal.fire({
+            title: "결제 완료",
+            text: "결제가 완료되었습니다.",
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "결제 실패",
+            text: "잠시후 다시 시도해주세요",
+            icon: "error",
+          });
         }
-      );
-    }
+      }
+    );
   };
   const copyAllChecked = allChecked;
   const CheckBoxTerms = (props) => {
@@ -642,19 +668,24 @@ const SelectInnInfo = (props) => {
     );
   };
   const openModalFunc2 = () => {
-    const setOpenModal2 = props.setOpenModal2;
-    document.body.classList.add("scroll_fixed");
-    setOpenModal2(true);
-    axios
-      .get(backServer + "/admin/selectCouponList")
-      .then((res) => {
-        console.log(res.data);
-        setCouponList(res.data.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
+    if (copyAllChecked.active !== true) {
+      Swal.fire("이용약관에 동의해주세요");
+    } else {
+      const setOpenModal2 = props.setOpenModal2;
+      document.body.classList.add("scroll_fixed");
+      setOpenModal2(true);
+      axios
+        .get(backServer + "/admin/selectCouponList")
+        .then((res) => {
+          console.log(res.data);
+          setCouponList(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
   };
+
   return (
     <>
       <div className="select-inn-top">

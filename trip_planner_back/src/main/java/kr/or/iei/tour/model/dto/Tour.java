@@ -27,4 +27,6 @@ public class Tour {
 	private int thumbnailCheck;
 	private int intronailCheck;
 	private String memberEmail;
+	private String searchText;
+	private String startDate;
 }

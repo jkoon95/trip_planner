@@ -109,8 +109,10 @@ public class TourService {
 	}
 
 	public Map searchTour(Tour tour) {
-		
-		return null;
+		List tourList = tourDao.searchTour(tour);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		return map;
 	}
 
 	

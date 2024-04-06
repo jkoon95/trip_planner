@@ -208,6 +208,13 @@
   text-align: center;
   margin-top: 30px;
 }
+.reservation-pay-zone > .coupon-btn {
+  width: 50%;
+}
+.reservation-pay-zone > .coupon-btn > button {
+  border: 1px solid #e9511c;
+  background-color: #e9511c;
+}
 .reservation-pay-zone > .btn-area > button {
   width: 100%;
   font-family: pt-b;
@@ -287,4 +294,18 @@
 .modal_content .discount-box-wrap .choice-coupon:checked + .discount-box {
   background-color: #1795f0;
   color: #fff;
+}
+.discount-room-price-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+}
+.discount-room-price-box > .prev-discount-room-price {
+  font-family: pt-b;
+  font-size: 18px;
+}
+.discount-room-price-box > .room-price {
+  font-size: 20px;
+  font-family: pt-eb;
+  color: #e9511c;
 }

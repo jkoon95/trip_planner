@@ -54,7 +54,7 @@ const BlogView = (props) => {
       }
     });
   };
-
+  useEffect(() => {});
   return (
     <section className="contents blogList">
       <div className="blog-view-wrap">

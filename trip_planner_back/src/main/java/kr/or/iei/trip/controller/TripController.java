@@ -89,7 +89,7 @@ public class TripController {
 			}
 			tripDetailList.add(tdl);
 		}
-		System.out.println(tripDetailList);
+//		System.out.println(tripDetailList);
 		int result = tripService.insertTrip(trip, tripDetailList, memberEmail);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -131,7 +131,7 @@ public class TripController {
 	})
 	@PatchMapping(value="/tripTbl")
 	public ResponseEntity<ResponseDTO> updateTrip(@RequestBody Trip trip){
-		System.out.println(trip);
+//		System.out.println(trip);
 		int result = tripService.updateTrip(trip);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

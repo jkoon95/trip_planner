@@ -41,12 +41,11 @@
 .createTrips_wrap .day_items_wrap .place_list>.item.tripTodo .item_box{padding-right: 30px;}
 .createTrips_wrap .day_items_wrap .place_list>.item .item_box .place_info{white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .createTrips_wrap .place_list>.item .item_box .place_name{font-family: pt-b; font-size: 14px; line-height: 1.5;}
-.createTrips_wrap .place_list>.item .item_box .place_info{margin-top: 4px; color: var(--gray_05); font-family: pt-b; font-size: 13px; line-height: 20px;}
-/* .createTrips_wrap .place_list>.item .item_box .place_info>span{display: inline-block;} */
+.createTrips_wrap .place_list>.item .item_box .place_info{margin-top: 4px; color: var(--gray_05); font-size: 13px; line-height: 20px;}
 .createTrips_wrap .place_list>.item .item_box .place_info>span+span{position: relative; margin-left: 12px;}
 .createTrips_wrap .place_list>.item .item_box .place_info>span+span::before{content: ''; display: block; position: absolute; top: 8px; left: -7px; width: 2px; height: 2px; border-radius: 50%; background-color: var(--gray_05);}
 .createTrips_wrap .place_list>.item .item_box .place_phone{margin-top: 8px; padding-left: 20px; background: url(/public/images/icon_call_blue.svg) no-repeat left center / 16px ; color: var(--info); font-family: pt-b; font-size: 13px; line-height: 20px;}
-.createTrips_wrap .place_list>.item .item_box_content{flex-grow: 1; max-width: calc(100% - 54px);}
+.createTrips_wrap .place_list>.item .item_box_content{flex-grow: 1; max-width: calc(100% - 58px);}
 .createTrips_wrap .result_place_area .place_list>.item .item_box_content{max-width: calc(100% - 78px);}
 .createTrips_wrap .place_list>.item.tripTodo .item_box .item_box_content{display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-overflow: ellipsis; overflow: hidden; min-height: 21px; font-size: 14px; line-height: 1.5; cursor: text;}
 .createTrips_wrap .place_list>.item .item_btn_wrap{display: flex; gap: 6px; align-self: center;}
@@ -72,4 +71,16 @@
 .createTrips_wrap .search_wrap .search_result_wrap .result_inns_area{max-height: 500px; margin-top: 8px; overflow-y: auto;}
 .createTrips_wrap .search_wrap>.btn_close{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / contain;}
 
+/* 지도 */
 .createTrips_wrap>.map_area .map_route {position: relative; bottom: 43px; width: 24px; height: 24px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 14px; line-height: 24px; text-align: center;}
+.createTrips_wrap .infowindow{position: relative; bottom: 52px; left: 0; right: 0; display: flex; gap: 4px; justify-content: space-between; border: 1px solid var(--line_02); border-radius: 8px; background-color: #fff;}
+.createTrips_wrap .infowindow::after{content: ''; display: block; position: absolute; bottom: -7px; left: calc(50% - 6px); transform: rotate(45deg); width: 12px; height: 12px; border: 1px solid var(--line_02); border-top: none; border-left: none; background-color: #fff;}
+.createTrips_wrap .infowindow .item_box{position: relative; flex: 1; width: 280px; padding: 15px 19px;}
+.createTrips_wrap .infowindow .item_box>.btn_area{flex: 1;}
+.createTrips_wrap .infowindow .item_box .place_name{font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.createTrips_wrap .infowindow .item_box .place_info{display: flex; flex-direction: column; flex-wrap: wrap; margin-top: 4px; color: var(--gray_05); font-size: 13px; line-height: 20px;}
+.createTrips_wrap .infowindow .item_box .place_info>span+span{position: relative;}
+.createTrips_wrap .infowindow .item_box .place_phone{margin-top: 8px; padding-left: 20px; background: url(/public/images/icon_call_blue.svg) no-repeat left center / 16px ; color: var(--info); font-family: pt-b; font-size: 13px; line-height: 20px;}
+.createTrips_wrap .infowindow .item_box .item_box_content{flex-grow: 1; font-size: 14px; line-height: 1.5; cursor: text;}
+.createTrips_wrap .infowindow .item_box .item_btn_wrap{margin-top: 4px;}
+.createTrips_wrap .infowindow .item_box .item_btn_wrap>[class^=btn_]{display: block; margin-left: auto;}

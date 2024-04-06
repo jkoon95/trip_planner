@@ -37,6 +37,11 @@ const ModifyTrips = () => {
   const [todoDayIndex, setTodoDayIndex] = useState(-1);
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [mapRoutes, setMapRoutes] = useState([]);
+  const [mapPs, setMapPs] = useState(null);
+  const [infowindow, setInfowindow] = useState(null);
 
   useEffect(() => {
     axios.get(backServer + "/trip/view/" + tripNo)
@@ -55,18 +60,18 @@ const ModifyTrips = () => {
   // console.log(tripTitle);
 
   // 제목 수정
-  useEffect(() => {
-    if(tripTitle !== ""){
-      const tripObj = {tripNo, tripTitle}
-      axios.patch(backServer + "/trip/tripTbl", tripObj)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      })
-    }
-  }, [tripTitle])
+  // useEffect(() => {
+  //   if(tripTitle !== ""){
+  //     const tripObj = {tripNo, tripTitle}
+  //     axios.patch(backServer + "/trip/tripTbl", tripObj)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((res) => {
+  //       console.log(res);
+  //     })
+  //   }
+  // }, [tripTitle])
 
 
   const changeTripTitleFunc = () => {
@@ -143,106 +148,269 @@ const ModifyTrips = () => {
     }
   }
 
-  // 지도
+  /* 지도(최초 1회만 등록) */
   useEffect(() => {
     const container = document.getElementById('map');
-    
-    const defaultLat = tripDetailList.length !== 0 && tripDetailList[0].selectPlaceList[0].tripPlaceLat ? Number(tripDetailList[0].selectPlaceList[0].tripPlaceLat) : 33.450701;
-    const defaultLng = tripDetailList.length !== 0 && tripDetailList[0].selectPlaceList[0].tripPlaceLng ? Number(tripDetailList[0].selectPlaceList[0].tripPlaceLng) : 126.570667;
-    
+    const ps = new kakao.maps.services.Places();
+    const infowindow = new kakao.maps.CustomOverlay({zIndex: 2, yAnchor: 1});
+
     const options = {
-      center: new kakao.maps.LatLng(defaultLat, defaultLng),
-      // center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
+
     const map = new kakao.maps.Map(container, options);
+    setMap(map);
+    setMapPs(ps);
+    setInfowindow(infowindow);
+  }, []);
 
-    // 내 장소 마커, 루트, 인포윈도우
-    const displayMyMarker = () => {
-      tripDetailList.forEach((detail) => {
-        detail.selectPlaceList.forEach((place) => {
-          const marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
-          });
-          const mapRoute = new kakao.maps.CustomOverlay({
-            map: map,
-            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-            content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
-            yAnchor: 1 
-          });
-          const infoWindowCustom = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-            content: "<div class='infowindow'>"+place.tripPlaceName+"</div>",
-            yAnchor: 1 
-          });
-          kakao.maps.event.addListener(marker, 'click', function() {
-            infoWindowCustom.setMap(map);
-          });
-        })
-      })
+  /* 지도에 표시할 것들 분리 */
+  useEffect(() => {
+    // console.log(tripDetailList);
+    if(map === null) {
+      return;
     }
 
-    if(tripDetailList.length !== 0){
-      displayMyMarker();
-    }
+    // 지도 표시를 위한 영역값
+    const bounds = new kakao.maps.LatLngBounds();
 
+    // 담아놓은 여행장소가 하나라도 있으면
+    const emptySp = tripDetailList.filter((item) => {
+      return item.selectPlaceList.length === 0;
+    })
+    // 내 장소들 최초 표시
+    const linePath = [];
+    if(emptySp.length !== tripDetailList.length){
+      if(tripDetailList.length !== 0){
+        displayMyMarker();
+      }
+    }
+    
     // 장소 검색
-    const ps = new kakao.maps.services.Places();
     const placesSearchCB = (data, status, pagination) => {
       placeResultList.length = 0;
       setPlaceResultList([...placeResultList]);
 
       if(status === kakao.maps.services.Status.OK) {
-        const bounds = new kakao.maps.LatLngBounds();
-        
-        data.forEach((place) => {
-          if(openSearchWrap){
-            displayMarker(place);
-          }
-          placeResultList.push({
-            tripPlaceName : place.place_name,
-            tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
-            tripPlaceAddress : place.address_name,
-            tripPlacePhone : place.phone,
-            tripPlaceLat : place.y,
-            tripPlaceLng : place.x
-          });
-          setPlaceResultList([...placeResultList]);
-          bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+        removeMarker();
 
-        })
-        
-        if(!openSearchWrap){
-          displayMyMarker();
+        if(openSearchWrap){
+          data.forEach((place) => {
+            displayMarker(place);
+            
+            placeResultList.push({
+              tripPlaceName : place.place_name,
+              tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
+              tripPlaceAddress : place.address_name,
+              tripPlacePhone : place.phone,
+              tripPlaceLat : place.y,
+              tripPlaceLng : place.x
+            });
+            setPlaceResultList([...placeResultList]);
+          })
+        }else{
+          if(tripDetailList.length !== 0){
+            displayMyMarker();
+          }
         }
-        map.setBounds(bounds);
       }
     }
 
-    if(searchPlaces !== ""){
-      ps.keywordSearch(searchPlaces, placesSearchCB);
+    if(searchPlaces !== "") {
+      mapPs.keywordSearch(searchPlaces, placesSearchCB);
     }
 
-    // 장소 마커와 인포윈도우
+    // 검색한 장소 마커와 인포윈도우
     const displayMarker = (place) => {
+      infowindow.setMap(null);
+      
+      bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+
       const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x) 
       });
-      const infoWindowCustom = new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(place.y, place.x),
-        content: "<div class='infowindow'>"+place.place_name+"</div>",
-        yAnchor: 1 
-      });
+      
+      markers.push(marker);
+      setMarkers([...markers]);
+        
       kakao.maps.event.addListener(marker, 'click', function() {
-        infoWindowCustom.setMap(map);
+        marker.setClickable(true);
+        let infowindowStr = [
+          "<div class='infowindow'>",
+            "<div class='item_box'>",
+              "<div class='item_box_content'>",
+                "<div class='place_name'>"+place.place_name+"</div>",
+                "<div class='place_info'>",
+                  "<span>"+place.category_group_name+"</span>",
+                  "<span>"+place.address_name+"</span>",
+                "</div>",
+                "<div class='place_phone'>"+place.phone+"</div>",
+              "</div>",
+            "</div>",
+          "</div>"
+        ].join("");
+        infowindow.setContent(infowindowStr);
+        infowindow.setPosition(new kakao.maps.LatLng(place.y, place.x));
+        infowindow.setMap(map);
+        map.setCenter(new kakao.maps.LatLng(place.y, place.x));
       });
+
+      kakao.maps.event.addListener(marker, 'custom_action', function(data){
+        console.log(data + '가 발생했습니다.');
+      });
+      kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
+
+
+      map.setBounds(bounds);
     }
 
-  }, [searchPlaces, openSearchWrap, tripDetailList]);
+    // 내 장소 마커, 루트, 인포윈도우
+    function displayMyMarker() {
+      infowindow.setMap(null);
+      removeMarker();
+      removeMapRoute();
+      linePath.length = 0;
+      
+      tripDetailList.forEach((detail) => {
+        
+        detail.selectPlaceList.forEach((place) => {
+          bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
 
-  // datepicker
+          const marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
+          });
+
+          markers.push(marker);
+          setMarkers([...markers]);
+
+          const mapRoute = new kakao.maps.CustomOverlay({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+            content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
+            yAnchor: 1,
+            zIndex: 3,
+            clickable: true
+          });
+
+          mapRoutes.push(mapRoute);
+          setMapRoutes([...mapRoutes]);
+            
+          kakao.maps.event.addListener(marker, 'click', function() {
+            const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
+            const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
+            let infowindowStr = [
+              "<div class='infowindow'>",
+                "<div class='item_box'>",
+                  "<div class='item_box_content'>",
+                    "<div class='place_name'>"+place.tripPlaceName+"</div>",
+                    "<div class='place_info'>",
+                      "<span>"+tripPlaceCategory+"</span>",
+                      "<span>"+place.tripPlaceAddress+"</span>",
+                    "</div>",
+                    "<div class='place_phone'>"+tripPlacePhone+"</div>",
+                  "</div>",
+                "</div>",
+              "</div>"
+            ].join("");
+            infowindow.setContent(infowindowStr);
+            infowindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+            infowindow.setMap(map);
+          });
+
+          // 장소에 이을 선 좌표 배열 추가
+          linePath.push(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+        })
+
+      })
+
+      // for(let i=0;i<tripDetailList.length;i++){
+      //   for(let j=0;j<tripDetailList[i].selectPlaceList.length;j++){
+      //     const place = tripDetailList[i].selectPlaceList[j];
+      //     bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+
+      //     const marker = new kakao.maps.Marker({
+      //       map: map,
+      //       position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
+      //     });
+
+      //     markers.push(marker);
+      //     setMarkers([...markers]);
+
+      //     const mapRoute = new kakao.maps.CustomOverlay({
+      //       map: map,
+      //       position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+      //       content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
+      //       yAnchor: 1,
+      //       zIndex: 3,
+      //       clickable: true
+      //     });
+
+      //     mapRoutes.push(mapRoute);
+      //     setMapRoutes([...mapRoutes]);
+            
+      //     kakao.maps.event.addListener(marker, 'click', function() {
+      //       const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
+      //       const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
+      //       let infowindowStr = [
+      //         "<div class='infowindow'>",
+      //           "<div class='item_box'>",
+      //             "<div class='item_box_content'>",
+      //               "<div class='place_name'>"+place.tripPlaceName+"</div>",
+      //               "<div class='place_info'>",
+      //                 "<span>"+tripPlaceCategory+"</span>",
+      //                 "<span>"+place.tripPlaceAddress+"</span>",
+      //               "</div>",
+      //               "<div class='place_phone'>"+tripPlacePhone+"</div>",
+      //             "</div>",
+      //           "</div>",
+      //         "</div>"
+      //       ].join("");
+      //       infowindow.setContent(infowindowStr);
+      //       infowindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+      //       infowindow.setMap(map);
+      //     });
+
+      //     // 장소에 이을 선 좌표 배열 추가
+      //     linePath.push(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+      //   }
+      // }
+
+      // 선 생성
+      const polyline = new kakao.maps.Polyline({
+        path: linePath,
+        strokeWeight: 5,
+        strokeColor: '#E9511C',
+        strokeOpacity: 0.2,
+        strokeStyle: 'dashed'
+      });
+      // 선 표시
+      polyline.setMap(map);  
+
+      map.setBounds(bounds);
+    }
+
+    function removeMarker(){
+      for(let i=0; i<markers.length; i++) {
+        markers[i].setMap(null);
+      }   
+      markers.length = 0;
+    }
+
+    function removeMapRoute(){
+      for (let i=0; i<mapRoutes.length; i++) {
+        mapRoutes[i].setMap(null);
+      }   
+      mapRoutes.length = 0;
+    }
+
+    infowindow.setMap(null);
+
+  }, [map, trip, openSearchWrap, searchPlaces])
+
+  /* datepicker */
   useEffect(()=>{
     //dayjs(new Date())
     //tripStartDate.format("YYYY-MM-DD")

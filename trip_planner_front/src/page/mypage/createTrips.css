@@ -1,4 +1,4 @@
-.contents.createTrips{max-width: none; width: calc(100% + 80px); margin-left: -40px; padding: 0;}
+.contents.trips{max-width: none; width: calc(100% + 80px); margin-left: -40px; padding: 0;}
 .createTrips_wrap{display: flex; height: 700px; min-height: calc(100vh - 61px);}
 .createTrips_wrap>.map_area{flex-grow: 1;}
 .createTrips_wrap>.left_area{position: relative; display: flex;}
@@ -71,3 +71,5 @@
 .createTrips_wrap .search_wrap .search_result_wrap .result_place_area{max-height: 500px; margin: 8px 0; overflow-y: auto;}
 .createTrips_wrap .search_wrap .search_result_wrap .result_inns_area{max-height: 500px; margin-top: 8px; overflow-y: auto;}
 .createTrips_wrap .search_wrap>.btn_close{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / contain;}
+
+.createTrips_wrap>.map_area .map_route {position: relative; bottom: 43px; width: 24px; height: 24px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 14px; line-height: 24px; text-align: center;}

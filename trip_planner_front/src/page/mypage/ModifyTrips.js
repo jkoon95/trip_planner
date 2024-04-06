@@ -145,14 +145,49 @@ const ModifyTrips = () => {
 
   // 지도
   useEffect(() => {
-    // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
     const container = document.getElementById('map');
+    
+    const defaultLat = tripDetailList.length !== 0 && tripDetailList[0].selectPlaceList[0].tripPlaceLat ? Number(tripDetailList[0].selectPlaceList[0].tripPlaceLat) : 33.450701;
+    const defaultLng = tripDetailList.length !== 0 && tripDetailList[0].selectPlaceList[0].tripPlaceLng ? Number(tripDetailList[0].selectPlaceList[0].tripPlaceLng) : 126.570667;
+    
     const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(defaultLat, defaultLng),
+      // center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
     const map = new kakao.maps.Map(container, options);
 
+    // 내 장소 마커, 루트, 인포윈도우
+    const displayMyMarker = () => {
+      tripDetailList.forEach((detail) => {
+        detail.selectPlaceList.forEach((place) => {
+          const marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
+          });
+          const mapRoute = new kakao.maps.CustomOverlay({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+            content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
+            yAnchor: 1 
+          });
+          const infoWindowCustom = new kakao.maps.CustomOverlay({
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+            content: "<div class='infowindow'>"+place.tripPlaceName+"</div>",
+            yAnchor: 1 
+          });
+          kakao.maps.event.addListener(marker, 'click', function() {
+            infoWindowCustom.setMap(map);
+          });
+        })
+      })
+    }
+
+    if(tripDetailList.length !== 0){
+      displayMyMarker();
+    }
+
+    // 장소 검색
     const ps = new kakao.maps.services.Places();
     const placesSearchCB = (data, status, pagination) => {
       placeResultList.length = 0;
@@ -165,7 +200,6 @@ const ModifyTrips = () => {
           if(openSearchWrap){
             displayMarker(place);
           }
-          
           placeResultList.push({
             tripPlaceName : place.place_name,
             tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
@@ -175,23 +209,12 @@ const ModifyTrips = () => {
             tripPlaceLng : place.x
           });
           setPlaceResultList([...placeResultList]);
-
           bounds.extend(new kakao.maps.LatLng(place.y, place.x));
 
         })
         
         if(!openSearchWrap){
-          tripDetailList.forEach((detail) => {
-            detail.selectPlaceList.forEach((place) => {
-              // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
-              const marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
-              });
-              // infowindow.setContent("<div class='infowindow'>"+(place.tripRoute+1)+"</div>");
-              // infowindow.open(map, marker);
-            })
-          })
+          displayMyMarker();
         }
         map.setBounds(bounds);
       }
@@ -201,10 +224,19 @@ const ModifyTrips = () => {
       ps.keywordSearch(searchPlaces, placesSearchCB);
     }
 
+    // 장소 마커와 인포윈도우
     const displayMarker = (place) => {
       const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x) 
+      });
+      const infoWindowCustom = new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(place.y, place.x),
+        content: "<div class='infowindow'>"+place.place_name+"</div>",
+        yAnchor: 1 
+      });
+      kakao.maps.event.addListener(marker, 'click', function() {
+        infoWindowCustom.setMap(map);
       });
     }
 
@@ -256,8 +288,8 @@ const ModifyTrips = () => {
   },[tripStartDate, tripEndDate])
   
   return (
-    <section className="contents createTrips">
-      <h2 className="hidden">여행 일정 만들기</h2>
+    <section className="contents trips">
+      <h2 className="hidden">여행 일정 수정</h2>
       <div className="createTrips_wrap">
         <div className="left_area">
           <div className="trips_wrap">

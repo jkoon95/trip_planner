@@ -217,9 +217,9 @@ const CreateTrips = () => {
   },[tripStartDate, tripEndDate])
   
   return (
-    <section className="contents createTrips">
+    <section className="contents trips">
       <h2 className="hidden">여행 일정 만들기</h2>
-      <div className="createTrips_wrap">
+      <div className="trips_wrap">
         <div className="left_area">
           <div className="trips_wrap">
             <div className="trips_input_wrap">

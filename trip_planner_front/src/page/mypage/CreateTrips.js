@@ -20,8 +20,8 @@ const CreateTrips = () => {
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
   const [tripTitle, setTripTitle] = useState("");
-  const [tripStartDate, setTripStartDate] = useState(dayjs(new Date()));
-  const [tripEndDate, setTripEndDate] = useState();
+  const [tripStartDate, setTripStartDate] = useState();
+  const [tripEndDate, setTripEndDate] = useState(null);
   const [tripDays, setTripDays] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchPlaces, setSearchPlaces] = useState("");
@@ -104,74 +104,237 @@ const CreateTrips = () => {
     }
   }
 
-  // 지도
+  /* 지도(최초 1회만 등록) */
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [mapRoutes, setMapRoutes] = useState([]);
+  const [infoWindows, setInfoWindows] = useState([]);
+  const [mapPs, setMapPs] = useState(null);
   useEffect(() => {
-    // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
     const container = document.getElementById('map');
+    const ps = new kakao.maps.services.Places();
+
     const options = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
-    const map = new kakao.maps.Map(container, options);
 
-    const ps = new kakao.maps.services.Places();
+    const map = new kakao.maps.Map(container, options);
+    setMap(map);
+    setMapPs(ps);
+  }, []);
+
+  /* 지도에 표시할 것들 분리 */
+  useEffect(() => {
+    if(map === null) {
+      return;
+    }
+
+    // 지도 표시를 위한 영역값
+    const bounds = new kakao.maps.LatLngBounds();
+
+    // 담아놓은 여행장소가 하나라도 있으면
+    const emptySp = tripDetailList.filter((item) => {
+      return item.selectPlaceList.length === 0;
+    })
+    // 내 장소들 최초 표시
+    const linePath = [];
+    if(tripDetailList.length !== 0 && emptySp.length !== tripDetailList.length){
+      displayMyMarker();
+    }
+    
+    // 장소 검색
     const placesSearchCB = (data, status, pagination) => {
       placeResultList.length = 0;
       setPlaceResultList([...placeResultList]);
 
       if(status === kakao.maps.services.Status.OK) {
-        const bounds = new kakao.maps.LatLngBounds();
-        
-        data.forEach((place) => {
-          if(openSearchWrap){
+        removeMarker();
+        removeInfoWindow();
+
+        if(openSearchWrap){
+          data.forEach((place) => {
             displayMarker(place);
-          }
-          
-          placeResultList.push({
-            tripPlaceName : place.place_name,
-            tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
-            tripPlaceAddress : place.address_name,
-            tripPlacePhone : place.phone,
-            tripPlaceLat : place.y,
-            tripPlaceLng : place.x
-          });
-          setPlaceResultList([...placeResultList]);
-
-          bounds.extend(new kakao.maps.LatLng(place.y, place.x));
-
-        })
-        
-        if(!openSearchWrap){
-          tripDetailList.forEach((detail) => {
-            detail.selectPlaceList.forEach((place) => {
-              // const infowindow = new kakao.maps.InfoWindow({zIndex:1});
-              const marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
-              });
-              // infowindow.setContent("<div class='infowindow'>"+(place.tripRoute+1)+"</div>");
-              // infowindow.open(map, marker);
-            })
+            
+            placeResultList.push({
+              tripPlaceName : place.place_name,
+              tripPlaceCategory : place.category_group_name !== "" ? place.category_group_name : place.category_name,
+              tripPlaceAddress : place.address_name,
+              tripPlacePhone : place.phone,
+              tripPlaceLat : place.y,
+              tripPlaceLng : place.x
+            });
+            setPlaceResultList([...placeResultList]);
           })
+        }else{
+          if(tripDetailList.length !== 0){
+            displayMyMarker();
+          }
         }
-        map.setBounds(bounds);
       }
     }
 
-    if(searchPlaces !== ""){
-      ps.keywordSearch(searchPlaces, placesSearchCB);
+    if(searchPlaces !== "") {
+      mapPs.keywordSearch(searchPlaces, placesSearchCB);
     }
 
+    // 검색한 장소 마커와 인포윈도우
     const displayMarker = (place) => {
+      bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+
       const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x) 
       });
+      markers.push(marker);
+      setMarkers([...markers]);
+        
+      const infoWindow = new kakao.maps.CustomOverlay({
+        zIndex: 2,
+        yAnchor: 1
+      });
+      infoWindows.push(infoWindow);
+      setInfoWindows([...infoWindows]);
+
+      kakao.maps.event.addListener(marker, 'click', function() {
+        marker.setClickable(true);
+        let infoWindowStr = [
+          "<div class='infoWindow'>",
+            "<div class='item_box'>",
+              "<div class='item_box_content'>",
+                "<div class='place_name'>"+place.place_name+"</div>",
+                "<div class='place_info'>",
+                  "<span>"+place.category_group_name+"</span>",
+                  "<span>"+place.address_name+"</span>",
+                "</div>",
+                "<div class='place_phone'>"+place.phone+"</div>",
+              "</div>",
+            "</div>",
+          "</div>"
+        ].join("");
+        infoWindow.setContent(infoWindowStr);
+        infoWindow.setPosition(new kakao.maps.LatLng(place.y, place.x));
+        for (let i=0; i<infoWindows.length; i++) {
+          infoWindows[i].setMap(null);
+        }
+        infoWindow.setMap(map);
+        map.setCenter(new kakao.maps.LatLng(place.y, place.x));
+      });
+
+      kakao.maps.event.addListener(marker, 'custom_action', function(data){
+        console.log(data + '가 발생했습니다.');
+      });
+      kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
+
+      map.setBounds(bounds);
     }
 
-  }, [searchPlaces, openSearchWrap, tripDetailList]);
+    // 내 장소 마커, 루트, 인포윈도우
+    function displayMyMarker() {
+      removeMarker();
+      removeMapRoute();
+      removeInfoWindow();
+      linePath.length = 0;
+      
+      tripDetailList.forEach((detail) => {
+        
+        detail.selectPlaceList.forEach((place) => {
+          bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
 
-  // datepicker
+          const marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
+          });
+          markers.push(marker);
+          setMarkers([...markers]);
+
+          const infoWindow = new kakao.maps.CustomOverlay({
+            zIndex: 2,
+            yAnchor: 1
+          });
+          infoWindows.push(infoWindow);
+          setInfoWindows([...infoWindows]);
+
+          const mapRoute = new kakao.maps.CustomOverlay({
+            map: map,
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+            content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
+            yAnchor: 1,
+            zIndex: 3,
+            clickable: true
+          });
+
+          mapRoutes.push(mapRoute);
+          setMapRoutes([...mapRoutes]);
+            
+          kakao.maps.event.addListener(marker, 'click', function() {
+            const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
+            const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
+            let infoWindowStr = [
+              "<div class='infoWindow'>",
+                "<div class='item_box'>",
+                  "<div class='item_box_content'>",
+                    "<div class='place_name'>"+place.tripPlaceName+"</div>",
+                    "<div class='place_info'>",
+                      "<span>"+tripPlaceCategory+"</span>",
+                      "<span>"+place.tripPlaceAddress+"</span>",
+                    "</div>",
+                    "<div class='place_phone'>"+tripPlacePhone+"</div>",
+                  "</div>",
+                "</div>",
+              "</div>"
+            ].join("");
+            infoWindow.setContent(infoWindowStr);
+            infoWindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+            for (let i=0; i<infoWindows.length; i++) {
+              infoWindows[i].setMap(null);
+            }
+            infoWindow.setMap(map);
+          });
+
+          // 장소에 이을 선 좌표 배열 추가
+          linePath.push(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+        })
+
+      })
+
+      // 선 생성
+      const polyline = new kakao.maps.Polyline({
+        path: linePath,
+        strokeWeight: 5,
+        strokeColor: '#E9511C',
+        strokeOpacity: 0.2,
+        strokeStyle: 'dashed'
+      });
+      // 선 표시
+      polyline.setMap(map);  
+      map.setBounds(bounds);
+    }
+
+    function removeMarker(){
+      for(let i=0; i<markers.length; i++) {
+        markers[i].setMap(null);
+      }   
+      markers.length = 0;
+    }
+
+    function removeMapRoute(){
+      for (let i=0; i<mapRoutes.length; i++) {
+        mapRoutes[i].setMap(null);
+      }   
+      mapRoutes.length = 0;
+    }
+
+    function removeInfoWindow(){
+      for (let i=0; i<infoWindows.length; i++) {
+        infoWindows[i].setMap(null);
+      }   
+      infoWindows.length = 0;
+    }
+
+  }, [map, trip, openSearchWrap, searchPlaces])
+
+  /* datepicker */
   useEffect(()=>{
     //dayjs(new Date())
     //tripStartDate.format("YYYY-MM-DD")
@@ -219,7 +382,7 @@ const CreateTrips = () => {
   return (
     <section className="contents trips">
       <h2 className="hidden">여행 일정 만들기</h2>
-      <div className="trips_wrap">
+      <div className="createTrips_wrap">
         <div className="left_area">
           <div className="trips_wrap">
             <div className="trips_input_wrap">
@@ -230,10 +393,14 @@ const CreateTrips = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker onChange={(newValue)=>{
-                      if(tripEndDate != null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
+                      if(tripEndDate === null){
                         setTripStartDate(newValue);
+                      }else{
+                        if(tripEndDate !== null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
+                          setTripStartDate(newValue);
+                        }
                       }
-                    }} format="YYYY-MM-DD" value={tripStartDate} disablePast />
+                    }} format="YYYY-MM-DD" disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
                       setTripBtnDisabled(false);

@@ -141,6 +141,11 @@ public class TripController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
+//	@PatchMapping(value="/tripDetailTbl")
+//	public ResponseEntity<ResponseDTO> updateTripDetail(@RequestBody TripDetail tripDetail){
+//		
+//	}
 }
 
 

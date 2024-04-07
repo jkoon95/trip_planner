@@ -10,6 +10,7 @@ import Modal from "../../component/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import { TocTwoTone } from "@mui/icons-material";
 const { kakao } = window;
 
 const ModifyTrips = () => {
@@ -21,6 +22,7 @@ const ModifyTrips = () => {
   const [trip, setTrip] = useState({}); //최종 데이터
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
+  const [tripTitleInput, setTripTitleInput] = useState("");
   const [tripTitle, setTripTitle] = useState("");
   const [tripStartDate, setTripStartDate] = useState();
   const [tripEndDate, setTripEndDate] = useState();
@@ -37,21 +39,16 @@ const ModifyTrips = () => {
   const [todoDayIndex, setTodoDayIndex] = useState(-1);
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
-  const [map, setMap] = useState(null);
-  const [markers, setMarkers] = useState([]);
-  const [mapRoutes, setMapRoutes] = useState([]);
-  const [mapPs, setMapPs] = useState(null);
-  const [infowindow, setInfowindow] = useState(null);
 
   useEffect(() => {
     axios.get(backServer + "/trip/view/" + tripNo)
     .then((res) => {
       console.log(res.data.data);
-      setTrip(res.data.data);
-      setTripTitle(res.data.data.tripTitle);
+      setTripDetailList(res.data.data.tripDetailList);
+      setTripTitleInput(res.data.data.tripTitle);
       setTripStartDate(dayjs(res.data.data.tripStartDate));
       setTripEndDate(dayjs(res.data.data.tripEndDate));
-      setTripDetailList(res.data.data.tripDetailList);
+      setTrip(res.data.data);
     })
     .catch((res) => {
       console.log(res);
@@ -60,22 +57,22 @@ const ModifyTrips = () => {
   // console.log(tripTitle);
 
   // 제목 수정
-  // useEffect(() => {
-  //   if(tripTitle !== ""){
-  //     const tripObj = {tripNo, tripTitle}
-  //     axios.patch(backServer + "/trip/tripTbl", tripObj)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((res) => {
-  //       console.log(res);
-  //     })
-  //   }
-  // }, [tripTitle])
+  useEffect(() => {
+    if(tripTitle !== ""){
+      const tripObj = {tripNo, tripTitle}
+      axios.patch(backServer + "/trip/tripTbl", tripObj)
+      .then((res) => {
+        console.log("제목 수정 axios!!!!!"+res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+    }
+  }, [tripTitle])
 
 
-  const changeTripTitleFunc = () => {
-    
+  const tripTitieBlurFunc = () => {
+    setTripTitle(tripTitleInput);
   }
 
   // 여행 등록하기
@@ -99,10 +96,47 @@ const ModifyTrips = () => {
   }
 
 
-
+  // 수정 시점..
   useEffect(() => {
-    setTrip({tripTitle: tripTitle, tripStartDate: dayjs(tripStartDate).format("YYYY-MM-DD"), tripEndDate: dayjs(tripEndDate).format("YYYY-MM-DD"), tripDetailListStr: tripDetailList});
-  }, [tripTitle, tripStartDate, tripEndDate, tripDetailList])
+    // console.log("trip에 저장된 tripStartDate: "+trip.tripStartDate);
+    // console.log("아마도 변경한 tripStartDate: "+dayjs(tripStartDate).format("YYYY-MM-DD"));
+    // console.log("trip에 저장된 tripEndDate: "+trip.tripEndDate);
+    // console.log("아마도 변경한 tripEndDate: "+dayjs(tripEndDate).format("YYYY-MM-DD"));
+
+    if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
+      console.log("시작 날짜 변경");
+      trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
+    }
+    if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
+      console.log("종료 날짜 변경");
+      trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
+    }
+
+    const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
+    axios.patch(backServer + "/trip/tripTbl", tripObj)
+    .then((res) => {
+      console.log("날짜 수정 axios!!!!!"+res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+    
+    trip.tripDetailList = tripDetailList;
+    trip.tripDetailListStr = JSON.stringify(tripDetailList);
+    setTrip({...trip});
+    console.log(trip);
+
+    const tripDetailObj = {tripNo: tripNo, tripDetailListStr: trip.tripDetailListStr};
+    axios.patch(backServer + "/trip/tripDetailTbl", tripDetailObj)
+    .then((res) => {
+      console.log("디테일 수정 axios!!!!!"+res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+
+    console.log("트립 디테일 변경! 이걸로 모든 걸 제어할 수 있을까?");
+  }, [tripDetailList])
 
   const closeTodoModalFunc = () => {
     document.body.classList.remove("scroll_fixed");
@@ -149,10 +183,14 @@ const ModifyTrips = () => {
   }
 
   /* 지도(최초 1회만 등록) */
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [mapRoutes, setMapRoutes] = useState([]);
+  const [infoWindows, setInfoWindows] = useState([]);
+  const [mapPs, setMapPs] = useState(null);
   useEffect(() => {
     const container = document.getElementById('map');
     const ps = new kakao.maps.services.Places();
-    const infowindow = new kakao.maps.CustomOverlay({zIndex: 2, yAnchor: 1});
 
     const options = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -162,12 +200,10 @@ const ModifyTrips = () => {
     const map = new kakao.maps.Map(container, options);
     setMap(map);
     setMapPs(ps);
-    setInfowindow(infowindow);
   }, []);
 
   /* 지도에 표시할 것들 분리 */
   useEffect(() => {
-    // console.log(tripDetailList);
     if(map === null) {
       return;
     }
@@ -181,10 +217,8 @@ const ModifyTrips = () => {
     })
     // 내 장소들 최초 표시
     const linePath = [];
-    if(emptySp.length !== tripDetailList.length){
-      if(tripDetailList.length !== 0){
-        displayMyMarker();
-      }
+    if(tripDetailList.length !== 0 && emptySp.length !== tripDetailList.length){
+      displayMyMarker();
     }
     
     // 장소 검색
@@ -194,6 +228,7 @@ const ModifyTrips = () => {
 
       if(status === kakao.maps.services.Status.OK) {
         removeMarker();
+        removeInfoWindow();
 
         if(openSearchWrap){
           data.forEach((place) => {
@@ -223,22 +258,26 @@ const ModifyTrips = () => {
 
     // 검색한 장소 마커와 인포윈도우
     const displayMarker = (place) => {
-      infowindow.setMap(null);
-      
       bounds.extend(new kakao.maps.LatLng(place.y, place.x));
 
       const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x) 
       });
-      
       markers.push(marker);
       setMarkers([...markers]);
         
+      const infoWindow = new kakao.maps.CustomOverlay({
+        zIndex: 2,
+        yAnchor: 1
+      });
+      infoWindows.push(infoWindow);
+      setInfoWindows([...infoWindows]);
+
       kakao.maps.event.addListener(marker, 'click', function() {
         marker.setClickable(true);
-        let infowindowStr = [
-          "<div class='infowindow'>",
+        let infoWindowStr = [
+          "<div class='infoWindow'>",
             "<div class='item_box'>",
               "<div class='item_box_content'>",
                 "<div class='place_name'>"+place.place_name+"</div>",
@@ -251,9 +290,12 @@ const ModifyTrips = () => {
             "</div>",
           "</div>"
         ].join("");
-        infowindow.setContent(infowindowStr);
-        infowindow.setPosition(new kakao.maps.LatLng(place.y, place.x));
-        infowindow.setMap(map);
+        infoWindow.setContent(infoWindowStr);
+        infoWindow.setPosition(new kakao.maps.LatLng(place.y, place.x));
+        for (let i=0; i<infoWindows.length; i++) {
+          infoWindows[i].setMap(null);
+        }
+        infoWindow.setMap(map);
         map.setCenter(new kakao.maps.LatLng(place.y, place.x));
       });
 
@@ -262,15 +304,14 @@ const ModifyTrips = () => {
       });
       kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
 
-
       map.setBounds(bounds);
     }
 
     // 내 장소 마커, 루트, 인포윈도우
     function displayMyMarker() {
-      infowindow.setMap(null);
       removeMarker();
       removeMapRoute();
+      removeInfoWindow();
       linePath.length = 0;
       
       tripDetailList.forEach((detail) => {
@@ -282,9 +323,15 @@ const ModifyTrips = () => {
             map: map,
             position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
           });
-
           markers.push(marker);
           setMarkers([...markers]);
+
+          const infoWindow = new kakao.maps.CustomOverlay({
+            zIndex: 2,
+            yAnchor: 1
+          });
+          infoWindows.push(infoWindow);
+          setInfoWindows([...infoWindows]);
 
           const mapRoute = new kakao.maps.CustomOverlay({
             map: map,
@@ -301,8 +348,8 @@ const ModifyTrips = () => {
           kakao.maps.event.addListener(marker, 'click', function() {
             const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
             const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
-            let infowindowStr = [
-              "<div class='infowindow'>",
+            let infoWindowStr = [
+              "<div class='infoWindow'>",
                 "<div class='item_box'>",
                   "<div class='item_box_content'>",
                     "<div class='place_name'>"+place.tripPlaceName+"</div>",
@@ -315,9 +362,12 @@ const ModifyTrips = () => {
                 "</div>",
               "</div>"
             ].join("");
-            infowindow.setContent(infowindowStr);
-            infowindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
-            infowindow.setMap(map);
+            infoWindow.setContent(infoWindowStr);
+            infoWindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+            for (let i=0; i<infoWindows.length; i++) {
+              infoWindows[i].setMap(null);
+            }
+            infoWindow.setMap(map);
           });
 
           // 장소에 이을 선 좌표 배열 추가
@@ -325,58 +375,6 @@ const ModifyTrips = () => {
         })
 
       })
-
-      // for(let i=0;i<tripDetailList.length;i++){
-      //   for(let j=0;j<tripDetailList[i].selectPlaceList.length;j++){
-      //     const place = tripDetailList[i].selectPlaceList[j];
-      //     bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
-
-      //     const marker = new kakao.maps.Marker({
-      //       map: map,
-      //       position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
-      //     });
-
-      //     markers.push(marker);
-      //     setMarkers([...markers]);
-
-      //     const mapRoute = new kakao.maps.CustomOverlay({
-      //       map: map,
-      //       position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-      //       content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
-      //       yAnchor: 1,
-      //       zIndex: 3,
-      //       clickable: true
-      //     });
-
-      //     mapRoutes.push(mapRoute);
-      //     setMapRoutes([...mapRoutes]);
-            
-      //     kakao.maps.event.addListener(marker, 'click', function() {
-      //       const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
-      //       const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
-      //       let infowindowStr = [
-      //         "<div class='infowindow'>",
-      //           "<div class='item_box'>",
-      //             "<div class='item_box_content'>",
-      //               "<div class='place_name'>"+place.tripPlaceName+"</div>",
-      //               "<div class='place_info'>",
-      //                 "<span>"+tripPlaceCategory+"</span>",
-      //                 "<span>"+place.tripPlaceAddress+"</span>",
-      //               "</div>",
-      //               "<div class='place_phone'>"+tripPlacePhone+"</div>",
-      //             "</div>",
-      //           "</div>",
-      //         "</div>"
-      //       ].join("");
-      //       infowindow.setContent(infowindowStr);
-      //       infowindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
-      //       infowindow.setMap(map);
-      //     });
-
-      //     // 장소에 이을 선 좌표 배열 추가
-      //     linePath.push(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
-      //   }
-      // }
 
       // 선 생성
       const polyline = new kakao.maps.Polyline({
@@ -388,7 +386,6 @@ const ModifyTrips = () => {
       });
       // 선 표시
       polyline.setMap(map);  
-
       map.setBounds(bounds);
     }
 
@@ -406,7 +403,12 @@ const ModifyTrips = () => {
       mapRoutes.length = 0;
     }
 
-    infowindow.setMap(null);
+    function removeInfoWindow(){
+      for (let i=0; i<infoWindows.length; i++) {
+        infoWindows[i].setMap(null);
+      }   
+      infoWindows.length = 0;
+    }
 
   }, [map, trip, openSearchWrap, searchPlaces])
 
@@ -463,7 +465,7 @@ const ModifyTrips = () => {
           <div className="trips_wrap">
             <div className="trips_input_wrap">
               <div className="set_title_wrap">
-                <Input type="text" data={tripTitle} setData={setTripTitle} placeholder="여행 제목을 입력해주세요" onChange={changeTripTitleFunc} />
+                <Input type="text" data={tripTitleInput} setData={setTripTitleInput} placeholder="여행 제목을 입력해주세요" blurEvent={tripTitieBlurFunc} />
               </div>
               <div className="set_date_wrap">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

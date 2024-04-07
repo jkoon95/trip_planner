@@ -26,7 +26,10 @@ const NoticeMain = (props) => {
         path="/noticeList"
         element={<NoticeList member={member} isLogin={isLogin} />}
       />
-      <Route path="/view/:noticeNo" element={<NoticeView member={member} />} />
+      <Route
+        path="/view/:noticeNo"
+        element={<NoticeView member={member} isLogin={isLogin} />}
+      />
     </Routes>
   );
 };

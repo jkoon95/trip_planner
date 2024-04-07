@@ -7,6 +7,8 @@ import TextEditor from "../../component/TextEditor";
 
 const NoticeView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const member = props.member;
+  const isLogin = props.isLogin;
   const params = useParams();
   const noticeNo = params.noticeNo;
   const [notice, setNotice] = useState({});
@@ -19,13 +21,7 @@ const NoticeView = (props) => {
       })
       .catch((res) => {});
   }, []);
-  const member = props.member;
   const navigate = useNavigate();
-  const checkBtn = () => {
-    //확인용
-    console.log(member);
-    console.log(notice);
-  };
   const updateBtn = () => {};
 
   const deleteBtn = () => {
@@ -60,20 +56,33 @@ const NoticeView = (props) => {
     <section className="contents notice">
       <h2>공지사항 상세</h2>
       <div className="notice-input-wrap">
-        <table>
-          <thead></thead>
-          <tbody>
-            <tr>
-              <td>
-                <TextEditor data={notice.noticeContent} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="notice-title">
+          <h3>{notice.noticeTitle}</h3>
+        </div>
+        <div className="notice-info">
+          <div className="notice-writer">
+            작성자 <span>{notice.memberNickName}</span>
+          </div>
+          <div className="notice-date">
+            작성일 <span>{notice.noticeDate}</span>
+          </div>
+        </div>
+        <div className="notice-content">
+          <textarea readOnly value={notice.noticeContent}></textarea>
+        </div>
+        {isLogin && member.memberType === 3 ? (
+          <div className="btn_area">
+            <Button
+              text="수정"
+              class="btn_primary outline"
+              clickEvent={updateBtn}
+            />
+            <Button text="삭제" class="btn_primary" clickEvent={deleteBtn} />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      <Button text="확인" class="btn_secondary" clickEvent={checkBtn} />
-      <Button text="수정" class="btn_secondary" clickEvent={updateBtn} />
-      <Button text="삭제" class="btn_secondary" clickEvent={deleteBtn} />
     </section>
   );
 };

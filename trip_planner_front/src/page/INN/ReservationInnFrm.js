@@ -255,15 +255,82 @@ const ReservationInnFrm = (props) => {
   */
 
   const discountPrice = (discountAmount, discountRate, couponList, index) => {
-    const selectCouponNo = couponList[index].couponNo;
-    const discountRateValue =
-      selectInn.roomPrice * lodgment * (discountRate / 100);
-    console.log(discountRateValue);
-    const totalPrice = price - discountRateValue;
-    console.log(totalPrice);
-    setPrice(totalPrice);
+    console.log(price);
+    Swal.fire({
+      title: "해당 쿠폰을 사용하시겠습니까?",
+      icon: "info",
+      confirmButtonText: "적용",
+      cancelButtonText: "취소",
+    }).then((res) => {
+      if (
+        discountRate < 100 &&
+        res.isConfirmed &&
+        price === selectInn.roomPrice * lodgment
+      ) {
+        const selectCouponNo = couponList[index].couponNo;
+        const discountRateValue =
+          selectInn.roomPrice * lodgment * (discountRate / 100);
+        console.log(discountRateValue);
+        const totalPrice = price - discountRateValue;
+        console.log(totalPrice);
+        setPrice(totalPrice);
+      } else {
+        const selectCouponNo = couponList[index].couponNo;
+        const discountAmountValue =
+          selectInn.roomPrice * lodgment - discountAmount;
+        console.log(discountAmountValue);
+        setPrice(discountAmountValue);
+      }
+    });
   };
 
+  const { IMP } = window;
+  IMP.init("imp82445436");
+  const pay = () => {
+    const price = selectInn.roomPrice * lodgment;
+    const date = new Date();
+    const dateString =
+      date.getFullYear() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getDate() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds();
+    IMP.request_pay(
+      {
+        pg: "danal_tpay.9810030929",
+        pay_method: "card",
+        merchant_uid: "product_no_" + dateString, // 상점에서 생성한 고유 주문번호
+        name: "주문명:결제테스트",
+        amount: price,
+        buyer_email: "test@portone.io",
+        buyer_name: "구매자이름",
+        buyer_tel: "010-1234-5678",
+        buyer_addr: "서울특별시 강남구 삼성동",
+        buyer_postcode: "123-456",
+      },
+      function (rsp) {
+        if (rsp.success) {
+          Swal.fire({
+            title: "결제 완료",
+            text: "결제가 완료되었습니다.",
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "결제 실패",
+            text: "잠시후 다시 시도해주세요",
+            icon: "error",
+          });
+        }
+      }
+    );
+  };
   return (
     <div className="reservation-wrap">
       <div className="reservation-top">
@@ -455,7 +522,7 @@ const ReservationInnFrm = (props) => {
           </div>
           <div className="discount-room-price-box">
             <div className="post-discount-room-price">쿠폰적용 후 금액</div>
-            <div className="post-room-price">{price}</div>
+            <div className="post-room-price">{price > 0 ? price : 0}원</div>
           </div>
           <div className="btn_area">
             <Button
@@ -463,11 +530,7 @@ const ReservationInnFrm = (props) => {
               text="취소"
               clickEvent={closeModalFunc2}
             />
-            <Button
-              class="btn_secondary"
-              text="결제하기"
-              clickEvent={closeModalFunc2}
-            />
+            <Button class="btn_secondary" text="결제하기" clickEvent={pay} />
           </div>
         </>
       </Modal>
@@ -564,53 +627,6 @@ const SelectInnInfo = (props) => {
     setCheckTerms(copyCheckTerms);
   };
 
-  const { IMP } = window;
-  IMP.init("imp82445436");
-  const pay = () => {
-    const price = selectInn.roomPrice * lodgment;
-    const date = new Date();
-    const dateString =
-      date.getFullYear() +
-      "" +
-      (date.getMonth() + 1) +
-      "" +
-      date.getDate() +
-      "" +
-      date.getHours() +
-      "" +
-      date.getMinutes() +
-      "" +
-      date.getSeconds();
-    IMP.request_pay(
-      {
-        pg: "danal_tpay.9810030929",
-        pay_method: "card",
-        merchant_uid: "product_no_" + dateString, // 상점에서 생성한 고유 주문번호
-        name: "주문명:결제테스트",
-        amount: price,
-        buyer_email: "test@portone.io",
-        buyer_name: "구매자이름",
-        buyer_tel: "010-1234-5678",
-        buyer_addr: "서울특별시 강남구 삼성동",
-        buyer_postcode: "123-456",
-      },
-      function (rsp) {
-        if (rsp.success) {
-          Swal.fire({
-            title: "결제 완료",
-            text: "결제가 완료되었습니다.",
-            icon: "success",
-          });
-        } else {
-          Swal.fire({
-            title: "결제 실패",
-            text: "잠시후 다시 시도해주세요",
-            icon: "error",
-          });
-        }
-      }
-    );
-  };
   const copyAllChecked = allChecked;
   const CheckBoxTerms = (props) => {
     const checkTerms = props.checkTerms;

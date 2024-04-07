@@ -303,9 +303,22 @@
 .discount-room-price-box > .prev-discount-room-price {
   font-family: pt-b;
   font-size: 18px;
+  color: #ccc;
+}
+.discount-room-price-box > .prev-room-price {
+  font-family: pt-b;
 }
 .discount-room-price-box > .room-price {
   font-size: 20px;
+  font-family: pt-eb;
+  color: #e9511c;
+}
+.discount-room-price-box > .post-discount-room-price {
+  font-family: pt-b;
+  font-size: 18px;
+}
+.discount-room-price-box > .post-room-price {
+  font-size: 18px;
   font-family: pt-eb;
   color: #e9511c;
 }

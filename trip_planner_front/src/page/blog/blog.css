@@ -237,6 +237,7 @@ blog-list-box {
 }
 
 /* BlogView*/
+
 .blog-view-wrap {
   width: 800px;
   margin: 0 auto;
@@ -289,4 +290,12 @@ blog-list-box {
 .btn-box button:hover {
   background-color: var(--main_02);
   color: #fff;
+}
+.comment-content-box input {
+  width: 85%;
+  float: left;
+  text-indent: 10px;
+}
+.comment-content-box h2 {
+  margin-bottom: 20px;
 }

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import "react-quill/dist/quill.snow.css";
+import { Input } from "../../component/FormFrm";
 
 const BlogView = (props) => {
   const isLogin = props.isLogin;
@@ -13,6 +14,7 @@ const BlogView = (props) => {
   const [blog, setBlog] = useState({});
   const [list, setlist] = useState([]);
   const [member, setMember] = useState(null);
+  const [comment, setComment] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -54,7 +56,16 @@ const BlogView = (props) => {
       }
     });
   };
-  useEffect(() => {});
+  useEffect(() => {
+    axios
+      .post(backServer + "/blog/insertComment")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  });
   return (
     <section className="contents blogList">
       <div className="blog-view-wrap">
@@ -101,7 +112,18 @@ const BlogView = (props) => {
             );
           })}
         </div>
-        <h1>댓글</h1>
+        <div className="comment-content-box">
+          <h2>Comment</h2>
+          <Input
+            type="text"
+            data={comment}
+            setData={setComment}
+            placeholder="댓글을 작성해주세요"
+          />
+          <button type="button" class="btn_secondary md">
+            등록
+          </button>
+        </div>
       </div>
     </section>
   );

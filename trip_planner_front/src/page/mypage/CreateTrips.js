@@ -12,9 +12,18 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 const { kakao } = window;
 
-const CreateTrips = () => {
+const CreateTrips = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  
+  const isLogin = props.isLogin;
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(navigate("/"));
+  }
 
   const [trip, setTrip] = useState({}); //최종 데이터
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);

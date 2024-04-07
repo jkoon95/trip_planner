@@ -21,11 +21,11 @@ public class TripService {
 	private MemberDao memberDao;
 
 	@Transactional
-	public int insertTrip(Trip trip, List<TripDetail> tripDetailList, String memberEmail) {
+	public int insertTrip(Trip trip, String memberEmail) {
 		Member m = memberDao.selectOneMember(memberEmail);
 		trip.setMemberNo(m.getMemberNo()); 
 		int result = tripDao.insertTrip(trip);
-		for(TripDetail td : tripDetailList) {
+		for(TripDetail td : trip.getTripDetailList()) {
 			td.setTripNo(trip.getTripNo());
 			result += tripDao.insertTripDetail(td);
 			if(td.getSelectPlaceList() != null) {
@@ -52,6 +52,13 @@ public class TripService {
 
 	public int updateTrip(Trip trip) {
 		return tripDao.updateTrip(trip);
+	}
+
+	public int updateTripDetail(Trip trip) {
+		for(TripDetail td : trip.getTripDetailList()) {
+			System.out.println(td.getTripDetailNo());
+		}
+		return 0;
 	}
 
 }

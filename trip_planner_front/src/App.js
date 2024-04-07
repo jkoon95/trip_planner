@@ -131,7 +131,7 @@ function App() {
           />
           <Route
             path="/mypage/myTrips/modifyTrips/:tripNo"
-            element={<ModifyTrips />}
+            element={<ModifyTrips isLogin={isLogin} />}
           />
           <Route path="/notice/*" element={<NoticeMain isLogin={isLogin} />} />
         </Routes>

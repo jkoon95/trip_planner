@@ -10,15 +10,22 @@ import Modal from "../../component/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import { TocTwoTone } from "@mui/icons-material";
 const { kakao } = window;
 
-const ModifyTrips = () => {
+const ModifyTrips = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const params = useParams();
   const tripNo = params.tripNo;
 
+  const isLogin = props.isLogin;
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(navigate("/"));
+  }
   const [trip, setTrip] = useState({}); //최종 데이터
   const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
@@ -40,15 +47,15 @@ const ModifyTrips = () => {
   const [todoIndex, setTodoIndex] = useState(-1);
   const [tripCost, setTripCost] = useState(0);
 
+  
   useEffect(() => {
     axios.get(backServer + "/trip/view/" + tripNo)
     .then((res) => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setTripDetailList(res.data.data.tripDetailList);
-      setTripTitleInput(res.data.data.tripTitle);
       setTripStartDate(dayjs(res.data.data.tripStartDate));
       setTripEndDate(dayjs(res.data.data.tripEndDate));
-      setTrip(res.data.data);
+      // setTrip(res.data.data);
     })
     .catch((res) => {
       console.log(res);
@@ -62,7 +69,8 @@ const ModifyTrips = () => {
       const tripObj = {tripNo, tripTitle}
       axios.patch(backServer + "/trip/tripTbl", tripObj)
       .then((res) => {
-        console.log("제목 수정 axios!!!!!"+res.data);
+        console.log("제목 수정 axios!!!!!");
+        console.log(res.data);
       })
       .catch((res) => {
         console.log(res);
@@ -77,11 +85,12 @@ const ModifyTrips = () => {
 
   // 여행 등록하기
   const createTripsFunc = () => {
-    if(tripTitle === ""){
-      trip.tripTitle = "국내 여행";
-      setTripTitle("국내 여행");
-    }
+    // if(tripTitle === ""){
+    //   trip.tripTitle = "국내 여행";
+    //   setTripTitle("국내 여행");
+    // }
     console.log(trip);
+    // console.log(tripDetailList);
     // axios.post(backServer + "/trip", trip)
     // .then((res) => {
     //   if(res.data.message === "success"){
@@ -103,40 +112,25 @@ const ModifyTrips = () => {
     // console.log("trip에 저장된 tripEndDate: "+trip.tripEndDate);
     // console.log("아마도 변경한 tripEndDate: "+dayjs(tripEndDate).format("YYYY-MM-DD"));
 
-    if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
-      console.log("시작 날짜 변경");
-      trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
-    }
-    if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
-      console.log("종료 날짜 변경");
-      trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
-    }
-
-    const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
-    axios.patch(backServer + "/trip/tripTbl", tripObj)
-    .then((res) => {
-      console.log("날짜 수정 axios!!!!!"+res.data);
-    })
-    .catch((res) => {
-      console.log(res);
-    })
     
     trip.tripDetailList = tripDetailList;
     trip.tripDetailListStr = JSON.stringify(tripDetailList);
     setTrip({...trip});
-    console.log(trip);
+    // console.log(trip);
 
-    const tripDetailObj = {tripNo: tripNo, tripDetailListStr: trip.tripDetailListStr};
-    axios.patch(backServer + "/trip/tripDetailTbl", tripDetailObj)
-    .then((res) => {
-      console.log("디테일 수정 axios!!!!!"+res.data);
-    })
-    .catch((res) => {
-      console.log(res);
-    })
+    // const tripObj = {tripNo: tripNo, tripDetailListStr: trip.tripDetailListStr};
+    // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+    // .then((res) => {
+    //   console.log("디테일 수정 axios!!!!!");
+    //   console.log(res.data);
+    // })
+    // .catch((res) => {
+    //   console.log(res);
+    // })
 
-    console.log("트립 디테일 변경! 이걸로 모든 걸 제어할 수 있을까?");
+    // console.log("트립 디테일 변경! 이걸로 모든 걸 제어할 수 있을까? 아니.");
   }, [tripDetailList])
+
 
   const closeTodoModalFunc = () => {
     document.body.classList.remove("scroll_fixed");
@@ -299,10 +293,10 @@ const ModifyTrips = () => {
         map.setCenter(new kakao.maps.LatLng(place.y, place.x));
       });
 
-      kakao.maps.event.addListener(marker, 'custom_action', function(data){
-        console.log(data + '가 발생했습니다.');
-      });
-      kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
+      // kakao.maps.event.addListener(marker, 'custom_action', function(data){
+      //   console.log(data + '가 발생했습니다.');
+      // });
+      // kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
 
       map.setBounds(bounds);
     }
@@ -417,13 +411,18 @@ const ModifyTrips = () => {
     //dayjs(new Date())
     //tripStartDate.format("YYYY-MM-DD")
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
+    // console.log(tripDetailList);
+
     if(tripStartDate && tripEndDate && (dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD") >= dayjs(new Date(tripStartDate.$d.getTime())).format("YYYY-MM-DD"))){
       const copyTripDetailList = tripDetailList.filter((item)=>{
         return item.length !== 0;
       });
+      // console.log(copyTripDetailList);
       tripDays.length = 0;
       tripDetailList.length = 0;
 
+      // const newTripDetailList = new Array();
+      
       const newTripDetailList = new Array();
       const newTripDate = new Array();
       const endDate = tripEndDate.format("YYYY-MM-DD");
@@ -440,12 +439,24 @@ const ModifyTrips = () => {
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
-            newTripDetailList.push({selectPlaceList : array, tripDay: tripDate});
+            if(copyTripDetailList[tripDayCount]){
+              newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : array, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
+            }else{
+              newTripDetailList.push({selectPlaceList : array, tripDay: tripDate});
+            }
           }else{
-            newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList, tripDay: tripDate});
+            if(copyTripDetailList[tripDayCount]){
+              newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
+            }else{
+              newTripDetailList.push({selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList, tripDay: tripDate});
+            }
           }
         }else{
-          newTripDetailList.push({selectPlaceList: [], tripDay: tripDate});
+          if(copyTripDetailList[tripDayCount]){
+            newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : [], tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
+          }else{
+            newTripDetailList.push({selectPlaceList: [], tripDay: tripDate});
+          }
         }
         if(tripDate === endDate){
           break;
@@ -454,6 +465,39 @@ const ModifyTrips = () => {
       }
       setTripDays(newTripDate);
       setTripDetailList(newTripDetailList);
+
+      if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
+        console.log("시작 날짜 변경");
+        trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
+      }
+      if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
+        console.log("종료 날짜 변경");
+        trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
+      }
+
+      console.log(newTripDetailList);
+  
+      // const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
+      // axios.patch(backServer + "/trip/tripTbl", tripObj)
+      // .then((res) => {
+      //   console.log("날짜 수정 axios!!!!!");
+      //   console.log(res.data);
+
+      //   tripObj.tripDetailListStr = JSON.stringify(newTripDetailList);
+      //   axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+      //   .then((res) => {
+      //     console.log("디테일 수정 axios!!!!!");
+      //     console.log(res.data);
+      //   })
+      //   .catch((res) => {
+      //     console.log(res);
+      //   })
+
+      // })
+      // .catch((res) => {
+      //   console.log(res);
+      // })
+
     }
   },[tripStartDate, tripEndDate])
   

@@ -22,7 +22,12 @@ const NoticeView = (props) => {
       .catch((res) => {});
   }, []);
   const navigate = useNavigate();
-  const updateBtn = () => {};
+  const updateBtn = () => {
+    const contentDiv = document.querySelector(".notice-content");
+    const removeContent = document.querySelector("#viewContent");
+    removeContent.remove();
+    contentDiv.append(<TextEditor value={notice.noticeContent}></TextEditor>);
+  };
 
   const deleteBtn = () => {
     Swal.fire({
@@ -68,7 +73,11 @@ const NoticeView = (props) => {
           </div>
         </div>
         <div className="notice-content">
-          <textarea readOnly value={notice.noticeContent}></textarea>
+          <textarea
+            id="viewContent"
+            readOnly
+            value={notice.noticeContent}
+          ></textarea>
         </div>
         {isLogin && member.memberType === 3 ? (
           <div className="btn_area">

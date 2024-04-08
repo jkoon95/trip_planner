@@ -14,8 +14,13 @@ const TourSearch = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.state && location.state.tourList) {
+    if (
+      location.state &&
+      location.state.tourList &&
+      location.state.ticketList
+    ) {
       setTourList(location.state.tourList);
+      setTicketList(location.state.ticketList);
     }
   }, [location.state]);
 
@@ -31,9 +36,10 @@ const TourSearch = (props) => {
       </div>
       <TourSearchBox />
       <TourSearchOption />
-      {tourList.slice(0, visibleTour).map((tour, index) => (
-        <TourItem key={index} tour={tour} />
-      ))}
+      {tourList.slice(0, visibleTour).map((tour, index) => {
+        const ticket = ticketList[index];
+        return <TourItem key={index} tour={tour} ticket={ticket} />;
+      })}
       {visibleTour < tourList.length && (
         <div className="tour-list-more">
           <button className="btn_secondary" onClick={handleTourMore}>
@@ -73,7 +79,7 @@ const TourSearchOption = () => {
   );
 };
 
-const TourItem = ({ tour }) => {
+const TourItem = ({ tour, ticket }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   let tourTypeText;
   switch (tour.tourType) {
@@ -116,7 +122,7 @@ const TourItem = ({ tour }) => {
             {tour.tourAddr.slice(0, 2)} {tourTypeText}
           </div>
           <div className="tour-prod-limit">~ {salesPeriod}</div>
-          <div className="tour-prod-price">10,000원</div>
+          <div className="tour-prod-price">{ticket.ticketAdult}</div>
           <img
             className="tour-prod-bookmark"
             alt="찜"

@@ -109,5 +109,16 @@
 	    FROM TOUR_TBL
 	    WHERE (TOUR_NAME LIKE '%' || #{searchText} || '%' OR TOUR_ADDR LIKE '%' || #{searchText} || '%')
 	    AND SALES_PERIOD >= #{startDate}
+	    ORDER BY 1 DESC
+	</select>
+	<select id="searchTicket" resultType="tourTicket">
+	    SELECT * FROM TOUR_TICKET_TBL
+	    WHERE TOUR_NO IN (
+	        SELECT TOUR_NO
+	        FROM TOUR_TBL
+	        WHERE (TOUR_NAME LIKE '%' || #{searchText} || '%' OR TOUR_ADDR LIKE '%' || #{searchText} || '%')
+	        AND SALES_PERIOD >= #{startDate}
+	    )
+	    ORDER BY 1 DESC
 	</select>
 </mapper>

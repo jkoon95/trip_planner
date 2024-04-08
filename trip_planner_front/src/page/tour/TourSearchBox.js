@@ -7,16 +7,18 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./tourSearchBox.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const TourSearchBox = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchText, setSearchText] = useState("");
   const [startDate, setStartDate] = React.useState(dayjs());
   const [tourList, setTourList] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
 
   const searchBtn = () => {
     if (searchText !== "") {
@@ -30,8 +32,12 @@ const TourSearchBox = (props) => {
         .then((res) => {
           if (res.data.message === "success") {
             setTourList(res.data.data.tourList);
+            setTicketList(res.data.data.ticketList);
             navigate("/tourSearch", {
-              state: { tourList: res.data.data.tourList },
+              state: {
+                tourList: res.data.data.tourList,
+                ticketList: res.data.data.ticketList,
+              },
             });
           } else {
             Swal.fire("검색중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");

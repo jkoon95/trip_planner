@@ -167,8 +167,11 @@ public class TourController {
 	}
 	
 	@PostMapping(value="/tourSearch")
-	public ResponseEntity<ResponseDTO> searchTour(@RequestBody Tour tour){
-		Map map = tourService.searchTour(tour);
+	public ResponseEntity<ResponseDTO> searchTour(@RequestBody Map requestData){
+		String searchText = (String) requestData.get("searchText");
+	    String startDate = (String) requestData.get("startDate");
+		
+		Map map = tourService.searchTour(searchText, startDate);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}

@@ -108,10 +108,12 @@ public class TourService {
 		return map;
 	}
 
-	public Map searchTour(Tour tour) {
-		List tourList = tourDao.searchTour(tour);
+	public Map searchTour(String searchText, String startDate) {
+		List tourList = tourDao.searchTour(searchText, startDate);
+		List ticketList = tourDao.searchTicket(searchText, startDate);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
 		return map;
 	}
 

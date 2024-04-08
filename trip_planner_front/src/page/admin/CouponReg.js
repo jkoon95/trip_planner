@@ -15,7 +15,8 @@ const CouponReg = ({ member, isLogin }) => {
       icon: "warning",
       text: "로그인 후 이용이 가능합니다.",
       confirmButtonText: "닫기",
-    }).then(navigate("/"));
+    });
+    navigate("/");
   }
   if (memberType !== 3) {
     Swal.fire({

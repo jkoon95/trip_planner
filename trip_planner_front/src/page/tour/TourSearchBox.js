@@ -12,11 +12,11 @@ import Swal from "sweetalert2";
 
 const TourSearchBox = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState("");
   const [startDate, setStartDate] = React.useState(dayjs());
-  const [tourList, setTourList] = useState("");
+  const [tourList, setTourList] = useState([]);
 
   const searchBtn = () => {
     if (searchText !== "") {
@@ -30,7 +30,9 @@ const TourSearchBox = (props) => {
         .then((res) => {
           if (res.data.message === "success") {
             setTourList(res.data.data.tourList);
-            console.log(res.data.data);
+            navigate("/tourSearch", {
+              state: { tourList: res.data.data.tourList },
+            });
           } else {
             Swal.fire("검색중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
           }
@@ -40,6 +42,12 @@ const TourSearchBox = (props) => {
         });
     } else {
       Swal.fire("검색어를 입력해주세요.");
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      searchBtn();
     }
   };
 
@@ -54,6 +62,7 @@ const TourSearchBox = (props) => {
           type="text"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="도시, 상품명으로 검색해주세요."
         />
       </div>

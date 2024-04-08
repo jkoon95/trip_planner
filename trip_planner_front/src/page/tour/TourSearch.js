@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const TourSearch = (props) => {
-  const location = useLocation;
+  const location = useLocation();
   const tourType = props.tourType;
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
@@ -14,16 +14,10 @@ const TourSearch = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(backServer + "/tour/tourSearch/type")
-      .then((res) => {
-        setTourList(res.data.data.tourList);
-        setTicketList(res.data.data.ticketList);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, []);
+    if (location.state && location.state.tourList) {
+      setTourList(location.state.tourList);
+    }
+  }, [location.state]);
 
   const handleTourMore = () => {
     setVisibleTour((prevCount) => prevCount + 5); // 5개씩 추가
@@ -37,10 +31,16 @@ const TourSearch = (props) => {
       </div>
       <TourSearchBox />
       <TourSearchOption />
-      <TourItem />
-      <div className="tour-list-more">
-        <Button text="더 보기" class="btn_secondary" />
-      </div>
+      {tourList.slice(0, visibleTour).map((tour, index) => (
+        <TourItem key={index} tour={tour} />
+      ))}
+      {visibleTour < tourList.length && (
+        <div className="tour-list-more">
+          <button className="btn_secondary" onClick={handleTourMore}>
+            더 보기
+          </button>
+        </div>
+      )}
     </section>
   );
 };
@@ -73,43 +73,49 @@ const TourSearchOption = () => {
   );
 };
 
-const TourItem = () => {
+const TourItem = ({ tour }) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  let tourTypeText;
+  switch (tour.tourType) {
+    case 1:
+      tourTypeText = "전시회";
+      break;
+    case 2:
+      tourTypeText = "액티비티";
+      break;
+    case 3:
+      tourTypeText = "테마파크";
+      break;
+    case 4:
+      tourTypeText = "박람회";
+      break;
+    case 5:
+      tourTypeText = "티켓·입장권";
+      break;
+    default:
+      tourTypeText = "기타";
+  }
+  const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
+
   return (
     <div className="tour-prod-zone">
       <div className="tour-prod">
-        <img alt="박람회" src="images/테마파크.jpg" />
-        <div className="tour-prod-info">
-          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
-          <div className="tour-prod-subname">서울 티켓·입장권</div>
-          <div className="tour-prod-limit">~2024.06.30</div>
-          <div className="tour-prod-price">10,000원</div>
-          <img
-            className="tour-prod-bookmark"
-            alt="찜"
-            src="images/찜버튼.png"
-          />
+        <div className="tour-prod-img">
+          {tour.tourImg === null || tour.tourImg === "null" ? (
+            <img src="/images/테마파크.jpg" />
+          ) : (
+            <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+          )}
         </div>
-      </div>
-      <div className="tour-prod">
-        <img alt="박람회" src="images/테마파크.jpg" />
         <div className="tour-prod-info">
-          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
-          <div className="tour-prod-subname">서울 티켓·입장권</div>
-          <div className="tour-prod-limit">~2024.06.30</div>
-          <div className="tour-prod-price">10,000원</div>
-          <img
-            className="tour-prod-bookmark"
-            alt="찜"
-            src="images/찜버튼.png"
-          />
-        </div>
-      </div>
-      <div className="tour-prod">
-        <img alt="박람회" src="images/테마파크.jpg" />
-        <div className="tour-prod-info">
-          <div className="tour-prod-name">[서울] 테마파크 입장권</div>
-          <div className="tour-prod-subname">서울 티켓·입장권</div>
-          <div className="tour-prod-limit">~2024.06.30</div>
+          <div className="tour-prod-name">
+            {" "}
+            [{tour.tourAddr.slice(0, 2)}] {tour.tourName}
+          </div>
+          <div className="tour-prod-subname">
+            {tour.tourAddr.slice(0, 2)} {tourTypeText}
+          </div>
+          <div className="tour-prod-limit">~ {salesPeriod}</div>
           <div className="tour-prod-price">10,000원</div>
           <img
             className="tour-prod-bookmark"

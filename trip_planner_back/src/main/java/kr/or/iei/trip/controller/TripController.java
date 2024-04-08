@@ -65,7 +65,7 @@ public class TripController {
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
 			for(LinkedHashMap<String, Object> data : spl) {
 				TripPlace tp = new TripPlace();
-				tp.setTripRoute((Integer)data.get("tripRoute"));
+				tp.setTripRoute(Integer.parseInt((String)data.get("tripRoute")));
 				tp.setTripTodo((String)data.get("tripTodo"));
 				
 //				LinkedHashMap<String, String> tripPlace = (LinkedHashMap<String, String>)data.get("tripPlace");
@@ -156,13 +156,12 @@ public class TripController {
 			TripDetail td = new TripDetail();
 			
 			String tripDetailNoStr = String.valueOf(map.get("tripDetailNo"));
-//			System.out.println("1: "+tripDetailNoStr);
 			if(!tripDetailNoStr.equals("null")) {
 				td.setTripDetailNo(Integer.parseInt(tripDetailNoStr));
 			}
 			
 			String tripNoStr = String.valueOf(map.get("tripNo"));
-//			System.out.println("2: "+tripNoStr);
+			System.out.println("2: "+tripNoStr);
 			if(!tripNoStr.equals("null")) {
 				td.setTripNo(Integer.parseInt(tripNoStr));
 			}
@@ -171,7 +170,6 @@ public class TripController {
 			td.setTripDay(tripDayStr);
 			
 			String tripCostStr = String.valueOf(map.get("tripCost"));
-//			System.out.println("3: "+tripCostStr);
 			if(!tripCostStr.equals("null")) {
 				td.setTripCost(Integer.parseInt(tripCostStr));
 			}
@@ -180,20 +178,36 @@ public class TripController {
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
 			for(LinkedHashMap<String, Object> data : spl) {
 				TripPlace tp = new TripPlace();
-				if((Integer)data.get("tripDetailNo") != null) {
-					tp.setTripDetailNo((Integer)data.get("tripDetailNo"));
+				
+				String tripDetailNoStr2 = String.valueOf(data.get("tripDetailNo"));
+//				System.out.println("tripDetailNoStr2: "+tripDetailNoStr2);
+				if(!tripDetailNoStr2.equals("null")) {
+					tp.setTripDetailNo(Integer.parseInt(String.valueOf(data.get("tripDetailNo"))));
 				}
-				tp.setTripRoute((Integer)data.get("tripRoute"));
-				if((Integer)data.get("oldDetailNo") != null) {
-					tp.setOldDetailNo((Integer)data.get("oldDetailNo"));
+				String tripRouteStr = String.valueOf(data.get("tripRoute"));
+//				System.out.println("tripRouteStr: "+tripRouteStr);
+				if(!tripRouteStr.equals("null")) {
+					tp.setTripRoute(Integer.parseInt(tripRouteStr));
 				}
-				if((Integer)data.get("oldTripRoute") != null) {
-					tp.setOldTripRoute((Integer)data.get("oldTripRoute"));
+				String oldDetailNoStr = String.valueOf(data.get("oldDetailNo"));
+//				System.out.println("oldDetailNoStr: "+oldDetailNoStr);
+				if(!oldDetailNoStr.equals("null")) {
+					tp.setOldDetailNo(Integer.parseInt(oldDetailNoStr));
 				}
-				if((String)data.get("oldTripDay") != null) {
-					tp.setOldTripDay((String)data.get("oldTripDay"));
+				String oldTripRouteStr = String.valueOf(data.get("oldTripRoute"));
+//				System.out.println("oldTripRouteStr: "+oldTripRouteStr);
+				if(!oldTripRouteStr.equals("null")) {
+					tp.setOldTripRoute(Integer.parseInt(oldTripRouteStr));
 				}
+				String oldTripDayStr = String.valueOf(data.get("oldTripDay"));
+				System.out.println("oldTripDayStr: "+oldTripDayStr);
+				if(!oldTripDayStr.equals("null")) {
+					System.out.println("나오냐");
+					tp.setOldTripDay(oldTripDayStr);
+				}
+				
 				tp.setTripTodo((String)data.get("tripTodo"));
+				tp.setDelNo(Integer.parseInt((String)data.get("delNo")));
 				tp.setTripPlaceName((String)data.get("tripPlaceName"));
 				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
 				tp.setTripPlaceAddress((String)data.get("tripPlaceAddress"));

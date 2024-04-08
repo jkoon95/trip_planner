@@ -677,7 +677,7 @@ const ItemTripPlace = (props) => {
           </li>
           ) : ""
         }
-        {place.tripTodo ? (
+        {place.delNo !== 1 && place.tripTodo ? (
           <li className="item tripTodo">
           <div className="tripRoute_no"></div>
           <div className="item_box">

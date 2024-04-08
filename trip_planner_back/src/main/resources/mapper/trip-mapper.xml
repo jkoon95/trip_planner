@@ -88,7 +88,7 @@
 	</update>
 
 	<delete id="deleteTripPlace">
-		delete from trip_place_tbl where trip_detail_no=#{tripDetailNo}
+		delete from trip_place_tbl where trip_detail_no=#{tripDetailNo} and trip_route=#{tripRoute}
 	</delete>
 
 	<select id="checkTdList" resultType="tripDetail">
@@ -96,7 +96,7 @@
 	</select>
 
 	<delete id="deleteTripDetail">
-		delete from trip_detail_tbl where trip_detail_no=#{tripDetailNo}
+		delete from trip_detail_tbl where trip_day=#{oldTripDay} and trip_detail_no=#{tripDetailNo}
 	</delete>
 	
 	<select id="selectTripDetailNo" resultType="String">
@@ -104,10 +104,16 @@
 	</select>
 	
 	<update id="updateTripPlace">
-		update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo} where trip_route=#{oldTripRoute}
-		<if test="oldDetailNo != 0">
-			trip_detail_no=#{oldDetailNo}
-		</if>
+		update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo}
+		<trim prefix="where" prefixOverrides="and">
+			<if test="oldTripRoute != null">
+				trip_route=#{oldTripRoute}
+			</if>
+			<if test="oldTripDay != null">
+				and trip_detail_no in(select trip_detail_no from trip_detail_tbl where trip_day=#{oldTripDay})		
+			</if>
+			and trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=#{tripNo})
+		</trim>
 	</update>
 
 </mapper>

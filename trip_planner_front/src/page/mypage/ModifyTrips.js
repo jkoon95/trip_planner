@@ -117,29 +117,26 @@ const ModifyTrips = (props) => {
 
   // 수정 시점..
   useEffect(() => {
-    trip.tripDetailList = tripDetailList;
-    trip.tripDetailListStr = JSON.stringify(tripDetailList);
-    setTrip({...trip});
+    // trip.tripDetailList = tripDetailList;
+    // trip.tripDetailListStr = JSON.stringify(tripDetailList);
+    // setTrip({...trip});
 
-    const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: trip.tripDetailList, tripDetailListStr: trip.tripDetailListStr};
-    console.log("보내는게 여기");
-    console.log(tripObj);
-    // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-    // .then((res) => {
-    //   console.log("디테일 수정 axios!!!!!");
-    //   console.log(res.data);
-    // })
-    // .catch((res) => {
-    //   console.log(res);
-    // })
+    if(tripDetailList.length != 0){
+      const tripObj = {tripNo: tripNo, tripStartDate: tripStartDate, tripEndDate: tripEndDate, tripDetailList: tripDetailList, tripDetailListStr: JSON.stringify(tripDetailList)};
+      console.log("보내는게 여기");
+      console.log(tripObj);
+      // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+      // .then((res) => {
+      //   console.log("디테일 수정 axios!!!!!");
+      //   console.log(res.data);
+      // })
+      // .catch((res) => {
+      //   console.log(res);
+      // })
+    }
 
     console.log("트립 디테일 변경!");
   }, [tripDetailList])
-
-  useEffect(() => {
-    
-  }, [trip])
-
 
   const closeTodoModalFunc = () => {
     document.body.classList.remove("scroll_fixed");
@@ -423,6 +420,8 @@ const ModifyTrips = (props) => {
     // console.log(tripDetailList);
 
     if(tripStartDate && tripEndDate && (dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD") >= dayjs(new Date(tripStartDate.$d.getTime())).format("YYYY-MM-DD"))){
+      trip.tripStartDate = tripStartDate;
+      trip.tripEndDate = tripEndDate;
       const copyTripDetailList = tripDetailList.filter((item)=>{
         return item.length !== 0;
       });
@@ -481,6 +480,7 @@ const ModifyTrips = (props) => {
       }
       setTripDays(newTripDate);
       setTripDetailList(newTripDetailList);
+      setTrip({...trip});
 
       if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
         // console.log("시작 날짜 변경");

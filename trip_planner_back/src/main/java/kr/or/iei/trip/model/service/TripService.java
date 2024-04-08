@@ -93,6 +93,8 @@ public class TripService {
 				System.out.println("기존 일정인 경우");
 				if(td.getSelectPlaceList() != null) {
 					for(TripPlace tp : td.getSelectPlaceList()) {
+						tp.setTripNo(td.getTripNo());
+						System.out.println(tp.getTripTodo());
 						if(tp.getTripDetailNo() == 0) {
 							insertTdLength++;
 							tp.setTripDetailNo(td.getTripDetailNo());
@@ -100,15 +102,14 @@ public class TripService {
 						}else {
 							if(tp.getDelNo() == 1) {
 								tpLength++;
-								updateTpResult += tripDao.deleteTripPlace(tp.getTripDetailNo());
+								System.out.println("delNo가 1이다");
+//								updateTpResult += tripDao.deleteTripPlace(tp);
 							}else {
 								tpLength++;
 								tp.setTripDetailNo(td.getTripDetailNo());
-								System.out.println("oldTripRoute: "+tp.getOldTripRoute());
 								updateTpResult += tripDao.updateTripPlace(tp);
-								//update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo} where trip_detail_no=#{oldDetailNo} and trip_route=#{oldTripRoute}
-								if(td.getTripDay() != tp.getOldTripDay()) {
-									updateTpResult += tripDao.deleteTripDetail(tp.getOldDetailNo());									
+								if(tp.getOldTripDay() != null && (td.getTripDay() != tp.getOldTripDay())) {
+//									updateTpResult += tripDao.deleteTripDetail(tp);									
 								}
 							}
 						}

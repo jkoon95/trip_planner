@@ -64,3 +64,7 @@
   height: 600px;
   overflow-y: scroll;
 }
+
+.contents.notice #notice-editor{
+  display: none;
+}

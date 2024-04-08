@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./member.css";
 import { useNavigate } from "react-router-dom";
 
@@ -39,6 +39,22 @@ const Login = (props) => {
         });
     }
   };
+
+  const passwordRef = useRef(null);
+
+  const handleShowPw = () => {
+    const password = passwordRef.current;
+    const pwIcon = document.querySelector("#showPw");
+
+    if (password.type === "password") {
+      password.type = "text";
+      pwIcon.innerText = "visibility_off";
+    } else {
+      password.type = "password";
+      pwIcon.innerText = "visibility";
+    }
+  };
+
   const kakaoLogin = () => {
     const script = document.createElement("script");
     script.async = true;
@@ -74,10 +90,10 @@ const Login = (props) => {
     };
   };
   const loginKeyDownEvnet = (e) => {
-    if(e.key === "Enter"){
+    if (e.key === "Enter") {
       login();
     }
-  }
+  };
   console.clear();
   return (
     <section className="contents login">
@@ -104,12 +120,17 @@ const Login = (props) => {
           </div>
           <div className="input_item">
             <Input
+              id="password"
               type="password"
               content="memberPw"
               data={memberPw}
               setData={setMemberPw}
               keyDownEvent={loginKeyDownEvnet}
+              inputRef={passwordRef}
             />
+            <span id="showPw" class="material-icons" onClick={handleShowPw}>
+              visibility
+            </span>
           </div>
         </div>
         <div className="btn_area">

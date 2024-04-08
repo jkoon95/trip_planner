@@ -23,10 +23,11 @@ const NoticeView = (props) => {
   }, []);
   const navigate = useNavigate();
   const updateBtn = () => {
-    const contentDiv = document.querySelector(".notice-content");
-    const removeContent = document.querySelector("#viewContent");
-    removeContent.remove();
-    contentDiv.append(<TextEditor value={notice.noticeContent}></TextEditor>);
+    const content = document.querySelector("#notice-content");
+    content.after(
+      '<TextEditor id="notice-editor" value={notice.noticeContent} />'
+    );
+    content.remove();
   };
 
   const deleteBtn = () => {
@@ -74,8 +75,8 @@ const NoticeView = (props) => {
         </div>
         <div className="notice-content">
           <textarea
-            id="viewContent"
             readOnly
+            id="notice-content"
             value={notice.noticeContent}
           ></textarea>
         </div>
@@ -93,6 +94,28 @@ const NoticeView = (props) => {
         )}
       </div>
     </section>
+  );
+};
+
+const coupBtn = (props) => {
+  const member = props.member;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const coupToMember = () => {
+    axios
+      .post(backServer + "/member/coupon")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  return (
+    <Button
+      class="btn_primary outline"
+      text="쿠폰 발급"
+      clickEvent={coupToMember}
+    />
   );
 };
 

@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import ModifyTrips from "./page/mypage/ModifyTrips";
 import NoticeMain from "./page/notice/NoticeMain";
 import TourView from "./page/tour/TourView";
+import MemberMgmt from "./page/admin/MemberMgmt";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const navigate = useNavigate();

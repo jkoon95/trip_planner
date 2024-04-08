@@ -179,7 +179,6 @@ public class TourController {
 	@PostMapping(value="/tourType")
 	public ResponseEntity<ResponseDTO> searchType(@RequestBody Map<String, Integer> requestData){
 		int tourType = requestData.get("tourType");
-		System.out.println(tourType);
 		Map map = tourService.searchType(tourType);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -187,8 +186,8 @@ public class TourController {
 	
 	@GetMapping(value="/view/{tourNo}")
 	public ResponseEntity<ResponseDTO> viewTourDetail(@PathVariable int tourNo){
-		Tour tour = tourService.viewTourDetail(tourNo);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
+		Map map = tourService.viewTourDetail(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	

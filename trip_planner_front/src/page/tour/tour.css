@@ -204,6 +204,7 @@
 /* 상세보기 */
 .tour-view-prev {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .tour-view-prev .material-icons {
@@ -217,6 +218,7 @@
 }
 
 .tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
-  width: 420px;
-  height: 315px;
+  width: 540px;
+  height: 303.75px;
+  border-radius: 15px;
 }

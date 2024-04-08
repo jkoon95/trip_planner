@@ -126,9 +126,13 @@ public class TourService {
 		return map;
 	}
 
-	public Tour viewTourDetail(int tourNo) {
-		Tour tour = tourDao.viewTourDetail(tourNo);
-		return tour;
+	public Map viewTourDetail(int tourNo) {
+		List tourList = tourDao.viewTourDetail(tourNo);
+		List ticketList = tourDao.viewTicket(tourNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
+		return map;
 	}
 
 	

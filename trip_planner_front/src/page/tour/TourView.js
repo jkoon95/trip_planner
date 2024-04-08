@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -17,8 +17,10 @@ const TourView = (props) => {
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
-        setTour(res.data.data);
-        setTicket(res.data.data);
+        console.log(res.data.data);
+        const { tourList, ticketList } = res.data.data;
+        setTour(tourList[0]);
+        setTicket(ticketList[0]);
       })
       .catch((res) => {
         console.log(res);
@@ -28,6 +30,29 @@ const TourView = (props) => {
   const handleTitleClick = () => {
     navigate("/tourList");
   };
+
+  let tourTypeText;
+  switch (tour.tourType) {
+    case 1:
+      tourTypeText = "전시회";
+      break;
+    case 2:
+      tourTypeText = "액티비티";
+      break;
+    case 3:
+      tourTypeText = "테마파크";
+      break;
+    case 4:
+      tourTypeText = "박람회";
+      break;
+    case 5:
+      tourTypeText = "티켓·입장권";
+      break;
+    default:
+      tourTypeText = "기타";
+  }
+  const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
+  const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
 
   return (
     <section className="contents">
@@ -43,6 +68,26 @@ const TourView = (props) => {
             ) : (
               <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
             )}
+          </div>
+          <div className="tour-view-badge">
+            <span className="badge gray">{tourTypeText}</span>
+            <span className="badge gray">~ {salesPeriod}</span>
+          </div>
+          <div className="tour-view-info">
+            <div className="tour-view-name">
+              [{simpleTourAddr}] {tour.tourName}
+            </div>
+            <div className="tour-view-type">
+              {simpleTourAddr} {tourTypeText}
+            </div>
+            <div className="tour-view-star">
+              <span className="material-icons">star</span>
+            </div>
+            <div className="tour-view-price">
+              {ticket && ticket.ticketAdult
+                ? ticket.ticketAdult.toLocaleString() + " 원"
+                : "무료"}
+            </div>
           </div>
         </div>
       </div>

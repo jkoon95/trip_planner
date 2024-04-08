@@ -14,8 +14,21 @@ const BlogView = (props) => {
   const [blog, setBlog] = useState({});
   const [list, setlist] = useState([]);
   const [member, setMember] = useState(null);
-  const [comment, setComment] = useState("");
+  const [commentContent, setCommentContent] = useState("");
   const navigate = useNavigate();
+  const [commnetList, setCommentList] = useState([]);
+  const [isRegistComment, setIsRegistComment] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/blogComment/commentList/" + blogNo)
+      .then((res) => {
+        setCommentList(res.data.data);
+        console.log(res.data);
+      })
+      .catch((res) => {});
+  }, [isRegistComment]);
+
   useEffect(() => {
     axios
       .get(backServer + "/blog/one/" + blogNo)
@@ -56,16 +69,25 @@ const BlogView = (props) => {
       }
     });
   };
-  useEffect(() => {
-    axios
-      .post(backServer + "/blog/insertComment")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
-  });
+  const insertComment = () => {
+    if (commentContent !== "") {
+      const form = new FormData();
+      form.append("commentContent", commentContent);
+      form.append("memberNickName", member.memberNickName);
+      form.append("blogNo", blog.blogNo);
+      axios
+        .post(backServer + "/blogComment", form)
+        .then((res) => {
+          setCommentContent("");
+          setIsRegistComment(!isRegistComment);
+          Swal.fire("댓글이 등록되었습니다 :)");
+        })
+        .catch((res) => {
+          console.log(res.data);
+        });
+    }
+  };
+
   return (
     <section className="contents blogList">
       <div className="blog-view-wrap">
@@ -113,16 +135,33 @@ const BlogView = (props) => {
           })}
         </div>
         <div className="comment-content-box">
-          <h2>Comment</h2>
-          <Input
-            type="text"
-            data={comment}
-            setData={setComment}
-            placeholder="댓글을 작성해주세요"
-          />
-          <button type="button" class="btn_secondary md">
-            등록
-          </button>
+          <h3>댓글</h3>
+          <div className="comment-insert-box">
+            <Input
+              type="text"
+              data={commentContent}
+              setData={setCommentContent}
+              placeholder="댓글을 작성해주세요"
+            />
+            <button
+              type="button"
+              class="btn_secondary md"
+              onClick={insertComment}
+            >
+              등록
+            </button>
+          </div>
+          {commnetList.map((comment, index) => {
+            return (
+              <CommentItem
+                key={"comment" + index}
+                comment={comment}
+                commentNumber={index + 1}
+                isRegistComment={isRegistComment}
+                setIsRegistComment={setIsRegistComment}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
@@ -140,6 +179,63 @@ const DayItem = (props) => {
         className="schedule-content ql-editor"
         dangerouslySetInnerHTML={{ __html: day.blogDateScheduleContent }}
       ></span>
+    </div>
+  );
+};
+const CommentItem = (props) => {
+  const comment = props.comment;
+  const commentNumber = props.commentNumber;
+  const isRegistComment = props.isRegistComment;
+  const setIsRegistComment = props.setIsRegistComment;
+  const commentUpdate = () => {};
+  const commentDelete = () => {
+    const backServer = process.env.REACT_APP_BACK_SERVER;
+
+    Swal.fire({
+      icon: "warning",
+      text: "댓글을 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancleButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/blogComment/" + comment.commentNo)
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire("삭제완료");
+            setIsRegistComment(!isRegistComment);
+          })
+          .catch((res) => {
+            console.log(res.data);
+          });
+      }
+    });
+  };
+  return (
+    <div className="comment-list-box">
+      <div class="btn-area">
+        <button
+          type="button"
+          class="btn_primary sm first"
+          onClick={commentUpdate}
+        >
+          수정
+        </button>
+        <button
+          type="button"
+          class="btn_primary outline sm"
+          onClick={commentDelete}
+        >
+          삭제
+        </button>
+      </div>
+      <div className="comment-number">{commentNumber}</div>
+      <div className="comment-content">{comment.commentContent}</div>
+      <div className="comment-info">
+        <div className="comment-nickname">{comment.memberNickName} </div>
+        <div className="comment-date">{comment.commentDate}</div>
+      </div>
     </div>
   );
 };

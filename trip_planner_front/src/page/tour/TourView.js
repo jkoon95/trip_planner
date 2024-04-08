@@ -17,7 +17,6 @@ const TourView = (props) => {
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
-        console.log(res.data.data);
         const { tourList, ticketList } = res.data.data;
         setTour(tourList[0]);
         setTicket(ticketList[0]);
@@ -87,6 +86,14 @@ const TourView = (props) => {
               {ticket && ticket.ticketAdult
                 ? ticket.ticketAdult.toLocaleString() + " 원"
                 : "무료"}
+            </div>
+            <div className="tour-view-guide">
+              <div className="tour-view-discount">
+                <span className="material-icons">confirmation_number</span>
+              </div>
+              <div className="tour-view-caution">
+                <span className="material-icons">info</span>
+              </div>
             </div>
           </div>
         </div>

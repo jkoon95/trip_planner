@@ -26,7 +26,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
-import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.trip.model.dto.TripDetail;
 import kr.or.iei.trip.model.dto.TripPlace;
@@ -155,17 +154,35 @@ public class TripController {
 		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)om.readValue(trip.getTripDetailListStr(), List.class);
 		for(LinkedHashMap<String, Object> map : list) {
 			TripDetail td = new TripDetail();
-			td.setTripDetailNo(Integer.parseInt((String)map.get("tripDetailNo")));
-			td.setTripNo(Integer.parseInt((String)map.get("tripNo")));
-			td.setTripDay((String)map.get("tripDay"));
-			String tripCostStr = (String)map.get("tripCost");
-			if(tripCostStr != null) {
+			
+			String tripDetailNoStr = String.valueOf(map.get("tripDetailNo"));
+//			System.out.println("1: "+tripDetailNoStr);
+			if(!tripDetailNoStr.equals("null")) {
+				td.setTripDetailNo(Integer.parseInt(tripDetailNoStr));
+			}
+			
+			String tripNoStr = String.valueOf(map.get("tripNo"));
+//			System.out.println("2: "+tripNoStr);
+			if(!tripNoStr.equals("null")) {
+				td.setTripNo(Integer.parseInt(tripNoStr));
+			}
+			
+			String tripDayStr = String.valueOf(map.get("tripDay"));
+			td.setTripDay(tripDayStr);
+			
+			String tripCostStr = String.valueOf(map.get("tripCost"));
+//			System.out.println("3: "+tripCostStr);
+			if(!tripCostStr.equals("null")) {
 				td.setTripCost(Integer.parseInt(tripCostStr));
 			}
+			
 			List<LinkedHashMap<String, Object>> spl = (List<LinkedHashMap<String, Object>>)map.get("selectPlaceList");
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
 			for(LinkedHashMap<String, Object> data : spl) {
 				TripPlace tp = new TripPlace();
+				if((Integer)data.get("tripDetailNo") != null) {
+					tp.setTripDetailNo((Integer)data.get("tripDetailNo"));
+				}
 				tp.setTripRoute((Integer)data.get("tripRoute"));
 				tp.setTripTodo((String)data.get("tripTodo"));
 				tp.setTripPlaceName((String)data.get("tripPlaceName"));
@@ -181,7 +198,13 @@ public class TripController {
 		}
 		trip.setTripDetailList(tripDetailList);
 		int result = tripService.updateTripDetail(trip);
-		return null;
+		if(result == 2) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 }
 

@@ -23,4 +23,14 @@ public interface TripDao {
 
 	int updateTrip(Trip trip);
 
+	int updateTripDetail(TripDetail td);
+
+	int deleteTripPlace(int tripDetailNo);
+
+	List<TripDetail> checkTdList(int tripNo);
+
+	int deleteTripDetail(int tripDetailNo);
+
+	String selectTripDetailNo(TripDetail td);
+
 }

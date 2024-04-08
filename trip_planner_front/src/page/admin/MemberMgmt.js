@@ -92,18 +92,18 @@ const MemberMgmtItem = (props) => {
       <td>{memberItem.memberNo}</td>
       <td className="title-td">
         <div>
-          <Link to={"/admin/memberView/" + memberItem.memberNo}>
+          <Link to={"/mypage/admin/memberView/" + memberItem.memberNo}>
             {memberItem.memberEmail}
           </Link>
         </div>
       </td>
       <td>{memberItem.memberName}</td>
       <td>{memberItem.memberNickName}</td>
-      {memberItem.memberType == 1 ? (
+      {memberItem.memberType === 1 ? (
         <td>
           <span className="badge blue">일반회원</span>
         </td>
-      ) : memberItem.memberType == 2 ? (
+      ) : memberItem.memberType === 2 ? (
         <td>
           <span className="badge green">업체</span>
         </td>
@@ -112,13 +112,13 @@ const MemberMgmtItem = (props) => {
           <span className="badge red">관리자</span>
         </td>
       )}
-      {memberItem.memberStatus == 1 ? (
+      {memberItem.memberStatus === 1 ? (
         <td>
           <span className="badge blue">이용중</span>
         </td>
       ) : (
         <td>
-          <span className="badge red">이용중</span>
+          <span className="badge red">이용정지</span>
         </td>
       )}
     </tr>

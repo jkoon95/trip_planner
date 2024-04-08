@@ -8,6 +8,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "./tour.css";
 import TourSearchBox from "./TourSearchBox";
 import axios from "axios";
+import { Swal } from "sweetalert2";
 
 const TourList = () => {
   const [tourList, setTourList] = useState([]);
@@ -32,13 +33,31 @@ const TourList = () => {
     setVisibleTour((prevCount) => prevCount + 4); // 4개씩 추가
   };
 
+  const searchType = (type) => {
+    axios
+      .post(backServer + "/tour/tourType", { tourType: type })
+      .then((res) => {
+        if (res.data.message === "success") {
+          navigate("/tourType", {
+            state: {
+              tourList: res.data.data.tourList,
+              ticketList: res.data.data.ticketList,
+            },
+          });
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <section className="contents">
       <div className="tour-list-title">
         <h2>투어 · 티켓</h2>
       </div>
       <TourSearchBox />
-      <TourIconBox />
+      <TourIconBox searchType={searchType} />
       <TourSwiper />
       <div className="tour-list-prod">
         <h2>NEW TOUR</h2>
@@ -60,29 +79,35 @@ const TourList = () => {
   );
 };
 
-const TourIconBox = () => {
+const TourIconBox = ({ searchType }) => {
+  const navigate = useNavigate();
+  const handleType = (type) => {
+    searchType(type);
+    navigate("/tourType");
+  };
+
   return (
     <div className="tour-icon-wrap">
-      <Link to="/tourSearch">
+      <div onClick={() => handleType(5)}>
         <img alt="입장권" src="images/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
-      </Link>
-      <Link to="#">
+      </div>
+      <div onClick={() => handleType(1)}>
         <img alt="전시회" src="images/투어전시.jpg" />
         <div>전시회</div>
-      </Link>
-      <Link to="#">
+      </div>
+      <div onClick={() => handleType(2)}>
         <img alt="액티비티" src="images/투어레저.jpg" />
         <div>액티비티</div>
-      </Link>
-      <Link to="#">
+      </div>
+      <div onClick={() => handleType(4)}>
         <img alt="박람회" src="images/투어박람.jpg" />
         <div>박람회</div>
-      </Link>
-      <Link to="#">
+      </div>
+      <div onClick={() => handleType(3)}>
         <img alt="테마파크" src="images/투어테마.jpg" />
         <div>테마파크</div>
-      </Link>
+      </div>
     </div>
   );
 };

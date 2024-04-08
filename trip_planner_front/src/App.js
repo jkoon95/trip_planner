@@ -15,6 +15,7 @@ import MypageMain from "./page/mypage/MypageMain";
 import Join from "./page/member/Join";
 import BlogWrite from "./page/blog/BlogWrite";
 import TourSearch from "./page/tour/TourSearch";
+import TourType from "./page/tour/TourType";
 import InnReg from "./page/INN/InnReg";
 import TourReg from "./page/tour/TourReg";
 import PromotionList from "./page/promotion/PromotionList";
@@ -111,6 +112,7 @@ function App() {
           />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/tourSearch" element={<TourSearch />} />
+          <Route path="/tourType" element={<TourType />} />
           <Route path="/ref" element={<Ref />} />
           <Route
             path="/mypage/*"

@@ -117,5 +117,14 @@ public class TourService {
 		return map;
 	}
 
+	public Map searchType(int tourType) {
+		List tourList = tourDao.searchType(tourType);
+		List ticketList = tourDao.searchTypeTicket(tourType);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
+		return map;
+	}
+
 	
 }

@@ -20,4 +20,5 @@ public class TourTicket {
 	
 	private String searchText;
 	private String startDate;
+	private int tourType;
 }

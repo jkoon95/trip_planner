@@ -43,12 +43,12 @@ public interface TourDao {
 
 	List selectTicketList();
 
-//	List searchTour(Tour tour);
-
-//	List searchTicket(TourTicket tourTicket);
-
 	List searchTour(String searchText, String startDate);
 
 	List searchTicket(String searchText, String startDate);
+
+	List searchType(int tourType);
+
+	List searchTypeTicket(int tourType);
 	
 }

@@ -151,6 +151,10 @@ const TourProd = (props) => {
   const ticket = props.ticket;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const tourView = () => {
+    navigate("/tour/view/" + tour.tourNo);
+  };
+
   // tourType에 따라 다른 텍스트 표시
   let tourTypeText;
   switch (tour.tourType) {
@@ -172,9 +176,6 @@ const TourProd = (props) => {
     default:
       tourTypeText = "기타";
   }
-  const tourView = () => {
-    navigate("/tour/view/" + tour.tourNo);
-  };
 
   return (
     <>
@@ -182,7 +183,7 @@ const TourProd = (props) => {
         <div className="tour-bookmark">
           <img alt="찜" src="images/투어찜.png" />
         </div>
-        <div className="tour-prod-img">
+        <div className="tour-prod-img" onClick={tourView}>
           {tour.tourImg === null || tour.tourImg === "null" ? (
             <img src="/images/테마파크.jpg" />
           ) : (

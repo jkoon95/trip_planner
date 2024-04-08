@@ -84,6 +84,11 @@ const TourSearchOption = () => {
 
 const TourItem = ({ tour, ticket }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const tourView = () => {
+    navigate("/tour/view/" + tour.tourNo);
+  };
+
   let tourTypeText;
   switch (tour.tourType) {
     case 1:
@@ -109,7 +114,7 @@ const TourItem = ({ tour, ticket }) => {
   return (
     <div className="tour-prod-zone">
       <div className="tour-prod">
-        <div className="tour-prod-img">
+        <div className="tour-prod-img" onClick={tourView}>
           {tour.tourImg === null || tour.tourImg === "null" ? (
             <img src="/images/테마파크.jpg" />
           ) : (

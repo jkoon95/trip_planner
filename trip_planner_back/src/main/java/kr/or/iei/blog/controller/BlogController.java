@@ -100,7 +100,8 @@ public class BlogController {
 		if(list != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		}else {ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+		}else {
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());			
 		}
 	}

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="blogComment")
 public class BlogComment {
-	private int commentNO;
+	private int commentNo;
 	private int blogNo;
 	private String memberNickName;
 	private String commentContent;

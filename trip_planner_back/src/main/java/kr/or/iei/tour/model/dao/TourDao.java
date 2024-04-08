@@ -50,5 +50,7 @@ public interface TourDao {
 	List searchType(int tourType);
 
 	List searchTypeTicket(int tourType);
+
+	Tour viewTourDetail(int tourNo);
 	
 }

@@ -126,5 +126,10 @@ public class TourService {
 		return map;
 	}
 
+	public Tour viewTourDetail(int tourNo) {
+		Tour tour = tourDao.viewTourDetail(tourNo);
+		return tour;
+	}
+
 	
 }

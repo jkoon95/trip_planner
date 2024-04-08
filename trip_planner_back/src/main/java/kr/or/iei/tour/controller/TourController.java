@@ -185,4 +185,12 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@GetMapping(value="/view/{tourNo}")
+	public ResponseEntity<ResponseDTO> viewTourDetail(@PathVariable int tourNo){
+		Tour tour = tourService.viewTourDetail(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tour);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	
 }

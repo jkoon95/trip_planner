@@ -143,4 +143,7 @@
 	    )
 	    ORDER BY 1 DESC
 	</select>
+	<select id="viewTourDetail" resultType="tour">
+		SELECT * FROM TOUR_TBL WHERE TOUR_NO = #{tourNo}
+	</select>
 </mapper>

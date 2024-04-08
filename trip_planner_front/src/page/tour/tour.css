@@ -200,3 +200,23 @@
   width: 600px;
   font-family: pt-b;
 }
+
+/* 상세보기 */
+.tour-view-prev {
+  display: flex;
+}
+
+.tour-view-prev .material-icons {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.tour-view-prev h5 {
+  margin-bottom: 0px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
+  width: 420px;
+  height: 315px;
+}

@@ -27,10 +27,13 @@ const TourSearch = (props) => {
   const handleTourMore = () => {
     setVisibleTour((prevCount) => prevCount + 5); // 5개씩 추가
   };
+  const handleTitleClick = () => {
+    navigate("/tourList");
+  };
 
   return (
     <section className="contents">
-      <div className="tour-list-title">
+      <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
         <h2>검색결과</h2>
       </div>

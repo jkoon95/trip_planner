@@ -32,6 +32,9 @@ const TourList = () => {
   const handleTourMore = () => {
     setVisibleTour((prevCount) => prevCount + 4); // 4개씩 추가
   };
+  const handleTitleClick = () => {
+    navigate("/tourList");
+  };
 
   const searchType = (type) => {
     axios
@@ -53,7 +56,7 @@ const TourList = () => {
 
   return (
     <section className="contents">
-      <div className="tour-list-title">
+      <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
       </div>
       <TourSearchBox />

@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
 import kr.or.iei.admin.model.dto.CouponList;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -41,6 +43,15 @@ public class AdminService {
 		map.put("memberList",list);
 		map.put("pi",pi);
 		return map;
+	}
+
+	public Member selectOneMember(int memberNo) {
+		return adminDao.selectOneMember(memberNo);
+	}
+	
+	@Transactional
+	public int blockMember(int memberNo) {
+		return adminDao.blockMember(memberNo);
 	}
 	
 }

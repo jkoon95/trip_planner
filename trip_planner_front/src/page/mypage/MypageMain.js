@@ -18,6 +18,7 @@ import TourSale from "../tour/TourSale";
 import TourTicket from "./../tour/TourTicket";
 import CouponReg from "../admin/CouponReg";
 import MemberMgmt from "../admin/MemberMgmt";
+import MemberView from "../admin/MemberView";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -146,6 +147,12 @@ const MypageMain = (props) => {
             <Route
               path="/admin/memberMgmt"
               element={<MemberMgmt isLogin={isLogin} member={member} />}
+            />
+            <Route
+              path="/admin/memberView/:memberNo"
+              element={
+                <MemberView isLogin={isLogin} memberType={member.memberType} />
+              }
             />
           </Routes>
         </div>

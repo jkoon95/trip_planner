@@ -8,6 +8,9 @@ const InnDetailView = (props) => {
   const [partner, setPartner] = useState("");
   const [inn, setInn] = useState({});
   const [room, setRoom] = useState({});
+
+  {
+    /*
   useEffect = () => {
     axios
       .get(backServer + "/inn/detail/" + inn.innNo)
@@ -18,6 +21,7 @@ const InnDetailView = (props) => {
         console.log(res);
       });
   };
+  
   useEffect = () => {
     axios
       .get(backServer + "/inn/roomInfo/" + inn.innNo)
@@ -28,6 +32,8 @@ const InnDetailView = (props) => {
         console.log(res);
       });
   };
+*/
+  }
   return (
     <section className="contents detail-view">
       <h2>숙소상세</h2>

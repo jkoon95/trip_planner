@@ -22,4 +22,11 @@
 	        	 order by member_no desc)b)
 	where rnum between #{start} and #{end}
  </select>
+ <select id="selectOneMember" resultType="member">
+ 	select * from member_tbl where member_no=#{memberNo}
+ </select>
+ 
+ <update id="blockMember">
+ 	update member_tbl set member_status = 2 where member_no = #{memberNo} 
+ </update>
 </mapper>

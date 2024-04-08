@@ -19,7 +19,9 @@ const ListSideMenu = () => {
   const [roomPrice, setRoomPrice] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(500000);
-
+  const [innType, setInnType] = useState();
+  const [hashTag, setHashTag] = useState([]);
+  const [option, setOption] = useState([]);
   const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
   const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
 
@@ -218,9 +220,9 @@ const ListSideMenu = () => {
   // });
 
   const searchInnOption = () => {
-    console.log(innTypeList);
-    console.log(hashTagMenu);
-    console.log(optionMenu);
+    console.log(hashTag);
+    console.log(option);
+    console.log(innType);
     console.log(checkIn);
     console.log(checkOut);
     console.log(innAddr);
@@ -228,9 +230,9 @@ const ListSideMenu = () => {
     console.log(minPrice);
     console.log(maxPrice);
     const form = new FormData();
-    form.append("innType", innTypeList);
-    form.append("hashTagMenu", hashTagMenu);
-    form.append("optionMenu", optionMenu);
+    form.append("innType", innType);
+    form.append("hashTag", hashTag);
+    form.append("option", option);
     form.append("checkInDate", checkIn);
     form.append("checkOutDate", checkOut);
     form.append("innAddr", innAddr);
@@ -238,7 +240,7 @@ const ListSideMenu = () => {
     form.append("minPrice", minPrice);
     form.append("maxPrice", maxPrice);
     axios
-      .get((backServer + "/selectInnList", form))
+      .get((backServer + "/inn/selectInnList", form))
       .then((res) => {
         console.log(res.data);
       })
@@ -296,6 +298,8 @@ const ListSideMenu = () => {
         <CheckBoxInput
           innTypeList={innTypeList}
           setInnTypeList={setInnTypeList}
+          innType={innType}
+          setInnType={setInnType}
         />
       </div>
       <div className="price-wrap">
@@ -317,7 +321,12 @@ const ListSideMenu = () => {
         </div>
         <div className="hashTag-content">
           <div className="hashTag">
-            <TagComponent tageMenu={hashTagMenu} setTagMenu={setHashTagMenu} />
+            <TagComponent
+              tagMenu={hashTagMenu}
+              setTagMenu={setHashTagMenu}
+              hashTag={hashTag}
+              setHashTag={setHashTag}
+            />
           </div>
         </div>
       </div>
@@ -327,7 +336,12 @@ const ListSideMenu = () => {
         </div>
         <div className="hashTag-content">
           <div className="hashTag">
-            <TagComponent tageMenu={optionMenu} setTagMenu={setOptionMenu} />
+            <TagComponent
+              tagMenu={optionMenu}
+              setTagMenu={setOptionMenu}
+              hashTag={option}
+              setHashTag={setOption}
+            />
           </div>
         </div>
       </div>
@@ -403,12 +417,16 @@ const SearchInput = (props) => {
 const CheckBoxInput = (props) => {
   const innTypeList = props.innTypeList;
   const setInnTypeList = props.setInnTypeList;
+  const innType = props.innType;
+  const setInnType = props.setInnType;
   return (
     <>
       {innTypeList.map((item, index) => {
         const selectInnType = () => {
           innTypeList[index].checked = !innTypeList[index].checked;
           setInnTypeList([...innTypeList]);
+          let checkedValue = innTypeList[index].defaultValue;
+          setInnType(checkedValue);
         };
         return (
           <div className="inn-type-filter" key={"item" + index}>
@@ -418,8 +436,9 @@ const CheckBoxInput = (props) => {
               name={item.name}
               id={item.content}
               checked={item.checked}
+              defaultValue={item.defaultValue}
               onChange={(e) => {
-                selectInnType();
+                selectInnType(index);
               }}
             />
             <label htmlFor={item.content}>{item.text}</label>
@@ -513,20 +532,25 @@ const PriceRange = (props) => {
 };
 
 const TagComponent = (props) => {
-  const tageMenu = props.tageMenu;
+  const tagMenu = props.tagMenu;
   const setTagMenu = props.setTagMenu;
-  const selectValue = (index) => {
-    const copyHashTagMenu = [...tageMenu];
-    copyHashTagMenu[index].active = !copyHashTagMenu[index].active;
-    setTagMenu(copyHashTagMenu);
-  };
+  const hashTag = props.hashTag;
+  const setHashTag = props.setHashTag;
+
   return (
     <ul>
-      {tageMenu.map((item, index) => {
+      {tagMenu.map((item, index) => {
         const selectValue = (index) => {
-          const copyHashTagMenu = [...tageMenu];
+          const copyHashTagMenu = [...tagMenu];
           copyHashTagMenu[index].active = !copyHashTagMenu[index].active;
           setTagMenu(copyHashTagMenu);
+          let arr = new Array();
+          for (let i = 0; i < copyHashTagMenu.length; i++) {
+            if (copyHashTagMenu[i].active == true) {
+              arr.push(copyHashTagMenu[i].value);
+            }
+          }
+          setHashTag(arr);
         };
         return (
           <li key={"item" + index}>

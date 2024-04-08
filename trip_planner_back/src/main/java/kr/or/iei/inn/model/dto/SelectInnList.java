@@ -11,7 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class SelectInnList {
 	private int innType;
-	private List<RoomHashTag> hashTagMenu;
-	private List<Option> optionMenu;
+	private List hashTag;
+	private List option;
 	private String checkInDate;
+	private String checkOutDate;
+	private String innAddr;
+	private int bookGuest;
+	private int minPrice;
+	private int maxPrice;
 }

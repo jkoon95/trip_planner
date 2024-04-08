@@ -29,6 +29,7 @@ import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
 import kr.or.iei.inn.model.dto.SelectInnInfo;
+import kr.or.iei.inn.model.dto.SelectInnList;
 import kr.or.iei.inn.model.service.InnService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
@@ -161,6 +162,11 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
+	@GetMapping("/selectInnList")
+	public ResponseEntity<ResponseDTO> selectInnList(@ModelAttribute SelectInnList selectInnList, @RequestAttribute String memberEmail){
+		int memberNo = memberService.getMemberNo(memberEmail);
+		System.out.println(selectInnList);
+		return null;
+	}
 	
 }

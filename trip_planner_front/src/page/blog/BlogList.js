@@ -38,7 +38,7 @@ const BlogList = (props) => {
         <div className="blog-list-title-one">Trip Planner</div>
         <div className="blog-list-title-two">추천 여행지</div>
         <div className="blog-list-title-three">
-          <p>🔥 HOT한 국내 여행지를 공유해주세요</p>
+          <p>🔥 HOT한 국내 여행지를 공유해주세요.</p>
           <>
             {isLogin ? (
               <div className="blog-write-btn">

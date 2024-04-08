@@ -57,22 +57,22 @@
   color: var(--main_01);
   font-weight: 900;
   font-size: 150%;
+  font-family: pt-eb;
 }
 .blog-list-title-two {
   color: var(--main_02);
   font-size: 150%;
   font-weight: 900;
-  margin-left: px;
+  font-family: pt-eb;
 }
 .blog-list-title-three {
-  font-weight: 200;
   display: flex;
   justify-content: space-between;
 }
 .blog-list-title-three > p {
   color: #c1c1c1;
   line-height: 40px;
-  font-family: pt-eb;
+  font-family: pt-b;
 }
 .blog-list-wrap {
   overflow: hidden;

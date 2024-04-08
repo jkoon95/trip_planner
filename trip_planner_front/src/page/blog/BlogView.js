@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import "react-quill/dist/quill.snow.css";
-import { Input } from "../../component/FormFrm";
+import { Button, Input, Textarea } from "../../component/FormFrm";
+import Modal from "../../component/Modal";
 
 const BlogView = (props) => {
   const isLogin = props.isLogin;
@@ -18,6 +19,12 @@ const BlogView = (props) => {
   const navigate = useNavigate();
   const [commnetList, setCommentList] = useState([]);
   const [isRegistComment, setIsRegistComment] = useState(true);
+  const [openComment, setOpenComment] = useState(false);
+  const [updateCommnet, setUpdateCommnet] = useState("");
+
+  const closeCommentFunc = () => {
+    setOpenComment(false);
+  };
 
   useEffect(() => {
     axios
@@ -87,84 +94,129 @@ const BlogView = (props) => {
         });
     }
   };
-
+  const commentUpdate = (props) => {
+    const comment = props.comment;
+    if (setUpdateCommnet !== "") {
+      const form = new FormData();
+      form.append("commentCotnet", commentContent);
+      form.append("commentNo", comment.commentNo);
+      console.log(commentContent);
+      console.log(comment.commentNo);
+      axios
+        .patch(backServer + "/blogComment", form)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("수정이 완료되었습니다. :)");
+            setIsRegistComment(!isRegistComment);
+          }
+        })
+        .catch((res) => {
+          Swal.fire("수정할 내용을 입력해주세요. :)");
+        });
+    }
+  };
   return (
-    <section className="contents blogList">
-      <div className="blog-view-wrap">
-        <h2>BLOG </h2>
-        {isLogin ? (
-          <div className="btn-box">
-            {member && member.memberNickName == blog.memberNickName ? (
-              <>
-                <button
-                  type="button"
-                  class="btn_secondary outline md"
-                  onClick={deleteBoard}
-                >
-                  삭제
-                </button>
-              </>
-            ) : (
-              ""
-            )}
-          </div>
-        ) : (
-          ""
-        )}
-
-        <div className="blog-view-info">
-          <div>닉네임 : {blog.memberNickName}</div>
-          <div>작성일자 : {blog.blogDate}</div>
-        </div>
-        <div className="blog-view-top">
-          {blog && blog.blogThumbnail === null ? (
-            <img src="/images/blogDefault.png" />
+    <>
+      <section className="contents blogList">
+        <div className="blog-view-wrap">
+          <h2>BLOG </h2>
+          {isLogin ? (
+            <div className="btn-box">
+              {member && member.memberNickName == blog.memberNickName ? (
+                <>
+                  <button
+                    type="button"
+                    class="btn_secondary outline md"
+                    onClick={deleteBoard}
+                  >
+                    삭제
+                  </button>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           ) : (
-            <img
-              src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
-            />
+            ""
           )}
 
-          <div className="blog-view-title">{blog.blogTitle}</div>
-        </div>
-        <div className="blog-view-content">
-          {list.map((day, index) => {
-            return (
-              <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
-            );
-          })}
-        </div>
-        <div className="comment-content-box">
-          <h3>댓글</h3>
-          <div className="comment-insert-box">
-            <Input
-              type="text"
-              data={commentContent}
-              setData={setCommentContent}
-              placeholder="댓글을 작성해주세요"
-            />
-            <button
-              type="button"
-              class="btn_secondary md"
-              onClick={insertComment}
-            >
-              등록
-            </button>
+          <div className="blog-view-info">
+            <div>닉네임 : {blog.memberNickName}</div>
+            <div>작성일자 : {blog.blogDate}</div>
           </div>
-          {commnetList.map((comment, index) => {
-            return (
-              <CommentItem
-                key={"comment" + index}
-                comment={comment}
-                commentNumber={index + 1}
-                isRegistComment={isRegistComment}
-                setIsRegistComment={setIsRegistComment}
+          <div className="blog-view-top">
+            {blog && blog.blogThumbnail === null ? (
+              <img src="/images/blogDefault.png" />
+            ) : (
+              <img
+                src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
               />
-            );
-          })}
+            )}
+
+            <div className="blog-view-title">{blog.blogTitle}</div>
+          </div>
+          <div className="blog-view-content">
+            {list.map((day, index) => {
+              return (
+                <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
+              );
+            })}
+          </div>
+          <div className="comment-content-box">
+            <h3>댓글</h3>
+            <div className="comment-insert-box">
+              <Input
+                type="text"
+                data={commentContent}
+                setData={setCommentContent}
+                placeholder="댓글을 작성해주세요"
+              />
+              <button
+                type="button"
+                class="btn_secondary md"
+                onClick={insertComment}
+              >
+                등록
+              </button>
+            </div>
+            {commnetList.map((comment, index) => {
+              return (
+                <CommentItem
+                  key={"comment" + index}
+                  comment={comment}
+                  commentNumber={index + 1}
+                  isRegistComment={isRegistComment}
+                  setIsRegistComment={setIsRegistComment}
+                  setOpenComment={setOpenComment}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <Modal
+        class="modal"
+        open={openComment}
+        title="댓글 수정"
+        useCloseBtn={true}
+        closeModal={closeCommentFunc}
+      >
+        <Textarea
+          data={updateCommnet}
+          setData={setUpdateCommnet}
+          placeholder="내용을 입력해주세요..."
+        />
+
+        <div className="btn_area">
+          <Button
+            class="btn_secondary"
+            text="수정"
+            clickEvent={commentUpdate}
+          />
+        </div>
+      </Modal>
+    </>
   );
 };
 
@@ -187,10 +239,12 @@ const CommentItem = (props) => {
   const commentNumber = props.commentNumber;
   const isRegistComment = props.isRegistComment;
   const setIsRegistComment = props.setIsRegistComment;
-  const commentUpdate = () => {};
+  const setOpenComment = props.setOpenComment;
+  const openCommentFunc = () => {
+    setOpenComment(true);
+  };
   const commentDelete = () => {
     const backServer = process.env.REACT_APP_BACK_SERVER;
-
     Swal.fire({
       icon: "warning",
       text: "댓글을 삭제하시겠습니까?",
@@ -203,7 +257,7 @@ const CommentItem = (props) => {
           .delete(backServer + "/blogComment/" + comment.commentNo)
           .then((res) => {
             console.log(res.data);
-            Swal.fire("삭제완료");
+            Swal.fire("삭제되었습니다 :)");
             setIsRegistComment(!isRegistComment);
           })
           .catch((res) => {
@@ -218,7 +272,7 @@ const CommentItem = (props) => {
         <button
           type="button"
           class="btn_primary sm first"
-          onClick={commentUpdate}
+          onClick={openCommentFunc}
         >
           수정
         </button>
@@ -230,6 +284,7 @@ const CommentItem = (props) => {
           삭제
         </button>
       </div>
+
       <div className="comment-number">{commentNumber}</div>
       <div className="comment-content">{comment.commentContent}</div>
       <div className="comment-info">

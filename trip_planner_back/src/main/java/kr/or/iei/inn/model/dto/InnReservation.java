@@ -24,4 +24,5 @@ public class InnReservation {
 	private String bookDate;
 	private int bookStatus;
 	private int bookGuest;
+	private int couponNo;
 }

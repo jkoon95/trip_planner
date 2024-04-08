@@ -13,4 +13,6 @@ public interface AdminDao {
 
 	List selectCouponList(int memberNo);
 
+	int updateCoupon(int couponNo);
+
 }

@@ -6,9 +6,13 @@
   </insert>
   
   <select id="selectCouponList" resultType="couponList">
-  	SELECT COUPON_NO, coupon_name, discount_rate, discount_amount, TO_CHAR(expired_date, 'YYYY-MM-DD') AS expired_date 
+  	SELECT COUPON_NO, coupon_name, discount_rate, discount_amount, TO_CHAR(expired_date, 'YYYY-MM-DD') AS expired_date, coupon_status
 	FROM COUPON_LIST_TBL 
 	JOIN COUPON_TBL USING (COUPON_NO) 
-	WHERE (COUPON_RANGE = 1 OR COUPON_RANGE = 4) AND MEMBER_NO = #{memberNo}
+	WHERE (COUPON_RANGE = 1 OR COUPON_RANGE = 4) AND MEMBER_NO = #{memberNo} AND COUPON_STATUS=1
   </select>
+  
+  <update id="updateCoupon">
+  	update coupon_tbl set coupon_status = 3 where coupon_no=#{couponNo}
+  </update>
 </mapper>

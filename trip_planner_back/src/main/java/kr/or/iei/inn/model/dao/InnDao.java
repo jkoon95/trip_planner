@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
+import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
@@ -32,6 +33,8 @@ public interface InnDao {
 	int insertRoomHashTag(RoomHashTag roomHashTag);
 
 	Inn selectInnDetail(int innNo);
+
+	int reservationInn(InnReservation innReservation);
 
 
 

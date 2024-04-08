@@ -8,12 +8,14 @@ import "./innMain.css";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import axios from "axios";
 
 const ListSideMenu = () => {
-  const [innAddr, setInnAddr] = useState("");
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [innAddr, setInnAddr] = useState("제주");
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
-  const [bookGuest, setBookGuest] = useState("");
+  const [bookGuest, setBookGuest] = useState(3);
   const [roomPrice, setRoomPrice] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(500000);
@@ -21,7 +23,7 @@ const ListSideMenu = () => {
   const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
   const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
 
-  const [hashTageMenu, setHashTagMenu] = useState([
+  const [hashTagMenu, setHashTagMenu] = useState([
     {
       text: "#가족여행",
       active: false,
@@ -135,6 +137,31 @@ const ListSideMenu = () => {
       active: false,
       value: 10,
     },
+    {
+      text: "욕실용품",
+      active: false,
+      value: 11,
+    },
+    {
+      text: "픽업가능",
+      active: false,
+      value: 12,
+    },
+    {
+      text: "라운지",
+      active: false,
+      value: 13,
+    },
+    {
+      text: "얼리체크인",
+      active: false,
+      value: 14,
+    },
+    {
+      text: "에어컨",
+      active: false,
+      value: 15,
+    },
   ]);
 
   const [innTypeList, setInnTypeList] = useState([
@@ -143,7 +170,7 @@ const ListSideMenu = () => {
       content: "hotel",
       defaultValue: 1,
       name: "innType",
-      type: "checkbox",
+      type: "radio",
       checked: false,
     },
     {
@@ -151,7 +178,7 @@ const ListSideMenu = () => {
       content: "resort",
       defaultValue: 2,
       name: "innType",
-      type: "checkbox",
+      type: "radio",
       checked: false,
     },
     {
@@ -159,7 +186,7 @@ const ListSideMenu = () => {
       content: "pension",
       defaultValue: 3,
       name: "innType",
-      type: "checkbox",
+      type: "radio",
       checked: false,
     },
     {
@@ -167,7 +194,7 @@ const ListSideMenu = () => {
       content: "guest-house",
       defaultValue: 4,
       name: "innType",
-      type: "checkbox",
+      type: "radio",
       checked: false,
     },
   ]);
@@ -192,7 +219,7 @@ const ListSideMenu = () => {
 
   const searchInnOption = () => {
     console.log(innTypeList);
-    console.log(hashTageMenu);
+    console.log(hashTagMenu);
     console.log(optionMenu);
     console.log(checkIn);
     console.log(checkOut);
@@ -200,6 +227,24 @@ const ListSideMenu = () => {
     console.log(bookGuest);
     console.log(minPrice);
     console.log(maxPrice);
+    const form = new FormData();
+    form.append("innType", innTypeList);
+    form.append("hashTagMenu", hashTagMenu);
+    form.append("optionMenu", optionMenu);
+    form.append("checkInDate", checkIn);
+    form.append("checkOutDate", checkOut);
+    form.append("innAddr", innAddr);
+    form.append("bookGuest", bookGuest);
+    form.append("minPrice", minPrice);
+    form.append("maxPrice", maxPrice);
+    axios
+      .get((backServer + "/selectInnList", form))
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
   return (
     <div className="sideMenu-wrap">
@@ -272,7 +317,7 @@ const ListSideMenu = () => {
         </div>
         <div className="hashTag-content">
           <div className="hashTag">
-            <TagComponent tageMenu={hashTageMenu} setTagMenu={setHashTagMenu} />
+            <TagComponent tageMenu={hashTagMenu} setTagMenu={setHashTagMenu} />
           </div>
         </div>
       </div>

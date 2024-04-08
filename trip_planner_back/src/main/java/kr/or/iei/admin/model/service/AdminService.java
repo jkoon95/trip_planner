@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
 import kr.or.iei.admin.model.dto.CouponList;
@@ -22,5 +23,11 @@ public class AdminService {
 	public List selectCouponList(int memberNo) {
 		List list = adminDao.selectCouponList(memberNo);
 		return list;
+	}
+
+	@Transactional
+	public int updateCoupon(int couponNo) {
+		
+		return adminDao.updateCoupon(couponNo);
 	}
 }

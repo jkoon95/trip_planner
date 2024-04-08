@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.inn.model.dao.InnDao;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
+import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.inn.model.dto.Option;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
@@ -60,5 +61,10 @@ public class InnService {
 	}
 	public Inn selectInnDetail(int innNo) {
 		return innDao.selectInnDetail(innNo);
+	}
+	@Transactional
+	public int reservationInn(InnReservation innReservation) {
+		
+		return innDao.reservationInn(innReservation);
 	}
 }

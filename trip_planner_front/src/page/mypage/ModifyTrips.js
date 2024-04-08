@@ -55,7 +55,7 @@ const ModifyTrips = (props) => {
       setTripDetailList(res.data.data.tripDetailList);
       setTripStartDate(dayjs(res.data.data.tripStartDate));
       setTripEndDate(dayjs(res.data.data.tripEndDate));
-      // setTrip(res.data.data);
+      setTrip(res.data.data);
     })
     .catch((res) => {
       console.log(res);
@@ -83,53 +83,61 @@ const ModifyTrips = (props) => {
     setTripTitle(tripTitleInput);
   }
 
-  // 여행 등록하기
-  const createTripsFunc = () => {
+  // 여행 수정하기
+  const modifyTripsFunc = () => {
     // if(tripTitle === ""){
     //   trip.tripTitle = "국내 여행";
     //   setTripTitle("국내 여행");
     // }
     console.log(trip);
-    // console.log(tripDetailList);
-    // axios.post(backServer + "/trip", trip)
+    // const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
+    // axios.patch(backServer + "/trip/tripTbl", tripObj)
     // .then((res) => {
-    //   if(res.data.message === "success"){
-    //     Swal.fire({icon: "success", title: "등록 완료", text: "여행 일정이 등록되었습니다.", confirmButtonText: "닫기"});
-    //     navigate("/");
-    //   }
-    // })
-    // .catch((res) => {
-    //   console.log(res);
-    //   Swal.fire({icon: "warning", text: "문제가 발생했습니다. 잠시 후 다시 시도해주세요.", confirmButtonText: "닫기"})
-    // })
-  }
-
-
-  // 수정 시점..
-  useEffect(() => {
-    // console.log("trip에 저장된 tripStartDate: "+trip.tripStartDate);
-    // console.log("아마도 변경한 tripStartDate: "+dayjs(tripStartDate).format("YYYY-MM-DD"));
-    // console.log("trip에 저장된 tripEndDate: "+trip.tripEndDate);
-    // console.log("아마도 변경한 tripEndDate: "+dayjs(tripEndDate).format("YYYY-MM-DD"));
-
-    
-    trip.tripDetailList = tripDetailList;
-    trip.tripDetailListStr = JSON.stringify(tripDetailList);
-    setTrip({...trip});
-    // console.log(trip);
-
-    // const tripObj = {tripNo: tripNo, tripDetailListStr: trip.tripDetailListStr};
-    // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-    // .then((res) => {
-    //   console.log("디테일 수정 axios!!!!!");
+    //   console.log("날짜 수정 axios!!!!!");
     //   console.log(res.data);
     // })
     // .catch((res) => {
     //   console.log(res);
     // })
 
-    // console.log("트립 디테일 변경! 이걸로 모든 걸 제어할 수 있을까? 아니.");
+    // if(trip.tripDetailList.length !== 0){
+    //   const tripObj = {tripNo: tripNo, tripDetailList: trip.tripDetailList, tripDetailListStr: trip.tripDetailListStr};
+    //   console.log(tripObj);
+    //   axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+    //   .then((res) => {
+    //     console.log("디테일 수정 axios!!!!!");
+    //     console.log(res.data);
+    //   })
+    //   .catch((res) => {
+    //     console.log(res);
+    //   })
+    // }
+  }
+
+
+  // 수정 시점..
+  useEffect(() => {
+    trip.tripDetailList = tripDetailList;
+    trip.tripDetailListStr = JSON.stringify(tripDetailList);
+    setTrip({...trip});
+
+    const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: trip.tripDetailList, tripDetailListStr: trip.tripDetailListStr};
+    console.log(tripObj);
+    axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+    .then((res) => {
+      console.log("디테일 수정 axios!!!!!");
+      console.log(res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+
+    // console.log("트립 디테일 변경!");
   }, [tripDetailList])
+
+  useEffect(() => {
+    
+  }, [trip])
 
 
   const closeTodoModalFunc = () => {
@@ -439,6 +447,7 @@ const ModifyTrips = (props) => {
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
+
             if(copyTripDetailList[tripDayCount]){
               newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : array, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
             }else{
@@ -467,36 +476,26 @@ const ModifyTrips = (props) => {
       setTripDetailList(newTripDetailList);
 
       if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
-        console.log("시작 날짜 변경");
+        // console.log("시작 날짜 변경");
         trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
       }
       if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
-        console.log("종료 날짜 변경");
+        // console.log("종료 날짜 변경");
         trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
       }
 
-      console.log(newTripDetailList);
-  
-      // const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
-      // axios.patch(backServer + "/trip/tripTbl", tripObj)
-      // .then((res) => {
-      //   console.log("날짜 수정 axios!!!!!");
-      //   console.log(res.data);
-
-      //   tripObj.tripDetailListStr = JSON.stringify(newTripDetailList);
-      //   axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-      //   .then((res) => {
-      //     console.log("디테일 수정 axios!!!!!");
-      //     console.log(res.data);
-      //   })
-      //   .catch((res) => {
-      //     console.log(res);
-      //   })
-
-      // })
-      // .catch((res) => {
-      //   console.log(res);
-      // })
+      console.log("날짜 수정");
+      
+      const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: newTripDetailList};
+      console.log(tripObj);
+      axios.patch(backServer + "/trip/tripTbl", tripObj)
+      .then((res) => {
+        console.log("날짜 수정 axios!!!!!");
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      })
 
     }
   },[tripStartDate, tripEndDate])
@@ -540,7 +539,7 @@ const ModifyTrips = (props) => {
             </div>
             <div className="btn_area">
               {/* <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} disabled={tripBtnDisabled} /> */}
-              <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} />
+              <Button text="수정하기" class="btn_primary" clickEvent={modifyTripsFunc} />
             </div>
           </div>
 

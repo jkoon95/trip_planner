@@ -186,6 +186,7 @@
 .tour-prod-zone > .tour-prod > .tour-prod-info > .tour-prod-bookmark {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 /* 더 보기 버튼 */

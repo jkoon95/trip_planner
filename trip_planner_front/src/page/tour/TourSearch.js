@@ -122,11 +122,15 @@ const TourItem = ({ tour, ticket }) => {
             {tour.tourAddr.slice(0, 2)} {tourTypeText}
           </div>
           <div className="tour-prod-limit">~ {salesPeriod}</div>
-          <div className="tour-prod-price">{ticket.ticketAdult}</div>
+          <div className="tour-prod-price">
+            {ticket.ticketAdult === 0
+              ? "무료"
+              : ticket.ticketAdult.toLocaleString() + " 원"}
+          </div>
           <img
             className="tour-prod-bookmark"
             alt="찜"
-            src="images/찜버튼.png"
+            src="images/투어찜.png"
           />
         </div>
       </div>

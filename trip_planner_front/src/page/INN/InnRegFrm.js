@@ -9,7 +9,6 @@ import { Button, Input } from "../../component/FormFrm";
 import TextEditor from "../../component/TextEditor";
 
 const InnRegFrm = (props) => {
-  
   const innType = props.innType;
   const setInnType = props.setInnType;
   const innAddr = props.innAddr;

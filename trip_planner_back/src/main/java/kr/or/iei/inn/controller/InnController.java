@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.admin.model.service.AdminService;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
+import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.inn.model.dto.Option;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
@@ -47,6 +49,8 @@ public class InnController {
 	private MemberService memberService;
 	@Value("${file.root}")
 	private String root;
+	@Autowired
+	private AdminService adminService;
 	
 	@PostMapping("/innReg")
 	public ResponseEntity<ResponseDTO> insertInn(@ModelAttribute Inn inn, @ModelAttribute MultipartFile[] innFile, @RequestAttribute String memberEmail){
@@ -133,6 +137,24 @@ public class InnController {
 		Inn inn = innService.selectInnDetail(innNo);
 		if(inn != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", inn);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
+	@PostMapping("/reservationInn")
+	public ResponseEntity<ResponseDTO> reservationInn(@ModelAttribute InnReservation innReservation, @RequestAttribute String memberEmail){
+		int memberNo = memberService.getMemberNo(memberEmail);
+		innReservation.setMemberNo(memberNo);
+		int result = innService.reservationInn(innReservation);
+		
+		int couponNo = innReservation.getCouponNo();
+		result += adminService.updateCoupon(couponNo);
+		
+		if(result > 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);

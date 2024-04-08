@@ -36,14 +36,12 @@
 		from trip_tbl where trip_no=#{tripNo}
 	</select>
 
-	<select id="selectOneTripDetailList"
-		resultMap="getTripDetailList">
-		select trip_detail_no, trip_no, to_char(trip_day, 'YYYY-MM-DD') trip_day,
-		trip_cost from trip_detail_tbl where trip_no=#{tripNo}
+	<select id="selectOneTripDetailList" resultMap="getTripDetailList">
+		select trip_detail_no, trip_no, to_char(trip_day, 'YYYY-MM-DD') trip_day, trip_cost from trip_detail_tbl where trip_no=#{tripNo} order by trip_day
 	</select>
 
 	<select id="selectOneTripPlaceList" resultType="tripPlace">
-		select * from trip_place_tbl where trip_detail_no=#{tripDetailNo}
+		select * from trip_place_tbl where trip_detail_no=#{tripDetailNo} order by trip_route
 	</select>
 
 	<resultMap type="trip" id="getTrip">
@@ -104,6 +102,13 @@
 	<select id="selectTripDetailNo" resultType="String">
 		select trip_detail_no from trip_detail_tbl where trip_no=#{tripNo} and trip_day=#{tripDay}
 	</select>
+	
+	<update id="updateTripPlace">
+		update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo} where trip_route=#{oldTripRoute}
+		<if test="oldDetailNo != 0">
+			trip_detail_no=#{oldDetailNo}
+		</if>
+	</update>
 
 </mapper>
 

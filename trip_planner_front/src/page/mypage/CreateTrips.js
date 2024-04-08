@@ -611,17 +611,24 @@ const ItemTripPlace = (props) => {
   }
 
   const deletePlace = () => {
-    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    // tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    tripDetailList[thisIndex].selectPlaceList[routeIndex].delNo = 1;
     setTripDetailList([...tripDetailList]);
   }
 
   const tripRouteDown = () => {
+    for(let i=0;i<tripDetailList[thisIndex].selectPlaceList.length;i++){
+      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = i;
+    }
     const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList.splice(routeIndex+1,0,thisItem[0]);
     setTripDetailList([...tripDetailList]);
   }
 
   const tripRouteUp = () => {
+    for(let i=0;i<tripDetailList[thisIndex].selectPlaceList.length;i++){
+      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = i;
+    }
     const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     let newIndex = routeIndex-1;
     if(routeIndex === 0){
@@ -635,38 +642,41 @@ const ItemTripPlace = (props) => {
   return(
     listType === "day_items" ? (
       <>
-        <li className="item tripPlace">
-          <div className="tripRoute_no">{(routeIndex+1)}</div>
-          <div className="item_box">
-            <div className="item_box_content">
-              <div className="place_name">{place.tripPlaceName}</div>
-              <div className="place_info">
-                <span>{place.tripPlaceCategory}</span>
-                <span>{place.tripPlaceAddress}</span>
+        {place.delNo !== 1 ? (
+          <li className="item tripPlace">
+            <div className="tripRoute_no">{(routeIndex+1)}</div>
+            <div className="item_box">
+              <div className="item_box_content">
+                <div className="place_name">{place.tripPlaceName}</div>
+                <div className="place_info">
+                  <span>{place.tripPlaceCategory}</span>
+                  <span>{place.tripPlaceAddress}</span>
+                </div>
               </div>
-            </div>
-            <div className="item_btn_wrap">
-              {
-                routeIndex === 0 ? (
-                  <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
-                ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
-                  <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                ) : (
-                  <>
+              <div className="item_btn_wrap">
+                {
+                  routeIndex === 0 ? (
                     <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                  ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
                     <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                  </>
-                )
-              }
-            </div>
-            {!place.tripTodo ? (
-              <div className="btn_area">
-                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
+                  ) : (
+                    <>
+                      <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                      <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
+                    </>
+                  )
+                }
               </div>
-            ) : ""}
-            <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
-          </div>
-        </li>
+              {!place.tripTodo ? (
+                <div className="btn_area">
+                  <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
+                </div>
+              ) : ""}
+              <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
+            </div>
+          </li>
+          ) : ""
+        }
         {place.tripTodo ? (
           <li className="item tripTodo">
           <div className="tripRoute_no"></div>

@@ -33,6 +33,7 @@ public class AdminService {
 		return list;
 	}
 
+
 	public Map selectMemberList(int reqPage) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
@@ -54,4 +55,11 @@ public class AdminService {
 		return adminDao.blockMember(memberNo);
 	}
 	
+
+	@Transactional
+	public int updateCoupon(int couponNo) {
+		
+		return adminDao.updateCoupon(couponNo);
+	}
+
 }

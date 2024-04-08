@@ -23,4 +23,7 @@ public interface AdminDao {
 
 	int blockMember(int memberNo);
 
+	int updateCoupon(int couponNo);
+
+
 }

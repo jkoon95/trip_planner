@@ -15,6 +15,7 @@ import MypageMain from "./page/mypage/MypageMain";
 import Join from "./page/member/Join";
 import BlogWrite from "./page/blog/BlogWrite";
 import TourSearch from "./page/tour/TourSearch";
+import TourType from "./page/tour/TourType";
 import InnReg from "./page/INN/InnReg";
 import TourReg from "./page/tour/TourReg";
 import PromotionList from "./page/promotion/PromotionList";
@@ -31,6 +32,8 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ModifyTrips from "./page/mypage/ModifyTrips";
 import NoticeMain from "./page/notice/NoticeMain";
+import TourView from "./page/tour/TourView";
+import MemberMgmt from "./page/admin/MemberMgmt";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const navigate = useNavigate();
@@ -111,6 +114,11 @@ function App() {
           />
           <Route path="/tourList" element={<TourList />} />
           <Route path="/tourSearch" element={<TourSearch />} />
+          <Route path="/tourType" element={<TourType />} />
+          <Route
+            path="/tour/view/:tourNo"
+            element={<TourView isLogin={isLogin} />}
+          />
           <Route path="/ref" element={<Ref />} />
           <Route
             path="/mypage/*"
@@ -131,7 +139,7 @@ function App() {
           />
           <Route
             path="/mypage/myTrips/modifyTrips/:tripNo"
-            element={<ModifyTrips />}
+            element={<ModifyTrips isLogin={isLogin} />}
           />
           <Route path="/notice/*" element={<NoticeMain isLogin={isLogin} />} />
         </Routes>

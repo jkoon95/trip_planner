@@ -109,5 +109,41 @@
 	    FROM TOUR_TBL
 	    WHERE (TOUR_NAME LIKE '%' || #{searchText} || '%' OR TOUR_ADDR LIKE '%' || #{searchText} || '%')
 	    AND SALES_PERIOD >= #{startDate}
+	    AND SALES_STATUS = 1
+	    ORDER BY 1 DESC
+	</select>
+	<select id="searchTicket" resultType="tourTicket">
+	    SELECT * FROM TOUR_TICKET_TBL
+	    WHERE TOUR_NO IN (
+	        SELECT TOUR_NO
+	        FROM TOUR_TBL
+	        WHERE (TOUR_NAME LIKE '%' || #{searchText} || '%' OR TOUR_ADDR LIKE '%' || #{searchText} || '%')
+	        AND SALES_PERIOD >= #{startDate}
+	        AND SALES_STATUS = 1
+	    )
+	    ORDER BY 1 DESC
+	</select>
+	<select id="searchType" resultType="tour">
+		SELECT *
+	    FROM TOUR_TBL
+	    WHERE TOUR_TYPE = #{tourType}
+	    AND SALES_PERIOD >= SYSDATE
+	    AND SALES_STATUS = 1
+	    ORDER BY 1 DESC
+	</select>
+	<select id="searchTypeTicket" resultType="tourTicket">
+		SELECT *
+	    FROM TOUR_TICKET_TBL
+	    WHERE TOUR_NO IN (
+	        SELECT TOUR_NO
+	        FROM TOUR_TBL
+	        WHERE TOUR_TYPE = #{tourType}
+	        AND SALES_PERIOD >= SYSDATE
+	        AND SALES_STATUS = 1
+	    )
+	    ORDER BY 1 DESC
+	</select>
+	<select id="viewTourDetail" resultType="tour">
+		SELECT * FROM TOUR_TBL WHERE TOUR_NO = #{tourNo}
 	</select>
 </mapper>

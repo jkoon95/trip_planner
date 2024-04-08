@@ -22,7 +22,13 @@ const NoticeView = (props) => {
       .catch((res) => {});
   }, []);
   const navigate = useNavigate();
-  const updateBtn = () => {};
+  const updateBtn = () => {
+    const content = document.querySelector("#notice-content");
+    content.after(
+      '<TextEditor id="notice-editor" value={notice.noticeContent} />'
+    );
+    content.remove();
+  };
 
   const deleteBtn = () => {
     Swal.fire({
@@ -68,7 +74,11 @@ const NoticeView = (props) => {
           </div>
         </div>
         <div className="notice-content">
-          <textarea readOnly value={notice.noticeContent}></textarea>
+          <textarea
+            readOnly
+            id="notice-content"
+            value={notice.noticeContent}
+          ></textarea>
         </div>
         {isLogin && member.memberType === 3 ? (
           <div className="btn_area">
@@ -84,6 +94,28 @@ const NoticeView = (props) => {
         )}
       </div>
     </section>
+  );
+};
+
+const coupBtn = (props) => {
+  const member = props.member;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const coupToMember = () => {
+    axios
+      .post(backServer + "/member/coupon")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  return (
+    <Button
+      class="btn_primary outline"
+      text="쿠폰 발급"
+      clickEvent={coupToMember}
+    />
   );
 };
 

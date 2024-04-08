@@ -10,6 +10,7 @@
 }
 .tour-list-title > h2 {
   float: left;
+  cursor: pointer;
 }
 .tour-list-title > h2:first-child {
   margin-right: 40px;
@@ -33,12 +34,13 @@
   margin-bottom: 8px; /* 이미지와 설명 사이의 간격 조절 */
   border-radius: 25px;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 .tour-icon-wrap img:hover {
   transform: scale(1.2); /* 마우스 오버 시 크기를 1.2배로 확대 */
 }
 
-.tour-icon-wrap div {
+.tour-icon-wrap > div > div {
   text-align: center; /* 설명 텍스트를 중앙 정렬 */
   width: 100%; /* 각 설명을 전체 너비로 설정하여 한 줄로 배치 */
 }
@@ -186,6 +188,7 @@
 .tour-prod-zone > .tour-prod > .tour-prod-info > .tour-prod-bookmark {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 /* 더 보기 버튼 */
@@ -196,4 +199,24 @@
 .tour-list-more > Button {
   width: 600px;
   font-family: pt-b;
+}
+
+/* 상세보기 */
+.tour-view-prev {
+  display: flex;
+}
+
+.tour-view-prev .material-icons {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.tour-view-prev h5 {
+  margin-bottom: 0px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
+  width: 420px;
+  height: 315px;
 }

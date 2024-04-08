@@ -4,9 +4,8 @@ import { Button } from "../../component/FormFrm";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const TourSearch = (props) => {
+const TourType = () => {
   const location = useLocation();
-  const tourType = props.tourType;
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
@@ -27,6 +26,7 @@ const TourSearch = (props) => {
   const handleTourMore = () => {
     setVisibleTour((prevCount) => prevCount + 5); // 5개씩 추가
   };
+
   const handleTitleClick = () => {
     navigate("/tourList");
   };
@@ -35,7 +35,7 @@ const TourSearch = (props) => {
     <section className="contents">
       <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
-        <h2>검색결과</h2>
+        <h2>카테고리 검색</h2>
       </div>
       <TourSearchBox />
       <TourSearchOption />
@@ -146,4 +146,4 @@ const TourItem = ({ tour, ticket }) => {
   );
 };
 
-export default TourSearch;
+export default TourType;

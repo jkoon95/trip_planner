@@ -8,6 +8,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "./tour.css";
 import TourSearchBox from "./TourSearchBox";
 import axios from "axios";
+import { Swal } from "sweetalert2";
 
 const TourList = () => {
   const [tourList, setTourList] = useState([]);
@@ -31,14 +32,35 @@ const TourList = () => {
   const handleTourMore = () => {
     setVisibleTour((prevCount) => prevCount + 4); // 4개씩 추가
   };
+  const handleTitleClick = () => {
+    navigate("/tourList");
+  };
+
+  const searchType = (type) => {
+    axios
+      .post(backServer + "/tour/tourType", { tourType: type })
+      .then((res) => {
+        if (res.data.message === "success") {
+          navigate("/tourType", {
+            state: {
+              tourList: res.data.data.tourList,
+              ticketList: res.data.data.ticketList,
+            },
+          });
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <section className="contents">
-      <div className="tour-list-title">
+      <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
       </div>
       <TourSearchBox />
-      <TourIconBox />
+      <TourIconBox searchType={searchType} />
       <TourSwiper />
       <div className="tour-list-prod">
         <h2>NEW TOUR</h2>
@@ -60,29 +82,35 @@ const TourList = () => {
   );
 };
 
-const TourIconBox = () => {
+const TourIconBox = ({ searchType }) => {
+  const navigate = useNavigate();
+  const handleType = (type) => {
+    searchType(type);
+    navigate("/tourType");
+  };
+
   return (
     <div className="tour-icon-wrap">
-      <Link to="/tourSearch">
-        <img alt="입장권" src="images/투어티켓.jpg" />
+      <div onClick={() => handleType(5)}>
+        <img alt="입장권" src="/images/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
-      </Link>
-      <Link to="#">
-        <img alt="전시회" src="images/투어전시.jpg" />
+      </div>
+      <div onClick={() => handleType(1)}>
+        <img alt="전시회" src="/images/투어전시.jpg" />
         <div>전시회</div>
-      </Link>
-      <Link to="#">
-        <img alt="액티비티" src="images/투어레저.jpg" />
+      </div>
+      <div onClick={() => handleType(2)}>
+        <img alt="액티비티" src="/images/투어레저.jpg" />
         <div>액티비티</div>
-      </Link>
-      <Link to="#">
-        <img alt="박람회" src="images/투어박람.jpg" />
+      </div>
+      <div onClick={() => handleType(4)}>
+        <img alt="박람회" src="/images/투어박람.jpg" />
         <div>박람회</div>
-      </Link>
-      <Link to="#">
-        <img alt="테마파크" src="images/투어테마.jpg" />
+      </div>
+      <div onClick={() => handleType(3)}>
+        <img alt="테마파크" src="/images/투어테마.jpg" />
         <div>테마파크</div>
-      </Link>
+      </div>
     </div>
   );
 };
@@ -100,19 +128,19 @@ const TourSwiper = () => {
       speed={600}
     >
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
     </Swiper>
   );
@@ -123,6 +151,10 @@ const TourProd = (props) => {
   const ticket = props.ticket;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const tourView = () => {
+    navigate("/tour/view/" + tour.tourNo);
+  };
+
   // tourType에 따라 다른 텍스트 표시
   let tourTypeText;
   switch (tour.tourType) {
@@ -144,17 +176,14 @@ const TourProd = (props) => {
     default:
       tourTypeText = "기타";
   }
-  const tourView = () => {
-    navigate("/tour/view/" + tour.tourNo);
-  };
 
   return (
     <>
       <div className="tour-prod">
         <div className="tour-bookmark">
-          <img alt="찜" src="images/투어찜.png" />
+          <img alt="찜" src="/images/투어찜.png" />
         </div>
-        <div className="tour-prod-img">
+        <div className="tour-prod-img" onClick={tourView}>
           {tour.tourImg === null || tour.tourImg === "null" ? (
             <img src="/images/테마파크.jpg" />
           ) : (

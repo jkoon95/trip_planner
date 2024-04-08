@@ -51,16 +51,16 @@ public class TripController {
 		List<TripDetail> tripDetailList = new ArrayList<TripDetail>();
 		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)om.readValue(trip.getTripDetailListStr(), List.class);
 		for(LinkedHashMap<String, Object> map : list) {
-			TripDetail tdl = new TripDetail();
+			TripDetail td = new TripDetail();
 			//System.out.println(map);
 			String tripDay = (String)map.get("tripDay");
 			//System.out.println(tripDay);
-			tdl.setTripDay(tripDay);
+			td.setTripDay(tripDay);
 			String tripCostStr = (String)map.get("tripCost");
 			if(tripCostStr != null) {
-				tdl.setTripCost(Integer.parseInt(tripCostStr));
+				td.setTripCost(Integer.parseInt(tripCostStr));
 			}
-			//System.out.println(tdl);
+			//System.out.println(td);
 			List<LinkedHashMap<String, Object>> spl = (List<LinkedHashMap<String, Object>>)map.get("selectPlaceList");
 			
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
@@ -85,12 +85,13 @@ public class TripController {
 				tp.setTripPlaceLng((String)data.get("tripPlaceLng"));
 				
 				selectPlaceList.add(tp);
-				tdl.setSelectPlaceList(selectPlaceList);
+				td.setSelectPlaceList(selectPlaceList);
 			}
-			tripDetailList.add(tdl);
+			tripDetailList.add(td);
 		}
 //		System.out.println(tripDetailList);
-		int result = tripService.insertTrip(trip, tripDetailList, memberEmail);
+		trip.setTripDetailList(tripDetailList);
+		int result = tripService.insertTrip(trip, memberEmail);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -142,10 +143,46 @@ public class TripController {
 		}
 	}
 	
-//	@PatchMapping(value="/tripDetailTbl")
-//	public ResponseEntity<ResponseDTO> updateTripDetail(@RequestBody TripDetail tripDetail){
-//		
-//	}
+	@Operation(summary = "여행 일정 상세 trip_detail_tbl 수정", description = "여행 일정 상세 trip_detail_tbl 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@PatchMapping(value="/tripDetailTbl")
+	public ResponseEntity<ResponseDTO> updateTripDetail(@RequestBody Trip trip) throws JsonMappingException, JsonProcessingException{
+		ObjectMapper om = new ObjectMapper();
+		List<TripDetail> tripDetailList = new ArrayList<TripDetail>();
+		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)om.readValue(trip.getTripDetailListStr(), List.class);
+		for(LinkedHashMap<String, Object> map : list) {
+			TripDetail td = new TripDetail();
+			td.setTripDetailNo(Integer.parseInt((String)map.get("tripDetailNo")));
+			td.setTripNo(Integer.parseInt((String)map.get("tripNo")));
+			td.setTripDay((String)map.get("tripDay"));
+			String tripCostStr = (String)map.get("tripCost");
+			if(tripCostStr != null) {
+				td.setTripCost(Integer.parseInt(tripCostStr));
+			}
+			List<LinkedHashMap<String, Object>> spl = (List<LinkedHashMap<String, Object>>)map.get("selectPlaceList");
+			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
+			for(LinkedHashMap<String, Object> data : spl) {
+				TripPlace tp = new TripPlace();
+				tp.setTripRoute((Integer)data.get("tripRoute"));
+				tp.setTripTodo((String)data.get("tripTodo"));
+				tp.setTripPlaceName((String)data.get("tripPlaceName"));
+				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
+				tp.setTripPlaceAddress((String)data.get("tripPlaceAddress"));
+				tp.setTripPlacePhone((String)data.get("tripPlacePhone"));
+				tp.setTripPlaceLat((String)data.get("tripPlaceLat"));
+				tp.setTripPlaceLng((String)data.get("tripPlaceLng"));			
+				selectPlaceList.add(tp);
+				td.setSelectPlaceList(selectPlaceList);
+			}
+			tripDetailList.add(td);
+		}
+		trip.setTripDetailList(tripDetailList);
+		int result = tripService.updateTripDetail(trip);
+		return null;
+	}
 }
 
 

@@ -17,4 +17,8 @@ public class TourTicket {
 	private int ticketAdult;
 	private int ticketYouth;
 	private int ticketChild;
+	
+	private String searchText;
+	private String startDate;
+	private int tourType;
 }

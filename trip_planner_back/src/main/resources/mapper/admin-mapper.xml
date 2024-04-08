@@ -11,4 +11,22 @@
 	JOIN COUPON_TBL USING (COUPON_NO) 
 	WHERE (COUPON_RANGE = 1 OR COUPON_RANGE = 4) AND MEMBER_NO = #{memberNo}
   </select>
+  
+  <select id="totalCount" resultType="int">
+	  	select count(*) from member_tbl
+ </select>  
+ <select id="selectMemberList" resultType="member">
+ 	select * from
+	    (select rownum as rnum, b.*from
+	        (select * from member_tbl 
+	        	 order by member_no desc)b)
+	where rnum between #{start} and #{end}
+ </select>
+ <select id="selectOneMember" resultType="member">
+ 	select * from member_tbl where member_no=#{memberNo}
+ </select>
+ 
+ <update id="blockMember">
+ 	update member_tbl set member_status = 2 where member_no = #{memberNo} 
+ </update>
 </mapper>

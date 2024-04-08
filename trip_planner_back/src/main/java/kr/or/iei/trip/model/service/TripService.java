@@ -1,5 +1,6 @@
 package kr.or.iei.trip.model.service;
 
+import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,11 @@ public class TripService {
 
 	@Transactional
 	public int updateTripDetail(Trip trip) {
-		int delTripDetail = 0;
 		int insertTdLength = 0;
 		int insertResult = 0;
+		int tpLength = 0;
+		int updateTpResult = 0;
+		int returnResult = 0;
 		for(TripDetail td : trip.getTripDetailList()) {
 			System.out.println(td);
 			//일정이 새로 추가됐을 경우
@@ -88,21 +91,38 @@ public class TripService {
 				}
 			}else {//기존 일정인 경우
 				System.out.println("기존 일정인 경우");
-				List<TripDetail> checkTdList = tripDao.checkTdList(td.getTripNo());
-				System.out.println("들어온 디테일 개수 "+trip.getTripDetailList().size());
-				System.out.println("기존 디테일 개수 "+checkTdList.size());
-				System.out.println(td.getTripDetailNo());
-				
-				for(TripPlace tp : td.getSelectPlaceList()) {
-					System.out.println("??" + tp.getTripDetailNo());
-					if(tp.getTripDetailNo() != td.getTripDetailNo()) {
-						System.out.println(tp.getTripDetailNo());
-						System.out.println(td.getTripDetailNo());
+				if(td.getSelectPlaceList() != null) {
+					for(TripPlace tp : td.getSelectPlaceList()) {
+						if(tp.getTripDetailNo() == 0) {
+							insertTdLength++;
+							tp.setTripDetailNo(td.getTripDetailNo());
+							insertResult += tripDao.insertTripPlace(tp);							
+						}else {
+							if(tp.getDelNo() == 1) {
+								tpLength++;
+								updateTpResult += tripDao.deleteTripPlace(tp.getTripDetailNo());
+							}else {
+								tpLength++;
+								tp.setTripDetailNo(td.getTripDetailNo());
+								System.out.println("oldTripRoute: "+tp.getOldTripRoute());
+								updateTpResult += tripDao.updateTripPlace(tp);
+								//update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo} where trip_detail_no=#{oldDetailNo} and trip_route=#{oldTripRoute}
+								if(td.getTripDay() != tp.getOldTripDay()) {
+									updateTpResult += tripDao.deleteTripDetail(tp.getOldDetailNo());									
+								}
+							}
+						}
 					}
 				}
 				
 			}
 		}
-		return 0;
+		if(insertTdLength == insertResult) {
+			returnResult = 1;
+		}
+		if(tpLength == updateTpResult + 1) {
+			returnResult = 1;
+		}
+		return returnResult;
 	}
 }

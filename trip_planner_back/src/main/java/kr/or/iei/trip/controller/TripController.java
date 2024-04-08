@@ -184,6 +184,15 @@ public class TripController {
 					tp.setTripDetailNo((Integer)data.get("tripDetailNo"));
 				}
 				tp.setTripRoute((Integer)data.get("tripRoute"));
+				if((Integer)data.get("oldDetailNo") != null) {
+					tp.setOldDetailNo((Integer)data.get("oldDetailNo"));
+				}
+				if((Integer)data.get("oldTripRoute") != null) {
+					tp.setOldTripRoute((Integer)data.get("oldTripRoute"));
+				}
+				if((String)data.get("oldTripDay") != null) {
+					tp.setOldTripDay((String)data.get("oldTripDay"));
+				}
 				tp.setTripTodo((String)data.get("tripTodo"));
 				tp.setTripPlaceName((String)data.get("tripPlaceName"));
 				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
@@ -198,7 +207,7 @@ public class TripController {
 		}
 		trip.setTripDetailList(tripDetailList);
 		int result = tripService.updateTripDetail(trip);
-		if(result == 2) {
+		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {

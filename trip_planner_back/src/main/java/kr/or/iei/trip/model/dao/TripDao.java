@@ -33,4 +33,6 @@ public interface TripDao {
 
 	String selectTripDetailNo(TripDetail td);
 
+	int updateTripPlace(TripPlace tp);
+
 }

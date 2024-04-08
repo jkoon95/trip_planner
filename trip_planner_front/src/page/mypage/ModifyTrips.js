@@ -122,17 +122,18 @@ const ModifyTrips = (props) => {
     setTrip({...trip});
 
     const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: trip.tripDetailList, tripDetailListStr: trip.tripDetailListStr};
+    console.log("보내는게 여기");
     console.log(tripObj);
-    axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-    .then((res) => {
-      console.log("디테일 수정 axios!!!!!");
-      console.log(res.data);
-    })
-    .catch((res) => {
-      console.log(res);
-    })
+    // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+    // .then((res) => {
+    //   console.log("디테일 수정 axios!!!!!");
+    //   console.log(res.data);
+    // })
+    // .catch((res) => {
+    //   console.log(res);
+    // })
 
-    // console.log("트립 디테일 변경!");
+    console.log("트립 디테일 변경!");
   }, [tripDetailList])
 
   useEffect(() => {
@@ -438,22 +439,28 @@ const ModifyTrips = (props) => {
       while(true){
         const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");
         newTripDate.push(tripDate);
+        //1.일정을 줄였을 경우
         if(tripDayCount < copyTripDetailList.length){
-          if(tripDate === endDate){
+          if(tripDate === endDate){//1-2.마지막 바퀴에선 마지막 날짜에 사라진 날짜의 selectPlaceList를 추가
             const array = new Array();
 
             for(let i=tripDayCount;i<copyTripDetailList.length;i++){
               for(let j=0;j<copyTripDetailList[i].selectPlaceList.length;j++){
+                console.log(copyTripDetailList[i].selectPlaceList[j]);
+                copyTripDetailList[i].selectPlaceList[j].oldDetailNo = copyTripDetailList[i].selectPlaceList[j].tripDetailNo;
+                copyTripDetailList[i].selectPlaceList[j].oldTripRoute = copyTripDetailList[i].selectPlaceList[j].tripRoute;
+                copyTripDetailList[i].selectPlaceList[j].oldTripDay = copyTripDetailList[i].tripDay;
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
+            console.log(array);
 
             if(copyTripDetailList[tripDayCount]){
               newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : array, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
             }else{
               newTripDetailList.push({selectPlaceList : array, tripDay: tripDate});
             }
-          }else{
+          }else{//1-1.복사한 배열을 넣음
             if(copyTripDetailList[tripDayCount]){
               newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : copyTripDetailList[tripDayCount].selectPlaceList, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
             }else{

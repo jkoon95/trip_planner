@@ -58,4 +58,19 @@
 		select * from inn_tbl where inn_no=#{innNo}
 		
 	</select>
+	
+	<insert id="reservationInn">
+		insert into inn_book_tbl values
+		(inn_book_seq.nextval, 
+		#{memberNo}, 
+		#{roomNo},
+		#{guestName},
+		#{guestPhone},
+		#{guestWish},
+		#{checkInDate},
+		#{checkOutDate},
+		sysdate,
+		1,
+		#{bookGuest})
+	</insert>
 </mapper>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./reservationInn.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -11,7 +11,7 @@ import Modal from "../../component/Modal";
 
 const ReservationInnFrm = (props) => {
   dayjs.locale("ko");
-
+  const naviGate = useNavigate();
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const guestName = props.guestName;
   const setGuestName = props.setGuestName;
@@ -20,10 +20,10 @@ const ReservationInnFrm = (props) => {
   const guestWish = props.guestWish;
   const setGuestWish = props.setGuestWish;
 
-  const [innNo, setInnNo] = useState(22);
+  const [innNo, setInnNo] = useState(41);
   const [checkInDate, setCheckInDate] = useState("2024-04-10");
   const [checkOutDate, setCheckOutDate] = useState("2024-04-13");
-  const [roomNo, setRoomNo] = useState(44);
+  const [roomNo, setRoomNo] = useState(64);
   const [partnerName, setPartnerName] = useState("");
   const [memberNo, setMemberNo] = useState(29);
   const [roomName, setRoomName] = useState("정원 전망 스탠다드 더블룸");
@@ -40,6 +40,7 @@ const ReservationInnFrm = (props) => {
   const [couponList, setCouponList] = useState([]);
   const lodgment = dayjs(checkOutDate).diff(checkInDate, "d"); //dayjs로 요일을 가져오는 방식
   const [price, setPrice] = useState(selectInn.roomPrice * lodgment);
+  const [couponNo, setCounponNo] = useState(0);
 
   useEffect(() => {
     setPrice(selectInn.roomPrice * lodgment);
@@ -262,24 +263,22 @@ const ReservationInnFrm = (props) => {
       confirmButtonText: "적용",
       cancelButtonText: "취소",
     }).then((res) => {
-      if (
-        discountRate < 100 &&
-        res.isConfirmed &&
-        price === selectInn.roomPrice * lodgment
-      ) {
+      if (discountRate != 0 && res.isConfirmed) {
         const selectCouponNo = couponList[index].couponNo;
         const discountRateValue =
           selectInn.roomPrice * lodgment * (discountRate / 100);
         console.log(discountRateValue);
-        const totalPrice = price - discountRateValue;
+        const totalPrice = selectInn.roomPrice * lodgment - discountRateValue;
         console.log(totalPrice);
         setPrice(totalPrice);
-      } else {
+        setCounponNo(selectCouponNo);
+      } else if (discountRate == 0 && res.isConfirmed) {
         const selectCouponNo = couponList[index].couponNo;
         const discountAmountValue =
           selectInn.roomPrice * lodgment - discountAmount;
         console.log(discountAmountValue);
         setPrice(discountAmountValue);
+        setCounponNo(selectCouponNo);
       }
     });
   };
@@ -287,7 +286,14 @@ const ReservationInnFrm = (props) => {
   const { IMP } = window;
   IMP.init("imp82445436");
   const pay = () => {
-    const price = selectInn.roomPrice * lodgment;
+    console.log(roomNo);
+    console.log(guestName);
+    console.log(guestPhone);
+    console.log(guestWish);
+    console.log(checkInDate);
+    console.log(checkOutDate);
+    console.log(bookGuest);
+    console.log(couponNo);
     const date = new Date();
     const dateString =
       date.getFullYear() +
@@ -307,7 +313,7 @@ const ReservationInnFrm = (props) => {
         pay_method: "card",
         merchant_uid: "product_no_" + dateString, // 상점에서 생성한 고유 주문번호
         name: "주문명:결제테스트",
-        amount: price,
+        amount: 100,
         buyer_email: "test@portone.io",
         buyer_name: "구매자이름",
         buyer_tel: "010-1234-5678",
@@ -321,6 +327,24 @@ const ReservationInnFrm = (props) => {
             text: "결제가 완료되었습니다.",
             icon: "success",
           });
+          const form = new FormData();
+          form.append("roomNo", roomNo);
+          form.append("guestName", guestName);
+          form.append("guestPhone", guestPhone);
+          form.append("guestWish", guestWish);
+          form.append("checkInDate", checkInDate);
+          form.append("checkOutDate", checkOutDate);
+          form.append("bookGuest", bookGuest);
+          form.append("couponNo", couponNo);
+          axios
+            .post(backServer + "/inn/reservationInn", form)
+            .then((res) => {
+              console.log(res.data);
+              naviGate("/innList");
+            })
+            .catch((res) => {
+              console.log(res);
+            });
         } else {
           Swal.fire({
             title: "결제 실패",
@@ -331,6 +355,7 @@ const ReservationInnFrm = (props) => {
       }
     );
   };
+
   return (
     <div className="reservation-wrap">
       <div className="reservation-top">
@@ -511,18 +536,30 @@ const ReservationInnFrm = (props) => {
                 </React.Fragment>
               );
             })}
+            <input
+              name="choice-coupon"
+              className="choice-coupon"
+              type="radio"
+              id={"coupon-" + 0}
+              defaultValue={0}
+            />
+            <label className="discount-box" htmlFor={"coupon-" + 0}>
+              <div className="discount">❌사용안함❌</div>
+            </label>
           </div>
         </div>
         <>
           <div className="discount-room-price-box">
             <div className="prev-discount-room-price">쿠폰적용 전 금액</div>
             <div className="prev-room-price">
-              {selectInn.roomPrice * lodgment}원
+              {(selectInn.roomPrice * lodgment).toLocaleString()}원
             </div>
           </div>
           <div className="discount-room-price-box">
             <div className="post-discount-room-price">쿠폰적용 후 금액</div>
-            <div className="post-room-price">{price > 0 ? price : 0}원</div>
+            <div className="post-room-price">
+              {price > 0 ? price.toLocaleString() : 0}원
+            </div>
           </div>
           <div className="btn_area">
             <Button
@@ -616,32 +653,34 @@ const SelectInnInfo = (props) => {
   }, []);
 
   const checkAll = (e) => {
-    const copyAllChecked = allChecked;
-    copyAllChecked.active = !copyAllChecked.active;
+    const copyAllChecked = { ...allChecked };
+    copyAllChecked.active = e.target.checked;
+
     setAllChecked(copyAllChecked);
     const copyCheckTerms = [...checkTerms];
     console.log(copyCheckTerms);
     copyCheckTerms.forEach((item) => {
-      item.active = !item.active;
+      item.active = copyAllChecked.active;
     });
     setCheckTerms(copyCheckTerms);
   };
 
-  const copyAllChecked = allChecked;
   const CheckBoxTerms = (props) => {
     const checkTerms = props.checkTerms;
     const setCheckTerms = props.setCheckTerms;
     const setOpenModal1 = props.setOpenModal1;
-
+    const allChecked = props.allChecked;
+    const setAllChecked = props.setAllChecked;
     const openModalFunc1 = (index) => {
       document.body.classList.add("scroll_fixed");
       setOpenModal1(true);
       setTermsIndex(index);
     };
 
-    const Checked = (index) => {
+    const Checked = (value, index) => {
+      const copyAllChecked = { ...allChecked };
       const copyCheckTerms = [...checkTerms];
-      copyCheckTerms[index].active = !copyCheckTerms[index].active;
+      copyCheckTerms[index].active = value;
       setCheckTerms(copyCheckTerms);
       let check = true;
       for (let i = 0; i < copyCheckTerms.length; i++) {
@@ -650,11 +689,9 @@ const SelectInnInfo = (props) => {
           break;
         }
       }
-      if (check) {
-        copyAllChecked.active = true;
-      } else {
-        copyAllChecked.active = false;
-      }
+      copyAllChecked.active = check;
+      console.log(check, copyAllChecked);
+      setAllChecked(copyAllChecked);
     };
 
     return (
@@ -666,7 +703,7 @@ const SelectInnInfo = (props) => {
                 type={item.type}
                 id={item.id}
                 defaultChecked={item.active}
-                onClick={() => Checked(index)}
+                onClick={(e) => Checked(e.target.checked, index)}
               />
               <label htmlFor={item.id}>{item.text}</label>
               <span
@@ -684,7 +721,7 @@ const SelectInnInfo = (props) => {
     );
   };
   const openModalFunc2 = () => {
-    if (copyAllChecked.active !== true) {
+    if (allChecked.active !== true) {
       Swal.fire("이용약관에 동의해주세요");
     } else {
       const setOpenModal2 = props.setOpenModal2;
@@ -754,22 +791,25 @@ const SelectInnInfo = (props) => {
           <input
             type={allChecked.type}
             id={allChecked.id}
-            defaultChecked={allChecked.active}
+            checked={allChecked.active}
+            onChange={checkAll}
           />
-          <label htmlFor={allChecked.id} onClick={checkAll}>
-            이용약관 전체동의
-          </label>
+          <label htmlFor={allChecked.id}>이용약관 전체동의</label>
         </div>
         <div className="terms-wrap-box">
           <CheckBoxTerms
             checkTerms={checkTerms}
             setCheckTerms={setCheckTerms}
             setOpenModal1={setOpenModal1}
+            allChecked={allChecked}
+            setAllChecked={setAllChecked}
           />
         </div>
         <div className="btn-area">
           <Button
-            text={selectInn.roomPrice * lodgment + "원 결제하기"}
+            text={
+              (selectInn.roomPrice * lodgment).toLocaleString() + "원 결제하기"
+            }
             class="btn_primary md"
             clickEvent={openModalFunc2}
           />

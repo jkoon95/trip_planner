@@ -295,6 +295,10 @@
   background-color: #1795f0;
   color: #fff;
 }
+.modal_content .discount-box-wrap .choice-coupon:disabled + .discount-box {
+  background-color: #ccc;
+  color: #000;
+}
 .discount-room-price-box {
   display: flex;
   justify-content: space-between;

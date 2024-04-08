@@ -146,4 +146,7 @@
 	<select id="viewTourDetail" resultType="tour">
 		SELECT * FROM TOUR_TBL WHERE TOUR_NO = #{tourNo}
 	</select>
+	<select id="viewTicket" resultType="tourTicket">
+		SELECT * FROM TOUR_TICKET_TBL WHERE TOUR_NO = #{tourNo}
+	</select>
 </mapper>

@@ -92,23 +92,23 @@ const TourIconBox = ({ searchType }) => {
   return (
     <div className="tour-icon-wrap">
       <div onClick={() => handleType(5)}>
-        <img alt="입장권" src="images/투어티켓.jpg" />
+        <img alt="입장권" src="/images/투어티켓.jpg" />
         <div>티켓 · 입장권</div>
       </div>
       <div onClick={() => handleType(1)}>
-        <img alt="전시회" src="images/투어전시.jpg" />
+        <img alt="전시회" src="/images/투어전시.jpg" />
         <div>전시회</div>
       </div>
       <div onClick={() => handleType(2)}>
-        <img alt="액티비티" src="images/투어레저.jpg" />
+        <img alt="액티비티" src="/images/투어레저.jpg" />
         <div>액티비티</div>
       </div>
       <div onClick={() => handleType(4)}>
-        <img alt="박람회" src="images/투어박람.jpg" />
+        <img alt="박람회" src="/images/투어박람.jpg" />
         <div>박람회</div>
       </div>
       <div onClick={() => handleType(3)}>
-        <img alt="테마파크" src="images/투어테마.jpg" />
+        <img alt="테마파크" src="/images/투어테마.jpg" />
         <div>테마파크</div>
       </div>
     </div>
@@ -128,19 +128,19 @@ const TourSwiper = () => {
       speed={600}
     >
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
       <SwiperSlide>
-        <img alt="박람회" src="images/테마파크.jpg" />
+        <img alt="박람회" src="/images/테마파크.jpg" />
       </SwiperSlide>
     </Swiper>
   );
@@ -181,7 +181,7 @@ const TourProd = (props) => {
     <>
       <div className="tour-prod">
         <div className="tour-bookmark">
-          <img alt="찜" src="images/투어찜.png" />
+          <img alt="찜" src="/images/투어찜.png" />
         </div>
         <div className="tour-prod-img" onClick={tourView}>
           {tour.tourImg === null || tour.tourImg === "null" ? (

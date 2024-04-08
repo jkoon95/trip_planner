@@ -138,7 +138,7 @@ const TourItem = ({ tour, ticket }) => {
           <img
             className="tour-prod-bookmark"
             alt="찜"
-            src="images/투어찜.png"
+            src="/images/투어찜.png"
           />
         </div>
       </div>

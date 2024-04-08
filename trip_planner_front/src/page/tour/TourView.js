@@ -32,7 +32,7 @@ const TourView = (props) => {
         <h5>투어 리스트 목록으로</h5>
       </div>
       <div>
-        <img src="images/돌아가기.png"></img>
+        <img src="/images/돌아가기.png"></img>
       </div>
     </section>
   );

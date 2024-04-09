@@ -17,4 +17,7 @@
 	<delete id="deleteComment">
 		delete from blog_comment where comment_no = #{commnetNo}
 	</delete>
+	<update id="modifyComment">
+		update blog_comment set comment_content=#{commentContent} where comment_no=#{commentNo}
+	</update>
 </mapper>

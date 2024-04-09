@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import "react-quill/dist/quill.snow.css";
@@ -15,22 +15,17 @@ const BlogView = (props) => {
   const [blog, setBlog] = useState({});
   const [list, setlist] = useState([]);
   const [member, setMember] = useState(null);
+  //const [comment, setComment] = useState([]);
   const [commentContent, setCommentContent] = useState("");
   const navigate = useNavigate();
-  const [commnetList, setCommentList] = useState([]);
+  const [comment, setComment] = useState([]);
   const [isRegistComment, setIsRegistComment] = useState(true);
-  const [openComment, setOpenComment] = useState(false);
-  const [updateCommnet, setUpdateCommnet] = useState("");
-
-  const closeCommentFunc = () => {
-    setOpenComment(false);
-  };
 
   useEffect(() => {
     axios
       .get(backServer + "/blogComment/commentList/" + blogNo)
       .then((res) => {
-        setCommentList(res.data.data);
+        setComment(res.data.data);
         console.log(res.data);
       })
       .catch((res) => {});
@@ -94,129 +89,85 @@ const BlogView = (props) => {
         });
     }
   };
-  const commentUpdate = (props) => {
-    const comment = props.comment;
-    if (setUpdateCommnet !== "") {
-      const form = new FormData();
-      form.append("commentCotnet", commentContent);
-      form.append("commentNo", comment.commentNo);
-      console.log(commentContent);
-      console.log(comment.commentNo);
-      axios
-        .patch(backServer + "/blogComment", form)
-        .then((res) => {
-          if (res.data.message === "success") {
-            Swal.fire("수정이 완료되었습니다. :)");
-            setIsRegistComment(!isRegistComment);
-          }
-        })
-        .catch((res) => {
-          Swal.fire("수정할 내용을 입력해주세요. :)");
-        });
-    }
-  };
+
   return (
-    <>
-      <section className="contents blogList">
-        <div className="blog-view-wrap">
-          <h2>BLOG </h2>
-          {isLogin ? (
-            <div className="btn-box">
-              {member && member.memberNickName == blog.memberNickName ? (
-                <>
-                  <button
-                    type="button"
-                    class="btn_secondary outline md"
-                    onClick={deleteBoard}
-                  >
-                    삭제
-                  </button>
-                </>
-              ) : (
-                ""
-              )}
-            </div>
+    <section className="contents blogList">
+      <div className="blog-view-wrap">
+        <h2>BLOG </h2>
+        {isLogin ? (
+          <div className="btn-box">
+            {member && member.memberNickName == blog.memberNickName ? (
+              <>
+                <button
+                  type="button"
+                  class="btn_secondary outline md"
+                  onClick={deleteBoard}
+                >
+                  삭제
+                </button>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          ""
+        )}
+
+        <div className="blog-view-info">
+          <div>닉네임 : {blog.memberNickName}</div>
+          <div>작성일자 : {blog.blogDate}</div>
+        </div>
+        <div className="blog-view-top">
+          {blog && blog.blogThumbnail === null ? (
+            <img src="/images/blogDefault.png" />
           ) : (
-            ""
+            <img
+              src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
+            />
           )}
 
-          <div className="blog-view-info">
-            <div>닉네임 : {blog.memberNickName}</div>
-            <div>작성일자 : {blog.blogDate}</div>
-          </div>
-          <div className="blog-view-top">
-            {blog && blog.blogThumbnail === null ? (
-              <img src="/images/blogDefault.png" />
-            ) : (
-              <img
-                src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail}
-              />
-            )}
-
-            <div className="blog-view-title">{blog.blogTitle}</div>
-          </div>
-          <div className="blog-view-content">
-            {list.map((day, index) => {
-              return (
-                <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
-              );
-            })}
-          </div>
-          <div className="comment-content-box">
-            <h3>댓글</h3>
-            <div className="comment-insert-box">
-              <Input
-                type="text"
-                data={commentContent}
-                setData={setCommentContent}
-                placeholder="댓글을 작성해주세요"
-              />
-              <button
-                type="button"
-                class="btn_secondary md"
-                onClick={insertComment}
-              >
-                등록
-              </button>
-            </div>
-            {commnetList.map((comment, index) => {
-              return (
-                <CommentItem
-                  key={"comment" + index}
-                  comment={comment}
-                  commentNumber={index + 1}
-                  isRegistComment={isRegistComment}
-                  setIsRegistComment={setIsRegistComment}
-                  setOpenComment={setOpenComment}
-                />
-              );
-            })}
-          </div>
+          <div className="blog-view-title">{blog.blogTitle}</div>
         </div>
-      </section>
-
-      <Modal
-        class="modal"
-        open={openComment}
-        title="댓글 수정"
-        useCloseBtn={true}
-        closeModal={closeCommentFunc}
-      >
-        <Textarea
-          data={updateCommnet}
-          setData={setUpdateCommnet}
-          placeholder="내용을 입력해주세요..."
-        />
-
-        <div className="btn_area">
-          <Button
-            class="btn_secondary"
-            text="수정"
-            clickEvent={commentUpdate}
-          />
+        <div className="blog-view-content">
+          {list.map((day, index) => {
+            return (
+              <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
+            );
+          })}
         </div>
-      </Modal>
-    </>
+        <div className="comment-content-box">
+          <h3>댓글</h3>
+          <div className="comment-insert-box">
+            <Input
+              type="text"
+              data={commentContent}
+              setData={setCommentContent}
+              placeholder="댓글을 작성해주세요"
+            />
+            <button
+              type="button"
+              class="btn_secondary md"
+              onClick={insertComment}
+            >
+              등록
+            </button>
+          </div>
+          {comment.map((comment, index) => {
+            return (
+              <CommentItem
+                key={"comment" + index}
+                comment={comment}
+                commentNumber={index + 1}
+                isRegistComment={isRegistComment}
+                setIsRegistComment={setIsRegistComment}
+                //setOpenComment={setOpenComment}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -235,13 +186,25 @@ const DayItem = (props) => {
   );
 };
 const CommentItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   const comment = props.comment;
   const commentNumber = props.commentNumber;
   const isRegistComment = props.isRegistComment;
   const setIsRegistComment = props.setIsRegistComment;
-  const setOpenComment = props.setOpenComment;
+  const [openComment, setOpenComment] = useState(false);
+  const [updateComment, setUpdateComment] = useState({ ...comment });
+
+  const changeContent = (value) => {
+    updateComment.commentContent = value;
+    setUpdateComment({ ...updateComment });
+  };
+
   const openCommentFunc = () => {
     setOpenComment(true);
+  };
+  const closeCommentFunc = () => {
+    setOpenComment(false);
   };
   const commentDelete = () => {
     const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -266,32 +229,76 @@ const CommentItem = (props) => {
       }
     });
   };
+  const commentUpdate = () => {
+    const form = new FormData();
+    form.append("commentNo", comment.commentNo);
+    form.append("blogNo", comment.blogNo);
+    form.append("memberNickName", comment.memberNickName);
+    form.append("commentContent", updateComment.commentContent);
+    axios
+      .patch(backServer + "/blogComment", form)
+      .then((res) => {
+        if (res.data.message === "success") {
+          Swal.fire("수정이 완료되었습니다. :)");
+          setOpenComment(false);
+          setIsRegistComment(!isRegistComment);
+        }
+      })
+      .catch((res) => {
+        Swal.fire("수정할 내용을 입력해주세요. :)");
+      });
+  };
   return (
-    <div className="comment-list-box">
-      <div class="btn-area">
-        <button
-          type="button"
-          class="btn_primary sm first"
-          onClick={openCommentFunc}
-        >
-          수정
-        </button>
-        <button
-          type="button"
-          class="btn_primary outline sm"
-          onClick={commentDelete}
-        >
-          삭제
-        </button>
-      </div>
+    <>
+      <Modal
+        class="modal"
+        open={openComment}
+        title="댓글 수정"
+        useCloseBtn={true}
+        closeModal={closeCommentFunc}
+      >
+        <Textarea
+          data={updateComment.commentContent}
+          setData={changeContent}
+          placeholder="내용을 입력해주세요..."
+        />
 
-      <div className="comment-number">{commentNumber}</div>
-      <div className="comment-content">{comment.commentContent}</div>
-      <div className="comment-info">
-        <div className="comment-nickname">{comment.memberNickName} </div>
-        <div className="comment-date">{comment.commentDate}</div>
+        <div className="btn_area">
+          <Button
+            class="btn_secondary"
+            text="수정"
+            clickEvent={commentUpdate}
+          />
+        </div>
+      </Modal>
+
+      <div className="comment-list-box">
+        <div class="btn-area">
+          <button
+            type="button"
+            class="btn_primary sm first"
+            onClick={openCommentFunc}
+            comment={comment}
+          >
+            수정
+          </button>
+          <button
+            type="button"
+            class="btn_primary outline sm"
+            onClick={commentDelete}
+          >
+            삭제
+          </button>
+        </div>
+
+        <div className="comment-number">{commentNumber}</div>
+        <div className="comment-content">{comment.commentContent}</div>
+        <div className="comment-info">
+          <div className="comment-nickname">{comment.memberNickName} </div>
+          <div className="comment-date">{comment.commentDate}</div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -19,6 +19,7 @@ import TourTicket from "./../tour/TourTicket";
 import CouponReg from "../admin/CouponReg";
 import MemberMgmt from "../admin/MemberMgmt";
 import MemberView from "../admin/MemberView";
+import PartnerMgmt from "../admin/PartnerMgmt";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -45,7 +46,7 @@ const MypageMain = (props) => {
           //관리자로 로그인 시
           setMenus([
             { url: "admin/memberMgmt", text: "회원 관리", active: true },
-            { url: "partnerMgmt", text: "업체 관리", active: false },
+            { url: "admin/partnerMgmt", text: "업체 관리", active: false },
             { url: "promotionMgmt", text: "프로모션 관리", active: false },
             { url: "admin/couponReg", text: "쿠폰 등록", active: false },
           ]);
@@ -153,6 +154,10 @@ const MypageMain = (props) => {
               element={
                 <MemberView isLogin={isLogin} memberType={member.memberType} />
               }
+            />
+            <Route
+              path="/admin/partnerMgmt"
+              element={<PartnerMgmt isLogin={isLogin} member={member} />}
             />
           </Routes>
         </div>

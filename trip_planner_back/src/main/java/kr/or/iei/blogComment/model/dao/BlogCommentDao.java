@@ -15,4 +15,6 @@ public interface BlogCommentDao {
 
 	int deleteComment(int commentNo);
 
+	int modifyComment(BlogComment blogComment);
+
 }

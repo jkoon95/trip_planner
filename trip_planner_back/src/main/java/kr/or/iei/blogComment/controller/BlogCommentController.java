@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.blog.model.dto.Blog;
 import kr.or.iei.blogComment.model.dto.BlogComment;
@@ -66,8 +67,19 @@ public class BlogCommentController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());			
 		}
 	}
-	//@PatchMapping
-	//public ResponseEntity<ResponseDTO> modifyComment(@ModelAttribute BlogComment blogComment){
-		
-	//}
+	@PatchMapping
+	public ResponseEntity<ResponseDTO> modifyComment(@ModelAttribute BlogComment blogComment, @RequestBody int commentNo){
+		System.out.println("blogComment : " + blogComment );
+		System.out.println("commentNo : " + commentNo);
+		blogComment.setCommentNo(commentNo);
+		int result = blogCommentService.modifyComment(blogComment);
+		System.out.println(result);
+		if(result > 0){
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());			
+		}
+	}
 }

@@ -62,4 +62,16 @@ public class AdminService {
 		return adminDao.updateCoupon(couponNo);
 	}
 
+	public Map selectPartnerList(int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalPartnerCount = adminDao.totalPartnerCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalPartnerCount);	
+		List list = adminDao.selectPartnerList(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("partnerList",list);
+		map.put("pi",pi);
+		return map;
+	}
+
 }

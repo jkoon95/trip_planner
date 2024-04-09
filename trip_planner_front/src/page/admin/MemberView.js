@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "../../component/FormFrm";
+import { Padding } from "@mui/icons-material";
+import { JoinInputWrap } from "../member/MemberForm";
 
 const MemberView = ({ isLogin, memberType }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -37,9 +39,6 @@ const MemberView = ({ isLogin, memberType }) => {
       })
       .catch((res) => {});
   }, []);
-  const check = () => {
-    console.log(member);
-  };
   const blockMember = () => {
     axios
       .patch(backServer + "/admin/blockMember/" + memberNo)
@@ -56,11 +55,78 @@ const MemberView = ({ isLogin, memberType }) => {
       .catch((res) => {});
   };
   return (
-    <section className="contents memberMgmt">
-      <h2>회원 상세</h2>
-      <div className="memberMgmt_wrap"></div>
-      <Button text="확인용" clickEvent={check} />
-      <Button text="차단하기" class="btn_primary" clickEvent={blockMember} />
+    <section className="contents memberMgmtView">
+      <div className="memberMgmtView-title">
+        <img className="title-img" src="/images/icons8-회원-80.png" />
+        <h2 id="title">
+          {member.memberType === 1
+            ? "일반회원"
+            : member.memberType === 2
+            ? "업체"
+            : "관리자"}
+        </h2>
+        {member.memberStatus === 2 ? (
+          <span id="block-icons" class="material-icons">
+            block
+          </span>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="memberMgmtView_wrap">
+        <div class="memberMgmtView_area">
+          <JoinInputWrap
+            label="회원번호"
+            content="memberNo"
+            type="number"
+            data={member.memberNo}
+            readOnly="readOnly"
+          />
+          <JoinInputWrap
+            label="이름"
+            content="memberName"
+            type="text"
+            data={member.memberName}
+            readOnly="readOnly"
+          />
+          <JoinInputWrap
+            label="닉네임"
+            content="memberNickName"
+            type="text"
+            data={member.memberNickName}
+            readOnly="readOnly"
+          />
+          <JoinInputWrap
+            label="전화번호"
+            content="memberPhone"
+            type="text"
+            data={member.memberPhone}
+            readOnly="readOnly"
+          />
+          <JoinInputWrap
+            label="주소"
+            content="memberAddr"
+            type="text"
+            data={member.memberAddr}
+            readOnly="readOnly"
+          />
+          <JoinInputWrap
+            label="주소"
+            content="memberAddr"
+            type="text"
+            data={member.memberAddr}
+            readOnly="readOnly"
+          />
+        </div>
+      </div>
+      <div className="btn_area">
+        <Button
+          id="block_btn"
+          text="차단하기"
+          class="btn_primary"
+          clickEvent={blockMember}
+        />
+      </div>
     </section>
   );
 };

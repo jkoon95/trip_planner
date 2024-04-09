@@ -39,10 +39,17 @@ const TourSearch = (props) => {
       </div>
       <TourSearchBox />
       <TourSearchOption />
-      {tourList.slice(0, visibleTour).map((tour, index) => {
-        const ticket = ticketList[index];
-        return <TourItem key={index} tour={tour} ticket={ticket} />;
-      })}
+      {tourList.length === 0 ? (
+        <div className="tour-list-empty">
+          <h2>검색어를 입력하세요</h2>
+          <img alt="로딩" src="/images/로딩.gif" />
+        </div>
+      ) : (
+        tourList.slice(0, visibleTour).map((tour, index) => {
+          const ticket = ticketList[index];
+          return <TourItem key={index} tour={tour} ticket={ticket} />;
+        })
+      )}
       {visibleTour < tourList.length && (
         <div className="tour-list-more">
           <button className="btn_secondary" onClick={handleTourMore}>

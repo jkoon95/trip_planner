@@ -150,6 +150,14 @@
 }
 
 /* 검색 상품 */
+.tour-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* 부모 요소의 높이를 차지하도록 설정 */
+}
+
 .tour-prod-zone > .tour-prod {
   display: flex;
   margin-bottom: 30px;

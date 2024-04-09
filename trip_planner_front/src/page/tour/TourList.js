@@ -54,12 +54,18 @@ const TourList = () => {
       });
   };
 
+  const handleSearchBox = () => {
+    navigate("/tourSearch");
+  };
+
   return (
     <section className="contents">
       <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
       </div>
-      <TourSearchBox />
+      <div className="tour-search-box" onClick={handleSearchBox}>
+        <TourSearchBox />
+      </div>
       <TourIconBox searchType={searchType} />
       <TourSwiper />
       <div className="tour-list-prod">

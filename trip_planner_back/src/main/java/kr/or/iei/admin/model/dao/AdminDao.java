@@ -25,5 +25,9 @@ public interface AdminDao {
 
 	int updateCoupon(int couponNo);
 
+	int totalPartnerCount();
+
+	List selectPartnerList(PageInfo pi);
+
 
 }

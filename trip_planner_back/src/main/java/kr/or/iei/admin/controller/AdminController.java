@@ -84,4 +84,11 @@ public class AdminController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	@GetMapping(value="/partnerList/{reqPage}")
+	public ResponseEntity<ResponseDTO> partnerList(@PathVariable int reqPage) {
+		Map map = adminService.selectPartnerList(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 }

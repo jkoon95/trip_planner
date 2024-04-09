@@ -304,3 +304,21 @@
   font-size: 15px;
   margin-left: 10px; /* 간격 조절을 위해 추가 */
 }
+
+/* 상세 메뉴네비 */
+.tour-view-content-wrap > .tour-view-menu {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.tour-view-content-wrap > .tour-view-menu > .tour-view-menu-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0px;
+  margin: 0 50px;
+  border-bottom: 2px solid #999;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: pt-b;
+}

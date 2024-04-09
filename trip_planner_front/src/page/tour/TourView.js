@@ -104,7 +104,18 @@ const TourView = (props) => {
             </div>
           </div>
         </div>
-        <div className="tour-view-content">옵션예약</div>
+        <div className="tour-view-content-wrap">
+          <div className="tour-view-menu">
+            <div className="tour-view-menu-item">옵션예약</div>
+            <div className="tour-view-menu-item">상품소개</div>
+            <div className="tour-view-menu-item">이용정보</div>
+          </div>
+          <div className="tour-view-content">
+            <div className="tour-view-content-title">
+              <h4>옵션예약</h4>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

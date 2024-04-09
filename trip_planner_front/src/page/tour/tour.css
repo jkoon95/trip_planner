@@ -158,6 +158,11 @@
   height: 100%; /* 부모 요소의 높이를 차지하도록 설정 */
 }
 
+.tour-list-empty > .tour-loading-icon {
+  display: flex;
+  align-items: center;
+}
+
 .tour-prod-zone > .tour-prod {
   display: flex;
   margin-bottom: 30px;

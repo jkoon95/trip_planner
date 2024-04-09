@@ -42,7 +42,9 @@ const TourSearch = (props) => {
       {tourList.length === 0 ? (
         <div className="tour-list-empty">
           <h2>검색어를 입력하세요</h2>
-          <img alt="로딩" src="/images/로딩.gif" />
+          <div className="tour-loading-icon">
+            <img alt="로딩" src="/images/로딩.gif" />
+          </div>
         </div>
       ) : (
         tourList.slice(0, visibleTour).map((tour, index) => {

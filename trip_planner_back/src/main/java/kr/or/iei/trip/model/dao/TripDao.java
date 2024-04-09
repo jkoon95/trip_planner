@@ -29,10 +29,11 @@ public interface TripDao {
 
 	List<TripDetail> checkTdList(int tripNo);
 
-	int deleteTripDetail(TripPlace tp);
-
 	String selectTripDetailNo(TripDetail td);
 
-	int updateTripPlace(TripPlace tp);
-
+	int updateTripPlace1(TripPlace tp);
+	
+	int updateTripPlace2(TripPlace tp);
+	
+	int deleteTripDetail(TripPlace tp);
 }

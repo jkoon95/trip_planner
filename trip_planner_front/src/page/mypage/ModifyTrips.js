@@ -17,6 +17,7 @@ const ModifyTrips = (props) => {
   const navigate = useNavigate();
   const params = useParams();
   const tripNo = params.tripNo;
+  const [modifyMode, setModifyMode] = useState(false);
 
   const isLogin = props.isLogin;
   if (!isLogin) {
@@ -51,7 +52,7 @@ const ModifyTrips = (props) => {
   useEffect(() => {
     axios.get(backServer + "/trip/view/" + tripNo)
     .then((res) => {
-      // console.log(res.data.data);
+      console.log(res.data.data);
       setTripDetailList(res.data.data.tripDetailList);
       setTripStartDate(dayjs(res.data.data.tripStartDate));
       setTripEndDate(dayjs(res.data.data.tripEndDate));
@@ -65,16 +66,18 @@ const ModifyTrips = (props) => {
 
   // 제목 수정
   useEffect(() => {
-    if(tripTitle !== ""){
-      const tripObj = {tripNo, tripTitle}
-      axios.patch(backServer + "/trip/tripTbl", tripObj)
-      .then((res) => {
-        console.log("제목 수정 axios!!!!!");
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      })
+    if(modifyMode){
+      if(tripTitle !== ""){
+        const tripObj = {tripNo, tripTitle}
+        axios.patch(backServer + "/trip/tripTbl", tripObj)
+        .then((res) => {
+          console.log("제목 수정 axios!!!!!");
+          console.log(res.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        })
+      }
     }
   }, [tripTitle])
 
@@ -85,33 +88,7 @@ const ModifyTrips = (props) => {
 
   // 여행 수정하기
   const modifyTripsFunc = () => {
-    // if(tripTitle === ""){
-    //   trip.tripTitle = "국내 여행";
-    //   setTripTitle("국내 여행");
-    // }
-    console.log(trip);
-    // const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
-    // axios.patch(backServer + "/trip/tripTbl", tripObj)
-    // .then((res) => {
-    //   console.log("날짜 수정 axios!!!!!");
-    //   console.log(res.data);
-    // })
-    // .catch((res) => {
-    //   console.log(res);
-    // })
-
-    // if(trip.tripDetailList.length !== 0){
-    //   const tripObj = {tripNo: tripNo, tripDetailList: trip.tripDetailList, tripDetailListStr: trip.tripDetailListStr};
-    //   console.log(tripObj);
-    //   axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-    //   .then((res) => {
-    //     console.log("디테일 수정 axios!!!!!");
-    //     console.log(res.data);
-    //   })
-    //   .catch((res) => {
-    //     console.log(res);
-    //   })
-    // }
+    setModifyMode(true);
   }
 
 
@@ -120,22 +97,24 @@ const ModifyTrips = (props) => {
     // trip.tripDetailList = tripDetailList;
     // trip.tripDetailListStr = JSON.stringify(tripDetailList);
     // setTrip({...trip});
+    if(modifyMode){
 
-    if(tripDetailList.length != 0){
-      const tripObj = {tripNo: tripNo, tripStartDate: tripStartDate, tripEndDate: tripEndDate, tripDetailList: tripDetailList, tripDetailListStr: JSON.stringify(tripDetailList)};
-      console.log("보내는게 여기");
-      console.log(tripObj);
-      // axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
-      // .then((res) => {
-      //   console.log("디테일 수정 axios!!!!!");
-      //   console.log(res.data);
-      // })
-      // .catch((res) => {
-      //   console.log(res);
-      // })
+      if(tripDetailList.length != 0){
+        const tripObj = {tripNo: tripNo, tripStartDate: tripStartDate, tripEndDate: tripEndDate, tripDetailList: tripDetailList, tripDetailListStr: JSON.stringify(tripDetailList)};
+        console.log("보내는게 여기");
+        console.log(tripObj);
+        axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
+        .then((res) => {
+          console.log("디테일 수정 axios!!!!!");
+          console.log(res.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        })
+      }
+  
+      console.log("트립 디테일 변경!");
     }
-
-    console.log("트립 디테일 변경!");
   }, [tripDetailList])
 
   const closeTodoModalFunc = () => {
@@ -445,14 +424,13 @@ const ModifyTrips = (props) => {
 
             for(let i=tripDayCount;i<copyTripDetailList.length;i++){
               for(let j=0;j<copyTripDetailList[i].selectPlaceList.length;j++){
-                console.log(copyTripDetailList[i].selectPlaceList[j]);
-                copyTripDetailList[i].selectPlaceList[j].oldDetailNo = copyTripDetailList[i].selectPlaceList[j].tripDetailNo;
-                copyTripDetailList[i].selectPlaceList[j].oldTripRoute = copyTripDetailList[i].selectPlaceList[j].tripRoute;
+                // console.log(copyTripDetailList[i].selectPlaceList[j]);
+                // copyTripDetailList[i].selectPlaceList[j].oldTripRoute = copyTripDetailList[i].selectPlaceList[j].tripRoute;
                 copyTripDetailList[i].selectPlaceList[j].oldTripDay = copyTripDetailList[i].tripDay;
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
-            console.log(array);
+            // console.log(array);
 
             if(copyTripDetailList[tripDayCount]){
               newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : array, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
@@ -492,20 +470,25 @@ const ModifyTrips = (props) => {
       }
 
       console.log("날짜 수정");
-      
-      const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: newTripDetailList};
+
+      const tripObj = {tripNo: tripNo, tripStartDate: tripStartDate, tripEndDate: tripEndDate};
       console.log(tripObj);
-      axios.patch(backServer + "/trip/tripTbl", tripObj)
-      .then((res) => {
-        console.log("날짜 수정 axios!!!!!");
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      })
+    
+      if(modifyMode){
+        axios.patch(backServer + "/trip/tripTbl", tripObj)
+        .then((res) => {
+          console.log("날짜 수정 axios!!!!!");
+          console.log(res.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        })
+      }
 
     }
   },[tripStartDate, tripEndDate])
+
+
   
   return (
     <section className="contents trips">

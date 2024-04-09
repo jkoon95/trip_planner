@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -8,22 +8,35 @@ import "./innMain.css";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import axios from "axios";
 
-const ListSideMenu = () => {
+const ListSideMenu = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [innAddr, setInnAddr] = useState("제주");
-  const [checkInDate, setCheckInDate] = useState();
-  const [checkOutDate, setCheckOutDate] = useState();
-  const [bookGuest, setBookGuest] = useState(3);
-  const [roomPrice, setRoomPrice] = useState([]);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(500000);
-  const [innType, setInnType] = useState();
-  const [hashTag, setHashTag] = useState([]);
-  const [option, setOption] = useState([]);
-  const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
-  const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
+  const innAddr = props.innAddr;
+  const setInnAddr = props.setInnAddr;
+  const checkInDate = props.checkInDate;
+  const setCheckInDate = props.setCheckInDate;
+  const checkOutDate = props.checkOutDate;
+  const setCheckOutDate = props.setCheckOutDate;
+  const bookGuest = props.bookGuest;
+  const setBookGuest = props.setBookGuest;
+  const roomPrice = props.roomPrice;
+  const setRoomPrice = props.setRoomPrice;
+  const minPrice = props.minPrice;
+  const setMinPrice = props.setMinPrice;
+  const maxPrice = props.maxPrice;
+  const setMaxPrice = props.setMaxPrice;
+  const innType = props.innType;
+  const setInnType = props.setInnType;
+  const hashTag = props.hashTag;
+  const setHashTag = props.setHashTag;
+  const option = props.option;
+  const setOption = props.setOption;
+  const buttonFunction = props.buttonFunction;
+  const checkIn = props.checkIn;
+  const checkOut = props.checkOut;
+
+  //숙소리스트 페이지 작업을위한 reqPage state
+  const [reqPage, setReqPage] = useState(1);
 
   const [hashTagMenu, setHashTagMenu] = useState([
     {
@@ -218,35 +231,10 @@ const ListSideMenu = () => {
   //     return item.value;
   //   }
   // });
+  useEffect(() => {}, []);
 
   const searchInnOption = () => {
-    console.log(hashTag);
-    console.log(option);
-    console.log(innType);
-    console.log(checkIn);
-    console.log(checkOut);
-    console.log(innAddr);
-    console.log(bookGuest);
-    console.log(minPrice);
-    console.log(maxPrice);
-    const form = new FormData();
-    form.append("innType", innType);
-    form.append("hashTag", hashTag);
-    form.append("option", option);
-    form.append("checkInDate", checkIn);
-    form.append("checkOutDate", checkOut);
-    form.append("innAddr", innAddr);
-    form.append("bookGuest", bookGuest);
-    form.append("minPrice", minPrice);
-    form.append("maxPrice", maxPrice);
-    axios
-      .get((backServer + "/inn/selectInnList", form))
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
+    //숙소 검색을 위한 객체
   };
   return (
     <div className="sideMenu-wrap">
@@ -284,7 +272,7 @@ const ListSideMenu = () => {
         <div className="btn_area">
           <Button
             text="btn_primary md"
-            class="btn_primary md"
+            className="btn_primary md"
             onClick={searchInn}
           >
             검색
@@ -348,8 +336,8 @@ const ListSideMenu = () => {
       <div className="btn_area">
         <Button
           text="btn_primary md"
-          class="btn_primary md"
-          onClick={searchInnOption}
+          className="btn_primary md"
+          onClick={buttonFunction}
         >
           검색
         </Button>
@@ -556,7 +544,7 @@ const TagComponent = (props) => {
           <li key={"item" + index}>
             <Button
               className={item.active ? "active-hashTag" : ""}
-              value={item.value}
+              value={item.value || ""}
               onClick={() => {
                 selectValue(index);
               }}

@@ -68,13 +68,14 @@ const TourView = (props) => {
               <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
             )}
           </div>
-          <div className="tour-view-badge">
-            <span className="badge gray">{tourTypeText}</span>
-            <span className="badge gray">~ {salesPeriod}</span>
-          </div>
           <div className="tour-view-info">
+            <div className="tour-view-badge">
+              <span className="badge gray">{tourTypeText}</span>
+              <span className="badge gray">~ {salesPeriod}</span>
+            </div>
             <div className="tour-view-name">
               [{simpleTourAddr}] {tour.tourName}
+              <img alt="찜버튼" src="/images/투어찜.png" />
             </div>
             <div className="tour-view-type">
               {simpleTourAddr} {tourTypeText}
@@ -88,12 +89,30 @@ const TourView = (props) => {
                 : "무료"}
             </div>
             <div className="tour-view-guide">
-              <div className="tour-view-discount">
-                <span className="material-icons">confirmation_number</span>
+              <div className="tour-view-guide-icon">
+                <span className="material-icons">
+                  confirmation_number
+                  <span>국내 투어 · 티켓 3% 할인</span>
+                </span>
               </div>
-              <div className="tour-view-caution">
-                <span className="material-icons">info</span>
+              <div className="tour-view-guide-icon">
+                <span className="material-icons">
+                  info
+                  <span>예약 유의사항</span>
+                </span>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="tour-view-content-wrap">
+          <div className="tour-view-menu">
+            <div className="tour-view-menu-item">옵션예약</div>
+            <div className="tour-view-menu-item">상품소개</div>
+            <div className="tour-view-menu-item">이용정보</div>
+          </div>
+          <div className="tour-view-content">
+            <div className="tour-view-content-title">
+              <h4>옵션예약</h4>
             </div>
           </div>
         </div>

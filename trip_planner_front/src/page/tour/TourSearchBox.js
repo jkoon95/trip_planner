@@ -81,7 +81,7 @@ const TourSearchBox = (props) => {
           ref={searchInputRef} // ref 설정
         />
       </div>
-      <div className="calendar-wrap">
+      <div className="tour-calendar-wrap">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DatePicker", "DatePicker"]}>
             <DatePicker

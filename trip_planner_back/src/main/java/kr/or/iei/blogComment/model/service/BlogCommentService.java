@@ -30,4 +30,9 @@ public class BlogCommentService {
 		return result;
 	}
 
+	public int modifyComment(BlogComment blogComment) {
+		int result = blogCommentDao.modifyComment(blogComment);
+		return result;
+	}
+
 }

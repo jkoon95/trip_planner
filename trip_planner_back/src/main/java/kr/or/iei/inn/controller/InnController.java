@@ -162,10 +162,10 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	@GetMapping("/selectInnList")
-	public ResponseEntity<ResponseDTO> selectInnList(@ModelAttribute SelectInnList selectInnList, @RequestAttribute String memberEmail){
-		int memberNo = memberService.getMemberNo(memberEmail);
+	@PostMapping("/innList")
+	public ResponseEntity<ResponseDTO> selectInnList(@RequestBody SelectInnList selectInnList , @RequestAttribute String memberEmail){	//@modelAttribute는 파일이 있을경우 받아올 때 사용
 		System.out.println(selectInnList);
+		List list = innService.selectInnList(selectInnList, memberEmail);
 		return null;
 	}
 	

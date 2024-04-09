@@ -19,4 +19,5 @@ public class SelectInnList {
 	private int bookGuest;
 	private int minPrice;
 	private int maxPrice;
+	private String selectSort;
 }

@@ -117,3 +117,53 @@
   width: 100%;
   box-sizing: border-box;
 }
+.inn-list-wrap-top {
+  width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+}
+.inn-list-wrap > .inn-list-wrap-top > div > span {
+  font-size: 24px;
+}
+.sort-option {
+  display: flex;
+  cursor: pointer;
+}
+.sort-option-box {
+  position: relative;
+}
+.sort-option-box > .default-sort-option {
+  display: flex;
+}
+.sort-option-box > .default-sort-option > .default-option {
+  cursor: pointer;
+}
+.sort-option-box > .sort-option-menu {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  width: 150px;
+  margin-top: 10px;
+  position: absolute;
+  right: 5px;
+}
+.sort-option-box > .sort-option-menu > ul > li > .sort {
+  padding: 20px 25px;
+}
+.sort-option-box > .sort-option-menu > ul > li > .sort {
+  display: flex;
+  justify-content: space-between;
+}
+.sort-option-box > .sort-option-menu > ul > li:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+.sort-option-box > .sort-option-menu > ul > li > .active > span:first-child {
+  font-family: pt-b;
+}
+.sort-option-box > .sort-option-menu > ul > li > .active > span:last-child {
+  line-height: 24px;
+}
+.sort-option-box > .sort-option-menu > ul > li > .active span {
+  color: #005caa;
+}

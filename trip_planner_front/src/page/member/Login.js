@@ -118,9 +118,8 @@ const Login = (props) => {
           <div className="input_title">
             <label htmlFor="memberPw">비밀번호</label>
           </div>
-          <div className="input_item">
+          <div className="input_item" id="password-input">
             <Input
-              id="password"
               type="password"
               content="memberPw"
               data={memberPw}

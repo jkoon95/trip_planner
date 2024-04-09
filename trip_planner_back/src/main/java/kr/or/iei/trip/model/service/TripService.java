@@ -1,5 +1,6 @@
 package kr.or.iei.trip.model.service;
 
+import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,11 @@ public class TripService {
 
 	@Transactional
 	public int updateTripDetail(Trip trip) {
-		int delTripDetail = 0;
 		int insertTdLength = 0;
 		int insertResult = 0;
+		int tpLength = 0;
+		int updateTpResult = 0;
+		int returnResult = 0;
 		for(TripDetail td : trip.getTripDetailList()) {
 			System.out.println(td);
 			//일정이 새로 추가됐을 경우
@@ -88,21 +91,39 @@ public class TripService {
 				}
 			}else {//기존 일정인 경우
 				System.out.println("기존 일정인 경우");
-				List<TripDetail> checkTdList = tripDao.checkTdList(td.getTripNo());
-				System.out.println("들어온 디테일 개수 "+trip.getTripDetailList().size());
-				System.out.println("기존 디테일 개수 "+checkTdList.size());
-				System.out.println(td.getTripDetailNo());
-				
-				for(TripPlace tp : td.getSelectPlaceList()) {
-					System.out.println("??" + tp.getTripDetailNo());
-					if(tp.getTripDetailNo() != td.getTripDetailNo()) {
-						System.out.println(tp.getTripDetailNo());
-						System.out.println(td.getTripDetailNo());
+				if(td.getSelectPlaceList() != null) {
+					for(TripPlace tp : td.getSelectPlaceList()) {
+						tp.setTripNo(td.getTripNo());
+						System.out.println(tp.getTripTodo());
+						if(tp.getTripDetailNo() == 0) {
+							insertTdLength++;
+							tp.setTripDetailNo(td.getTripDetailNo());
+							insertResult += tripDao.insertTripPlace(tp);							
+						}else {
+							if(tp.getDelNo() == 1) {
+								tpLength++;
+								System.out.println("delNo가 1이다");
+//								updateTpResult += tripDao.deleteTripPlace(tp);
+							}else {
+								tpLength++;
+								tp.setTripDetailNo(td.getTripDetailNo());
+								updateTpResult += tripDao.updateTripPlace(tp);
+								if(tp.getOldTripDay() != null && (td.getTripDay() != tp.getOldTripDay())) {
+//									updateTpResult += tripDao.deleteTripDetail(tp);									
+								}
+							}
+						}
 					}
 				}
 				
 			}
 		}
-		return 0;
+		if(insertTdLength == insertResult) {
+			returnResult = 1;
+		}
+		if(tpLength == updateTpResult + 1) {
+			returnResult = 1;
+		}
+		return returnResult;
 	}
 }

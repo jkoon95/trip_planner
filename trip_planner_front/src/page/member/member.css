@@ -4,19 +4,15 @@
     padding-bottom: 40px;
 }
 .contents.login .naver{
-    background-image: url(../../../public/images/btnG_축약형.png);
-    width: 90px;
+    background: url(../../../public/images/naver_login.png) no-repeat center / contain;
+    width: 124px;
     height: 45px;
-    background-repeat: no-repeat;
-    object-fit: contain;
 }
 
 .contents.login .kakao{
-    background-image: url(../../../public/images/kakao_login_medium.png);
+    background: url(../../../public/images/kakao_login_medium.png)  no-repeat center / contain;
     width: 90px;
     height: 45px;
-    background-repeat: no-repeat;
-    object-fit: contain;
 }
 
 .contents.consult{
@@ -75,4 +71,14 @@
 
 .b_auth{
     width: 120px;
+}
+
+.contents.login #password-input{
+    position: relative;
+}
+
+.contents.login #showPw{
+    position:absolute;
+    right: 10px;
+    cursor: pointer;
 }

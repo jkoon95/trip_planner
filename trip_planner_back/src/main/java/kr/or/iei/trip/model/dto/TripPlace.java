@@ -14,7 +14,12 @@ import lombok.NoArgsConstructor;
 @Schema(description = "여행일지 장소 객체")
 public class TripPlace {
 	private int tripDetailNo;
+	private int tripNo;
 	private int tripRoute;
+	private int oldDetailNo;
+	private int oldTripRoute;
+	private String oldTripDay;
+	private int delNo;
 	private String tripPlaceName;
 	private String tripPlaceCategory;
 	private String tripPlaceAddress;

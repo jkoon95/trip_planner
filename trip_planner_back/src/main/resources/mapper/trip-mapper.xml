@@ -36,14 +36,12 @@
 		from trip_tbl where trip_no=#{tripNo}
 	</select>
 
-	<select id="selectOneTripDetailList"
-		resultMap="getTripDetailList">
-		select trip_detail_no, trip_no, to_char(trip_day, 'YYYY-MM-DD') trip_day,
-		trip_cost from trip_detail_tbl where trip_no=#{tripNo}
+	<select id="selectOneTripDetailList" resultMap="getTripDetailList">
+		select trip_detail_no, trip_no, to_char(trip_day, 'YYYY-MM-DD') trip_day, trip_cost from trip_detail_tbl where trip_no=#{tripNo} order by trip_day
 	</select>
 
 	<select id="selectOneTripPlaceList" resultType="tripPlace">
-		select * from trip_place_tbl where trip_detail_no=#{tripDetailNo}
+		select * from trip_place_tbl where trip_detail_no=#{tripDetailNo} order by trip_route
 	</select>
 
 	<resultMap type="trip" id="getTrip">
@@ -90,7 +88,7 @@
 	</update>
 
 	<delete id="deleteTripPlace">
-		delete from trip_place_tbl where trip_detail_no=#{tripDetailNo}
+		delete from trip_place_tbl where trip_detail_no=#{tripDetailNo} and trip_route=#{tripRoute}
 	</delete>
 
 	<select id="checkTdList" resultType="tripDetail">
@@ -98,12 +96,25 @@
 	</select>
 
 	<delete id="deleteTripDetail">
-		delete from trip_detail_tbl where trip_detail_no=#{tripDetailNo}
+		delete from trip_detail_tbl where trip_day=#{oldTripDay} and trip_detail_no=#{tripDetailNo}
 	</delete>
 	
 	<select id="selectTripDetailNo" resultType="String">
 		select trip_detail_no from trip_detail_tbl where trip_no=#{tripNo} and trip_day=#{tripDay}
 	</select>
+	
+	<update id="updateTripPlace">
+		update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo}
+		<trim prefix="where" prefixOverrides="and">
+			<if test="oldTripRoute != null">
+				trip_route=#{oldTripRoute}
+			</if>
+			<if test="oldTripDay != null">
+				and trip_detail_no in(select trip_detail_no from trip_detail_tbl where trip_day=#{oldTripDay})		
+			</if>
+			and trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=#{tripNo})
+		</trim>
+	</update>
 
 </mapper>
 

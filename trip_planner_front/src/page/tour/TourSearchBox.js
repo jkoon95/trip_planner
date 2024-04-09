@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../../component/FormFrm";
 import dayjs, { Dayjs } from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -19,6 +19,16 @@ const TourSearchBox = (props) => {
   const [startDate, setStartDate] = React.useState(dayjs());
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
+
+  // useRef를 사용하여 searchInput 요소의 ref 생성
+  const searchInputRef = useRef(null);
+
+  // 컴포넌트가 마운트될 때 searchInput에 포커스 설정
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
 
   const searchBtn = () => {
     if (searchText !== "") {
@@ -68,6 +78,7 @@ const TourSearchBox = (props) => {
           onChange={(e) => setSearchText(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="도시, 상품명으로 검색해주세요."
+          ref={searchInputRef} // ref 설정
         />
       </div>
       <div className="calendar-wrap">

@@ -150,6 +150,19 @@
 }
 
 /* 검색 상품 */
+.tour-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* 부모 요소의 높이를 차지하도록 설정 */
+}
+
+.tour-list-empty > .tour-loading-icon {
+  display: flex;
+  align-items: center;
+}
+
 .tour-prod-zone > .tour-prod {
   display: flex;
   margin-bottom: 30px;
@@ -206,7 +219,6 @@
   display: flex;
   margin-bottom: 20px;
 }
-
 .tour-view-prev .material-icons {
   margin-right: 5px;
   cursor: pointer;
@@ -217,8 +229,78 @@
   cursor: pointer;
 }
 
-.tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
+.tour-view-wrap {
+  margin: 0 auto;
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+.tour-view-wrap > .tour-view-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-thumbnail {
   width: 540px;
   height: 303.75px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
+  width: 100%;
+  height: 100%;
   border-radius: 15px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info {
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info > div {
+  margin-bottom: 5px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-badge span {
+  font-size: 11px;
+  margin-right: 10px;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name {
+  font-family: pt-b;
+  font-size: 1.8em;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name > img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-type {
+  font-family: pt-b;
+  color: #666;
+}
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-price {
+  font-family: pt-b;
+  font-size: 26px;
+}
+
+.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-guide {
+  width: 420px;
+}
+.tour-view-guide > .tour-view-guide-icon {
+  margin-top: 14px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  display: flex; /* 자식 요소들을 수직으로 정렬하기 위해 flex로 설정 */
+  align-items: center; /* 수직 가운데 정렬 */
+  cursor: pointer;
+}
+.tour-view-guide > .tour-view-guide-icon:first-child {
+  margin-bottom: 10px;
+}
+.tour-view-guide > .tour-view-guide-icon > span {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+.tour-view-guide > .tour-view-guide-icon > span > span {
+  font-size: 15px;
+  margin-left: 10px; /* 간격 조절을 위해 추가 */
 }

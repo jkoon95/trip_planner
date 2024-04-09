@@ -72,3 +72,13 @@
 .b_auth{
     width: 120px;
 }
+
+.contents.login #password-input{
+    position: relative;
+}
+
+.contents.login #showPw{
+    position:absolute;
+    right: 10px;
+    cursor: pointer;
+}

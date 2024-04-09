@@ -48,10 +48,10 @@ const Login = (props) => {
 
     if (password.type === "password") {
       password.type = "text";
-      pwIcon.innerText = "visibility_off";
+      pwIcon.innerText = "visibility";
     } else {
       password.type = "password";
-      pwIcon.innerText = "visibility";
+      pwIcon.innerText = "visibility_off";
     }
   };
 
@@ -118,9 +118,8 @@ const Login = (props) => {
           <div className="input_title">
             <label htmlFor="memberPw">비밀번호</label>
           </div>
-          <div className="input_item">
+          <div className="input_item" id="password-input">
             <Input
-              id="password"
               type="password"
               content="memberPw"
               data={memberPw}
@@ -129,7 +128,7 @@ const Login = (props) => {
               inputRef={passwordRef}
             />
             <span id="showPw" class="material-icons" onClick={handleShowPw}>
-              visibility
+              visibility_off
             </span>
           </div>
         </div>

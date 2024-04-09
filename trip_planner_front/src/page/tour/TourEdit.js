@@ -56,6 +56,13 @@ const TourEdit = () => {
   }, []);
 
   const edit = () => {
+    if (tourName.length > 16) {
+      Swal.fire({
+        title: "상품 이름은 16자 이하로 작성해주세요 (한글 기준)",
+        icon: "warning",
+      });
+      return;
+    }
     const form = new FormData();
     form.append("tourNo", tourNo);
     form.append("tourName", tourName);

@@ -28,6 +28,14 @@ const TourReg = () => {
     // console.log(intronail);
 
     if (tourName !== "" && tourType !== "" && tourAddr !== "") {
+      if (tourName.length > 16) {
+        Swal.fire({
+          title: "상품 이름은 16자 이하로 작성해주세요 (한글 기준)",
+          icon: "warning",
+        });
+        return;
+      }
+
       // 전송용 form객체 생성
       const form = new FormData();
       form.append("tourName", tourName);

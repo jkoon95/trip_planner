@@ -2,6 +2,11 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 
 const TourView = (props) => {
   const isLogin = props.isLogin;
@@ -52,6 +57,8 @@ const TourView = (props) => {
   }
   const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
+
+  const [startDate, setStartDate] = React.useState(dayjs());
 
   return (
     <section className="contents">
@@ -113,6 +120,18 @@ const TourView = (props) => {
           <div className="tour-view-content">
             <div className="tour-view-content-title">
               <h4>옵션예약</h4>
+            </div>
+            <div className="tour-view-calendar">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DateCalendar", "DateCalendar"]}>
+                  <DateCalendar
+                    value={startDate}
+                    onChange={(newValue) => setStartDate(newValue)}
+                    showDaysOutsideCurrentMonth
+                    disablePast
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
             </div>
           </div>
         </div>

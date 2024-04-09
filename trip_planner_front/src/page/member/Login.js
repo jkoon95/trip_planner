@@ -48,10 +48,10 @@ const Login = (props) => {
 
     if (password.type === "password") {
       password.type = "text";
-      pwIcon.innerText = "visibility_off";
+      pwIcon.innerText = "visibility";
     } else {
       password.type = "password";
-      pwIcon.innerText = "visibility";
+      pwIcon.innerText = "visibility_off";
     }
   };
 
@@ -129,7 +129,7 @@ const Login = (props) => {
               inputRef={passwordRef}
             />
             <span id="showPw" class="material-icons" onClick={handleShowPw}>
-              visibility
+              visibility_off
             </span>
           </div>
         </div>

@@ -547,7 +547,11 @@ const SetDayWrap = (props) => {
         <ul className="place_list">
           {
             tripDetailItem.selectPlaceList.map((item, index) => {
-              item.tripRoute = index;
+              if(item.delNo === 1){
+                item.tripRoute = -1
+              }else{
+                item.tripRoute = index;
+              }
               return (
                 <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
@@ -613,6 +617,12 @@ const ItemTripPlace = (props) => {
   const deletePlace = () => {
     // tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList[routeIndex].delNo = 1;
+    if(routeIndex != 0){
+      tripDetailList[thisIndex].selectPlaceList[routeIndex-1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex-1].tripRoute;
+      tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute;
+    }
+    const delItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    tripDetailList[thisIndex].selectPlaceList.push(...delItem);
     setTripDetailList([...tripDetailList]);
   }
 

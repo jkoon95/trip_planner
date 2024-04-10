@@ -182,17 +182,14 @@ public class TripController {
 				TripPlace tp = new TripPlace();
 				
 				String tripDetailNoStr2 = String.valueOf(data.get("tripDetailNo"));
-//				System.out.println("tripDetailNoStr2: "+tripDetailNoStr2);
 				if(!tripDetailNoStr2.equals("null")) {
 					tp.setTripDetailNo(Integer.parseInt(String.valueOf(data.get("tripDetailNo"))));
 				}
 				String tripRouteStr = String.valueOf(data.get("tripRoute"));
-//				System.out.println("tripRouteStr: "+tripRouteStr);
 				if(!tripRouteStr.equals("null")) {
 					tp.setTripRoute(Integer.parseInt(tripRouteStr));
 				}
 				String oldTripRouteStr = String.valueOf(data.get("oldTripRoute"));
-//				System.out.println("oldTripRouteStr: "+oldTripRouteStr);
 				if(!oldTripRouteStr.equals("null")) {
 					tp.setOldTripRoute(Integer.parseInt(oldTripRouteStr));
 				}
@@ -203,17 +200,14 @@ public class TripController {
 				String oldTripDayStr = String.valueOf(data.get("oldTripDay"));
 				System.out.println("oldTripDayStr: "+oldTripDayStr);
 				if(!oldTripDayStr.equals("null")) {
-					System.out.println("나오냐");
 					tp.setOldTripDay(oldTripDayStr);
 				}
-				System.out.println(data);
 				String delNoStr = String.valueOf(data.get("delNo"));
 				System.out.println("111111 : "+delNoStr );
 				if(!delNoStr.equals("null")) {
 					tp.setDelNo(Integer.parseInt(delNoStr));
 				}
 				tp.setTripTodo((String)data.get("tripTodo"));
-				//tp.setDelNo(Integer.parseInt((String)data.get("delNo")));
 				tp.setTripPlaceName((String)data.get("tripPlaceName"));
 				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
 				tp.setTripPlaceAddress((String)data.get("tripPlaceAddress"));
@@ -227,6 +221,7 @@ public class TripController {
 			tripDetailList.add(td);
 		}
 		trip.setTripDetailList(tripDetailList);
+		System.out.println("trip!!!!!!!"+trip);
 		int result = tripService.updateTripDetail(trip);
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

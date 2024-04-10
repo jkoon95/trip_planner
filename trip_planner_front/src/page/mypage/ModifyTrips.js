@@ -671,6 +671,7 @@ const SetDayWrap = (props) => {
                 item.tripRoute = -1
               }else{
                 item.tripRoute = index;
+                item.delNo = -1;
               }
               item.tripDay = tripDetailItem.tripDay;
               return (
@@ -710,7 +711,7 @@ const ItemTripPlace = (props) => {
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
-    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex]});
+    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }
@@ -739,6 +740,7 @@ const ItemTripPlace = (props) => {
   }
 
   const deletePlace = () => {
+    console.log(routeIndex);
     // tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList[routeIndex].delNo = 1;
     if(routeIndex != 0){

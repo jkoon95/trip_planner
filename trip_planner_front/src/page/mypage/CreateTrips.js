@@ -547,6 +547,7 @@ const SetDayWrap = (props) => {
                 item.tripRoute = index;
               }
               item.tripDay = tripDetailItem.tripDay;
+              item.delNo = -1;
               return (
                 <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
@@ -581,7 +582,7 @@ const ItemTripPlace = (props) => {
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
-    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex]});
+    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }

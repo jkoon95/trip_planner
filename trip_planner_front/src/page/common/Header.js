@@ -38,6 +38,13 @@ const Header = (props) => {
   document.body.addEventListener("click", () => {
     menuRef.current.classList.remove("active");
   });
+  window.addEventListener("scroll", () => {
+    if(window.scrollY > 60){
+      document.querySelector(".header").classList.add("line");
+    }else{
+      document.querySelector(".header").classList.remove("line");
+    }
+  })
   return (
     <header className="header">
       <div className="header_inner">

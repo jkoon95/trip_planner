@@ -133,6 +133,48 @@ const TourView = (props) => {
                 </DemoContainer>
               </LocalizationProvider>
             </div>
+            <div className="tour-view-book-wrap">
+              <div className="tour-view-book-title">
+                <h3>예약날짜</h3>
+                <div className="tour-view-book-date">
+                  <span>{startDate.format("YYYY년 MM월 DD일")}</span>
+                </div>
+              </div>
+              <div className="tour-view-book-title">
+                <h3>수량/인원</h3>
+                <div className="tour-view-book-ticket">
+                  <span>입장권 성인</span>
+                  <span>
+                    {ticket && ticket.ticketAdult
+                      ? ticket.ticketAdult.toLocaleString() + " 원"
+                      : "무료"}
+                  </span>
+                  <span class="material-icons">add_box</span>
+                  <span class="material-icons">indeterminate_check_box</span>
+                  <span>입장권 청소년</span>
+                  <span>
+                    {ticket && ticket.ticketYouth
+                      ? ticket.ticketYouth.toLocaleString() + " 원"
+                      : "무료"}
+                  </span>
+                  <span>입장권 어린이</span>
+                  <span>
+                    {ticket && ticket.ticketChild
+                      ? ticket.ticketChild.toLocaleString() + " 원"
+                      : "무료"}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="tour-view-content-title">
+              <h4>상품소개</h4>
+            </div>
+            <div className="tour-view-content-title">
+              <h4>이용정보</h4>
+            </div>
+            <div className="tour-view-content-title">
+              <h4>리뷰</h4>
+            </div>
           </div>
         </div>
       </div>

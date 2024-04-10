@@ -273,6 +273,16 @@ const CommentItem = (props) => {
       </Modal>
 
       <div className="comment-list-box">
+        <div className="comment-number">{commentNumber}</div>
+        <div className="comment-contents-wrap">
+          <div className="comment-info">
+            <div className="comment-nickname">{comment.memberNickName} </div>
+            <div className="comment-date">{comment.commentDate}</div>
+          </div>
+          <div className="comment-content">
+            <div className="comment-inner">{comment.commentContent}</div>
+          </div>
+        </div>
         <div class="btn-area">
           <button
             type="button"
@@ -289,13 +299,6 @@ const CommentItem = (props) => {
           >
             삭제
           </button>
-        </div>
-
-        <div className="comment-number">{commentNumber}</div>
-        <div className="comment-content">{comment.commentContent}</div>
-        <div className="comment-info">
-          <div className="comment-nickname">{comment.memberNickName} </div>
-          <div className="comment-date">{comment.commentDate}</div>
         </div>
       </div>
     </>

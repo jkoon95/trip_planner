@@ -292,7 +292,6 @@ blog-list-box {
   color: #fff;
 }
 .comment-insert-box {
-  margin-bottom: 10px;
 }
 .comment-content-box input {
   width: 85%;
@@ -305,39 +304,42 @@ blog-list-box {
   border-top: 1px solid #c1c1c1;
 }
 .comment-list-box {
-  overflow: hidden;
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
   border-bottom: 1px solid #c1c1c1;
 }
+.comment-list-box .comment-contents-wrap {
+  max-width: calc(100% - 205px);
+  flex-grow: 1;
+}
 .comment-number {
-  width: 100px;
-  height: 70px;
+  align-self: center;
+  width: 80px;
   text-align: center;
-  line-height: 70px;
-  float: left;
   color: var(--main_01);
   font-family: pt-eb;
-  border-right: 1px solid #c1c1c1;
+  /* border-right: 1px solid #c1c1c1; */
 }
 .comment-info {
-  text-align: right;
+  display: flex;
+  gap: 8px;
   font-size: 80%;
 }
 
 .comment-content {
-  text-indent: 15px;
+  height: 70px;
+  padding: 8px 0;
   font-family: pt-eb;
-  padding-top: 10px;
+  overflow-y: auto;
 }
 .comment-nickname {
   color: var(--main_02);
 }
 .comment-date {
-  padding-bottom: 10px;
 }
 .btn-area {
-  text-align: right;
-  margin-top: 5px;
-}
-.first {
-  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

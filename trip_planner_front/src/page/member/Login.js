@@ -127,7 +127,7 @@ const Login = (props) => {
               keyDownEvent={loginKeyDownEvnet}
               inputRef={passwordRef}
             />
-            <span id="showPw" class="material-icons" onClick={handleShowPw}>
+            <span id="showPw" className="material-icons" onClick={handleShowPw}>
               visibility_off
             </span>
           </div>

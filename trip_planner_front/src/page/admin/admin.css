@@ -58,3 +58,38 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
   }
+
+  .contents.memberMgmtView .memberMgmtView-title{
+    position: relative;
+  }
+
+  .contents.memberMgmtView .title-img{
+    position: absolute;
+    left: 37%;
+    top: -40px;
+  }
+
+  .contents.memberMgmtView #block-icons{
+    position: absolute;
+    bottom: 6px;
+    right: 40%;
+    color: red;
+  }
+
+  .contents.memberMgmtView .memberMgmtView_wrap{
+    width: 600px;
+    border: 2px solid #89cff0;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
+  .contents.memberMgmtView .memberMgmtView_area{
+    padding: 40px;
+  }
+
+  .contents.memberMgmtView #block_btn{
+    display: flex;
+    justify-content: center;
+  }
+
+

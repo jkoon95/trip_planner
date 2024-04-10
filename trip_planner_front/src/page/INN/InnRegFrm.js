@@ -195,7 +195,7 @@ const InnImgReg = (props) => {
         {item === null ? (
           <>
             <label htmlFor={"innImg" + index}>
-              <span class="material-icons">photo_camera</span>
+              <span className="material-icons">photo_camera</span>
             </label>
             <input
               type="file"

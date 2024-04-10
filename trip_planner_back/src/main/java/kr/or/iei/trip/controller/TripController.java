@@ -65,7 +65,9 @@ public class TripController {
 			List<TripPlace> selectPlaceList = new ArrayList<TripPlace>();
 			for(LinkedHashMap<String, Object> data : spl) {
 				TripPlace tp = new TripPlace();
-				tp.setTripRoute(Integer.parseInt((String)data.get("tripRoute")));
+				System.out.println(String.valueOf(data.get("tripRoute")));
+				String tripRouteStr = String.valueOf(data.get("tripRoute"));
+				tp.setTripRoute(Integer.parseInt(tripRouteStr));
 				tp.setTripTodo((String)data.get("tripTodo"));
 				
 //				LinkedHashMap<String, String> tripPlace = (LinkedHashMap<String, String>)data.get("tripPlace");
@@ -88,7 +90,7 @@ public class TripController {
 			}
 			tripDetailList.add(td);
 		}
-//		System.out.println(tripDetailList);
+		System.out.println(tripDetailList);
 		trip.setTripDetailList(tripDetailList);
 		int result = tripService.insertTrip(trip, memberEmail);
 		if(result > 0) {
@@ -189,11 +191,6 @@ public class TripController {
 				if(!tripRouteStr.equals("null")) {
 					tp.setTripRoute(Integer.parseInt(tripRouteStr));
 				}
-				String oldDetailNoStr = String.valueOf(data.get("oldDetailNo"));
-//				System.out.println("oldDetailNoStr: "+oldDetailNoStr);
-				if(!oldDetailNoStr.equals("null")) {
-					tp.setOldDetailNo(Integer.parseInt(oldDetailNoStr));
-				}
 				String oldTripRouteStr = String.valueOf(data.get("oldTripRoute"));
 //				System.out.println("oldTripRouteStr: "+oldTripRouteStr);
 				if(!oldTripRouteStr.equals("null")) {
@@ -205,9 +202,14 @@ public class TripController {
 					System.out.println("나오냐");
 					tp.setOldTripDay(oldTripDayStr);
 				}
-				
+				System.out.println(data);
+				String delNoStr = String.valueOf(data.get("delNo"));
+				System.out.println("111111 : "+delNoStr );
+				if(!delNoStr.equals("null")) {
+					tp.setDelNo(Integer.parseInt(delNoStr));
+				}
 				tp.setTripTodo((String)data.get("tripTodo"));
-				tp.setDelNo(Integer.parseInt((String)data.get("delNo")));
+				//tp.setDelNo(Integer.parseInt((String)data.get("delNo")));
 				tp.setTripPlaceName((String)data.get("tripPlaceName"));
 				tp.setTripPlaceCategory((String)data.get("tripPlaceCategory"));
 				tp.setTripPlaceAddress((String)data.get("tripPlaceAddress"));
@@ -216,6 +218,7 @@ public class TripController {
 				tp.setTripPlaceLng((String)data.get("tripPlaceLng"));			
 				selectPlaceList.add(tp);
 				td.setSelectPlaceList(selectPlaceList);
+				System.out.println(tp);
 			}
 			tripDetailList.add(td);
 		}

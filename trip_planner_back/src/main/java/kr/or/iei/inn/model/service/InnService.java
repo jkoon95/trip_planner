@@ -16,6 +16,7 @@ import kr.or.iei.inn.model.dto.Option;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
+import kr.or.iei.inn.model.dto.SelectInnList;
 
 @Service
 public class InnService {
@@ -66,5 +67,9 @@ public class InnService {
 	public int reservationInn(InnReservation innReservation) {
 		
 		return innDao.reservationInn(innReservation);
+	}
+	public List selectInnList(SelectInnList selectInnList, String memberEmail) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

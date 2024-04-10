@@ -31,15 +31,15 @@
   min-width: 80%;
   padding-left: 10px;
 }
-.tour-search-wrap > .calendar-wrap {
+.tour-search-wrap > .tour-calendar-wrap {
   width: 40%;
   padding-left: 20px;
   overflow: hidden;
 }
-.tour-search-wrap > .calendar-wrap * {
+.tour-search-wrap > .tour-calendar-wrap * {
   font-size: 20px;
   border: none;
 }
-.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-  width: 60% !important;
+.tour-calendar-wrap .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  width: 60%;
 }

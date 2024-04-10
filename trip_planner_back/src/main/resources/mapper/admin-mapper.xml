@@ -34,5 +34,16 @@
   <update id="updateCoupon">
   	update coupon_tbl set coupon_status = 3 where coupon_no=#{couponNo}
   </update>
+  
+  <select id="totalPartnerCount" resultType="int">
+	  	select count(*) from partner_tbl
+ </select>  
+ <select id="selectPartnerList" resultType="partner">
+ 	select * from
+	    (select rownum as rnum, b.*from
+	        (select * from partner_tbl 
+	        	 order by partner_no desc)b)
+	where rnum between #{start} and #{end}
+ </select>
 
 </mapper>

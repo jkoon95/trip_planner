@@ -94,13 +94,14 @@ function App() {
       <Header isLogin={isLogin} logout={logout} />
       <main className="container">
         <Routes>
+          {/* 메인이니까 첫 번째 자리에 둘게요 */}
+          <Route
+            path="/"
+            element={<Main />}
+          />
           <Route
             path="/innDetailView"
             element={<InnDetailView isLogin={isLogin} />}
-          />
-          <Route
-            path="/"
-            element={<Main isLogin={isLogin} logout={logout} />}
           />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/join" element={<Join />} />

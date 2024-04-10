@@ -17,6 +17,7 @@ public class TripPlace {
 	private int tripNo;
 	private int tripRoute;
 	private int oldTripRoute;
+	private String tripDay;
 	private String oldTripDay;
 	private int delNo;
 	private String tripPlaceName;

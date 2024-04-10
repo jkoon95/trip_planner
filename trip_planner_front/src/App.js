@@ -89,6 +89,7 @@ function App() {
       setTimeout(logout, remainingTime);
     }
   }, []);
+
   return (
     <div className="wrap">
       <Header isLogin={isLogin} logout={logout} />

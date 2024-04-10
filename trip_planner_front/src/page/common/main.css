@@ -1,7 +1,7 @@
 .contents.main_hero{perspective: 1000px; display: flex; justify-content: center; align-items: center; position: relative; height: calc(100vh - 60px); min-height: 720px; padding: 0 20px; max-width: unset; width: calc(100% + 40px); margin-left: -20px; padding: 0; border-radius: 30px; overflow: hidden;}
 .contents.main_hero::after{content: ""; display: block; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: url(/public/images/main_hero_bg.png) no-repeat top center / cover; mask-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,1)); -webkit-mask-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,1));}
 .main_hero .hero_inner{position: absolute; -webkit-transform-style: preserve-3d; transform-style: preserve-3d; transition: ease-out 0.2s; transform-origin: center; z-index: 100; width: 100%; max-width: 1280px;}
-.main_hero .hero_ticket{position: relative; transform: translateZ(-200px) scale(1.2); display: flex; width: 100%; z-index: 150;}
+.main_hero .hero_ticket{position: relative; transform: translateZ(-100px) scale(1.1); display: flex; width: 100%; z-index: 150;}
 .main_hero .hero_ticket>.search_area{width: 68%; max-width: 867px; border-radius: 20px; overflow: hidden;}
 .main_hero .hero_ticket>.details_area{flex-grow: 1; border-radius: 20px; overflow: hidden;}
 

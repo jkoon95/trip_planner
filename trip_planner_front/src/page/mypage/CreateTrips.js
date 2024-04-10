@@ -56,7 +56,7 @@ const CreateTrips = (props) => {
     .then((res) => {
       if(res.data.message === "success"){
         Swal.fire({icon: "success", title: "등록 완료", text: "여행 일정이 등록되었습니다.", confirmButtonText: "닫기"});
-        navigate("/");
+        navigate("/mypage/myTrips");
       }
     })
     .catch((res) => {
@@ -348,7 +348,7 @@ const CreateTrips = (props) => {
     //dayjs(new Date())
     //tripStartDate.format("YYYY-MM-DD")
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
-    if(tripStartDate && tripEndDate && (dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD") >= dayjs(new Date(tripStartDate.$d.getTime())).format("YYYY-MM-DD"))){
+    if(tripStartDate && tripEndDate && (new Date(tripEndDate.$d.getTime()) >= new Date(tripStartDate.$d.getTime()))){
       const copyTripDetailList = tripDetailList.filter((item)=>{
         return item.length !== 0;
       });
@@ -402,13 +402,7 @@ const CreateTrips = (props) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker onChange={(newValue)=>{
-                      if(tripEndDate === null){
-                        setTripStartDate(newValue);
-                      }else{
-                        if(tripEndDate !== null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
-                          setTripStartDate(newValue);
-                        }
-                      }
+                      setTripStartDate(newValue);
                     }} format="YYYY-MM-DD" disablePast />
                     <DatePicker onChange={(newValue)=>{
                       setTripEndDate(newValue);
@@ -552,6 +546,7 @@ const SetDayWrap = (props) => {
               }else{
                 item.tripRoute = index;
               }
+              item.tripDay = tripDetailItem.tripDay;
               return (
                 <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );
@@ -586,7 +581,7 @@ const ItemTripPlace = (props) => {
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
-    tripDetailList[thisIndex].selectPlaceList.push({...place});
+    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex]});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }

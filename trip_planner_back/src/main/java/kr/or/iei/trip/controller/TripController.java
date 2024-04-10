@@ -196,6 +196,10 @@ public class TripController {
 				if(!oldTripRouteStr.equals("null")) {
 					tp.setOldTripRoute(Integer.parseInt(oldTripRouteStr));
 				}
+				String tpTripDayStr = String.valueOf(data.get("tripDay"));
+				if(!tpTripDayStr.equals("null")) {
+					tp.setTripDay(tpTripDayStr);
+				}
 				String oldTripDayStr = String.valueOf(data.get("oldTripDay"));
 				System.out.println("oldTripDayStr: "+oldTripDayStr);
 				if(!oldTripDayStr.equals("null")) {

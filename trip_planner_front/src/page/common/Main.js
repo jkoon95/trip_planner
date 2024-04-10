@@ -11,10 +11,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Main = (props) => {
-  const setIsMain = props.setIsMain;
+const Main = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState("");
   const [numberInput, setNumberInput] = useState("");
   const [detailPlace, setDetailPlace] = useState("-");
@@ -22,6 +24,7 @@ const Main = (props) => {
   const [detailCheckIn, setDetailCheckIn] = useState();
   const [detailCheckOut, setDetailCheckOut] = useState();
   const [calcCount, setCalcCount] = useState();
+  // const [searchObj, setSearchObj] = useState({});
   const mainHero = useRef();
   const heroInner = useRef();
 
@@ -30,8 +33,8 @@ const Main = (props) => {
     let heroHeight = mainHero.current.offsetHeight;
     let mouseXpos = e.nativeEvent.offsetX;
     let mouseYpos = e.nativeEvent.offsetY;
-    let YrotateDeg = (heroWidth / 2 - mouseXpos) * 0.002;
-    let XrotateDeg = (heroHeight / 2 - mouseYpos) * -0.002;
+    let YrotateDeg = (heroWidth / 2 - mouseXpos) * 0.003;
+    let XrotateDeg = (heroHeight / 2 - mouseYpos) * -0.003;
     heroInner.current.style.transform = "rotateX("+XrotateDeg+"deg) rotateY("+YrotateDeg+"deg)"
   }
 
@@ -40,6 +43,29 @@ const Main = (props) => {
   }
   const setDetailPeopleFunc = () => {
     setDetailPeople(numberInput);
+  }
+
+  useEffect(() => {
+    let calc = 0;
+    if(detailCheckIn && detailCheckOut){
+      if(new Date(detailCheckOut.$d) >= new Date(detailCheckIn.$d)){
+        calc = (new Date(detailCheckOut.$d) - new Date(detailCheckIn.$d))/(1000*60*60*24);
+      }
+    }
+    setCalcCount(calc);
+  }, [detailCheckIn, detailCheckOut])
+
+  const goToInnListFunc = () => {
+    const searchObj = {detailPlace, detailPeople};
+    console.log(searchObj);
+    axios.get(backServer + "/main/search/inn", searchObj)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+    // navigate("/innList", {searchObj});
   }
 
   return (
@@ -109,7 +135,7 @@ const Main = (props) => {
                   </div>
                 </div>
                 <div className="btn_area">
-                  <button type="button" className="btn_main_search">해당 조건으로 검색하기</button>
+                  <button type="button" className="btn_main_search" onClick={goToInnListFunc}>해당 조건으로 검색하기</button>
                 </div>
                 <div className="dots"></div>
               </div>

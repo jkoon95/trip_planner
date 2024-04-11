@@ -96,10 +96,7 @@ function App() {
       <main className="container">
         <Routes>
           {/* 메인이니까 첫 번째 자리에 둘게요 */}
-          <Route
-            path="/"
-            element={<Main />}
-          />
+          <Route path="/" element={<Main />} />
           <Route
             path="/innDetailView"
             element={<InnDetailView isLogin={isLogin} />}

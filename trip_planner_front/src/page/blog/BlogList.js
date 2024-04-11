@@ -30,7 +30,6 @@ const BlogList = (props) => {
         console.log(res);
       });
   }, [reqPage]);
-
   return (
     <section className="contents blogList">
       <div className="blog-list-title-wrap">

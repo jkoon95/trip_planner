@@ -72,22 +72,20 @@ const BlogView = (props) => {
     });
   };
   const insertComment = () => {
-    if (commentContent !== "") {
-      const form = new FormData();
-      form.append("commentContent", commentContent);
-      form.append("memberNickName", member.memberNickName);
-      form.append("blogNo", blog.blogNo);
-      axios
-        .post(backServer + "/blogComment", form)
-        .then((res) => {
-          setCommentContent("");
-          setIsRegistComment(!isRegistComment);
-          Swal.fire("댓글이 등록되었습니다 :)");
-        })
-        .catch((res) => {
-          console.log(res.data);
-        });
-    }
+    const form = new FormData();
+    form.append("commentContent", commentContent);
+    form.append("memberNickName", member.memberNickName);
+    form.append("blogNo", blog.blogNo);
+    axios
+      .post(backServer + "/blogComment", form)
+      .then((res) => {
+        setCommentContent("");
+        setIsRegistComment(!isRegistComment);
+        Swal.fire("댓글이 등록되었습니다 :)");
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
@@ -127,32 +125,42 @@ const BlogView = (props) => {
             />
           )}
 
-          <div className="blog-view-title">{blog.blogTitle}</div>
+          <div className="blog-view-title">
+            <span>여행 제목 : </span>
+            {blog.blogTitle}
+          </div>
         </div>
         <div className="blog-view-content">
           {list.map((day, index) => {
-            return (
-              <DayItem key={"list" + index} day={day} dayNumber={index + 1} />
-            );
+            return <DayItem key={"list" + index} day={day} />;
           })}
         </div>
+
         <div className="comment-content-box">
           <h3>댓글</h3>
-          <div className="comment-insert-box">
-            <Input
-              type="text"
-              data={commentContent}
-              setData={setCommentContent}
-              placeholder="댓글을 작성해주세요"
-            />
-            <button
-              type="button"
-              class="btn_secondary md"
-              onClick={insertComment}
-            >
-              등록
-            </button>
-          </div>
+          <>
+            {isLogin ? (
+              <div>
+                <div className="comment-insert-box">
+                  <Input
+                    type="text"
+                    data={commentContent}
+                    setData={setCommentContent}
+                    placeholder="댓글을 작성해주세요"
+                  />
+                  <button
+                    type="button"
+                    class="btn_secondary md"
+                    onClick={insertComment}
+                  >
+                    등록
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </>
           {comment.map((comment, index) => {
             return (
               <CommentItem
@@ -161,6 +169,8 @@ const BlogView = (props) => {
                 commentNumber={index + 1}
                 isRegistComment={isRegistComment}
                 setIsRegistComment={setIsRegistComment}
+                member={member}
+                isLogin={isLogin}
                 //setOpenComment={setOpenComment}
               />
             );
@@ -173,11 +183,17 @@ const BlogView = (props) => {
 
 const DayItem = (props) => {
   const day = props.day;
-  const dayNumber = props.dayNumber;
   return (
     <div className="day-list">
-      <div className="date-day">{"🚕 " + " day " + dayNumber + " 💨"} </div>
-      <span className="schedule-title">{day.blogDateScheduleTitle}</span>
+      <div className="day-titie-box">
+        <span className="blog-date-day">
+          🚕 Day {day.blogDateDay + 1} 일정 💨💨💨
+        </span>
+        <br></br>
+        <p className="schedule-title">
+          <span>일정 제목</span> : {day.blogDateScheduleTitle}
+        </p>
+      </div>
       <span
         className="schedule-content ql-editor"
         dangerouslySetInnerHTML={{ __html: day.blogDateScheduleContent }}
@@ -187,7 +203,10 @@ const DayItem = (props) => {
 };
 const CommentItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-
+  const isLogin = props.isLogin;
+  const member = props.member;
+  console.log(isLogin);
+  console.log(member);
   const comment = props.comment;
   const commentNumber = props.commentNumber;
   const isRegistComment = props.isRegistComment;
@@ -229,24 +248,27 @@ const CommentItem = (props) => {
       }
     });
   };
-  const commentUpdate = () => {
-    const form = new FormData();
-    form.append("commentNo", comment.commentNo);
-    form.append("blogNo", comment.blogNo);
-    form.append("memberNickName", comment.memberNickName);
-    form.append("commentContent", updateComment.commentContent);
-    axios
-      .patch(backServer + "/blogComment", form)
-      .then((res) => {
-        if (res.data.message === "success") {
-          Swal.fire("수정이 완료되었습니다. :)");
-          setOpenComment(false);
-          setIsRegistComment(!isRegistComment);
-        }
-      })
-      .catch((res) => {
-        Swal.fire("수정할 내용을 입력해주세요. :)");
-      });
+  const commentUpdate = (props) => {
+    const commentContent = props.commentContent;
+    if (commentContent !== "") {
+      const form = new FormData();
+      form.append("commentNo", comment.commentNo);
+      form.append("blogNo", comment.blogNo);
+      form.append("memberNickName", comment.memberNickName);
+      form.append("commentContent", updateComment.commentContent);
+      axios
+        .patch(backServer + "/blogComment", form)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("수정이 완료되었습니다. :)");
+            setOpenComment(false);
+            setIsRegistComment(!isRegistComment);
+          }
+        })
+        .catch((res) => {
+          Swal.fire("수정할 내용을 입력해주세요. :)");
+        });
+    }
   };
   return (
     <>
@@ -283,23 +305,30 @@ const CommentItem = (props) => {
             <div className="comment-inner">{comment.commentContent}</div>
           </div>
         </div>
-        <div class="btn-area">
-          <button
-            type="button"
-            class="btn_primary sm first"
-            onClick={openCommentFunc}
-            comment={comment}
-          >
-            수정
-          </button>
-          <button
-            type="button"
-            class="btn_primary outline sm"
-            onClick={commentDelete}
-          >
-            삭제
-          </button>
-        </div>
+        <>
+          {isLogin &&
+          member &&
+          member.memberNickName === comment.memberNickName ? (
+            <div class="btn-area">
+              <button
+                type="button"
+                className="btn_primary sm first"
+                onClick={openCommentFunc}
+              >
+                수정
+              </button>
+              <button
+                type="button"
+                className="btn_primary outline sm"
+                onClick={commentDelete}
+              >
+                삭제
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
+        </>
       </div>
     </>
   );

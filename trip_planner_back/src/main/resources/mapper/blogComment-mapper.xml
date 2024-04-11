@@ -12,7 +12,7 @@
 		member_nickname,
 		comment_content,
 		to_char(comment_date, 'yyyy-mm-dd') as comment_date	
-	from blog_comment where blog_no=#{blogNo}
+	from blog_comment where blog_no=#{blogNo} ORDER BY comment_no DESC
 	</select>
 	<delete id="deleteComment">
 		delete from blog_comment where comment_no = #{commnetNo}

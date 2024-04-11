@@ -101,12 +101,15 @@ public class TripService {
 						tp.setTripNo(td.getTripNo());
 						//기존 날짜에 장소가 새로 추가된 경우
 						if(tp.getTripDetailNo() == 0) {
+							System.out.println("기존 날짜에 장소가 새로 추가된 경우");
+							System.out.println(tp);
 							insertTdLength++;
 							//장소가 가진 detailNo가 0이기 때문에 td의 detailNo 부여
 							tp.setTripDetailNo(td.getTripDetailNo());
 							//장소 insert
 							insertResult += tripDao.insertTripPlace(tp);			
 						}else {//기존 날짜에 기존 장소가 변경된 경우
+							System.out.println("기존 장소가 삭제예정인 경우");
 							//기존 장소가 삭제예정인 경우
 							if(tp.getDelNo() == 1) {
 								System.out.println("service1 : "+tp.getDelNo()+"/"+tp.getOldTripRoute());
@@ -123,12 +126,11 @@ public class TripService {
 								System.out.println("여기가 돈걸까..?");
 								tpLength++;
 								updateTpResult += tripDao.updateTripPlace1(tp);
+							}else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
+								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
+								tpLength++;
+								updateTpResult += tripDao.updateTripPlace1(tp);
 							}
-//							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
-//								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
-//								tpLength++;
-//								updateTpResult += tripDao.updateTripPlace1(tp);
-//							}
 							//기존 일정을 줄여서 장소의 정보가 변경된 경우
 							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {
 								System.out.println();
@@ -148,13 +150,13 @@ public class TripService {
 						}
 					}
 					//마지막에 전체 트립루트 싹 업데이트
-					for(TripPlace tp : td.getSelectPlaceList()) {
-						System.out.println("이거 안돌아?");
-						System.out.println("old"+tp.getOldTripRoute());
-						System.out.println("new"+tp.getTripRoute());
-						System.out.println("detailNo"+tp.getTripDetailNo());
-						tripDao.updateTripRoute(tp);
-					}
+//					for(TripPlace tp : td.getSelectPlaceList()) {
+//						System.out.println("이거 안돌아?");
+//						System.out.println("old"+tp.getOldTripRoute());
+//						System.out.println("new"+tp.getTripRoute());
+//						System.out.println("detailNo"+tp.getTripDetailNo());
+//						tripDao.updateTripRoute(tp);
+//					}
 				}else {//기존 날짜에 장소가 없는 경우(빈 배열)
 					updateTdLength++;
 					System.out.println("기존 날짜에 장소가 없는 경우");

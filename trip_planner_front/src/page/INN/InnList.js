@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
 import ListSideMenu from "./ListSideMenu";
 import { Link, Route, Routes } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
 
-const InnList = () => {
+const InnList = (props) => {
+  const location = useLocation();
+  console.log(location.state);
   //리뷰,별점,낮은가격,높은가격 순으로 보여주기 위한 기능
   const [optionSort, setOptionSort] = useState([
     {

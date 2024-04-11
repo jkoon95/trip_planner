@@ -1,8 +1,29 @@
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import "./promotion.css";
+import Pagination from "../../component/Pagination";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const PromotionList = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [promotionList, setPromotionList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
+  const [reqPage, setReqPage] = useState(1);
+  useEffect(() => {
+    axios
+      .get(backServer + "/promotion/promotionList/" + reqPage)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setPromotionList(res.data.data.promotionList);
+          setPageInfo(res.data.data.pi);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [reqPage]);
   return (
     <section className="contents promotion">
       <div className="input_wrap">
@@ -16,9 +37,15 @@ const PromotionList = () => {
         <Button>가격순</Button>
         <Button>마감임박</Button>
       </ButtonGroup>
+      <div className="page-box">
+        <Pagination
+          pageInfo={pageInfo}
+          reqPage={reqPage}
+          setReqPage={setReqPage}
+        />
+      </div>
     </section>
   );
 };
 
 export default PromotionList;
-// *snip*

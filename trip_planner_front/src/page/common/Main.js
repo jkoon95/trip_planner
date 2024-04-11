@@ -53,19 +53,14 @@ const Main = () => {
       }
     }
     setCalcCount(calc);
+    setDetailCheckIn(dayjs(detailCheckIn).format("YYYY-MM-DD"));
+    setDetailCheckOut(dayjs(detailCheckOut).format("YYYY-MM-DD"));
   }, [detailCheckIn, detailCheckOut])
 
   const goToInnListFunc = () => {
-    const searchObj = {detailPlace, detailPeople};
+    const searchObj = {detailPlace, detailPeople, detailCheckIn, detailCheckOut};
     console.log(searchObj);
-    axios.get(backServer + "/main/search/inn", searchObj)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((res) => {
-      console.log(res);
-    })
-    // navigate("/innList", {searchObj});
+    navigate("/innList", {state: searchObj});
   }
 
   return (
@@ -102,7 +97,6 @@ const Main = () => {
                       <div className="calendar_title">check-in</div>
                       <DatePicker onChange={(newValue)=>{
                         setDetailCheckIn(newValue);
-                        console.log(newValue);
                       }} format="YYYY-MM-DD" disablePast />
                       <div className="calendar_title">check-out</div>
                       <DatePicker onChange={(newValue)=>{

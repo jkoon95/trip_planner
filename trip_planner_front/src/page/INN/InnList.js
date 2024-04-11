@@ -7,7 +7,7 @@ import axios from "axios";
 
 const InnList = (props) => {
   const location = useLocation();
-  location.state.
+  console.log(location.state);
   //리뷰,별점,낮은가격,높은가격 순으로 보여주기 위한 기능
   const [optionSort, setOptionSort] = useState([
     {

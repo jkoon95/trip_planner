@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.or.iei.ResponseDTO;
-import kr.or.iei.inn.model.dto.SearchOption;
 import kr.or.iei.inn.model.service.InnService;
 
 @CrossOrigin("*")
@@ -28,10 +28,10 @@ public class MainController {
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러")
 	})
-	@GetMapping(value="/search/inn")
-	public ResponseEntity<ResponseDTO> searchInnList(@RequestBody SearchOption searchObj) {
+	@PostMapping(value="/search/inn")
+	public ResponseEntity<ResponseDTO> searchInnList(@RequestBody Object obj) {
 		System.out.println("아아");
-		System.out.println(searchObj);
+		System.out.println(obj);
 		return null;
 	}
 }

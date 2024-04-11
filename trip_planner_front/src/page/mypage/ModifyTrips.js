@@ -106,9 +106,10 @@ const ModifyTrips = (props) => {
     setModifyMode(!modifyMode);
     setBtnDeltePlaceDisabled(!btnDeltePlaceDisabled);
     setBtnModifyText(btnModifyText === "수정하기" ? "수정완료" : "수정하기");
+    console.log(tripDetailList);
   }
 
-  // 수정 시점..
+  // 디테일 수정
   useEffect(() => {
     // trip.tripDetailList = tripDetailList;
     // trip.tripDetailListStr = JSON.stringify(tripDetailList);
@@ -117,7 +118,7 @@ const ModifyTrips = (props) => {
 
       if(tripDetailList.length != 0){
         const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: tripDetailList, tripDetailListStr: JSON.stringify(tripDetailList)};
-        console.log("보내는게 여기");
+        console.log("디테일이 수정됐다");
         console.log(tripObj);
         axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
         .then((res) => {
@@ -129,7 +130,7 @@ const ModifyTrips = (props) => {
         })
       }
   
-      console.log("트립 디테일 변경!");
+      // console.log("트립 디테일 변경!");
     }
   }, [tripDetailList])
 
@@ -150,6 +151,8 @@ const ModifyTrips = (props) => {
     setTripDetailList([...tripDetailList]);
     setTripTodo("");
     setOpenTodoModal(false);
+    console.log(tripDetailList[todoDayIndex].selectPlaceList[todoIndex].tripTodo);
+    console.log("todo 수정");
   }
 
   const addCostFunc = () => {
@@ -414,26 +417,26 @@ const ModifyTrips = (props) => {
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
     // console.log(tripDetailList);
 
-    if(tripStartDate && tripEndDate && (dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD") >= dayjs(new Date(tripStartDate.$d.getTime())).format("YYYY-MM-DD"))){
+    if(tripStartDate && tripEndDate && new Date(tripEndDate.$d.getTime()) >= new Date(tripStartDate.$d.getTime())){
       trip.tripStartDate = tripStartDate;
       trip.tripEndDate = tripEndDate;
+
       const copyTripDetailList = tripDetailList.filter((item)=>{
         return item.length !== 0;
       });
-      console.log(copyTripDetailList);
+      
       tripDays.length = 0;
       tripDetailList.length = 0;
 
-      // const newTripDetailList = new Array();
-      
       const newTripDetailList = new Array();
       const newTripDate = new Array();
       const endDate = tripEndDate.format("YYYY-MM-DD");
       let tripDayCount = 0;
+
       while(true){
         const tripDate = dayjs(new Date(tripStartDate.$d.getTime()+86400000*tripDayCount)).format("YYYY-MM-DD");
         newTripDate.push(tripDate);
-        console.log(tripDayCount)
+        
         if(tripDayCount < copyTripDetailList.length){
           if(tripDate === endDate){//마지막 바퀴에선 마지막 날짜에 사라진 날짜의 selectPlaceList를 추가
             const array = new Array();
@@ -444,7 +447,6 @@ const ModifyTrips = (props) => {
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
-            console.log(array);
 
             if(copyTripDetailList[tripDayCount]){
               newTripDetailList.push({tripDetailNo: copyTripDetailList[tripDayCount].tripDetailNo, tripNo: copyTripDetailList[tripDayCount].tripNo, selectPlaceList : array, tripDay: tripDate, tripCost: copyTripDetailList[tripDayCount].tripCost});
@@ -472,23 +474,24 @@ const ModifyTrips = (props) => {
       }
       setTripDays(newTripDate);
       setTripDetailList(newTripDetailList);
+      trip.tripDetailList = [...newTripDetailList];
       setTrip({...trip});
 
       if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
-        // console.log("시작 날짜 변경");
+        console.log("시작 날짜 변경");
         trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
       }
       if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
-        // console.log("종료 날짜 변경");
+        console.log("종료 날짜 변경");
         trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
       }
 
-      console.log("날짜 수정");
-
       const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
-      console.log(tripObj);
-    
+      
       if(modifyMode){
+        console.log("날짜 수정 여기용");
+        console.log(tripObj);
+
         axios.patch(backServer + "/trip/tripTbl", tripObj)
         .then((res) => {
           console.log("날짜 수정 axios!!!!!");
@@ -502,8 +505,6 @@ const ModifyTrips = (props) => {
     }
   },[tripStartDate, tripEndDate])
 
-
-  
   return (
     <section className="contents trips">
       <h2 className="hidden">여행 일정 수정</h2>
@@ -710,8 +711,7 @@ const ItemTripPlace = (props) => {
 
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
-    // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
-    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1});
+    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1, tripDetailNo: tripDetailList[thisIndex].tripDetailNo});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }
@@ -743,9 +743,17 @@ const ItemTripPlace = (props) => {
     console.log(routeIndex);
     // tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList[routeIndex].delNo = 1;
-    if(routeIndex != 0){
+    if(routeIndex > 0){
       tripDetailList[thisIndex].selectPlaceList[routeIndex-1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex-1].tripRoute;
-      tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute;
+    }else{
+      if(tripDetailList[thisIndex].selectPlaceList[routeIndex+1]){
+        tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute
+      }
+      // console.log(tripDetailList[thisIndex]);
+      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1]);
+      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute);
+      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute);
+      // tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute;
     }
     const delItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList.push(...delItem);
@@ -754,16 +762,18 @@ const ItemTripPlace = (props) => {
 
   const tripRouteDown = () => {
     for(let i=0;i<tripDetailList[thisIndex].selectPlaceList.length;i++){
-      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = i;
+      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[i].tripRoute;
     }
     const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     tripDetailList[thisIndex].selectPlaceList.splice(routeIndex+1,0,thisItem[0]);
     setTripDetailList([...tripDetailList]);
+    console.log("routeDown");
+    console.log(tripDetailList);
   }
 
   const tripRouteUp = () => {
     for(let i=0;i<tripDetailList[thisIndex].selectPlaceList.length;i++){
-      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = i;
+      tripDetailList[thisIndex].selectPlaceList[i].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[i].tripRoute;
     }
     const thisItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
     let newIndex = routeIndex-1;
@@ -772,6 +782,8 @@ const ItemTripPlace = (props) => {
     }
     tripDetailList[thisIndex].selectPlaceList.splice(newIndex,0,thisItem[0]);
     setTripDetailList([...tripDetailList]);
+    console.log("routeUp");
+    console.log(tripDetailList);
   }
   // console.log(tripDetailList[thisIndex])
 

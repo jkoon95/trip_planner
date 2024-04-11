@@ -124,11 +124,11 @@ public class TripService {
 								tpLength++;
 								updateTpResult += tripDao.updateTripPlace1(tp);
 							}
-//							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
-//								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
-//								tpLength++;
-//								updateTpResult += tripDao.updateTripPlace1(tp);
-//							}
+							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
+								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
+								tpLength++;
+								updateTpResult += tripDao.updateTripPlace1(tp);
+							}
 							//기존 일정을 줄여서 장소의 정보가 변경된 경우
 							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {
 								System.out.println();
@@ -148,13 +148,13 @@ public class TripService {
 						}
 					}
 					//마지막에 전체 트립루트 싹 업데이트
-					for(TripPlace tp : td.getSelectPlaceList()) {
-						System.out.println("이거 안돌아?");
-						System.out.println("old"+tp.getOldTripRoute());
-						System.out.println("new"+tp.getTripRoute());
-						System.out.println("detailNo"+tp.getTripDetailNo());
-						tripDao.updateTripRoute(tp);
-					}
+//					for(TripPlace tp : td.getSelectPlaceList()) {
+//						System.out.println("이거 안돌아?");
+//						System.out.println("old"+tp.getOldTripRoute());
+//						System.out.println("new"+tp.getTripRoute());
+//						System.out.println("detailNo"+tp.getTripDetailNo());
+//						tripDao.updateTripRoute(tp);
+//					}
 				}else {//기존 날짜에 장소가 없는 경우(빈 배열)
 					updateTdLength++;
 					System.out.println("기존 날짜에 장소가 없는 경우");

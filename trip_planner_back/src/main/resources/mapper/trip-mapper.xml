@@ -22,12 +22,10 @@
 	</insert>
 
 	<select id="selectMyTripList" resultType="trip">
-		select * from (select rownum rnum, t.* from (select trip_no, member_no,
-		trip_title, to_char(trip_start_date,'YYYY-MM-DD') trip_start_date,
-		to_char(trip_end_date,'YYYY-MM-DD') trip_end_date from trip_tbl where
-		member_no in(select member_no from member_tbl where
-		member_email=#{memberEmail}) order by 1 desc)t) where rnum between
-		#{start} and #{end}
+		select * from (select rownum rnum, t.* from (select trip_no, member_no, trip_title, to_char(trip_start_date,'YYYY-MM-DD') trip_start_date, to_char(trip_end_date,'YYYY-MM-DD') trip_end_date,
+		(select trip_place_name from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no) and rownum = 1) trip_place_name,
+		(select count(*) from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no)) trip_place_count
+		from trip_tbl t where member_no in(select member_no from member_tbl where member_email=#{memberEmail}) order by 1 desc)t) where rnum between #{start} and #{end}
 	</select>
 
 	<select id="selectOneTrip" resultMap="getTrip">
@@ -116,7 +114,7 @@
 	<update id="updateTripRoute">
 		update trip_place_tbl set trip_route=#{tripRoute} where trip_detail_no=#{tripDetailNo} and trip_route=#{oldTripRoute}
 	</update>
-
+	
 </mapper>
 
 

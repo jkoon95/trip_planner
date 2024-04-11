@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.tour.model.dao.TourDao;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourTicket;
@@ -129,9 +130,11 @@ public class TourService {
 	public Map viewTourDetail(int tourNo) {
 		List tourList = tourDao.viewTourDetail(tourNo);
 		List ticketList = tourDao.viewTicket(tourNo);
+		List partner = tourDao.selectPartner(tourNo);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("tourList", tourList);
 		map.put("ticketList", ticketList);
+		map.put("partner", partner);
 		return map;
 	}
 

@@ -248,42 +248,50 @@
   height: 100%;
   border-radius: 15px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone {
   width: 650px;
   display: flex;
   flex-direction: column;
   height: 300px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > div {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > div {
   margin-bottom: 5px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-badge span {
+.tour-view-wrap
+  > .tour-view-top
+  > .tour-view-badge-zone
+  > .tour-view-badge
+  span {
   font-size: 11px;
   margin-right: 10px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-name {
   display: inline-flex;
   align-items: center;
   font-family: pt-b;
   font-size: 28px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name > img {
+.tour-view-wrap
+  > .tour-view-top
+  > .tour-view-badge-zone
+  > .tour-view-name
+  > img {
   width: 28px;
   height: 28px;
   cursor: pointer;
   margin-left: 20px;
 }
 
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-type {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-type {
   font-family: pt-b;
   color: #666;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-price {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-price {
   font-family: pt-b;
   font-size: 26px;
 }
 
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-guide {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-guide {
   width: 420px;
 }
 .tour-view-guide > .tour-view-guide-icon {
@@ -393,6 +401,25 @@
   display: flex;
   justify-content: center;
 }
-.tour-view-content-wrap > .tour-view-intro-wrap > .tour-view-intronail {
-  padding-left: 20px;
+
+.tour-view-content-wrap > .tour-view-info-wrap {
+  margin-top: 20px;
+  display: flex;
+  padding-left: 60px;
+}
+.tour-view-content-wrap > .tour-view-info-wrap > .tour-info-zone {
+  width: 450px;
+  box-sizing: border-box;
+  margin-right: 20px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 7px 20px;
+  cursor: pointer;
+}
+.tour-view-info-wrap > .tour-info-zone > .tour-info-title {
+  color: #666;
+  font-size: 0.9em;
+}
+.tour-view-info-wrap > .tour-info-zone > .tour-info-detail {
+  margin-top: 10px;
 }

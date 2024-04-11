@@ -16,11 +16,13 @@ const TourView = (props) => {
   const [tour, setTour] = useState({});
   const [ticket, setTicket] = useState({});
   const [member, setMember] = useState(null);
+  const [partner, setPartner] = useState({});
   const [quantity, setQuantity] = useState({
     adult: 0,
     youth: 0,
     child: 0,
   });
+  const [showPartner, setShowPartner] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,9 +30,11 @@ const TourView = (props) => {
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
-        const { tourList, ticketList } = res.data.data;
+        const { tourList, ticketList, partner } = res.data.data;
         setTour(tourList[0]);
         setTicket(ticketList[0]);
+        setPartner(partner[0]);
+        console.log(partner.partnerName);
       })
       .catch((res) => {
         console.log(res);
@@ -80,6 +84,14 @@ const TourView = (props) => {
     }));
   };
 
+  const handleModalOpen = () => {
+    // 모달을 열 때 특정 데이터를 가져와야 한다면 이곳에 추가로 처리합니다.
+    setShowPartner(true);
+  };
+  const handleModalClose = () => {
+    setShowPartner(false);
+  };
+
   return (
     <section className="contents">
       <div className="tour-view-prev" onClick={handleTitleClick}>
@@ -95,7 +107,7 @@ const TourView = (props) => {
               <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
             )}
           </div>
-          <div className="tour-view-info">
+          <div className="tour-view-badge-zone">
             <div className="tour-view-badge">
               <span className="badge gray">{tourTypeText}</span>
               <span className="badge gray">~ {salesPeriod}</span>
@@ -274,11 +286,35 @@ const TourView = (props) => {
           <div className="tour-view-content-title">
             <h4>이용정보</h4>
           </div>
+          <div className="tour-view-info-wrap">
+            <div className="tour-info-zone" onClick={handleModalOpen}>
+              <div className="tour-info-title">판매자 정보를 확인하세요</div>
+              <div className="tour-info-detail">
+                {partner && partner.partnerName}
+              </div>
+            </div>
+            <div className="tour-info-zone">
+              <div className="tour-info-title">투어 주소</div>
+              <div className="tour-info-detail">{tour.tourAddr}</div>
+            </div>
+          </div>
           <div className="tour-view-content-title">
             <h4>리뷰</h4>
           </div>
         </div>
       </div>
+      {showPartner && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleModalClose}>
+              &times;
+            </span>
+            <h2>판매자 정보</h2>
+            <p>판매자 이름: {partner && partner.partnerName}</p>
+            <p>판매자 전화번호: {partner && partner.partnerTel}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

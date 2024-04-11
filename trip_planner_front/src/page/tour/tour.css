@@ -310,7 +310,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 .tour-view-content-wrap > .tour-view-menu > .tour-view-menu-item {
   flex: 1;
@@ -323,9 +323,16 @@
   font-family: pt-b;
 }
 
+.tour-view-content-wrap > .tour-view-content {
+  display: flex;
+}
 .tour-view-content-wrap > .tour-view-content > .tour-view-calendar {
   border: 1px solid #999;
   border-radius: 10px;
   width: 330px;
   margin-left: 20px;
+  margin-right: 100px;
+}
+.tour-view-content-wrap > .tour-view-content > .tour-view-book-wrap {
+  flex: 1;
 }

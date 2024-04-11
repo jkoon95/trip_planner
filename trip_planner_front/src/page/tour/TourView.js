@@ -117,10 +117,10 @@ const TourView = (props) => {
             <div className="tour-view-menu-item">상품소개</div>
             <div className="tour-view-menu-item">이용정보</div>
           </div>
+          <div className="tour-view-content-title">
+            <h4>옵션예약</h4>
+          </div>
           <div className="tour-view-content">
-            <div className="tour-view-content-title">
-              <h4>옵션예약</h4>
-            </div>
             <div className="tour-view-calendar">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DateCalendar", "DateCalendar"]}>
@@ -166,15 +166,15 @@ const TourView = (props) => {
                 </div>
               </div>
             </div>
-            <div className="tour-view-content-title">
-              <h4>상품소개</h4>
-            </div>
-            <div className="tour-view-content-title">
-              <h4>이용정보</h4>
-            </div>
-            <div className="tour-view-content-title">
-              <h4>리뷰</h4>
-            </div>
+          </div>
+          <div className="tour-view-content-title">
+            <h4>상품소개</h4>
+          </div>
+          <div className="tour-view-content-title">
+            <h4>이용정보</h4>
+          </div>
+          <div className="tour-view-content-title">
+            <h4>리뷰</h4>
           </div>
         </div>
       </div>

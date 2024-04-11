@@ -141,6 +141,10 @@ function App() {
             element={<ModifyTrips isLogin={isLogin} />}
           />
           <Route path="/notice/*" element={<NoticeMain isLogin={isLogin} />} />
+          <Route
+            path="/promotion/*"
+            element={<PromotionList isLogin={isLogin} />}
+          />
         </Routes>
       </main>
       <Footer />

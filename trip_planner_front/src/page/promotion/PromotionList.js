@@ -4,6 +4,7 @@ import "./promotion.css";
 import Pagination from "../../component/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const PromotionList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -37,6 +38,13 @@ const PromotionList = () => {
         <Button>가격순</Button>
         <Button>마감임박</Button>
       </ButtonGroup>
+      <div className="promotion_content_wrap">
+        {promotionList.map((promotion, index) => {
+          return (
+            <PromotionItem key={"promotion" + index} promotion={promotion} />
+          );
+        })}
+      </div>
       <div className="page-box">
         <Pagination
           pageInfo={pageInfo}
@@ -45,6 +53,21 @@ const PromotionList = () => {
         />
       </div>
     </section>
+  );
+};
+
+const PromotionItem = (props) => {
+  const promotion = props.promotion;
+  return (
+    <div className="promotion_item_wrap">
+      <div className="promotion_content">
+        <div>
+          <Link to={"/promotion/view/" + promotion.promotionNo}>
+            {promotion.promotionName}
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

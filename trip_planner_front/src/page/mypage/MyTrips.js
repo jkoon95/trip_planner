@@ -111,8 +111,8 @@ const TripListItem = (props) => {
           <div className="trip_date">{item.tripStartDate.replaceAll("-",".")} - {item.tripEndDate.replaceAll("-",".")}</div>
           <div className="btm_info">
             <span className="trip_place_count">1개 장소</span>
-            <span className="book_inn">예약한 숙소: 1</span>
-            <span className="book_tour">예약한 투어: 1</span>
+            {/* <span className="book_inn">예약한 숙소: 1</span> */}
+            {/* <span className="book_tour">예약한 투어: 1</span> */}
           </div>
         </div>
       </Link>

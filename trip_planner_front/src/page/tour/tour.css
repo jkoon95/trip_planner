@@ -312,7 +312,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .tour-view-content-wrap > .tour-view-menu > .tour-view-menu-item {
   flex: 1;
@@ -328,7 +328,14 @@
 .tour-view-content-wrap > .tour-view-content {
   display: flex;
 }
+.tour-view-content-wrap > .tour-view-content-title > h4 {
+  margin-bottom: 0;
+  margin-top: 60px;
+}
 
+.tour-view-content-wrap > .tour-view-content > .tour-view-calendar {
+  margin-top: 20px;
+}
 .tour-view-calendar > .css-1rv8zyt-MuiStack-root {
   border: 1px solid #999;
   border-radius: 10px;
@@ -370,4 +377,22 @@
 .tour-quantity-controls .material-icons {
   cursor: pointer;
   margin: 0 10px; /* 각 컨트롤 아이콘 사이의 간격 조절 */
+}
+.tour-quantity-controls .tour-book-quantity {
+  width: 40px;
+  text-align: center;
+}
+
+.tour-view-book-wrap > .tour-book-btn-zone > button {
+  width: 400px;
+}
+
+/* 상품소개 */
+.tour-view-content-wrap > .tour-view-intro-wrap {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+.tour-view-content-wrap > .tour-view-intro-wrap > .tour-view-intronail {
+  padding-left: 20px;
 }

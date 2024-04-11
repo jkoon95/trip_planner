@@ -16,6 +16,12 @@ const TourView = (props) => {
   const [tour, setTour] = useState({});
   const [ticket, setTicket] = useState({});
   const [member, setMember] = useState(null);
+  const [quantity, setQuantity] = useState({
+    adult: 0,
+    youth: 0,
+    child: 0,
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,6 +65,20 @@ const TourView = (props) => {
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
 
   const [startDate, setStartDate] = React.useState(dayjs());
+
+  const handleDecreaseQuantity = (type) => {
+    setQuantity((prevQuantity) => ({
+      ...prevQuantity,
+      [type]: Math.max(0, prevQuantity[type] - 1),
+    }));
+  };
+
+  const handleIncreaseQuantity = (type) => {
+    setQuantity((prevQuantity) => ({
+      ...prevQuantity,
+      [type]: prevQuantity[type] + 1,
+    }));
+  };
 
   return (
     <section className="contents">
@@ -155,10 +175,20 @@ const TourView = (props) => {
                       </div>
                     </div>
                     <div className="tour-quantity-controls">
-                      <span className="material-icons">add_box</span>
-                      <span className="tour-book-quantity">0</span>
-                      <span className="material-icons">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("adult")}
+                      >
                         indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.adult}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("adult")}
+                      >
+                        add_box
                       </span>
                     </div>
                   </div>
@@ -174,10 +204,20 @@ const TourView = (props) => {
                       </div>
                     </div>
                     <div className="tour-quantity-controls">
-                      <span className="material-icons">add_box</span>
-                      <span className="tour-book-quantity">0</span>
-                      <span className="material-icons">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("youth")}
+                      >
                         indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.youth}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("youth")}
+                      >
+                        add_box
                       </span>
                     </div>
                   </div>
@@ -193,19 +233,43 @@ const TourView = (props) => {
                       </div>
                     </div>
                     <div className="tour-quantity-controls">
-                      <span className="material-icons">add_box</span>
-                      <span className="tour-book-quantity">0</span>
-                      <span className="material-icons">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("child")}
+                      >
                         indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.child}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("child")}
+                      >
+                        add_box
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="tour-book-btn-zone">
+                <button className="btn_primary md handle-book-btn">
+                  예약하기
+                </button>
+              </div>
             </div>
           </div>
           <div className="tour-view-content-title">
             <h4>상품소개</h4>
+          </div>
+          <div className="tour-view-intro-wrap">
+            <div className="tour-view-intronail">
+              {tour.tourIntro === null || tour.tourIntro === "null" ? (
+                <img src="/images/테마파크.jpg" />
+              ) : (
+                <img src={backServer + "/tour/intronail/" + tour.tourIntro} />
+              )}
+            </div>
           </div>
           <div className="tour-view-content-title">
             <h4>이용정보</h4>

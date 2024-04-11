@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
+import BlogList from "../blog/BlogList";
 
 const MyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -84,7 +85,7 @@ const MyTrips = () => {
                     ) : tab.tabName === "지난 여행" ? (
                       <div>지난 여행</div>
                     ) : (
-                      <div>내 여행기</div>
+                      <BlogList />
                     )
                   ) : ""
                 }
@@ -110,7 +111,7 @@ const TripListItem = (props) => {
           <div className="trip_title">{item.tripTitle}</div>
           <div className="trip_date">{item.tripStartDate.replaceAll("-",".")} - {item.tripEndDate.replaceAll("-",".")}</div>
           <div className="btm_info">
-            <span className="trip_place_count">1개 장소</span>
+            <span className="trip_place_count">{item.tripPlaceName} 외 {item.tripPlaceCount-1}개 장소</span>
             {/* <span className="book_inn">예약한 숙소: 1</span> */}
             {/* <span className="book_tour">예약한 투어: 1</span> */}
           </div>

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.service.AdminService;
+import kr.or.iei.inn.model.dto.BookInns;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.inn.model.dto.InnReservation;
@@ -169,4 +170,10 @@ public class InnController {
 		return null;
 	}
 	
+	@GetMapping("/bookInnsList/{bookInnsReqPage}")
+	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookInnsReqPage, @RequestAttribute String memberEmail){
+		List<BookInns> bookInnsList = innService.selectBookInnsList(bookInnsReqPage, memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookInnsList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 }

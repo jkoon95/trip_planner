@@ -21,11 +21,47 @@ public class PromotionService {
 	private Pagination pagination;	
 	
 	public Map<String, Object> selectPromotionList(int reqPage) {
-		int numPerPage = 10;
+		int numPerPage = 3;
 		int pageNaviSize = 5;
 		int totalCount = promotionDao.totalCount();
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
 		List list = promotionDao.selectPromotionList(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("promotionList",list);
+		map.put("pi",pi);
+		return map;
+	}
+
+	public Map selectPromotionListLatest(int reqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		int totalCount = promotionDao.totalCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
+		List list = promotionDao.selectPromotionListLatest(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("promotionList",list);
+		map.put("pi",pi);
+		return map;
+	}
+
+	public Map selectPromotionListPrice(int reqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		int totalCount = promotionDao.totalCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
+		List list = promotionDao.selectPromotionListPrice(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("promotionList",list);
+		map.put("pi",pi);
+		return map;
+	}
+
+	public Map selectPromotionListDeadline(int reqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		int totalCount = promotionDao.totalCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
+		List list = promotionDao.selectPromotionListDeadline(pi);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("promotionList",list);
 		map.put("pi",pi);

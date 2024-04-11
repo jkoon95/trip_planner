@@ -5,7 +5,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
 
-const InnList = () => {
+const InnList = (props) => {
+  const location = useLocation();
+  location.state.
   //리뷰,별점,낮은가격,높은가격 순으로 보여주기 위한 기능
   const [optionSort, setOptionSort] = useState([
     {

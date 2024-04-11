@@ -23,7 +23,6 @@ const BlogList = (props) => {
     axios
       .get(backServer + "/blog/list/" + reqPage)
       .then((res) => {
-        console.log(res.data);
         setBlogList(res.data.data.blogList);
         setPageInfo(res.data.data.pi);
       })

@@ -11,7 +11,7 @@
 		blog_no,
 		member_nickname,
 		comment_content,
-		to_char(sysdate, 'yyyy-mm-dd') as comment_date	
+		to_char(comment_date, 'yyyy-mm-dd') as comment_date	
 	from blog_comment where blog_no=#{blogNo}
 	</select>
 	<delete id="deleteComment">

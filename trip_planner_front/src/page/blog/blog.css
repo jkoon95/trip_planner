@@ -318,7 +318,6 @@ blog-list-box {
   width: 80px;
   text-align: center;
   color: var(--main_01);
-  font-family: pt-eb;
   /* border-right: 1px solid #c1c1c1; */
 }
 .comment-info {
@@ -336,8 +335,7 @@ blog-list-box {
 .comment-nickname {
   color: var(--main_02);
 }
-.comment-date {
-}
+
 .btn-area {
   display: flex;
   align-items: center;

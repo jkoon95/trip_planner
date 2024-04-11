@@ -46,7 +46,7 @@ public class BlogController {
 	private String root;
 	
 	@GetMapping(value="/list/{reqPage}")
-	public ResponseEntity<ResponseDTO> boardList(@PathVariable int reqPage) {
+	public ResponseEntity<ResponseDTO> blogList(@PathVariable int reqPage) {
 		Map map = blogService.selectBlogList(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

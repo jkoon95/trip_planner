@@ -42,62 +42,62 @@ const ListSideMenu = (props) => {
     {
       text: "#가족여행",
       active: false,
-      value: 1,
+      value: 0,
     },
     {
       text: "#스파",
       active: false,
-      value: 2,
+      value: 0,
     },
     {
       text: "#파티",
       active: false,
-      value: 3,
+      value: 0,
     },
     {
       text: "#뷰맛집",
       active: false,
-      value: 4,
+      value: 0,
     },
     {
       text: "#연인추천",
       active: false,
-      value: 5,
+      value: 0,
     },
     {
       text: "#감성숙소",
       active: false,
-      value: 6,
+      value: 0,
     },
     {
       text: "#사진맛집",
       active: false,
-      value: 7,
+      value: 0,
     },
     {
       text: "#야경",
       active: false,
-      value: 8,
+      value: 0,
     },
     {
       text: "#반려견동반",
       active: false,
-      value: 9,
+      value: 0,
     },
     {
       text: "#온수풀",
       active: false,
-      value: 10,
+      value: 0,
     },
     {
       text: "#BBQ",
       active: false,
-      value: 11,
+      value: 0,
     },
     {
       text: "#호캉스",
       active: false,
-      value: 12,
+      value: 0,
     },
   ]);
 
@@ -532,19 +532,29 @@ const TagComponent = (props) => {
           const copyHashTagMenu = [...tagMenu];
           copyHashTagMenu[index].active = !copyHashTagMenu[index].active;
           setTagMenu(copyHashTagMenu);
-          let arr = new Array();
-          for (let i = 0; i < copyHashTagMenu.length; i++) {
-            if (copyHashTagMenu[i].active == true) {
-              arr.push(copyHashTagMenu[i].value);
+          let hashTagArr = new Array();
+          let optionArr = new Array();
+          if (item.value === 0) {
+            for (let i = 0; i < copyHashTagMenu.length; i++) {
+              if (copyHashTagMenu[i].active == true) {
+                hashTagArr.push(copyHashTagMenu[i].text);
+              }
             }
+            setHashTag(hashTagArr);
+          } else {
+            for (let i = 0; i < copyHashTagMenu.length; i++) {
+              if (copyHashTagMenu[i].active == true) {
+                optionArr.push(copyHashTagMenu[i].value);
+              }
+            }
+            setHashTag(optionArr);
           }
-          setHashTag(arr);
         };
         return (
           <li key={"item" + index}>
             <Button
               className={item.active ? "active-hashTag" : ""}
-              value={item.value || ""}
+              value={item.text || ""}
               onClick={() => {
                 selectValue(index);
               }}

@@ -24,3 +24,9 @@
   height: 500px;
   padding: 40px;
 }
+
+.contents.promotion .promotion_content {
+  border: 1px solid black;
+  border-radius: 20px;
+  height: 100%;
+}

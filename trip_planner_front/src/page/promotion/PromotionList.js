@@ -25,6 +25,50 @@ const PromotionList = () => {
         console.log(res);
       });
   }, [reqPage]);
+
+  const latest = () => {
+    axios
+      .get(backServer + "/promotion/promotionList/latest/" + reqPage)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setPromotionList(res.data.data.promotionList);
+          setPageInfo(res.data.data.pi);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  const price = () => {
+    axios
+      .get(backServer + "/promotion/promotionList/price/" + reqPage)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setPromotionList(res.data.data.promotionList);
+          setPageInfo(res.data.data.pi);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+  const deadline = () => {
+    axios
+      .get(backServer + "/promotion/promotionList/deadline/" + reqPage)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setPromotionList(res.data.data.promotionList);
+          setPageInfo(res.data.data.pi);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <section className="contents promotion">
       <div className="input_wrap">
@@ -34,9 +78,9 @@ const PromotionList = () => {
         </div>
       </div>
       <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Button>최신순</Button>
-        <Button>가격순</Button>
-        <Button>마감임박</Button>
+        <Button onClick={latest}>최신순</Button>
+        <Button onClick={price}>가격순</Button>
+        <Button onClick={deadline}>마감순</Button>
       </ButtonGroup>
       <div className="promotion_content_wrap">
         {promotionList.map((promotion, index) => {
@@ -61,9 +105,9 @@ const PromotionItem = (props) => {
   return (
     <div className="promotion_item_wrap">
       <div className="promotion_content">
-        <div>
+        <div className="promotion_title">
           <Link to={"/promotion/view/" + promotion.promotionNo}>
-            {promotion.promotionName}
+            <h1>{promotion.promotionName}</h1>
           </Link>
         </div>
       </div>

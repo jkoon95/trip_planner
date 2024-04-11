@@ -203,7 +203,7 @@ public class TripController {
 					tp.setOldTripDay(oldTripDayStr);
 				}
 				String delNoStr = String.valueOf(data.get("delNo"));
-				System.out.println("111111 : "+delNoStr );
+//				System.out.println("111111 : "+delNoStr );
 				if(!delNoStr.equals("null")) {
 					tp.setDelNo(Integer.parseInt(delNoStr));
 				}

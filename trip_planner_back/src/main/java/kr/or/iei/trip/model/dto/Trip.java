@@ -22,4 +22,6 @@ public class Trip {
 	private String tripEndDate;
 	private String tripDetailListStr;
 	private List<TripDetail> tripDetailList;
+	private String tripPlaceName;
+	private int tripPlaceCount;
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.blog.model.dto.Blog;
 import kr.or.iei.blog.model.dto.BlogDate;
+import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.util.PageInfo;
 
 
@@ -26,6 +27,6 @@ public interface BlogDao {
 
 	int deleteBlog(int blogNo);
 
-
+	List<Blog> selectMyBlogList(String memberEmail, int start, int end);
 
 }

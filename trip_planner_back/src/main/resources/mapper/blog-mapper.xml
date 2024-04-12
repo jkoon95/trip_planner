@@ -48,4 +48,7 @@
 	<delete id="deleteBlog">
 		delete from blog_tbl where blog_no = #{blogNo}
 	</delete>
+	<select id="selectMyBlogList" resultType="blog">
+		select * from (select rownum rnum, b.* from (select * from blog_tbl where member_nickname in (select member_nickname from member_tbl where member_email=#{memberEmail}) order by 1 desc) b) where rnum between #{start} and #{end}
+	</select>
 </mapper>

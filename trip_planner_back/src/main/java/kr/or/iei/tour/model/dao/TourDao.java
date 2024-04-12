@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
 
@@ -57,5 +58,7 @@ public interface TourDao {
 	List viewTicket(int tourNo);
 
 	List selectPartner(int tourNo);
+
+	List<TourBook> selectBookTourList(String memberEmail, int start, int end);
 	
 }

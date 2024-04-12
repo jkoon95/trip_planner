@@ -17,7 +17,9 @@ public interface TripDao {
 
 	int insertTripPlace(TripPlace tp);
 
-	List<Trip> selectMyTripList(String memberEmail, int start, int end);
+	List<Trip> selectMyComingTripList(String memberEmail, int start, int end);
+	
+	List<Trip> selectMyPastTripList(String memberEmail, int start, int end);
 
 	Trip selectOneTrip(int tripNo);
 

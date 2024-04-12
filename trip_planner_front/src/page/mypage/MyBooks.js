@@ -147,7 +147,7 @@ const MyBooks = () => {
                     ) : (
                       <>
                         <h4 className="hidden">프로모션 예약 내역</h4>
-                        <ul className="myBook_list">
+                        <ul className="myBook_list promotion">
                           {bookPromotionList.map((item, i) => {
                             return(
                               <BookPromotionListItem key={"myBookPromotion"+i} item={item} backServer={backServer} />

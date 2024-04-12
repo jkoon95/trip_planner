@@ -20,3 +20,7 @@
 .myBook_list>.bookItem .item_details .row .cont{font-size: 16px; line-height: 1.5;}
 .myBook_list>.bookItem .item_details .row .cont>span{display: block; flex: 1;}
 .myBook_list>.bookItem .item_details .row .cont>span+span{margin-top: 12px;}
+
+.myBook_list.promotion{flex-direction: row; flex-wrap: wrap;}
+.myBook_list.promotion>.bookItem{width: calc(50% - 12px); padding: 20px 20px 24px 20px;}
+.myBook_list.promotion>.bookItem .item_thumbs{width: 200px; height: 140px; background-color: #f2f2f2;}

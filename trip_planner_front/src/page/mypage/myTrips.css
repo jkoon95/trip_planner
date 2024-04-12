@@ -32,3 +32,11 @@
 .myTrips_wrap .small_menu_wrap>.menu_list button{display: block; min-width: 140px; padding: 0 38px; font-size: 16px; line-height: 40px; text-align: center;}
 .myTrips_wrap .small_menu_wrap>.menu_list a:hover,
 .myTrips_wrap .small_menu_wrap>.menu_list button:hover{background-color: var(--main_03);}
+
+.myTrips_wrap .myBlogs_list{display: flex; flex-wrap: wrap; gap: 20px;}
+.myTrips_wrap .myBlogs_list>.blogItem{width: calc((100% - 40px) / 3);}
+.myTrips_wrap .myBlogs_list>.blogItem>a{display: flex; flex-direction: column; height: 100%; padding: 20px; border-radius: 12px; border: 1px solid var(--line_03);}
+.myTrips_wrap .myBlogs_list>.blogItem .blog_thumb{height: 240px;}
+.myTrips_wrap .myBlogs_list>.blogItem .blog_thumb>img{display: block; width: 100%; height: 100%; object-position: center; object-fit: cover;}
+.myTrips_wrap .myBlogs_list>.blogItem .blog_title{margin:20px 0 8px; font-size: 16px; line-height: 1.5; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-overflow: ellipsis; overflow: hidden;}
+.myTrips_wrap .myBlogs_list>.blogItem .blog_date{margin-top: auto; color: var(--gray_04); font-family: pt-b; font-size: 14px; line-height: 1.5;}

@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
-import BlogList from "../blog/BlogList";
 
 const MyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -55,7 +54,7 @@ const MyTrips = () => {
       .then((res) => {
         console.log(res.data.data);
 
-        pastTripList.push(...comingTripList);
+        pastTripList.push(...res.data.data);
         setPastTripList([...pastTripList]);
 
         if(res.data.data.length < 5){
@@ -74,10 +73,10 @@ const MyTrips = () => {
       .then((res) => {
         console.log(res.data.data);
 
-        myBlogList.push(...myBlogList);
+        myBlogList.push(...res.data.data);
         setMyBlogList([...myBlogList]);
 
-        if(res.data.data.length < 5){
+        if(res.data.data.length < 6){
           setBtnMoreShow3(false);
         }
       })
@@ -218,19 +217,17 @@ const BlogItem = (props) => {
   const backServer = props.backServer;
 
   return(
-    <li>
+    <li className="blogItem">
       <Link to={"/mypage/"}>
-        <div className="blog_info">
-          <div className="blog_thumb">
-            {
-              item.blogThumbnail !== "null" ? (
-                <img src={backServer+"/blog/blogThumbnail/"+item.blogThumbnail} alt="블로그 썸네일"></img>
-              ) : ""
-            }  
-          </div>
-          <div className="blog_title">{item.blogTitle}</div>
-          <div className="blogDate">{item.blogDate}</div>
+        <div className="blog_thumb">
+          {
+            item.blogThumbnail !== "null" ? (
+              <img src={backServer+"/blog/blogThumbnail/"+item.blogThumbnail} alt="블로그 썸네일"></img>
+            ) : ""
+          }  
         </div>
+        <div className="blog_title">{item.blogTitle}</div>
+        <div className="blog_date">{item.blogDate}</div>
       </Link>
     </li>
   );

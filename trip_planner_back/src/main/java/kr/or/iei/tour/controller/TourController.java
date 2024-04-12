@@ -191,5 +191,8 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+//	@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
+//	@PostMapping(value="/review")
+//	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute )
 	
 }

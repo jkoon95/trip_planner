@@ -115,7 +115,20 @@ const TourView = (props) => {
       form.append("reviewStar", reviewStar);
       form.append("tourNo", tourNo);
 
-      axios.post(backServer + "/tour/review");
+      axios
+        .post(backServer + "/tour/review", form)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("리뷰가 등록되었습니다.");
+          } else {
+            Swal.fire(
+              "리뷰 등록 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+            );
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
     }
   };
   const handleKeyPress = (event) => {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -18,5 +19,7 @@ public interface PromotionDao {
 	List selectPromotionListPrice(PageInfo pi);
 
 	List selectPromotionListDeadline(PageInfo pi);
+
+	List<Promotion> selectBookPromotionList(String memberEmail, int start, int end);
 
 }

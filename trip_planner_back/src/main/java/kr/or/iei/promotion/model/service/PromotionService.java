@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.iei.promotion.model.dao.PromotionDao;
+import kr.or.iei.promotion.model.dto.Promotion;
+import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -66,5 +68,13 @@ public class PromotionService {
 		map.put("promotionList",list);
 		map.put("pi",pi);
 		return map;
+	}
+	
+	public List<Promotion> selectBookPromotionList(int bookPromotionReqPage, String memberEmail) {
+		int amount = 5;
+		int end = bookPromotionReqPage * amount;
+		int start = end - amount + 1;
+		List<Promotion> bookPromotionList = promotionDao.selectBookPromotionList(memberEmail, start, end);
+		return bookPromotionList;
 	}
 }

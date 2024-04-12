@@ -81,7 +81,7 @@ public class BlogService {
 	}
 	
 	public List<Blog> selectMyBlogList(int reqPage, String memberEmail) {
-		int amount = 5;
+		int amount = 6;
 		int end = reqPage * amount;
 		int start = end - amount + 1;
 		List<Blog> myBlogList = blogDao.selectMyBlogList(memberEmail, start, end);

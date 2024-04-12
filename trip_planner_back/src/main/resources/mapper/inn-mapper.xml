@@ -74,7 +74,7 @@
 		#{bookGuest})
 	</insert>
 	
-	<select id="selectBookInnsList" resultType="bookInns">
+	<select id="selectBookInnsList" resultType="innReservation">
 		select * from (select rownum rnum, ibt.* from
 			(select inn_book_no,
 			    (select partner_name from partner_tbl where partner_no in

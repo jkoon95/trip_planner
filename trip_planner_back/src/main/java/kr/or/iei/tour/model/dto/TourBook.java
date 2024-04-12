@@ -19,6 +19,11 @@ public class TourBook {
 	private String bookDate;
 	private int bookGuest;
 	private int bookFee;
+	private int bookStatus;
 	
-	
+	private String tourName;
+	private String tourImg;
+	private String memberName;
+	private String bookStatusStr;
+	private String tourTypeStr;
 }

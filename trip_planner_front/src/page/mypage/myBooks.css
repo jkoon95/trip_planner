@@ -9,7 +9,7 @@
 .myBookInns_list>.bookItem{padding: 24px 24px 36px 24px; border-radius: 12px; border: 1px solid var(--line_03);}
 .myBookInns_list>.bookItem>a{display: block;}
 .myBookInns_list>.bookItem .item_top_wrap{display: flex; justify-content: space-between; padding-bottom: 16px;}
-.myBookInns_list>.bookItem .item_top_wrap .partnerName{font-family: pt-b; font-size: 16px; line-height: 1.5;}
+.myBookInns_list>.bookItem .item_top_wrap .partnerName{display: flex; align-items: center; gap: 4px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
 .myBookInns_list>.bookItem .item_top_wrap .badges{margin-top: -4px; margin-right: -4px;}
 .myBookInns_list>.bookItem .item_contents_wrap{display: flex; gap: 24px;}
 .myBookInns_list>.bookItem .item_thumbs{width: 396px; height: 240px;}
@@ -20,3 +20,19 @@
 .myBookInns_list>.bookItem .item_details .row .cont{font-size: 16px; line-height: 1.5;}
 .myBookInns_list>.bookItem .item_details .row .cont>span{display: block; flex: 1;}
 .myBookInns_list>.bookItem .item_details .row .cont>span+span{margin-top: 12px;}
+
+.myBookTour_list{display: flex; flex-direction: column; gap: 24px;}
+.myBookTour_list>.bookItem{padding: 24px 24px 36px 24px; border-radius: 12px; border: 1px solid var(--line_03);}
+.myBookTour_list>.bookItem>a{display: block;}
+.myBookTour_list>.bookItem .item_top_wrap{display: flex; justify-content: space-between; padding-bottom: 16px;}
+.myBookTour_list>.bookItem .item_top_wrap .partnerName{display: flex; align-items: center; gap: 4px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
+.myBookTour_list>.bookItem .item_top_wrap .badges{margin-top: -4px; margin-right: -4px;}
+.myBookTour_list>.bookItem .item_contents_wrap{display: flex; gap: 24px;}
+.myBookTour_list>.bookItem .item_thumbs{width: 396px; height: 240px; background-color: #f2f2f2;}
+.myBookTour_list>.bookItem .item_thumbs>img{display: block;}
+.myBookTour_list>.bookItem .item_details{display: flex; flex-direction: column; gap: 12px;}
+.myBookTour_list>.bookItem .item_details .row{display: flex; gap: 20px;}
+.myBookTour_list>.bookItem .item_details .row .title{width: 100px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
+.myBookTour_list>.bookItem .item_details .row .cont{font-size: 16px; line-height: 1.5;}
+.myBookTour_list>.bookItem .item_details .row .cont>span{display: block; flex: 1;}
+.myBookTour_list>.bookItem .item_details .row .cont>span+span{margin-top: 12px;}

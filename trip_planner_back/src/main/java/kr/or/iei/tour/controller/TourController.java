@@ -1,5 +1,6 @@
 package kr.or.iei.tour.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.tour.model.service.TourService;
 import kr.or.iei.util.FileUtils;
@@ -194,5 +197,12 @@ public class TourController {
 //	@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
 //	@PostMapping(value="/review")
 //	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute )
+	
+	@GetMapping("/bookTourList/{bookTourReqPage}")
+	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookTourReqPage, @RequestAttribute String memberEmail){
+		List<TourBook> bookTourList = tourService.selectBookTourList(bookTourReqPage, memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookTourList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 	
 }

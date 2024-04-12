@@ -435,6 +435,11 @@
   font-size: 18px;
 }
 
+.tour-info-zone > .tour-info-detail > span.material-icons {
+  float: right; /* 아이콘을 오른쪽으로 정렬합니다. */
+  font-size: 27px; /* 아이콘의 크기를 조절합니다. */
+}
+
 /* 리뷰 */
 .tour-review-input-wrap {
   display: flex;
@@ -527,4 +532,27 @@
 .tour-reviewList-content .tour-reviewList-text {
   color: #1e1e1e;
   padding: 5px 10px;
+}
+
+.tour-view-content-wrap .tour-review-more-btn {
+  margin-top: 60px;
+  text-align: center;
+  width: 100%;
+}
+.tour-view-content-wrap .tour-review-more-btn .review-more-btn {
+  width: 50%;
+}
+
+.tour-reviewList-header .tour-reviewList-modify {
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+.tour-reviewList-header .tour-reviewList-modify > span {
+  cursor: pointer;
+}
+.tour-reviewList-header .tour-reviewList-modify > span:first-child {
+  margin-right: 5px;
+  font-size: 24px; /* 아이콘 크기 설정 */
+  line-height: 24px; /* 아이콘과 텍스트의 높이를 맞추기 위해 추가 */
 }

@@ -27,6 +27,10 @@ const TourView = (props) => {
     youth: 0,
     child: 0,
   });
+  const [startDate, setStartDate] = React.useState(dayjs());
+  const [reviewStar, setReviewStar] = React.useState(5);
+  const [displayedReviews, setDisplayedReviews] = useState([]);
+  const [displayedReviewCount, setDisplayedReviewCount] = useState(5);
 
   useEffect(() => {
     axios
@@ -46,12 +50,18 @@ const TourView = (props) => {
       .get(backServer + "/tour/reviewList/" + tourNo)
       .then((res) => {
         setReviewList(res.data.data.reviewList);
-        console.log(res.data.data.reviewList);
       })
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+  }, [backServer, tourNo]);
+
+  useEffect(() => {
+    if (reviewList.length > 0) {
+      const initialReviews = reviewList.slice(0, displayedReviewCount);
+      setDisplayedReviews(initialReviews);
+    }
+  }, [reviewList, displayedReviewCount]);
 
   const handleTitleClick = () => {
     navigate("/tourList");
@@ -80,9 +90,6 @@ const TourView = (props) => {
   const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
 
-  const [startDate, setStartDate] = React.useState(dayjs());
-  const [reviewStar, setReviewStar] = React.useState(5);
-
   const handleDecreaseQuantity = (type) => {
     setQuantity((prevQuantity) => ({
       ...prevQuantity,
@@ -107,7 +114,6 @@ const TourView = (props) => {
   };
 
   const reviewSubmit = () => {
-    console.log(reviewStar);
     if (!isLogin) {
       Swal.fire({
         icon: "warning",
@@ -137,6 +143,15 @@ const TourView = (props) => {
         .then((res) => {
           if (res.data.message === "success") {
             Swal.fire("리뷰가 등록되었습니다.");
+            // 리뷰 등록 후에 리뷰 목록 다시 불러오기
+            axios
+              .get(backServer + "/tour/reviewList/" + tourNo)
+              .then((res) => {
+                setReviewList(res.data.data.reviewList);
+              })
+              .catch((res) => {
+                console.log(res);
+              });
           } else {
             Swal.fire(
               "리뷰 등록 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
@@ -152,6 +167,16 @@ const TourView = (props) => {
     if (event.key === "Enter") {
       reviewSubmit();
     }
+  };
+
+  const handleLoadMoreReviews = () => {
+    const newCount = displayedReviewCount + 5;
+    const additionalReviews = reviewList.slice(displayedReviewCount, newCount);
+    setDisplayedReviews((prevReviews) => [
+      ...prevReviews,
+      ...additionalReviews,
+    ]);
+    setDisplayedReviewCount(newCount);
   };
 
   return (
@@ -353,11 +378,15 @@ const TourView = (props) => {
               <div className="tour-info-title">판매자 정보를 확인하세요</div>
               <div className="tour-info-detail">
                 {partner && partner.partnerName}
+                <span className="material-icons">live_help</span>
               </div>
             </div>
             <div className="tour-info-zone">
               <div className="tour-info-title">투어 주소</div>
-              <div className="tour-info-detail">{tour.tourAddr}</div>
+              <div className="tour-info-detail">
+                {tour.tourAddr}
+                <span className="material-icons">map</span>
+              </div>
             </div>
           </div>
           <div className="tour-view-content-title">
@@ -397,7 +426,7 @@ const TourView = (props) => {
             </div>
           </div>
           <div className="tour-review-list-wrap">
-            {reviewList.map((review, index) => (
+            {displayedReviews.map((review, index) => (
               <div className="tour-reviewList-item" key={index}>
                 <div className="tour-reviewList-profile">
                   <span className="material-icons">person</span>
@@ -413,6 +442,10 @@ const TourView = (props) => {
                     <div className="tour-reviewList-date">
                       {dayjs(review.reviewDate).format("YYYY-MM-DD")}
                     </div>
+                    <div className="tour-reviewList-modify">
+                      <span className="material-icons">edit</span>
+                      <span className="material-icons">delete</span>
+                    </div>
                   </div>
                   <div className="tour-reviewList-text">
                     {review.reviewContent}
@@ -421,9 +454,16 @@ const TourView = (props) => {
               </div>
             ))}
           </div>
-          <div className="tour-review-more-btn">
-            <button className="btn_secondary md review-more-btn">더보기</button>
-          </div>
+          {reviewList.length > displayedReviewCount && (
+            <div className="tour-review-more-btn">
+              <button
+                className="btn_secondary md review-more-btn"
+                onClick={handleLoadMoreReviews}
+              >
+                리뷰 더 보기
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

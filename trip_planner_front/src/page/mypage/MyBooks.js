@@ -8,10 +8,10 @@ const MyBooks = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [bookInnsReqPage, setBookInnsReqPage] = useState(1);
   const [bookInnsList, setBookInnsList] = useState([]);
-  const [bookInnsBtnMoreShow, setBookInnsBtnMoreShow] = useState(true);
+  const [bookInnsBtnMoreShow, setBookInnsBtnMoreShow] = useState(false);
   const [bookTourReqPage, setBookTourReqPage] = useState(1);
   const [bookTourList, setBookTourList] = useState([]);
-  const [bookTourBtnMoreShow, setBookTourBtnMoreShow] = useState(true);
+  const [bookTourBtnMoreShow, setBookTourBtnMoreShow] = useState(false);
   const [tabs, setTabs] = useState([
     { tabName: "숙소", active: true },
     { tabName: "투어", active: false },
@@ -36,6 +36,8 @@ const MyBooks = () => {
           setBookInnsList([...bookInnsList]);
           if(res.data.data.length < 5){
             setBookInnsBtnMoreShow(false);
+          }else{
+            setBookInnsBtnMoreShow(true);
           }
         }
       })
@@ -55,6 +57,8 @@ const MyBooks = () => {
           setBookTourList([...bookTourList]);
           if(res.data.data.length < 5){
             setBookTourBtnMoreShow(false);
+          }else{
+            setBookTourBtnMoreShow(true);
           }
         }
       })
@@ -215,9 +219,9 @@ const BookTourListItem = (props) => {
           <div className="item_thumbs">
             {
               item.tourImg !== "null" ? (
-                  <img src={backServer+"/tour/thumbnail/"+item.tourImg} alt="상품 썸네일"></img>
-                ) : ""
-              }
+                <img src={backServer+"/tour/thumbnail/"+item.tourImg} alt="상품 썸네일"></img>
+              ) : ""
+            }
           </div>
           <div className="item_details">
             <div className="row">

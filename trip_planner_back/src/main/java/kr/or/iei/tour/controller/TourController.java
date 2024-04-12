@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.tour.model.dto.Tour;
@@ -198,6 +201,11 @@ public class TourController {
 //	@PostMapping(value="/review")
 //	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute )
 	
+	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
 	@GetMapping("/bookTourList/{bookTourReqPage}")
 	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookTourReqPage, @RequestAttribute String memberEmail){
 		List<TourBook> bookTourList = tourService.selectBookTourList(bookTourReqPage, memberEmail);

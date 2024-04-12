@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.blog.model.dao.BlogDao;
 import kr.or.iei.blog.model.dto.Blog;
 import kr.or.iei.blog.model.dto.BlogDate;
+import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -77,6 +78,14 @@ public class BlogService {
 			return list;
 		}
 		return null;
+	}
+	
+	public List<Blog> selectMyBlogList(int reqPage, String memberEmail) {
+		int amount = 5;
+		int end = reqPage * amount;
+		int start = end - amount + 1;
+		List<Blog> myBlogList = blogDao.selectMyBlogList(memberEmail, start, end);
+		return myBlogList;
 	}
 	
 }

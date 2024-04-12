@@ -31,6 +31,7 @@ const TourView = (props) => {
   const [reviewStar, setReviewStar] = React.useState(5);
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [displayedReviewCount, setDisplayedReviewCount] = useState(5);
+  const [member, setMember] = useState("");
 
   useEffect(() => {
     axios
@@ -50,6 +51,15 @@ const TourView = (props) => {
       .get(backServer + "/tour/reviewList/" + tourNo)
       .then((res) => {
         setReviewList(res.data.data.reviewList);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+
+    axios
+      .get(backServer + "/tour/member")
+      .then((res) => {
+        setMember(res.data.data);
       })
       .catch((res) => {
         console.log(res);
@@ -443,8 +453,13 @@ const TourView = (props) => {
                       {dayjs(review.reviewDate).format("YYYY-MM-DD")}
                     </div>
                     <div className="tour-reviewList-modify">
-                      <span className="material-icons">edit</span>
-                      <span className="material-icons">delete</span>
+                      {isLogin &&
+                        member.memberNickName === review.memberNickname && (
+                          <>
+                            <span className="material-icons">edit</span>
+                            <span className="material-icons">delete</span>
+                          </>
+                        )}
                     </div>
                   </div>
                   <div className="tour-reviewList-text">

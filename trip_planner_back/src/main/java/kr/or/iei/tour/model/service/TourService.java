@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dao.TourDao;
@@ -151,6 +152,10 @@ public class TourService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("reviewList", reviewList);
 		return map;
+	}
+
+	public Member selectLoginMember(String memberEmail) {
+		return tourDao.selectLoginMember(memberEmail);
 	}
 	
 	

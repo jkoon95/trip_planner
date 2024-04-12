@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourTicket;
@@ -208,6 +209,13 @@ public class TourController {
 	public ResponseEntity<ResponseDTO> viewReviewList(@PathVariable int tourNo){
 		Map map = tourService.selectReviewList(tourNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping(value="/member")
+	public ResponseEntity<ResponseDTO> selectLoginMember(@RequestAttribute String memberEmail){
+		Member member = tourService.selectLoginMember(memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	

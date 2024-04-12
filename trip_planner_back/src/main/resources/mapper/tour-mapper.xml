@@ -171,4 +171,7 @@
 		join member_tbl using(member_no)
 		WHERE ref_no = #{tourNo} ORDER BY 1 DESC
 	</select>
+	<select id="selectLoginMember" resultType="member">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
 </mapper>

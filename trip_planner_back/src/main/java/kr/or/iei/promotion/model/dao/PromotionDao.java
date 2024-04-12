@@ -22,6 +22,8 @@ public interface PromotionDao {
 	/*
 	List selectPromotionListSearch(PageInfo pi);
 
+	List<Promotion> selectBookPromotionList(String memberEmail, int start, int end);
+
 	int totalSearchCount();
 	*/
 

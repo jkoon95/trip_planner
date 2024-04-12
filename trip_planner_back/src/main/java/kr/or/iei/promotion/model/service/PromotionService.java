@@ -68,6 +68,14 @@ public class PromotionService {
 		map.put("pi",pi);
 		return map;
 	}
+	
+	public List<Promotion> selectBookPromotionList(int bookPromotionReqPage, String memberEmail) {
+		int amount = 5;
+		int end = bookPromotionReqPage * amount;
+		int start = end - amount + 1;
+		List<Promotion> bookPromotionList = promotionDao.selectBookPromotionList(memberEmail, start, end);
+		return bookPromotionList;
+	}
 
 	public Promotion selectOnePromotion(int promotionNo) {
 		return promotionDao.selectOnePromotion(promotionNo);

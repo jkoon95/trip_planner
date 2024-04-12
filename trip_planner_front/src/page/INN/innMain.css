@@ -167,3 +167,21 @@
 .sort-option-box > .sort-option-menu > ul > li > .active span {
   color: #005caa;
 }
+.inn-box {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+.inn-box > .inn-img-box {
+  width: 300px;
+  height: 200px;
+}
+.inn-box > .inn-img-box > img {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  height: 100%;
+  object-fit: contain;
+}

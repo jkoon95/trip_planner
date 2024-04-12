@@ -186,8 +186,8 @@ const DayItem = (props) => {
   return (
     <div className="day-list">
       <div className="day-titie-box">
-        <span className="blog-date-day">
-          🚕 Day {day.blogDateDay + 1} 일정 💨💨💨
+        <span className="blog-date-day-view">
+          🚕 Day <span>{day.blogDateDay + 1}</span> 💨
         </span>
         <br></br>
         <p className="schedule-title">

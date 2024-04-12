@@ -193,10 +193,7 @@ blog-list-box {
   font-family: pt-l;
   font-size: 90%;
 }
-.blog-date-day {
-  color: var(--main_02);
-  margin-bottom: 5px;
-}
+
 #blog-date-day {
   text-indent: 10px;
   border: 1px solid var(--gray_04);
@@ -261,7 +258,7 @@ blog-list-box {
 .blog-view-top {
   overflow: hidden;
   line-height: 300px;
-  margin-bottom: 30px;
+  margin: 20px 0;
   text-align: center;
 }
 .blog-view-top img {
@@ -277,6 +274,7 @@ blog-list-box {
   font-size: 150%;
   color: var(--main_01);
 }
+
 .blog-view-title span {
   color: var(--main_04);
 }
@@ -284,7 +282,7 @@ blog-list-box {
   border-top: 5px solid #c1c1c1;
 }
 .day-list {
-  padding: 30px;
+  padding-top: 50px;
 }
 .day-titie-box {
   width: 100%;
@@ -295,10 +293,19 @@ blog-list-box {
   margin-top: 30px;
 }
 .blog-date-day {
-  color: var(--main_01);
-  font-family: pt-eb;
+  color: var(--main_02);
+  font-family: pt-l;
+  font-size: 100%;
+}
+.blog-date-day-view {
   font-size: 150%;
-  margin: 0 auto;
+  border-bottom: 1px solid #c1c1c1;
+  border-top: 1px solid #c1c1c1;
+  padding: 15px 0;
+}
+.blog-date-day-view span {
+  color: var(--main_02);
+  font-family: pt-eb;
 }
 .schedule-title {
   color: var(--main_02);

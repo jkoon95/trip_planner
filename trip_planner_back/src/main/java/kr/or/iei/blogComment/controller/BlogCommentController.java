@@ -69,12 +69,9 @@ public class BlogCommentController {
 		}
 	}
 	@PatchMapping
-	public ResponseEntity<ResponseDTO> modifyComment(@ModelAttribute BlogComment blogComment, @RequestBody int commentNo){
-		System.out.println("blogComment : " + blogComment );
-		System.out.println("commentNo : " + commentNo);
+	public ResponseEntity<ResponseDTO> modifyComment(@ModelAttribute BlogComment blogComment, @RequestBody int commentNo){		
 		blogComment.setCommentNo(commentNo);
 		int result = blogCommentService.modifyComment(blogComment);
-		System.out.println(result);
 		if(result > 0){
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

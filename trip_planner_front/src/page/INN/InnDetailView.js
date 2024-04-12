@@ -6,22 +6,22 @@ const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.inLogin;
   const [partner, setPartner] = useState("");
-  const [inn, setInn] = useState({});
+  const [innNo, setInnNo] = useState(22);
   const [room, setRoom] = useState({});
 
-  {
-    /*
   useEffect = () => {
     axios
-      .get(backServer + "/inn/detail/" + inn.innNo)
+      .get(backServer + "/inn/detail/" + innNo)
       .then((res) => {
-        setInn(res.data.data);
+        console.log(res.data.data);
       })
       .catch((res) => {
         console.log(res);
       });
   };
-  
+
+  {
+    /*
   useEffect = () => {
     axios
       .get(backServer + "/inn/roomInfo/" + inn.innNo)
@@ -34,6 +34,8 @@ const InnDetailView = (props) => {
   };
 */
   }
+  console.log(innNo);
+
   return (
     <section className="contents detail-view">
       <h2>숙소상세</h2>

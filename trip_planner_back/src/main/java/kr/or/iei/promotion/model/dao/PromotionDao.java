@@ -14,12 +14,18 @@ public interface PromotionDao {
 
 	List selectPromotionList(PageInfo pi);
 
-	List selectPromotionListLatest(PageInfo pi);
+	List selectPromotionListRegion(PageInfo pi);
 
 	List selectPromotionListPrice(PageInfo pi);
 
 	List selectPromotionListDeadline(PageInfo pi);
+	/*
+	List selectPromotionListSearch(PageInfo pi);
 
 	List<Promotion> selectBookPromotionList(String memberEmail, int start, int end);
 
+	int totalSearchCount();
+	*/
+
+	Promotion selectOnePromotion(int promotionNo);
 }

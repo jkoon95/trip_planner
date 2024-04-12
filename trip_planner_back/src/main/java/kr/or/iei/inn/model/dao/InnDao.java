@@ -10,6 +10,7 @@ import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
+import kr.or.iei.inn.model.dto.SelectInnList;
 
 @Mapper
 public interface InnDao {
@@ -41,5 +42,7 @@ public interface InnDao {
 	List selectRoomDetail(int innNo);
 
 	List selectInnFileDetail(int innNo);
+
+	List selectInnList(SelectInnList selectInnList);
 
 }

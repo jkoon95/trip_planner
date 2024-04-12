@@ -156,6 +156,33 @@
 	    JOIN TOUR_TBL T ON P.PARTNER_NO = T.PARTNER_NO
 	    WHERE T.TOUR_NO = #{tourNo}
 	</select>
+	<select id="searchMember" resultType="int">
+	    SELECT MEMBER_NO
+	    FROM MEMBER_TBL
+	    WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	<insert id="insertReview" parameterType="review">
+	    INSERT INTO REVIEW_TBL (REVIEW_NO, MEMBER_NO, REVIEW_TYPE, REVIEW_TITLE, REVIEW_CONTENT, REVIEW_STAR, REF_NO, REVIEW_DATE)
+	    VALUES (REVIEW_SEQ.nextval, #{memberNo}, 2, null, #{reviewContent}, #{reviewStar}, #{tourNo}, sysdate)
+	</insert>
+	<select id="selectReviewList" resultType="review">
+		SELECT review_no,member_nickname,review_content,review_star,ref_no,review_date
+		FROM review_tbl
+		join member_tbl using(member_no)
+		WHERE ref_no = #{tourNo} ORDER BY 1 DESC
+	</select>
+	<select id="selectLoginMember" resultType="member">
+		SELECT * FROM MEMBER_TBL WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	<update id="modifyTourReview" parameterType="map">
+	    UPDATE REVIEW_TBL
+	    SET review_content = #{review.reviewContent}
+	    WHERE review_no = #{reviewNo}
+	</update>
+	<delete id="deleteReview">
+		delete from review_tbl where review_no = #{reviewNo}
+	</delete>
+	
 	<select id="selectBookTourList" resultType="tourBook">
 		select * from
 			(select rownum rnum, tbt.* from

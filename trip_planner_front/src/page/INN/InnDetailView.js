@@ -52,7 +52,6 @@ const InnDetailView = (props) => {
           {innFile.map((innFile, index) => {
             return <InnFileItem key={"innFile" + index} innFile={innFile} />;
           })}
-          ;
         </div>
         <div className="inn-detail-top">
           <div>제주 롯데호텔</div>
@@ -109,7 +108,11 @@ const RoomItem = (props) => {
 const InnFileItem = (props) => {
   const innFile = props.innFile;
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  return <img src={backServer + "/inn/innFile/" + innFile.innFilePath} />;
+  return (
+    <div>
+      <img src={backServer + "/inn/innFileList/" + innFile.innFilePath} />
+    </div>
+  );
 };
 
 export default InnDetailView;

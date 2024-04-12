@@ -25,6 +25,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourBook;
@@ -197,9 +199,55 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-//	@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
-//	@PostMapping(value="/review")
-//	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute )
+	@PostMapping(value="/review")
+	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute Review review, @RequestAttribute String memberEmail) {
+		int result = tourService.insertReview(review,memberEmail);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping(value="/reviewList/{tourNo}")
+	public ResponseEntity<ResponseDTO> viewReviewList(@PathVariable int tourNo){
+		Map map = tourService.selectReviewList(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping(value="/member")
+	public ResponseEntity<ResponseDTO> selectLoginMember(@RequestAttribute String memberEmail){
+		Member member = tourService.selectLoginMember(memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PatchMapping(value="/review/{reviewNo}")
+	public ResponseEntity<ResponseDTO> modifyTourReview(@PathVariable int reviewNo, @RequestBody Review review){
+		int result = tourService.modifyTourReview(reviewNo, review);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@DeleteMapping(value="/review/{reviewNo}")
+	public ResponseEntity<ResponseDTO> deleteTourReview(@PathVariable int reviewNo){
+		int result = tourService.deleteReview(reviewNo);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 	
 	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
 	@ApiResponses({

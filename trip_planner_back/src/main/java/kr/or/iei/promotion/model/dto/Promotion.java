@@ -18,4 +18,6 @@ public class Promotion {
 	private String promotionIntro;
 	private String promotionRegion;
 	private int promotionLimit;
+	private String promotionImg;
+	private String promotionExpiredDate;
 }

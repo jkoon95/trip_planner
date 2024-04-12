@@ -39,4 +39,8 @@ public interface InnDao {
 
 	List<BookInns> selectBookInnsList(String memberEmail, int start, int end);
 
+	List selectRoomDetail(int innNo);
+
+	List selectInnFileDetail(int innNo);
+
 }

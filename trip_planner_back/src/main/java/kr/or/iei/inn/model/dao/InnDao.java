@@ -11,6 +11,7 @@ import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
+import kr.or.iei.inn.model.dto.SelectInnList;
 
 @Mapper
 public interface InnDao {
@@ -38,5 +39,7 @@ public interface InnDao {
 	int reservationInn(InnReservation innReservation);
 
 	List<BookInns> selectBookInnsList(String memberEmail, int start, int end);
+
+	List selectInnList(SelectInnList selectInnList);
 
 }

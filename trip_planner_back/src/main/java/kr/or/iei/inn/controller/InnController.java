@@ -167,7 +167,14 @@ public class InnController {
 	public ResponseEntity<ResponseDTO> selectInnList(@RequestBody SelectInnList selectInnList , @RequestAttribute String memberEmail){	//@modelAttribute는 파일이 있을경우 받아올 때 사용
 		System.out.println(selectInnList);
 		List list = innService.selectInnList(selectInnList, memberEmail);
-		return null;
+		System.out.println(list);
+		if(!list.isEmpty()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 	
 	@GetMapping("/bookInnsList/{bookInnsReqPage}")

@@ -102,6 +102,7 @@ const PromotionList = () => {
 
 const PromotionItem = (props) => {
   const promotion = props.promotion;
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   return (
     <div className="promotion_item_wrap">
       <div className="promotion_content">
@@ -109,6 +110,21 @@ const PromotionItem = (props) => {
           <Link to={"/promotion/view/" + promotion.promotionNo}>
             <h1>{promotion.promotionName}</h1>
           </Link>
+        </div>
+        <div className="promotion-list-img">
+          <img
+            src={
+              backServer +
+              "/promotion/promotionThumbnail/" +
+              promotion.promotionImg
+            }
+          />
+        </div>
+        <div className="promotion-list-intro">
+          <h1>{promotion.promotionIntro}</h1>
+        </div>
+        <div className="promotion-list-price">
+          <h1>가격 : {promotion.promotionPrice}</h1>
         </div>
       </div>
     </div>

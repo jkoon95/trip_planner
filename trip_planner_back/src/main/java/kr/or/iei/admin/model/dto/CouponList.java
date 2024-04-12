@@ -1,7 +1,5 @@
 package kr.or.iei.admin.model.dto;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;

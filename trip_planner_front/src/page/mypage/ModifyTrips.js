@@ -27,7 +27,6 @@ const ModifyTrips = (props) => {
     }).then(navigate("/"));
   }
   const [trip, setTrip] = useState({}); //최종 데이터
-  const [tripBtnDisabled, setTripBtnDisabled] = useState(true);
   const [tripDetailList, setTripDetailList] = useState([]);
   const [tripTitleInput, setTripTitleInput] = useState("");
   const [tripTitle, setTripTitle] = useState("");
@@ -70,7 +69,6 @@ const ModifyTrips = (props) => {
       console.log(res);
     })
   }, [])
-  // console.log(tripTitle);
 
   // 제목 수정
   useEffect(() => {
@@ -111,27 +109,43 @@ const ModifyTrips = (props) => {
 
   // 디테일 수정
   useEffect(() => {
-    // trip.tripDetailList = tripDetailList;
-    // trip.tripDetailListStr = JSON.stringify(tripDetailList);
-    // setTrip({...trip});
     if(modifyMode){
 
-      if(tripDetailList.length != 0){
-        const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: tripDetailList, tripDetailListStr: JSON.stringify(tripDetailList)};
-        console.log("디테일이 수정됐다");
+      trip.tripDetailList = tripDetailList;
+
+      // if(tripDetailList.length != 0){
+        const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: trip.tripDetailList, tripDetailListStr: JSON.stringify(trip.tripDetailList)};
+        console.log("보내는 정보");
         console.log(tripObj);
         axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
         .then((res) => {
           console.log("디테일 수정 axios!!!!!");
           console.log(res.data);
+
+          if(res.data.message === "success"){
+            for(let i=0; i<trip.tripDetailList.length; i++){
+              for(let j=0; j<trip.tripDetailList[i].selectPlaceList.length; j++){
+                trip.tripDetailList[i].selectPlaceList[j].tripDetailNo = trip.tripDetailList[i].tripDetailNo;
+                if(trip.tripDetailList[i].selectPlaceList[j].delNo === 1){
+                  trip.tripDetailList[i].selectPlaceList.splice(j, 1)
+                }
+              }
+            }
+            setTripDetailList([...trip.tripDetailList]);
+          }
+
         })
         .catch((res) => {
           console.log(res);
         })
-      }
-  
-      // console.log("트립 디테일 변경!");
+      // }
+      
     }
+  }, [trip])
+
+  useEffect(() => {
+    console.log("현재 버전 tripDetailList")
+    console.log(tripDetailList)
   }, [tripDetailList])
 
   const closeTodoModalFunc = () => {
@@ -151,8 +165,11 @@ const ModifyTrips = (props) => {
     setTripDetailList([...tripDetailList]);
     setTripTodo("");
     setOpenTodoModal(false);
-    console.log(tripDetailList[todoDayIndex].selectPlaceList[todoIndex].tripTodo);
     console.log("todo 수정");
+    console.log(tripDetailList[todoDayIndex].selectPlaceList[todoIndex].tripTodo);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const addCostFunc = () => {
@@ -160,6 +177,9 @@ const ModifyTrips = (props) => {
     setTripDetailList([...tripDetailList]);
     setTripCost("");
     setOpenCostModal(false);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const closeSearchWrap = () => {
@@ -417,9 +437,12 @@ const ModifyTrips = (props) => {
     //조건검사(시작날짜,종료날짜 비교하는거, 값이있는지)
     // console.log(tripDetailList);
 
-    if(tripStartDate && tripEndDate && new Date(tripEndDate.$d.getTime()) >= new Date(tripStartDate.$d.getTime())){
-      trip.tripStartDate = tripStartDate;
-      trip.tripEndDate = tripEndDate;
+    if(tripStartDate && tripEndDate){
+      if(new Date(tripEndDate.$d.getTime()) < new Date(tripStartDate.$d.getTime())){
+        return;
+      }
+      trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
+      trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
 
       const copyTripDetailList = tripDetailList.filter((item)=>{
         return item.length !== 0;
@@ -444,6 +467,7 @@ const ModifyTrips = (props) => {
             for(let i=tripDayCount;i<copyTripDetailList.length;i++){
               for(let j=0;j<copyTripDetailList[i].selectPlaceList.length;j++){
                 copyTripDetailList[i].selectPlaceList[j].oldTripDay = copyTripDetailList[i].selectPlaceList[j].tripDay;
+                copyTripDetailList[i].selectPlaceList[j].oldTripRoute = copyTripDetailList[i].selectPlaceList[j].tripRoute;
                 array.push(copyTripDetailList[i].selectPlaceList[j]);
               }
             }
@@ -474,17 +498,17 @@ const ModifyTrips = (props) => {
       }
       setTripDays(newTripDate);
       setTripDetailList(newTripDetailList);
-      trip.tripDetailList = [...newTripDetailList];
+      // trip.tripDetailList = [...newTripDetailList];
       setTrip({...trip});
 
-      if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
-        console.log("시작 날짜 변경");
-        trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
-      }
-      if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
-        console.log("종료 날짜 변경");
-        trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
-      }
+      // if(trip.tripStartDate !== dayjs(tripStartDate).format("YYYY-MM-DD")){
+      //   console.log("시작 날짜 변경");
+      //   trip.tripStartDate = dayjs(tripStartDate).format("YYYY-MM-DD");
+      // }
+      // if(trip.tripEndDate !== dayjs(tripEndDate).format("YYYY-MM-DD")){
+      //   console.log("종료 날짜 변경");
+      //   trip.tripEndDate = dayjs(tripEndDate).format("YYYY-MM-DD");
+      // }
 
       const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate};
       
@@ -519,15 +543,10 @@ const ModifyTrips = (props) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker disabled={datePicker1Disabled} onChange={(newValue)=>{
-                      if(tripEndDate != null && dayjs(newValue).format("YYYY-MM-DD") <= dayjs(new Date(tripEndDate.$d.getTime())).format("YYYY-MM-DD")){
-                        setTripStartDate(newValue);
-                        // console.log(trip);
-                      }
+                      setTripStartDate(newValue);
                     }} format="YYYY-MM-DD" value={tripStartDate || dayjs(new Date())} disablePast />
                     <DatePicker disabled={datePicker2Disabled} onChange={(newValue)=>{
                       setTripEndDate(newValue);
-                      setTripBtnDisabled(false);
-                      // console.log(trip);
                     }} format="YYYY-MM-DD" value={tripEndDate || dayjs(new Date())} disablePast />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -537,17 +556,15 @@ const ModifyTrips = (props) => {
               {
                 tripDetailList.map((item, index) => {
                   return(
-                    <SetDayWrap key={"day" + index} tripDetailItem={item} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} setTripTodo={setTripTodo} btnTripCostDisabled={btnTripCostDisabled} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnPlaceDisabled={btnPlaceDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled}/>
+                    <SetDayWrap key={"day" + index} tripDetailItem={item} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} setTripTodo={setTripTodo} btnTripCostDisabled={btnTripCostDisabled} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnPlaceDisabled={btnPlaceDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled}/>
                   );
                 })
               }
             </div>
             <div className="btn_area">
-              {/* <Button text="여행 등록하기" class="btn_primary" clickEvent={createTripsFunc} disabled={tripBtnDisabled} /> */}
               <Button text={btnModifyText} class="btn_primary" clickEvent={modifyTripsFunc} />
             </div>
           </div>
-
           {
             openSearchWrap ? (
               <div className="search_wrap">
@@ -565,13 +582,13 @@ const ModifyTrips = (props) => {
                         placeResultList.map((place, index) => {
                           // console.log(place);
                           return(
-                            <ItemTripPlace key={"place"+index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
+                            <ItemTripPlace key={"place"+index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} />
                           );
                         })
                       }
                     </ul>
                   </div>
-                  <div className="result_title">숙소</div>
+                  {/* <div className="result_title">숙소</div>
                   <div className="result_inns_area">
                     <ul className="inn_list">
                       <li>
@@ -581,7 +598,7 @@ const ModifyTrips = (props) => {
                     <div className="btn_area">
                       <Button text="숙소 검색 결과 더보기" class="btn_primary outline md" />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <button type="button" className="btn_close" onClick={closeSearchWrap}><span className="hidden">닫기</span></button>
               </div>
@@ -615,6 +632,8 @@ const ModifyTrips = (props) => {
 }
 
 const SetDayWrap = (props) => {
+  const trip = props.trip;
+  const setTrip = props.setTrip;
   const tripDetailItem = props.tripDetailItem;
   const tripDetailList = props.tripDetailList;
   const setTripDetailList = props.setTripDetailList;
@@ -676,7 +695,7 @@ const SetDayWrap = (props) => {
               }
               item.tripDay = tripDetailItem.tripDay;
               return (
-                <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled}/>
+                <ItemTripPlace key={"select" + index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled}/>
               );
             })
           }
@@ -692,6 +711,8 @@ const SetDayWrap = (props) => {
 }
 
 const ItemTripPlace = (props) => {
+  const trip = props.trip;
+  const setTrip = props.setTrip;
   const tripDetailList = props.tripDetailList;
   const setTripDetailList = props.setTripDetailList;
   const routeIndex = props.routeIndex;
@@ -714,6 +735,9 @@ const ItemTripPlace = (props) => {
     tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1, tripDetailNo: 0});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const openTodoModalFunc = () => {
@@ -737,6 +761,9 @@ const ItemTripPlace = (props) => {
     tripDetailList[thisIndex].selectPlaceList[routeIndex].tripTodo = "";
     setTripDetailList([...tripDetailList]);
     setTripTodo("");
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const deletePlace = () => {
@@ -749,15 +776,14 @@ const ItemTripPlace = (props) => {
       if(tripDetailList[thisIndex].selectPlaceList[routeIndex+1]){
         tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute
       }
-      // console.log(tripDetailList[thisIndex]);
-      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1]);
-      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute);
-      // console.log(tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute);
-      // tripDetailList[thisIndex].selectPlaceList[routeIndex+1].oldTripRoute = tripDetailList[thisIndex].selectPlaceList[routeIndex+1].tripRoute;
     }
-    const delItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
-    tripDetailList[thisIndex].selectPlaceList.push(...delItem);
+    // const delItem = tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+    // tripDetailList[thisIndex].selectPlaceList.push(...delItem);
     setTripDetailList([...tripDetailList]);
+    tripDetailList[thisIndex].selectPlaceList.splice(routeIndex, 1);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const tripRouteDown = () => {
@@ -769,6 +795,9 @@ const ItemTripPlace = (props) => {
     setTripDetailList([...tripDetailList]);
     console.log("routeDown");
     console.log(tripDetailList);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
 
   const tripRouteUp = () => {
@@ -784,6 +813,9 @@ const ItemTripPlace = (props) => {
     setTripDetailList([...tripDetailList]);
     console.log("routeUp");
     console.log(tripDetailList);
+
+    trip.tripDetailList = tripDetailList;
+    setTrip({...trip});
   }
   // console.log(tripDetailList[thisIndex])
 
@@ -825,7 +857,8 @@ const ItemTripPlace = (props) => {
           </li>
           ) : ""
         }
-        {place.delNo !== 1 && place.tripTodo ? (
+        {/* {place.delNo !== 1 && place.tripTodo ? ( */}
+        {place.tripTodo ? (
           <li className="item tripTodo">
           <div className="tripRoute_no"></div>
           <div className="item_box">

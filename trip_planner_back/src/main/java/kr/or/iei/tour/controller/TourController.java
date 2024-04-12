@@ -219,4 +219,28 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@PatchMapping(value="/review/{reviewNo}")
+	public ResponseEntity<ResponseDTO> modifyTourReview(@PathVariable int reviewNo, @RequestBody Review review){
+		int result = tourService.modifyTourReview(reviewNo, review);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@DeleteMapping(value="/review/{reviewNo}")
+	public ResponseEntity<ResponseDTO> deleteTourReview(@PathVariable int reviewNo){
+		int result = tourService.deleteReview(reviewNo);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
 }

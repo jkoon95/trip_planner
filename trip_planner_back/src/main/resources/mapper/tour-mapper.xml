@@ -174,4 +174,13 @@
 	<select id="selectLoginMember" resultType="member">
 		SELECT * FROM MEMBER_TBL WHERE MEMBER_EMAIL = #{memberEmail}
 	</select>
+	<update id="modifyTourReview" parameterType="map">
+	    UPDATE REVIEW_TBL
+	    SET review_content = #{review.reviewContent}
+	    WHERE review_no = #{reviewNo}
+	</update>
+	<delete id="deleteReview">
+		delete from review_tbl where review_no = #{reviewNo}
+	</delete>
+	
 </mapper>

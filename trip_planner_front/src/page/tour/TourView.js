@@ -189,6 +189,85 @@ const TourView = (props) => {
     setDisplayedReviewCount(newCount);
   };
 
+  const handleEditReview = (reviewNo) => {
+    Swal.fire({
+      title: "리뷰 내용을 수정하세요.",
+      input: "text",
+      inputPlaceholder: "내용을 입력하세요.",
+      showCancelButton: true, // 취소 버튼 표시
+      confirmButtonText: "확인", // 확인 버튼 텍스트 변경
+      cancelButtonText: "취소", // 취소 버튼 텍스트 변경
+    }).then((result) => {
+      // 확인 버튼 클릭 후의 동작 정의
+      if (result.isConfirmed) {
+        const updatedReviewContent = result.value; // 입력된 값 가져오기
+        if (updatedReviewContent) {
+          axios
+            .patch(backServer + "/tour/review/" + reviewNo, {
+              reviewContent: updatedReviewContent,
+            })
+            .then((res) => {
+              if (res.data.message === "success") {
+                Swal.fire("리뷰가 성공적으로 수정되었습니다.");
+                axios
+                  .get(backServer + "/tour/reviewList/" + tourNo)
+                  .then((res) => {
+                    setReviewList(res.data.data.reviewList);
+                  })
+                  .catch((res) => {
+                    console.log(res);
+                  });
+              } else {
+                Swal.fire(
+                  "리뷰 수정 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+                );
+              }
+            })
+            .catch((res) => {
+              console.log(res);
+            });
+        }
+      }
+    });
+  };
+
+  const handleDeleteReview = (reviewNo) => {
+    Swal.fire({
+      title: "정말로 삭제하시겠습니까?",
+      text: "삭제한 리뷰는 복구할 수 없습니다!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(backServer + "/tour/review/" + reviewNo)
+          .then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire("삭제되었습니다!");
+              // 리뷰 삭제 후 페이지 다시 불러오기
+              axios
+                .get(backServer + "/tour/reviewList/" + tourNo)
+                .then((res) => {
+                  setReviewList(res.data.data.reviewList);
+                })
+                .catch((res) => {
+                  console.log(res);
+                });
+            } else {
+              Swal.fire("삭제 실패");
+            }
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
+    });
+  };
+
   return (
     <section className="contents">
       <div className="tour-view-prev" onClick={handleTitleClick}>
@@ -456,8 +535,20 @@ const TourView = (props) => {
                       {isLogin &&
                         member.memberNickName === review.memberNickname && (
                           <>
-                            <span className="material-icons">edit</span>
-                            <span className="material-icons">delete</span>
+                            <span
+                              className="material-icons"
+                              onClick={() => handleEditReview(review.reviewNo)}
+                            >
+                              edit
+                            </span>
+                            <span
+                              className="material-icons"
+                              onClick={() =>
+                                handleDeleteReview(review.reviewNo)
+                              }
+                            >
+                              delete
+                            </span>
                           </>
                         )}
                     </div>

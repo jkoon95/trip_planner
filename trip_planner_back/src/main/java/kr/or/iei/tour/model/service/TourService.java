@@ -157,6 +157,16 @@ public class TourService {
 	public Member selectLoginMember(String memberEmail) {
 		return tourDao.selectLoginMember(memberEmail);
 	}
+
+	@Transactional
+	public int modifyTourReview(int reviewNo, Review review) {
+		return tourDao.modifyTourReview(reviewNo, review);
+	}
+
+	@Transactional
+	public int deleteReview(int reviewNo) {
+		return tourDao.deleteReview(reviewNo);
+	}
 	
 	
 }

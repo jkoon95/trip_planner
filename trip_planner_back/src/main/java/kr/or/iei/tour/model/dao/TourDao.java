@@ -68,5 +68,9 @@ public interface TourDao {
 
 	Member selectLoginMember(String memberEmail);
 
+	int modifyTourReview(int reviewNo, Review review);
+
+	int deleteReview(int reviewNo);
+
 	
 }

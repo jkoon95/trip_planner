@@ -12,22 +12,21 @@ import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 
 const TourView = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const isLogin = props.isLogin;
   const params = useParams();
   const tourNo = params.tourNo;
-  const backServer = process.env.REACT_APP_BACK_SERVER;
   const [tour, setTour] = useState({});
   const [ticket, setTicket] = useState({});
   const [member, setMember] = useState(null);
   const [partner, setPartner] = useState({});
-  const [reviewText, setReviewText] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
   const [quantity, setQuantity] = useState({
     adult: 0,
     youth: 0,
     child: 0,
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -98,7 +97,31 @@ const TourView = (props) => {
   };
 
   const reviewSubmit = () => {
-    Swal.fire("안녕");
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        title: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else if (reviewContent === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "리뷰 내용을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      const form = new FormData();
+      form.append("reviewContent", reviewContent);
+      form.append("reviewStar", reviewStar);
+      form.append("tourNo", tourNo);
+
+      axios.post(backServer + "/tour/review");
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      reviewSubmit();
+    }
   };
 
   return (
@@ -327,16 +350,18 @@ const TourView = (props) => {
               <div className="tour-review-text">
                 <input
                   type="text"
-                  value={reviewText}
+                  placeholder="운영정책에 위배되는 리뷰는 삭제될 수 있습니다."
+                  value={reviewContent}
                   onChange={(event) => {
-                    setReviewText(event.target.value);
+                    setReviewContent(event.target.value);
                   }}
+                  onKeyUp={handleKeyPress}
                 />
                 <button
                   className="btn_primary sm review-btn"
                   onClick={reviewSubmit}
                 >
-                  등록
+                  Enter
                 </button>
               </div>
             </div>
@@ -358,12 +383,11 @@ const TourView = (props) => {
               <div className="tour-review-text">
                 <input
                   type="text"
-                  value={reviewText}
+                  value={reviewContent}
                   onChange={(event) => {
-                    setReviewText(event.target.value);
+                    setReviewContent(event.target.value);
                   }}
                 />
-                <button className="btn_primary sm review-btn">등록</button>
               </div>
             </div>
           </div>

@@ -7,6 +7,9 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
 
 const TourView = (props) => {
   const isLogin = props.isLogin;
@@ -17,12 +20,12 @@ const TourView = (props) => {
   const [ticket, setTicket] = useState({});
   const [member, setMember] = useState(null);
   const [partner, setPartner] = useState({});
+  const [reviewText, setReviewText] = useState("");
   const [quantity, setQuantity] = useState({
     adult: 0,
     youth: 0,
     child: 0,
   });
-  const [showPartner, setShowPartner] = useState(false);
 
   const navigate = useNavigate();
 
@@ -34,7 +37,7 @@ const TourView = (props) => {
         setTour(tourList[0]);
         setTicket(ticketList[0]);
         setPartner(partner[0]);
-        console.log(partner.partnerName);
+        console.log(partner);
       })
       .catch((res) => {
         console.log(res);
@@ -69,6 +72,7 @@ const TourView = (props) => {
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
 
   const [startDate, setStartDate] = React.useState(dayjs());
+  const [reviewStar, setReviewStar] = React.useState(5);
 
   const handleDecreaseQuantity = (type) => {
     setQuantity((prevQuantity) => ({
@@ -84,12 +88,13 @@ const TourView = (props) => {
     }));
   };
 
-  const handleModalOpen = () => {
-    // 모달을 열 때 특정 데이터를 가져와야 한다면 이곳에 추가로 처리합니다.
-    setShowPartner(true);
-  };
-  const handleModalClose = () => {
-    setShowPartner(false);
+  const showPartnerTel = () => {
+    Swal.fire({
+      icon: "info",
+      title: partner.partnerName,
+      text:
+        "전화번호: " + partner.partnerTel + " 이메일: " + partner.memberEmail,
+    });
   };
 
   return (
@@ -287,7 +292,7 @@ const TourView = (props) => {
             <h4>이용정보</h4>
           </div>
           <div className="tour-view-info-wrap">
-            <div className="tour-info-zone" onClick={handleModalOpen}>
+            <div className="tour-info-zone" onClick={showPartnerTel}>
               <div className="tour-info-title">판매자 정보를 확인하세요</div>
               <div className="tour-info-detail">
                 {partner && partner.partnerName}
@@ -301,20 +306,32 @@ const TourView = (props) => {
           <div className="tour-view-content-title">
             <h4>리뷰</h4>
           </div>
-        </div>
-      </div>
-      {showPartner && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleModalClose}>
-              &times;
-            </span>
-            <h2>판매자 정보</h2>
-            <p>판매자 이름: {partner && partner.partnerName}</p>
-            <p>판매자 전화번호: {partner && partner.partnerTel}</p>
+          <div className="tour-review-input-wrap">
+            <div className="tour-review-profile">
+              <span className="material-icons">person</span>
+            </div>
+            <div className="tour-review-star">
+              <Rating
+                name="simple-controlled"
+                value={reviewStar}
+                onChange={(event, newValue) => {
+                  setReviewStar(newValue);
+                }}
+              />
+            </div>
+            <div className="tour-review-input">
+              <input
+                type="text"
+                value={reviewText}
+                onChange={(event) => {
+                  setReviewText(event.target.value);
+                }}
+              />
+              <button className="btn_primary md">등록</button>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </section>
   );
 };

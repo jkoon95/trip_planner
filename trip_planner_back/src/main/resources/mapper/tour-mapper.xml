@@ -150,7 +150,9 @@
 		SELECT * FROM TOUR_TICKET_TBL WHERE TOUR_NO = #{tourNo}
 	</select>
 	<select id="selectPartner" resultType="partner">
-		SELECT * FROM PARTNER_TBL P
+	    SELECT P.*, M.MEMBER_EMAIL
+	    FROM PARTNER_TBL P
+	    JOIN MEMBER_TBL M ON P.MEMBER_NO = M.MEMBER_NO
 	    JOIN TOUR_TBL T ON P.PARTNER_NO = T.PARTNER_NO
 	    WHERE T.TOUR_NO = #{tourNo}
 	</select>

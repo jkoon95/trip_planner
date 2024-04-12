@@ -236,12 +236,14 @@
 }
 .tour-view-wrap > .tour-view-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 60px;
+  align-items: center;
 }
 .tour-view-wrap > .tour-view-top > .tour-view-thumbnail {
   width: 540px;
   height: 303.75px;
+  margin-right: 60px;
 }
 .tour-view-wrap > .tour-view-top > .tour-view-thumbnail > img {
   width: 100%;
@@ -335,10 +337,13 @@
 
 .tour-view-content-wrap > .tour-view-content {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .tour-view-content-wrap > .tour-view-content-title > h4 {
   margin-bottom: 0;
-  margin-top: 60px;
+  margin-top: 80px;
+  padding-left: 40px;
 }
 
 .tour-view-content-wrap > .tour-view-content > .tour-view-calendar {
@@ -401,11 +406,16 @@
   display: flex;
   justify-content: center;
 }
+.tour-view-content-wrap > .tour-view-intro-wrap > .tour-view-intronail img {
+  max-width: 940px;
+}
 
 .tour-view-content-wrap > .tour-view-info-wrap {
   margin-top: 20px;
   display: flex;
   padding-left: 60px;
+  justify-content: center;
+  align-items: center;
 }
 .tour-view-content-wrap > .tour-view-info-wrap > .tour-info-zone {
   width: 450px;
@@ -421,5 +431,6 @@
   font-size: 0.9em;
 }
 .tour-view-info-wrap > .tour-info-zone > .tour-info-detail {
-  margin-top: 10px;
+  margin-top: 5px;
+  font-size: 18px;
 }

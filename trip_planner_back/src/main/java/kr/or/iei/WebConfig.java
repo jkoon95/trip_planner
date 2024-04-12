@@ -33,11 +33,17 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceHandler("/blog/blogThumbnail/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
 		registry
+		.addResourceHandler("/inn/innFileList/**")
+		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
+		registry
 		.addResourceHandler("/tour/thumbnail/**","/tour/intronail/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/tour/");
 		registry
 		.addResourceHandler("/inn/reservationInn/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
+		registry
+		.addResourceHandler("/promotion/promotionThumbnail/**")
+		.addResourceLocations("file:///C:/Temp/trip_planner/promotion/");
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -46,7 +52,7 @@ public class WebConfig implements WebMvcConfigurer{
 				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**", "/admin/**","/coupon/**")				
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
 						"/blog/list/*","/tour/thumbnail/*","/tour/intronail/*","/tour","/tour/tourSearch","/tour/tourType","/tour/view/*","/tour/reviewList/*"
-						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*");
+						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*","/inn/innFileList/*");
 		
 		//관리자
 		//registry.addInterceptor(adminInterceptor)

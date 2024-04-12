@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.inn.model.dto.InnReservation;
 import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dao.TourDao;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
@@ -168,5 +170,13 @@ public class TourService {
 		return tourDao.deleteReview(reviewNo);
 	}
 	
+	public List<TourBook> selectBookTourList(int bookTourReqPage, String memberEmail) {
+		int amount = 5;
+		int end = bookTourReqPage * amount;
+		int start = end - amount + 1;
+		List<TourBook> bookTourList = tourDao.selectBookTourList(memberEmail, start, end);
+		return bookTourList;
+	}
+
 	
 }

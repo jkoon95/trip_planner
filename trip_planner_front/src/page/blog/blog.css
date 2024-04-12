@@ -266,7 +266,7 @@ blog-list-box {
   height: 300px;
   border-radius: 10px;
   float: left;
-  border: 5px solid #c1c1c1;
+  border: 5px solid #f1f1f1;
 }
 
 .blog-view-title {
@@ -279,7 +279,7 @@ blog-list-box {
   color: var(--main_04);
 }
 .day-list:nth-child(1) {
-  border-top: 5px solid #c1c1c1;
+  border-top: 5px solid #f1f1f1;
 }
 .day-list {
   padding-top: 50px;
@@ -299,8 +299,8 @@ blog-list-box {
 }
 .blog-date-day-view {
   font-size: 150%;
-  border-bottom: 1px solid #c1c1c1;
-  border-top: 1px solid #c1c1c1;
+  border-bottom: 1px solid #f1f1f1;
+  border-top: 1px solid #f1f1f1;
   padding: 15px 0;
 }
 .blog-date-day-view span {

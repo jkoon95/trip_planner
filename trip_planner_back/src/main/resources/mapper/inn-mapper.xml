@@ -55,10 +55,14 @@
 	</insert>
 	
 	<select id="selectInnDetail" resultType="inn">
-		select * from inn_tbl where inn_no=#{innNo}
-		
+		select * from inn_tbl where inn_no=#{innNo}		
 	</select>
-	
+	<select id="selectRoomDetail" resultType="room">
+		select * from room_tbl where inn_no=#{innNo}
+	</select>	
+	<select id="selectInnFileDetail" resultType="innFile">
+		select * from inn_file_tbl where inn_no=#{innNo}	
+	</select>
 	<insert id="reservationInn">
 		insert into inn_book_tbl values
 		(inn_book_seq.nextval, 
@@ -74,7 +78,7 @@
 		#{bookGuest})
 	</insert>
 	
-	<select id="selectBookInnsList" resultType="bookInns">
+	<select id="selectBookInnsList" resultType="innReservation">
 		select * from (select rownum rnum, ibt.* from
 			(select inn_book_no,
 			    (select partner_name from partner_tbl where partner_no in

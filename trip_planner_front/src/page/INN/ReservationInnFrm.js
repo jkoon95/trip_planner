@@ -731,7 +731,9 @@ const SelectInnInfo = (props) => {
         .get(backServer + "/admin/selectCouponList")
         .then((res) => {
           console.log(res.data);
-          setCouponList(res.data.data);
+          if(res.data.data !== null){
+            setCouponList(res.data.data);
+          }
         })
         .catch((res) => {
           console.log(res);

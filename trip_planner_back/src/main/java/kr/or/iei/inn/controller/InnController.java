@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.service.AdminService;
-import kr.or.iei.inn.model.dto.BookInns;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.inn.model.dto.InnReservation;
@@ -134,6 +136,7 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	//숙소상세페이지
 	@GetMapping("/detail/{innNo}")
 	public ResponseEntity<ResponseDTO> selectInnDetail(@PathVariable int innNo){
 		Inn inn = innService.selectInnDetail(innNo);
@@ -144,8 +147,31 @@ public class InnController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
+	}	
+	@GetMapping("/roomInfo/{innNo}")
+	public ResponseEntity<ResponseDTO> selectRoomDetail(@PathVariable int innNo){
+		List room= innService.selectRoomDetail(innNo);		
+		if(room != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", room);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	@GetMapping("/innFile/{innNo}")
+	public ResponseEntity<ResponseDTO> selectInnFileDetail(@PathVariable int innNo){
+		List innFile = innService.selectInnFileDetail(innNo);
+		if(innFile != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", innFile);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 	
+	//숙소상세페이지
 	@PostMapping("/reservationInn")
 	public ResponseEntity<ResponseDTO> reservationInn(@ModelAttribute InnReservation innReservation, @RequestAttribute String memberEmail){
 		int memberNo = memberService.getMemberNo(memberEmail);
@@ -170,9 +196,14 @@ public class InnController {
 		return null;
 	}
 	
+	@Operation(summary = "내 숙소 예약 리스트 조회", description = "내 숙소 예약 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
 	@GetMapping("/bookInnsList/{bookInnsReqPage}")
 	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookInnsReqPage, @RequestAttribute String memberEmail){
-		List<BookInns> bookInnsList = innService.selectBookInnsList(bookInnsReqPage, memberEmail);
+		List<InnReservation> bookInnsList = innService.selectBookInnsList(bookInnsReqPage, memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookInnsList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}

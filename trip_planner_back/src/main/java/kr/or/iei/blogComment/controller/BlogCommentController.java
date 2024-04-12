@@ -48,7 +48,6 @@ public class BlogCommentController {
 	@GetMapping(value="/commentList/{blogNo}")
 		public ResponseEntity<ResponseDTO> selectCommentList(@PathVariable int blogNo){
 			List<BlogComment> list = blogCommentService.selectCommentList(blogNo);
-			System.out.println(list);
 			if(list != null) {
 				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
 				return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

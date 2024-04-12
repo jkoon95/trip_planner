@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.or.iei.inn.model.dto.BookInns;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.inn.model.dto.InnReservation;
@@ -37,6 +36,10 @@ public interface InnDao {
 
 	int reservationInn(InnReservation innReservation);
 
-	List<BookInns> selectBookInnsList(String memberEmail, int start, int end);
+	List<InnReservation> selectBookInnsList(String memberEmail, int start, int end);
+
+	List selectRoomDetail(int innNo);
+
+	List selectInnFileDetail(int innNo);
 
 }

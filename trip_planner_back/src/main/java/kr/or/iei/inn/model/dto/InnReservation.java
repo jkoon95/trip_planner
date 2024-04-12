@@ -25,4 +25,9 @@ public class InnReservation {
 	private int bookStatus;
 	private int bookGuest;
 	private int couponNo;
+	
+	private String partnerName;
+	private int night;
+	private String roomName;
+	private String innFilepath;
 }

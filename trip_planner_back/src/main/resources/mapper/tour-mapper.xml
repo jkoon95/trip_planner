@@ -183,4 +183,35 @@
 		delete from review_tbl where review_no = #{reviewNo}
 	</delete>
 	
+	<select id="selectBookTourList" resultType="tourBook">
+		select * from
+			(select rownum rnum, tbt.* from
+			(select tour_book_no, book_guest, book_fee, book_date,
+			    case
+			        when book_status=1
+			        then '예약확정'
+			        when book_status=2
+			        then '예약취소'
+			    end book_status_str,
+			    (select tour_name from tour_tbl where tour_no=tb.tour_no) tour_name, (select tour_img from tour_tbl where tour_no=tb.tour_no) tour_img,
+			    (select member_name from member_tbl where member_no=tb.member_no) member_name,
+			    (
+			        select
+			            case
+			                when tour_type=1
+			                then '전시관'
+			                when tour_type=2
+			                then '레저'
+			                when tour_type=3
+			                then '테마파크'
+			                when tour_type=4
+			                then '박람회'
+			                when tour_type=5
+			                then '입장권'
+			            end
+			        from tour_tbl where tour_no=tb.tour_no
+			    ) tour_type_str
+			from tour_book_tbl tb where member_no in (select member_no from member_tbl where member_email=#{memberEmail}) order by tour_book_no desc)tbt)
+			where rnum between #{start} and #{end}
+	</select>
 </mapper>

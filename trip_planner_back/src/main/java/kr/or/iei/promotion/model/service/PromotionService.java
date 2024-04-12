@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.iei.promotion.model.dao.PromotionDao;
+import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -32,12 +33,12 @@ public class PromotionService {
 		return map;
 	}
 
-	public Map selectPromotionListLatest(int reqPage) {
+	public Map selectPromotionListRegion(int reqPage) {
 		int numPerPage = 3;
 		int pageNaviSize = 5;
 		int totalCount = promotionDao.totalCount();
 		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);	
-		List list = promotionDao.selectPromotionListLatest(pi);
+		List list = promotionDao.selectPromotionListRegion(pi);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("promotionList",list);
 		map.put("pi",pi);
@@ -67,4 +68,23 @@ public class PromotionService {
 		map.put("pi",pi);
 		return map;
 	}
+
+	public Promotion selectOnePromotion(int promotionNo) {
+		return promotionDao.selectOnePromotion(promotionNo);
+	}
+	
+	/*
+	public Map selectPromotionListSearch(int reqPage) {
+		int numPerPage = 3;
+		int pageNaviSize = 5;
+		int totalCount = promotionDao.totalSearchCount();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list = promotionDao.selectPromotionListSearch(pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("promotionList",list);
+		map.put("pi",pi);
+		return map;
+	}
+	*/
+	
 }

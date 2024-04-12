@@ -1,5 +1,6 @@
 package kr.or.iei.trip.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,19 @@ public class TripService {
 		return result;
 	}
 
-	public List<Trip> selectMyTripList(int reqPage, String memberEmail) {
+	public List<Trip> selectMyComingTripList(int reqPage, String memberEmail) {
 		int amount = 5;
 		int end = reqPage * amount;
 		int start = end - amount + 1;
-		List<Trip> tripList = tripDao.selectMyTripList(memberEmail, start, end);
+		List<Trip> tripList = tripDao.selectMyComingTripList(memberEmail, start, end);
+		return tripList;
+	}
+	
+	public List<Trip> selectMyPastTripList(int reqPage, String memberEmail) {
+		int amount = 5;
+		int end = reqPage * amount;
+		int start = end - amount + 1;
+		List<Trip> tripList = tripDao.selectMyPastTripList(memberEmail, start, end);
 		return tripList;
 	}
 
@@ -65,6 +74,7 @@ public class TripService {
 		int returnResult = 0;
 		int updateTdLength = 0; 
 		int updateTdResult = 0;
+//		ArrayList<TripPlace> updateTpList = new ArrayList<TripPlace>();
 		for(TripDetail td : trip.getTripDetailList()) {
 			//일정이 새로 추가됐을 경우(날짜를 늘리고 새 일정 추가)
 			if(td.getTripDetailNo() == 0) {
@@ -107,13 +117,14 @@ public class TripService {
 						if(tp.getTripDetailNo() == 0) {
 							System.out.println("기존 날짜에 장소가 새로 추가된 경우");
 							System.out.println(tp);
-//							insertTdLength++;
-//							//장소가 가진 detailNo가 0이기 때문에 td의 detailNo 부여
-//							tp.setTripDetailNo(td.getTripDetailNo());
-//							//장소 insert
-//							insertResult += tripDao.insertTripPlace(tp);			
+							insertTdLength++;
+							//장소가 가진 detailNo가 0이기 때문에 td의 detailNo 부여
+							tp.setTripDetailNo(td.getTripDetailNo());
+							//장소 insert
+							insertResult += tripDao.insertTripPlace(tp);
 						}
-//						else {//기존 날짜에 기존 장소가 변경된 경우
+						else {//기존 날짜에 기존 장소가 변경된 경우
+							System.out.println("기존 날짜에 기존 장소가 변경된 경우");
 //							//기존 장소가 삭제예정인 경우
 //							if(tp.getDelNo() == 1) {
 //								System.out.println("기존 장소가 삭제예정인 경우");
@@ -136,23 +147,31 @@ public class TripService {
 //								tpLength++;
 //								updateTpResult += tripDao.updateTripPlace1(tp);
 //							}
-//							//기존 일정을 줄여서 장소의 정보가 변경된 경우
-//							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {
-//								System.out.println();
-//								System.out.println("oldTripDay"+tp.getOldTripDay());
-//								System.out.println("tripday"+tp.getTripDay());
-//								System.out.println("tdTripDetailNO"+td.getTripDetailNo());
-//								tpLength++;
-//								int tpDeNo = tp.getTripDetailNo();
-//								tp.setTripDetailNo(td.getTripDetailNo());
-//								updateTpResult += tripDao.updateTripPlace2(tp);
-//							
-//								System.out.println("tpno"+tpDeNo);
-//								//줄어든 날짜는 tripDetail에서 지우기
+							//기존 일정을 줄여서 장소의 정보가 변경된 경우
+							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {
+								System.out.println("기존 일정을 줄여서 장소의 정보가 변경된 경우");
+								System.out.println("oldTripDay"+tp.getOldTripDay());
+								System.out.println("tripday"+tp.getTripDay());
+								System.out.println("tpTripDetailNo"+tp.getTripDetailNo());
+								System.out.println("tdTripDetailNO"+td.getTripDetailNo());
+								System.out.println("tpTripROute"+tp.getTripRoute());
+								System.out.println("tpOldTripROute"+tp.getOldTripRoute());
+								
+								tpLength++;
+
+								int tpDeNo = tp.getTripDetailNo();
+								
+								tp.setTripDetailNo(td.getTripDetailNo());
+								tp.setTripNo(td.getTripNo());
+								
+								tripDao.updateTripPlace2(tp);
+							
+								System.out.println("tpno"+tpDeNo);
+								//줄어든 날짜는 tripDetail에서 지우기
 //								tp.setTripDetailNo(tpDeNo);
 //								tripDao.deleteTripDetail(tp);
-//							}
-//						}
+							}
+						}
 					}
 //					//마지막에 전체 트립루트 싹 업데이트
 ////					for(TripPlace tp : td.getSelectPlaceList()) {
@@ -171,11 +190,11 @@ public class TripService {
 //				
 			}
 		}
-//		if(insertTdLength == insertResult) {
-//			returnResult = 1;
-//		}else {
-//			returnResult = -1;
-//		}
+		if(insertTdLength == insertResult) {
+			returnResult = 1;
+		}else {
+			returnResult = -1;
+		}
 //		if(tpLength == updateTpResult + 1) {
 //			returnResult = 1;
 //		}else {

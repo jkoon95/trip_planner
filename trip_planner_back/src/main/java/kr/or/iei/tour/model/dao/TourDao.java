@@ -8,6 +8,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dto.Tour;
+import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
 
@@ -72,5 +73,6 @@ public interface TourDao {
 
 	int deleteReview(int reviewNo);
 
+	List<TourBook> selectBookTourList(String memberEmail, int start, int end);
 	
 }

@@ -8,7 +8,10 @@ const MyBooks = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [bookInnsReqPage, setBookInnsReqPage] = useState(1);
   const [bookInnsList, setBookInnsList] = useState([]);
-  const [bookInnsBtnMoreShow, setBookInnsBtnMoreShow] = useState(true);
+  const [bookInnsBtnMoreShow, setBookInnsBtnMoreShow] = useState(false);
+  const [bookTourReqPage, setBookTourReqPage] = useState(1);
+  const [bookTourList, setBookTourList] = useState([]);
+  const [bookTourBtnMoreShow, setBookTourBtnMoreShow] = useState(false);
   const [tabs, setTabs] = useState([
     { tabName: "숙소", active: true },
     { tabName: "투어", active: false },
@@ -22,6 +25,7 @@ const MyBooks = () => {
     setTabs([...tabs]);
   }
 
+  // 숙소 예약 내역 불러오기
   useEffect(() => {
     axios
       .get(backServer + "/inn/bookInnsList/" + bookInnsReqPage)
@@ -32,6 +36,8 @@ const MyBooks = () => {
           setBookInnsList([...bookInnsList]);
           if(res.data.data.length < 5){
             setBookInnsBtnMoreShow(false);
+          }else{
+            setBookInnsBtnMoreShow(true);
           }
         }
       })
@@ -39,6 +45,27 @@ const MyBooks = () => {
         console.log(res);
       })
   }, [bookInnsReqPage]);
+
+  // 투어 예약 내역 불러오기
+  useEffect(() => {
+    axios
+      .get(backServer + "/tour/bookTourList/" + bookTourReqPage)
+      .then((res) => {
+        console.log(res.data.data);
+        if(res.data.message === "success"){
+          bookTourList.push(...res.data.data);
+          setBookTourList([...bookTourList]);
+          if(res.data.data.length < 5){
+            setBookTourBtnMoreShow(false);
+          }else{
+            setBookTourBtnMoreShow(true);
+          }
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+  }, [bookTourReqPage]);
   
   return(
     <div className="myBooks_wrap">
@@ -63,7 +90,7 @@ const MyBooks = () => {
                         <ul className="myBookInns_list">
                           {bookInnsList.map((item, i) => {
                             return(
-                              <BookListItem key={"myBookInns"+i} item={item} backServer={backServer} />
+                              <BookInnListItem key={"myBookInns"+i} item={item} backServer={backServer} />
                             );
                           })}
                         </ul>
@@ -76,7 +103,24 @@ const MyBooks = () => {
                         }
                       </>
                     ) : tab.tabName === "투어" ? (
-                      <h4>투어 예약 내역</h4>
+                      <>
+                        <h4 className="hidden">투어 예약 내역</h4>
+                        <ul className="myBookTour_list">
+                          {bookTourList.map((item, i) => {
+                            return(
+                              <BookTourListItem key={"myBookTour"+i} item={item} backServer={backServer} />
+                            );
+                          })}
+                        </ul>
+                        {
+                          bookTourBtnMoreShow ? (
+                            <div className="btn_area">
+                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setBookTourReqPage(bookTourReqPage+1)}} />
+                            </div>
+                          ) : ""
+                        }
+                      </>
+                      
                     ) : (
                       <h4>프로모션</h4>
                     )
@@ -91,7 +135,8 @@ const MyBooks = () => {
   );
 }
 
-const BookListItem = (props) => {
+// 숙소 예약 리스트 아이템
+const BookInnListItem = (props) => {
   const item = props.item;
   const backServer = props.backServer;
 
@@ -143,6 +188,61 @@ const BookListItem = (props) => {
             <div className="row">
               <div className="title">요청사항</div>
               <div className="cont">{item.guestWish}</div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </li>
+  )
+}
+
+// 투어 예약 리스트 아이템
+const BookTourListItem = (props) => {
+  const item = props.item;
+  const backServer = props.backServer;
+
+  return(
+    <li className="bookItem">
+      <Link to={"/mypage/"}>
+        <div className="item_top_wrap">
+          <div className="partnerName"><span className="badge orange">{item.tourTypeStr}</span> {item.tourName}</div>
+          <div className="badges">
+            <span className={item.bookStatusStr === "예약확정" ? "badge blue" : "badge red"}>{item.bookStatusStr}</span>
+            {
+              new Date(item.bookDate) > new Date() ? (
+                <span className="badge gray">이용완료</span>
+              ) : ""
+            }
+          </div>
+        </div>
+        <div className="item_contents_wrap">
+          <div className="item_thumbs">
+            {
+              item.tourImg !== "null" ? (
+                <img src={backServer+"/tour/thumbnail/"+item.tourImg} alt="상품 썸네일"></img>
+              ) : ""
+            }
+          </div>
+          <div className="item_details">
+            <div className="row">
+              <div className="title">예약 번호</div>
+              <div className="cont">{item.tourBookNo}</div>
+            </div>
+            <div className="row">
+              <div className="title">예약 인원</div>
+              <div className="cont">{item.bookGuest} 명</div>
+            </div>
+            <div className="row">
+              <div className="title">가격</div>
+              <div className="cont"><span>{item.bookFee}</span></div>
+            </div>
+            <div className="row">
+              <div className="title">이용 날짜</div>
+              <div className="cont">{item.bookDate}</div>
+            </div>
+            <div className="row">
+              <div className="title">예약자</div>
+              <div className="cont">{item.memberName}</div>
             </div>
           </div>
         </div>

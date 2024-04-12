@@ -104,7 +104,6 @@
 	<update id="updateTripPlace2">
 		update trip_place_tbl set trip_detail_no=#{tripDetailNo}, trip_route=#{tripRoute}, trip_todo=#{tripTodo}
 		where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_day=#{oldTripDay} and trip_no=#{tripNo})
-		and trip_route=#{oldTripRoute}
 	</update>
 	
 	<delete id="deleteTripDetail">

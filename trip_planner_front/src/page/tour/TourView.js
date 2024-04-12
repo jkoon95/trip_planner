@@ -37,7 +37,7 @@ const TourView = (props) => {
         setTour(tourList[0]);
         setTicket(ticketList[0]);
         setPartner(partner[0]);
-        console.log(partner);
+        // console.log(partner);
       })
       .catch((res) => {
         console.log(res);
@@ -95,6 +95,10 @@ const TourView = (props) => {
       text:
         "전화번호: " + partner.partnerTel + " 이메일: " + partner.memberEmail,
     });
+  };
+
+  const reviewSubmit = () => {
+    Swal.fire("안녕");
   };
 
   return (
@@ -310,24 +314,57 @@ const TourView = (props) => {
             <div className="tour-review-profile">
               <span className="material-icons">person</span>
             </div>
-            <div className="tour-review-star">
-              <Rating
-                name="simple-controlled"
-                value={reviewStar}
-                onChange={(event, newValue) => {
-                  setReviewStar(newValue);
-                }}
-              />
+            <div className="tour-review-input">
+              <div className="tour-review-star">
+                <Rating
+                  name="simple-controlled"
+                  value={reviewStar}
+                  onChange={(event, newValue) => {
+                    setReviewStar(newValue);
+                  }}
+                />
+              </div>
+              <div className="tour-review-text">
+                <input
+                  type="text"
+                  value={reviewText}
+                  onChange={(event) => {
+                    setReviewText(event.target.value);
+                  }}
+                />
+                <button
+                  className="btn_primary sm review-btn"
+                  onClick={reviewSubmit}
+                >
+                  등록
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="tour-review-list-wrap">
+            <div className="tour-review-profile">
+              <span className="material-icons">person</span>
             </div>
             <div className="tour-review-input">
-              <input
-                type="text"
-                value={reviewText}
-                onChange={(event) => {
-                  setReviewText(event.target.value);
-                }}
-              />
-              <button className="btn_primary md">등록</button>
+              <div className="tour-review-star">
+                <Rating
+                  name="simple-controlled"
+                  value={reviewStar}
+                  onChange={(event, newValue) => {
+                    setReviewStar(newValue);
+                  }}
+                />
+              </div>
+              <div className="tour-review-text">
+                <input
+                  type="text"
+                  value={reviewText}
+                  onChange={(event) => {
+                    setReviewText(event.target.value);
+                  }}
+                />
+                <button className="btn_primary sm review-btn">등록</button>
+              </div>
             </div>
           </div>
         </div>

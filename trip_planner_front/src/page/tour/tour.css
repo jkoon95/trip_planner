@@ -434,3 +434,38 @@
   margin-top: 5px;
   font-size: 18px;
 }
+
+/* 리뷰 */
+.tour-review-input-wrap {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #999;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.tour-review-input-wrap > .tour-review-profile > .material-icons {
+  font-size: 72px;
+  margin-right: 20px;
+  margin-top: 25px;
+}
+
+.tour-review-input-wrap > .tour-review-input {
+  margin-top: 10px;
+}
+.tour-review-input-wrap > .tour-review-input > .tour-review-text {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 5px 10px;
+  width: 800px;
+}
+.tour-review-input-wrap > .tour-review-input > .tour-review-text input {
+  width: 91.5%;
+  font-size: 16px;
+}
+.tour-review-input-wrap .review-btn {
+  height: 36px;
+}

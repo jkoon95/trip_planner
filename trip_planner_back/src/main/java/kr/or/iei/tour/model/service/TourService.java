@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.partner.model.dto.Partner;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dao.TourDao;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourTicket;
@@ -138,5 +139,19 @@ public class TourService {
 		return map;
 	}
 
+	@Transactional
+	public int insertReview(Review review, String memberEmail) {
+		int memberNo = tourDao.searchMember(memberEmail);
+		review.setMemberNo(memberNo);
+		return tourDao.insertReview(review);
+	}
+
+	public Map selectReviewList(int tourNo) {
+		List reviewList = tourDao.selectReviewList(tourNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("reviewList", reviewList);
+		return map;
+	}
+	
 	
 }

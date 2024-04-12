@@ -19,9 +19,9 @@ const TourView = (props) => {
   const tourNo = params.tourNo;
   const [tour, setTour] = useState({});
   const [ticket, setTicket] = useState({});
-  const [member, setMember] = useState(null);
   const [partner, setPartner] = useState({});
   const [reviewContent, setReviewContent] = useState("");
+  const [reviewList, setReviewList] = useState([]);
   const [quantity, setQuantity] = useState({
     adult: 0,
     youth: 0,
@@ -37,6 +37,16 @@ const TourView = (props) => {
         setTicket(ticketList[0]);
         setPartner(partner[0]);
         // console.log(partner);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+
+    axios
+      .get(backServer + "/tour/reviewList/" + tourNo)
+      .then((res) => {
+        setReviewList(res.data.data.reviewList);
+        console.log(res.data.data.reviewList);
       })
       .catch((res) => {
         console.log(res);
@@ -97,10 +107,17 @@ const TourView = (props) => {
   };
 
   const reviewSubmit = () => {
+    console.log(reviewStar);
     if (!isLogin) {
       Swal.fire({
         icon: "warning",
         title: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else if (reviewStar === null) {
+      Swal.fire({
+        icon: "warning",
+        title: "별점을 선택해주세요.",
         confirmButtonText: "닫기",
       });
     } else if (reviewContent === "") {
@@ -380,29 +397,32 @@ const TourView = (props) => {
             </div>
           </div>
           <div className="tour-review-list-wrap">
-            <div className="tour-review-profile">
-              <span className="material-icons">person</span>
-            </div>
-            <div className="tour-review-input">
-              <div className="tour-review-star">
-                <Rating
-                  name="simple-controlled"
-                  value={reviewStar}
-                  onChange={(event, newValue) => {
-                    setReviewStar(newValue);
-                  }}
-                />
+            {reviewList.map((review, index) => (
+              <div className="tour-reviewList-item" key={index}>
+                <div className="tour-reviewList-profile">
+                  <span className="material-icons">person</span>
+                </div>
+                <div className="tour-reviewList-content">
+                  <div className="tour-reviewList-header">
+                    <div className="tour-reviewList-star">
+                      <Rating value={review.reviewStar} readOnly />
+                    </div>
+                    <div className="tour-reviewList-nickName">
+                      {review.memberNickname}
+                    </div>
+                    <div className="tour-reviewList-date">
+                      {dayjs(review.reviewDate).format("YYYY-MM-DD")}
+                    </div>
+                  </div>
+                  <div className="tour-reviewList-text">
+                    {review.reviewContent}
+                  </div>
+                </div>
               </div>
-              <div className="tour-review-text">
-                <input
-                  type="text"
-                  value={reviewContent}
-                  onChange={(event) => {
-                    setReviewContent(event.target.value);
-                  }}
-                />
-              </div>
-            </div>
+            ))}
+          </div>
+          <div className="tour-review-more-btn">
+            <button className="btn_secondary md review-more-btn">더보기</button>
           </div>
         </div>
       </div>

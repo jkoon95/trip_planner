@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.iei.partner.model.dto.Partner;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.util.PageInfo;
@@ -57,5 +58,12 @@ public interface TourDao {
 	List viewTicket(int tourNo);
 
 	List selectPartner(int tourNo);
+
+	int searchMember(String memberEmail);
+
+	int insertReview(Review review);
+
+	List selectReviewList(int tourNo);
+
 	
 }

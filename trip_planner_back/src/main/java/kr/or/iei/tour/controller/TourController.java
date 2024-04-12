@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourTicket;
 import kr.or.iei.tour.model.service.TourService;
@@ -191,8 +192,23 @@ public class TourController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-//	@ModelAttribute Tour tour, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile intronail, @RequestAttribute String memberEmail) {
-//	@PostMapping(value="/review")
-//	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute )
+	@PostMapping(value="/review")
+	public ResponseEntity<ResponseDTO> insertReview(@ModelAttribute Review review, @RequestAttribute String memberEmail) {
+		int result = tourService.insertReview(review,memberEmail);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	@GetMapping(value="/reviewList/{tourNo}")
+	public ResponseEntity<ResponseDTO> viewReviewList(@PathVariable int tourNo){
+		Map map = tourService.selectReviewList(tourNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 	
 }

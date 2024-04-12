@@ -156,4 +156,19 @@
 	    JOIN TOUR_TBL T ON P.PARTNER_NO = T.PARTNER_NO
 	    WHERE T.TOUR_NO = #{tourNo}
 	</select>
+	<select id="searchMember" resultType="int">
+	    SELECT MEMBER_NO
+	    FROM MEMBER_TBL
+	    WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	<insert id="insertReview" parameterType="review">
+	    INSERT INTO REVIEW_TBL (REVIEW_NO, MEMBER_NO, REVIEW_TYPE, REVIEW_TITLE, REVIEW_CONTENT, REVIEW_STAR, REF_NO, REVIEW_DATE)
+	    VALUES (REVIEW_SEQ.nextval, #{memberNo}, 2, null, #{reviewContent}, #{reviewStar}, #{tourNo}, sysdate)
+	</insert>
+	<select id="selectReviewList" resultType="review">
+		SELECT review_no,member_nickname,review_content,review_star,ref_no,review_date
+		FROM review_tbl
+		join member_tbl using(member_no)
+		WHERE ref_no = #{tourNo} ORDER BY 1 DESC
+	</select>
 </mapper>

@@ -248,40 +248,50 @@
   height: 100%;
   border-radius: 15px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone {
   width: 650px;
   display: flex;
   flex-direction: column;
   height: 300px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > div {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > div {
   margin-bottom: 5px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-badge span {
+.tour-view-wrap
+  > .tour-view-top
+  > .tour-view-badge-zone
+  > .tour-view-badge
+  span {
   font-size: 11px;
   margin-right: 10px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-name {
+  display: inline-flex;
+  align-items: center;
   font-family: pt-b;
-  font-size: 1.8em;
+  font-size: 28px;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-name > img {
-  width: 24px;
-  height: 24px;
+.tour-view-wrap
+  > .tour-view-top
+  > .tour-view-badge-zone
+  > .tour-view-name
+  > img {
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   margin-left: 20px;
 }
 
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-type {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-type {
   font-family: pt-b;
   color: #666;
 }
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-price {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-price {
   font-family: pt-b;
   font-size: 26px;
 }
 
-.tour-view-wrap > .tour-view-top > .tour-view-info > .tour-view-guide {
+.tour-view-wrap > .tour-view-top > .tour-view-badge-zone > .tour-view-guide {
   width: 420px;
 }
 .tour-view-guide > .tour-view-guide-icon {
@@ -310,7 +320,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .tour-view-content-wrap > .tour-view-menu > .tour-view-menu-item {
   flex: 1;
@@ -326,13 +336,90 @@
 .tour-view-content-wrap > .tour-view-content {
   display: flex;
 }
+.tour-view-content-wrap > .tour-view-content-title > h4 {
+  margin-bottom: 0;
+  margin-top: 60px;
+}
+
 .tour-view-content-wrap > .tour-view-content > .tour-view-calendar {
+  margin-top: 20px;
+}
+.tour-view-calendar > .css-1rv8zyt-MuiStack-root {
   border: 1px solid #999;
   border-radius: 10px;
-  width: 330px;
   margin-left: 20px;
-  margin-right: 100px;
+  margin-right: 240px;
 }
-.tour-view-content-wrap > .tour-view-content > .tour-view-book-wrap {
-  flex: 1;
+
+.tour-view-book-wrap > .tour-view-book-title {
+  margin-bottom: 20px;
+}
+.tour-view-book-wrap > .tour-view-book-title > h3 {
+  margin-bottom: 12px;
+}
+
+.tour-view-book-wrap > .tour-view-book-title > .tour-view-book-date > span {
+  padding-left: 20px;
+  font-size: 1.1em;
+}
+
+.tour-view-book-wrap > .tour-view-book-title > .tour-view-book-ticket {
+  padding-left: 20px;
+  font-size: 1.05em;
+}
+
+.tour-view-book-title > .tour-view-book-ticket > .tour-ticket-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px; /* 각 입장권 타입 사이의 간격 조절 */
+}
+.tour-view-book-ticket > .tour-ticket-type > .tour-ticket-info {
+  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+  margin-right: 120px;
+}
+.tour-view-book-ticket > .tour-ticket-type > .tour-quantity-controls {
+  display: flex;
+  align-items: center;
+}
+.tour-quantity-controls .material-icons {
+  cursor: pointer;
+  margin: 0 10px; /* 각 컨트롤 아이콘 사이의 간격 조절 */
+}
+.tour-quantity-controls .tour-book-quantity {
+  width: 40px;
+  text-align: center;
+}
+
+.tour-view-book-wrap > .tour-book-btn-zone > button {
+  width: 400px;
+}
+
+/* 상품소개 */
+.tour-view-content-wrap > .tour-view-intro-wrap {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.tour-view-content-wrap > .tour-view-info-wrap {
+  margin-top: 20px;
+  display: flex;
+  padding-left: 60px;
+}
+.tour-view-content-wrap > .tour-view-info-wrap > .tour-info-zone {
+  width: 450px;
+  box-sizing: border-box;
+  margin-right: 20px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 7px 20px;
+  cursor: pointer;
+}
+.tour-view-info-wrap > .tour-info-zone > .tour-info-title {
+  color: #666;
+  font-size: 0.9em;
+}
+.tour-view-info-wrap > .tour-info-zone > .tour-info-detail {
+  margin-top: 10px;
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.inn.model.dao.InnDao;
+import kr.or.iei.inn.model.dto.BookInns;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.inn.model.dto.InnReservation;
@@ -17,6 +18,7 @@ import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
 import kr.or.iei.inn.model.dto.SelectInnList;
+import kr.or.iei.trip.model.dto.Trip;
 
 @Service
 public class InnService {
@@ -71,5 +73,12 @@ public class InnService {
 	public List selectInnList(SelectInnList selectInnList, String memberEmail) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public List<BookInns> selectBookInnsList(int bookInnsReqPage, String memberEmail) {
+		int amount = 5;
+		int end = bookInnsReqPage * amount;
+		int start = end - amount + 1;
+		List<BookInns> bookInnsList = innDao.selectBookInnsList(memberEmail, start, end);
+		return bookInnsList;
 	}
 }

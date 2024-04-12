@@ -16,10 +16,10 @@
 .myTrips_wrap .myTrips_list>li>a{display: block; padding: 23px 72px 23px 23px; border: 1px solid var(--line_02); border-radius: 8px; background-color: #fff; transition: all 0.2s;}
 .myTrips_wrap .myTrips_list>li>a:hover{background-color: #F2F2F2;}
 .myTrips_wrap .myTrips_list>li+li{margin-top: 20px;}
-.myTrips_wrap .myTrips_list>li .trip_info>.trip_title{margin-bottom: 4px; font-family: pt-b; font-size: 16px; font-weight: normal; line-height: 24px;}
-.myTrips_wrap .myTrips_list>li .trip_info>.trip_date{margin-bottom: 4px; color: var(--gray_05); font-family: pt-b; font-size: 14px; line-height: 21px;}
+.myTrips_wrap .myTrips_list>li .trip_info>.trip_title{margin-bottom: 8px; font-family: pt-b; font-size: 16px; font-weight: normal; line-height: 24px;}
+.myTrips_wrap .myTrips_list>li .trip_info>.trip_date{margin-bottom: 4px; color: var(--gray_05); font-size: 14px; line-height: 21px;}
 .myTrips_wrap .myTrips_list>li .trip_info>.btm_info{display: flex; gap: 16px; font-size: 14px; line-height: 21px;}
-.myTrips_wrap .myTrips_list>li .trip_info .trip_place_count{color: var(--gray_05); font-family: pt-b;}
+.myTrips_wrap .myTrips_list>li .trip_info .trip_place_count{color: var(--gray_02); font-family: pt-b;}
 .myTrips_wrap .myTrips_list>li .trip_info .book_inn{color: var(--gray_03); font-family: pt-b;}
 .myTrips_wrap .myTrips_list>li .trip_info .book_tour{position: relative; color: var(--gray_03); font-family: pt-b;}
 .myTrips_wrap .myTrips_list>li .trip_info .book_tour::before{content: ""; display: block; position: absolute; top: 4px; left: -8px; width: 1px; height: 12px; background-color: var(--line_02);}

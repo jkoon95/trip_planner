@@ -31,6 +31,8 @@ public class SecurityConfig {
 					.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
 					//보안설정 객체 생성
 					.build();
+		
+		
 	}
 	
 	

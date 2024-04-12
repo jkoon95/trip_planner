@@ -16,15 +16,25 @@ const TourView = (props) => {
   const [tour, setTour] = useState({});
   const [ticket, setTicket] = useState({});
   const [member, setMember] = useState(null);
+  const [partner, setPartner] = useState({});
+  const [quantity, setQuantity] = useState({
+    adult: 0,
+    youth: 0,
+    child: 0,
+  });
+  const [showPartner, setShowPartner] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
-        const { tourList, ticketList } = res.data.data;
+        const { tourList, ticketList, partner } = res.data.data;
         setTour(tourList[0]);
         setTicket(ticketList[0]);
+        setPartner(partner[0]);
+        console.log(partner.partnerName);
       })
       .catch((res) => {
         console.log(res);
@@ -60,6 +70,28 @@ const TourView = (props) => {
 
   const [startDate, setStartDate] = React.useState(dayjs());
 
+  const handleDecreaseQuantity = (type) => {
+    setQuantity((prevQuantity) => ({
+      ...prevQuantity,
+      [type]: Math.max(0, prevQuantity[type] - 1),
+    }));
+  };
+
+  const handleIncreaseQuantity = (type) => {
+    setQuantity((prevQuantity) => ({
+      ...prevQuantity,
+      [type]: prevQuantity[type] + 1,
+    }));
+  };
+
+  const handleModalOpen = () => {
+    // 모달을 열 때 특정 데이터를 가져와야 한다면 이곳에 추가로 처리합니다.
+    setShowPartner(true);
+  };
+  const handleModalClose = () => {
+    setShowPartner(false);
+  };
+
   return (
     <section className="contents">
       <div className="tour-view-prev" onClick={handleTitleClick}>
@@ -75,7 +107,7 @@ const TourView = (props) => {
               <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
             )}
           </div>
-          <div className="tour-view-info">
+          <div className="tour-view-badge-zone">
             <div className="tour-view-badge">
               <span className="badge gray">{tourTypeText}</span>
               <span className="badge gray">~ {salesPeriod}</span>
@@ -143,41 +175,146 @@ const TourView = (props) => {
               <div className="tour-view-book-title">
                 <h3>수량/인원</h3>
                 <div className="tour-view-book-ticket">
-                  <span>입장권 성인</span>
-                  <span>
-                    {ticket && ticket.ticketAdult
-                      ? ticket.ticketAdult.toLocaleString() + " 원"
-                      : "무료"}
-                  </span>
-                  <span class="material-icons">add_box</span>
-                  <span class="material-icons">indeterminate_check_box</span>
-                  <span>입장권 청소년</span>
-                  <span>
-                    {ticket && ticket.ticketYouth
-                      ? ticket.ticketYouth.toLocaleString() + " 원"
-                      : "무료"}
-                  </span>
-                  <span>입장권 어린이</span>
-                  <span>
-                    {ticket && ticket.ticketChild
-                      ? ticket.ticketChild.toLocaleString() + " 원"
-                      : "무료"}
-                  </span>
+                  <div className="tour-ticket-type">
+                    <div className="tour-ticket-info">
+                      <span>입장권 성인</span>
+                      <div>
+                        <span>
+                          {ticket && ticket.ticketAdult
+                            ? ticket.ticketAdult.toLocaleString() + " 원"
+                            : "무료"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="tour-quantity-controls">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("adult")}
+                      >
+                        indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.adult}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("adult")}
+                      >
+                        add_box
+                      </span>
+                    </div>
+                  </div>
+                  <div className="tour-ticket-type">
+                    <div className="tour-ticket-info">
+                      <span>입장권 청소년</span>
+                      <div>
+                        <span>
+                          {ticket && ticket.ticketYouth
+                            ? ticket.ticketYouth.toLocaleString() + " 원"
+                            : "무료"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="tour-quantity-controls">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("youth")}
+                      >
+                        indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.youth}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("youth")}
+                      >
+                        add_box
+                      </span>
+                    </div>
+                  </div>
+                  <div className="tour-ticket-type">
+                    <div className="tour-ticket-info">
+                      <span>입장권 어린이</span>
+                      <div>
+                        <span>
+                          {ticket && ticket.ticketChild
+                            ? ticket.ticketChild.toLocaleString() + " 원"
+                            : "무료"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="tour-quantity-controls">
+                      <span
+                        className="material-icons"
+                        onClick={() => handleDecreaseQuantity("child")}
+                      >
+                        indeterminate_check_box
+                      </span>
+                      <span className="tour-book-quantity">
+                        {quantity.child}
+                      </span>
+                      <span
+                        className="material-icons"
+                        onClick={() => handleIncreaseQuantity("child")}
+                      >
+                        add_box
+                      </span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div className="tour-book-btn-zone">
+                <button className="btn_primary md handle-book-btn">
+                  예약하기
+                </button>
               </div>
             </div>
           </div>
           <div className="tour-view-content-title">
             <h4>상품소개</h4>
           </div>
+          <div className="tour-view-intro-wrap">
+            <div className="tour-view-intronail">
+              {tour.tourIntro === null || tour.tourIntro === "null" ? (
+                <img src="/images/테마파크.jpg" />
+              ) : (
+                <img src={backServer + "/tour/intronail/" + tour.tourIntro} />
+              )}
+            </div>
+          </div>
           <div className="tour-view-content-title">
             <h4>이용정보</h4>
+          </div>
+          <div className="tour-view-info-wrap">
+            <div className="tour-info-zone" onClick={handleModalOpen}>
+              <div className="tour-info-title">판매자 정보를 확인하세요</div>
+              <div className="tour-info-detail">
+                {partner && partner.partnerName}
+              </div>
+            </div>
+            <div className="tour-info-zone">
+              <div className="tour-info-title">투어 주소</div>
+              <div className="tour-info-detail">{tour.tourAddr}</div>
+            </div>
           </div>
           <div className="tour-view-content-title">
             <h4>리뷰</h4>
           </div>
         </div>
       </div>
+      {showPartner && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleModalClose}>
+              &times;
+            </span>
+            <h2>판매자 정보</h2>
+            <p>판매자 이름: {partner && partner.partnerName}</p>
+            <p>판매자 전화번호: {partner && partner.partnerTel}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

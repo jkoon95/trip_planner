@@ -11,4 +11,26 @@
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
  	</select>
+ 	<select id="selectPromotionListLatest" resultType="promotion">
+ 	select * from
+	    (select rownum as rnum, b.*from
+	        (select * from promotion_tbl 
+	        	 order by promotion_no latest)b)
+	where rnum between #{start} and #{end}
+ 	</select>
+ 	<select id="selectPromotionListPrice" resultType="promotion">
+ 	select * from
+	    (select rownum as rnum, b.*from
+	        (select * from promotion_tbl 
+	        	 order by promotion_price asc)b)
+	where rnum between #{start} and #{end}
+ 	</select>
+ 	<select id="selectPromotionListDeadline" resultType="promotion">
+ 	select * from
+	    (select rownum as rnum, b.*from
+	        (select * from promotion_tbl 
+	        	 order by promotion_price asc)b)
+	where rnum between #{start} and #{end}
+ 	</select>
+ 	
 </mapper>

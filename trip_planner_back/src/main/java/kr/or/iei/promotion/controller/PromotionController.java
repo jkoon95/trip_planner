@@ -31,4 +31,24 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@GetMapping("/promotionList/latest/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectPromotionListLatest(@PathVariable int reqPage) {
+		Map map = promotionService.selectPromotionListLatest(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping("/promotionList/price/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectPromotionListPrice(@PathVariable int reqPage) {
+		Map map = promotionService.selectPromotionListPrice(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping("/promotionList/deadline/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectPromotionListDeadline(@PathVariable int reqPage) {
+		Map map = promotionService.selectPromotionListDeadline(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 }

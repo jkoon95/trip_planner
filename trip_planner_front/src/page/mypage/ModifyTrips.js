@@ -711,7 +711,7 @@ const ItemTripPlace = (props) => {
 
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
-    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1, tripDetailNo: tripDetailList[thisIndex].tripDetailNo});
+    tripDetailList[thisIndex].selectPlaceList.push({...place, tripDay: tripDays[thisIndex], delNo: -1, tripDetailNo: 0});
     setTripDetailList([...tripDetailList]);
     setOpenSearchWrap(false);
   }

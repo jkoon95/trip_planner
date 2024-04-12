@@ -150,7 +150,7 @@
 				            FROM room_tbl r 
 				            WHERE r.inn_no =inn.inn_no 
 				            AND rt.room_no=room_no) 
-				    AND  hashtag like #{hashTagItem}) > 0 
+				    AND hashtag like #{hashTagItem}) > 0 
 			</foreach>
 		</if>
 		<if test="option != null">

@@ -28,4 +28,6 @@ public interface PromotionDao {
 	*/
 
 	Promotion selectOnePromotion(int promotionNo);
+
+	List<Promotion> selectBookPromotionList(String memberEmail, int start, int end);
 }

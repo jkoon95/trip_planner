@@ -68,6 +68,7 @@ public class PromotionController {
 		List<Promotion> bookPromotionList = promotionService.selectBookPromotionList(bookPromotionReqPage, memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookPromotionList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 	/*
 	@GetMapping("/promotionList/search/{reqPage}")
 	public ResponseEntity<ResponseDTO> selectPromotionListSearch(@PathVariable int reqPage, @RequestParam String keyword){

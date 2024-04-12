@@ -39,11 +39,19 @@ public class TripService {
 		return result;
 	}
 
-	public List<Trip> selectMyTripList(int reqPage, String memberEmail) {
+	public List<Trip> selectMyComingTripList(int reqPage, String memberEmail) {
 		int amount = 5;
 		int end = reqPage * amount;
 		int start = end - amount + 1;
-		List<Trip> tripList = tripDao.selectMyTripList(memberEmail, start, end);
+		List<Trip> tripList = tripDao.selectMyComingTripList(memberEmail, start, end);
+		return tripList;
+	}
+	
+	public List<Trip> selectMyPastTripList(int reqPage, String memberEmail) {
+		int amount = 5;
+		int end = reqPage * amount;
+		int start = end - amount + 1;
+		List<Trip> tripList = tripDao.selectMyPastTripList(memberEmail, start, end);
 		return tripList;
 	}
 

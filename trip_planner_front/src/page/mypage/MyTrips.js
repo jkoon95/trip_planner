@@ -3,13 +3,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
-import BlogList from "../blog/BlogList";
 
 const MyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [reqPage, setReqPage] = useState(1);
-  const [tripList, setTripList] = useState([]);
-  const [btnMoreShow, setBtnMoreShow] = useState(true);
+  const [comingTripReqPage, setComingTripReqPage] = useState(1);
+  const [pastTripReqPage, setPastTripReqPage] = useState(1);
+  const [myBlogReqPage, setMyBlogReqPage] = useState(1);
+  const [comingTripList, setComingTripList] = useState([]);
+  const [pastTripList, setPastTripList] = useState([]);
+  const [myBlogList, setMyBlogList] = useState([]);
+  const [btnMoreShow1, setBtnMoreShow1] = useState(true);
+  const [btnMoreShow2, setBtnMoreShow2] = useState(true);
+  const [btnMoreShow3, setBtnMoreShow3] = useState(true);
   const [tabs, setTabs] = useState([
     { tabName: "다가오는 여행", active: true },
     { tabName: "지난 여행", active: false },
@@ -23,22 +28,63 @@ const MyTrips = () => {
     setTabs([...tabs]);
   }
 
+  // 다가오는 여행 리스트 조회
   useEffect(() => {
     axios
-      .get(backServer + "/trip/list/" + reqPage)
+      .get(backServer + "/trip/comingList/" + comingTripReqPage)
       .then((res) => {
-        tripList.push(...res.data.data);
-        setTripList([...tripList]);
-        if(res.data.data.length < 5){
-          setBtnMoreShow(false);
-        }
         console.log(res.data.data);
+
+        comingTripList.push(...res.data.data);
+        setComingTripList([...comingTripList]);
+
+        if(res.data.data.length < 5){
+          setBtnMoreShow1(false);
+        }
       })
       .catch((res) => {
         console.log(res);
       })
-  }, [reqPage]);
-  
+  }, [comingTripReqPage]);
+
+  // 지난 여행 리스트 조회
+  useEffect(() => {
+    axios
+      .get(backServer + "/trip/pastList/" + pastTripReqPage)
+      .then((res) => {
+        console.log(res.data.data);
+
+        pastTripList.push(...res.data.data);
+        setPastTripList([...pastTripList]);
+
+        if(res.data.data.length < 5){
+          setBtnMoreShow2(false);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+  }, [pastTripReqPage]);
+
+  // 내 블로그 리스트 조회
+  useEffect(() => {
+    axios
+      .get(backServer + "/blog/myBlogList/" + myBlogReqPage)
+      .then((res) => {
+        console.log(res.data.data);
+
+        myBlogList.push(...res.data.data);
+        setMyBlogList([...myBlogList]);
+
+        if(res.data.data.length < 6){
+          setBtnMoreShow3(false);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+  }, [myBlogReqPage]);
+
   return(
     <div className="myTrips_wrap">
       <h3 className="hidden">내 여행</h3>
@@ -68,24 +114,54 @@ const MyTrips = () => {
 
                         <h4>내가 만든 여행</h4>
                         <ul className="myTrips_list">
-                          {tripList.map((item, i) => {
+                          {comingTripList.map((item, i) => {
                             return(
                               <TripListItem key={"myTrips"+i} item={item} />
                             );
                           })}
                         </ul>
                         {
-                          btnMoreShow ? (
+                          btnMoreShow1 ? (
                             <div className="btn_area">
-                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setReqPage(reqPage+1)}} />
+                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setComingTripReqPage(comingTripReqPage+1)}} />
                             </div>
                           ) : ""
                         }
                       </>
                     ) : tab.tabName === "지난 여행" ? (
-                      <div>지난 여행</div>
+                      <>
+                        <ul className="myTrips_list">
+                          {pastTripList.map((item, i) => {
+                            return(
+                              <TripListItem key={"myTrips"+i} item={item} />
+                            );
+                          })}
+                        </ul>
+                        {
+                          btnMoreShow2 ? (
+                            <div className="btn_area">
+                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setPastTripReqPage(pastTripReqPage+1)}} />
+                            </div>
+                          ) : ""
+                        }
+                      </>
                     ) : (
-                      <BlogList />
+                      <>
+                        <ul className="myBlogs_list">
+                          {myBlogList.map((item, i) => {
+                            return(
+                              <BlogItem key={"myBlog"+i} item={item} backServer={backServer} />
+                            )
+                          })}
+                        </ul>
+                        {
+                          btnMoreShow3 ? (
+                            <div className="btn_area">
+                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setMyBlogReqPage(myBlogReqPage+1)}} />
+                            </div>
+                          ) : ""
+                        }
+                      </>
                     )
                   ) : ""
                 }
@@ -134,6 +210,27 @@ const TripListItem = (props) => {
       </div>
     </li>
   )
+}
+
+const BlogItem = (props) => {
+  const item = props.item;
+  const backServer = props.backServer;
+
+  return(
+    <li className="blogItem">
+      <Link to={"/mypage/"}>
+        <div className="blog_thumb">
+          {
+            item.blogThumbnail !== "null" ? (
+              <img src={backServer+"/blog/blogThumbnail/"+item.blogThumbnail} alt="블로그 썸네일"></img>
+            ) : ""
+          }  
+        </div>
+        <div className="blog_title">{item.blogTitle}</div>
+        <div className="blog_date">{item.blogDate}</div>
+      </Link>
+    </li>
+  );
 }
 
 export default MyTrips;

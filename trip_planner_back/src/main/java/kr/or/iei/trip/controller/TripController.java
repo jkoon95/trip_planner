@@ -102,14 +102,26 @@ public class TripController {
 		}
 	}
 	
-	@Operation(summary = "여행 일정 리스트 조회", description = "다가오는 여행/지난 여행 리스트 조회")
+	@Operation(summary = "여행 일정 리스트 조회", description = "다가오는 여행 리스트 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
 		@ApiResponse(responseCode = "500", description = "서버 에러")
 	})
-	@GetMapping(value="/list/{reqPage}")
-	public ResponseEntity<ResponseDTO> selectMyTripList(@PathVariable int reqPage, @RequestAttribute String memberEmail){
-		List<Trip> tripList = tripService.selectMyTripList(reqPage, memberEmail);
+	@GetMapping(value="/comingList/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectMyComingTripList(@PathVariable int reqPage, @RequestAttribute String memberEmail){
+		List<Trip> tripList = tripService.selectMyComingTripList(reqPage, memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tripList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@Operation(summary = "여행 일정 리스트 조회", description = "지난 여행 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping(value="/pastList/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectMyPastTripList(@PathVariable int reqPage, @RequestAttribute String memberEmail){
+		List<Trip> tripList = tripService.selectMyPastTripList(reqPage, memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", tripList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}

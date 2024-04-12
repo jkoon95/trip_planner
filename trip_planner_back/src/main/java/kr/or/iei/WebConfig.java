@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceHandler("/blog/blogThumbnail/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
 		registry
-		.addResourceHandler("/inn/innFile/**")
+		.addResourceHandler("/inn/innFileList/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
 		registry
 		.addResourceHandler("/tour/thumbnail/**","/tour/intronail/**")
@@ -52,7 +52,7 @@ public class WebConfig implements WebMvcConfigurer{
 				.addPathPatterns("/member/**","/blog/**","/tour/**","/inn/**","/trip/**", "/admin/**","/coupon/**")				
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
 						"/blog/list/*","/tour/thumbnail/*","/tour/intronail/","/tour","/tour/tourSearch","/tour/tourType","/tour/view/*"
-						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*","/inn/innFile/*");
+						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*","/inn/innFileList/*");
 		
 		//관리자
 		//registry.addInterceptor(adminInterceptor)

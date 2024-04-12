@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.promotion.model.service.PromotionService;
 
 @CrossOrigin("*")
@@ -31,9 +33,9 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@GetMapping("/promotionList/latest/{reqPage}")
-	public ResponseEntity<ResponseDTO> selectPromotionListLatest(@PathVariable int reqPage) {
-		Map map = promotionService.selectPromotionListLatest(reqPage);
+	@GetMapping("/promotionList/region/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectPromotionListRegion(@PathVariable int reqPage) {
+		Map map = promotionService.selectPromotionListRegion(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
@@ -49,6 +51,22 @@ public class PromotionController {
 	public ResponseEntity<ResponseDTO> selectPromotionListDeadline(@PathVariable int reqPage) {
 		Map map = promotionService.selectPromotionListDeadline(reqPage);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	/*
+	@GetMapping("/promotionList/search/{reqPage}")
+	public ResponseEntity<ResponseDTO> selectPromotionListSearch(@PathVariable int reqPage, @RequestParam String keyword){
+		Map map = promotionService.selectPromotionListSearch(reqPage);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	*/
+	
+	@GetMapping("/selectOnePromotion")
+	public ResponseEntity<ResponseDTO> selectOnePromotion(@PathVariable int promotionNo) {
+		Promotion promotion = promotionService.selectOnePromotion(promotionNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", promotion);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 }

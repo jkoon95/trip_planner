@@ -21,7 +21,7 @@
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
  	</select>
- 	<select id="selectPromotionListLatest" resultType="promotion">
+ 	<select id="selectPromotionListRegion" resultType="promotion">
  	select * from
 	    (select rownum as rnum, b.*from
 	        (select 
@@ -35,7 +35,7 @@
 	        	promotion_limit,
 	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
 	        from promotion_tbl 
-	        	 order by promotion_no latest)b)
+	        	 order by promotion_region desc)b)
 	where rnum between #{start} and #{end}
  	</select>
  	<select id="selectPromotionListPrice" resultType="promotion">
@@ -69,7 +69,29 @@
 	        	promotion_limit,
 	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
 	         from promotion_tbl 
-	        	 order by promotion_price asc)b)
+	        	 order by promotion_expired_date asc)b)
+	where rnum between #{start} and #{end}
+ 	</select>
+ 	
+ 	<select id="totalSearchCount" resultType="int">
+		select count(*) from promotion_tbl where promotion_name like '%'||#{keyword}||'%'
+	</select>
+ 	
+ 	<select id="selectPromotionListSearch" resultType="promotion">
+ 	select * from 
+	    (select rownum as rnum, b.*from
+	        (select 
+	        	promotion_no,
+	        	partner_no,
+	        	promotion_name,
+	        	promotion_img,
+	        	promotion_price,
+	        	promotion_intro,
+	        	promotion_region,
+	        	promotion_limit,
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        from promotion_tbl where promotion_name like '%'||#{keyword}||'%'
+	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
  	</select>
  	

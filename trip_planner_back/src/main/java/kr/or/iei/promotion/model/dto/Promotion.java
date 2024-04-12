@@ -20,4 +20,6 @@ public class Promotion {
 	private int promotionLimit;
 	private String promotionImg;
 	private String promotionExpiredDate;
+	private String partnerName;
+	private String partnerTel;
 }

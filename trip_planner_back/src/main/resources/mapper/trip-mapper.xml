@@ -122,7 +122,17 @@
 	</delete>
 	
 	<update id="updateTripRoute">
-		update trip_place_tbl set trip_route=#{tripRoute} where trip_detail_no=#{tripDetailNo} and trip_route=#{oldTripRoute}
+		declare 
+		begin
+		    delete from trip_place_tbl
+		    where trip_route=#{tripRoute} and trip_detail_no=#{tripDetailNo};
+		    update trip_place_tbl
+		    set trip_route=#{tripRoute}
+		    where trip_route=#{oldTripRoute} and trip_detail_no=#{tripDetailNo};
+		    insert into trip_place_tbl values(#{tripDetailNo}, #{tripRoute},
+			#{tripPlaceName}, #{tripPlaceCategory}, #{tripPlaceAddress},
+			#{tripPlacePhone}, #{tripPlaceLat}, #{tripPlaceLng}, #{tripTodo});
+		end;
 	</update>
 	
 </mapper>

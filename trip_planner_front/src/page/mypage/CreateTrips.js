@@ -267,7 +267,7 @@ const CreateTrips = (props) => {
           const mapRoute = new kakao.maps.CustomOverlay({
             map: map,
             position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-            content: "<div class='map_route'>"+(place.tripRoute+1)+"</div>",
+            content: "<div class='map_route'>"+(place.tripRoute)+"</div>",
             yAnchor: 1,
             zIndex: 3,
             clickable: true
@@ -544,10 +544,10 @@ const SetDayWrap = (props) => {
               if(item.delNo === 1){
                 item.tripRoute = -1
               }else{
-                item.tripRoute = index;
+                item.tripRoute = index+1;
+                item.delNo = -1;
               }
               item.tripDay = tripDetailItem.tripDay;
-              item.delNo = -1;
               return (
                 <ItemTripPlace key={"select" + index} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} />
               );

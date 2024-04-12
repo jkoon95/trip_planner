@@ -3,6 +3,8 @@
 .myBooks_tab .tab_btns{display: flex;}
 .myBooks_tab .tab_btns .tab_btn{flex: 1; display: block; border-radius: 16px 16px 0 0; background-color: #89CFF0; color: #fff; font-family: pt-b; font-size: 16px; line-height: 60px;}
 .myBooks_tab .tab_btns .tab_btn.active{background-color: #fff; color: #50B8EA;}
+.myBooks_tab .tab_btns .tab_btn.active+.tab_btn+.tab_btn{opacity: 0.8;}
+.myBooks_tab .tab_btns .tab_btn:first-child:not(.active){opacity: 0.8;}
 .myBooks_tab .tab_contents{min-height: 620px; padding: 24px 20px 40px 20px; background-color: #fff; border-radius: 0 0 16px 16px;}
 
 .myBook_list{display: flex; flex-direction: column; gap: 24px;}

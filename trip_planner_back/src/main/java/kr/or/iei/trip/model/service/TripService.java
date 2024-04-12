@@ -144,12 +144,12 @@ public class TripService {
 //								tpLength++;
 //								updateTpResult += tripDao.updateTripPlace1(tp);
 //							}
-							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
-								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
+							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != 0 && (tp.getOldTripRoute() != tp.getTripRoute())) {
+								System.out.println("순서 변경했을 때");
 								System.out.println(tp.getTripPlaceName()+"oldTripRoute: "+tp.getOldTripRoute());
 								System.out.println("tripRoute: "+tp.getTripRoute());
-//								tpLength++;
-//								updateTpResult += tripDao.updateTripPlace1(tp);
+								tpLength++;
+								updateTpResult += tripDao.updateTripRoute(tp);
 							}
 							//기존 일정을 줄여서 장소의 정보가 변경된 경우
 							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {

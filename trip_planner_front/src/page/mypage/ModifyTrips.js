@@ -58,17 +58,21 @@ const ModifyTrips = (props) => {
   useEffect(() => {
     axios.get(backServer + "/trip/view/" + tripNo)
     .then((res) => {
-      console.log(res.data.data);
-      setTripTitle(res.data.data.tripTitle);
-      setTripDetailList(res.data.data.tripDetailList);
-      setTripStartDate(dayjs(res.data.data.tripStartDate));
-      setTripEndDate(dayjs(res.data.data.tripEndDate));
-      setTrip(res.data.data);
+      if(res.data.message === "success"){
+        console.log(res.data.data);
+        setTripTitle(res.data.data.tripTitle);
+        setTripDetailList(res.data.data.tripDetailList);
+        setTripStartDate(dayjs(res.data.data.tripStartDate));
+        setTripEndDate(dayjs(res.data.data.tripEndDate));
+        setTrip(res.data.data);
+      }
     })
     .catch((res) => {
       console.log(res);
     })
+    console.log(tripDetailList);
   }, [])
+
 
   // 제목 수정
   useEffect(() => {
@@ -93,7 +97,7 @@ const ModifyTrips = (props) => {
   }
 
   // 여행 수정하기
-  const modifyTripsFunc = () => { 
+  const modifyTripsFunc = () => {
     setDatePicker1Disabled(!datePicker1Disabled);
     setDatePicker2Disabled(!datePicker2Disabled);
     setTripTitleInputDisabled(!tripTitleInputDisabled);
@@ -366,7 +370,7 @@ const ModifyTrips = (props) => {
           const mapRoute = new kakao.maps.CustomOverlay({
             map: map,
             position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-            content: "<div class='map_route color"+colorIndex+"'>"+(place.tripRoute+1)+"</div>",
+            content: "<div class='map_route color"+colorIndex+"'>"+(place.tripRoute)+"</div>",
             yAnchor: 1,
             zIndex: 3,
             clickable: true
@@ -408,7 +412,7 @@ const ModifyTrips = (props) => {
             path: linePath,
             strokeWeight: 5,
             strokeColor: '#E9511C',
-            strokeOpacity: 0.8,
+            strokeOpacity: 0.2,
             strokeStyle: 'dashed'
           });
 
@@ -717,7 +721,7 @@ const SetDayWrap = (props) => {
               if(item.delNo === 1){
                 item.tripRoute = -1
               }else{
-                item.tripRoute = index;
+                item.tripRoute = index+1;
                 item.delNo = -1;
               }
               item.tripDay = tripDetailItem.tripDay;

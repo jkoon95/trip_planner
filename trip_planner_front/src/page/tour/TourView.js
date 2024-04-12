@@ -32,8 +32,12 @@ const TourView = (props) => {
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [displayedReviewCount, setDisplayedReviewCount] = useState(5);
   const [member, setMember] = useState("");
+  const optionReservationRef = useRef(null);
+  const productIntroductionRef = useRef(null);
+  const usageInformationRef = useRef(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
@@ -268,6 +272,27 @@ const TourView = (props) => {
     });
   };
 
+  const getAverageReviewStar = () => {
+    if (reviewList.length === 0) {
+      return 0; // 리뷰가 없을 경우 평균 별점을 0으로 반환
+    }
+    const totalStars = reviewList.reduce(
+      (acc, review) => acc + review.reviewStar,
+      0
+    );
+    const averageStar = totalStars / reviewList.length;
+    return averageStar.toFixed(1); // 소수점 첫째 자리까지만 표시
+  };
+
+  const averageReviewStar = getAverageReviewStar();
+
+  const scrollToSection = (ref) => {
+    window.scrollTo({
+      top: ref.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section className="contents">
       <div className="tour-view-prev" onClick={handleTitleClick}>
@@ -296,7 +321,12 @@ const TourView = (props) => {
               {simpleTourAddr} {tourTypeText}
             </div>
             <div className="tour-view-star">
-              <span className="material-icons">star</span>
+              <Rating
+                name="average-rating"
+                value={parseFloat(averageReviewStar)}
+                readOnly
+              />
+              <div>{averageReviewStar}</div>
             </div>
             <div className="tour-view-price">
               {ticket && ticket.ticketAdult
@@ -321,11 +351,26 @@ const TourView = (props) => {
         </div>
         <div className="tour-view-content-wrap">
           <div className="tour-view-menu">
-            <div className="tour-view-menu-item">옵션예약</div>
-            <div className="tour-view-menu-item">상품소개</div>
-            <div className="tour-view-menu-item">이용정보</div>
+            <div
+              className="tour-view-menu-item"
+              onClick={() => scrollToSection(optionReservationRef)}
+            >
+              옵션예약
+            </div>
+            <div
+              className="tour-view-menu-item"
+              onClick={() => scrollToSection(productIntroductionRef)}
+            >
+              상품소개
+            </div>
+            <div
+              className="tour-view-menu-item"
+              onClick={() => scrollToSection(usageInformationRef)}
+            >
+              이용정보
+            </div>
           </div>
-          <div className="tour-view-content-title">
+          <div className="tour-view-content-title" ref={optionReservationRef}>
             <h4>옵션예약</h4>
           </div>
           <div className="tour-view-content">
@@ -447,7 +492,7 @@ const TourView = (props) => {
               </div>
             </div>
           </div>
-          <div className="tour-view-content-title">
+          <div className="tour-view-content-title" ref={productIntroductionRef}>
             <h4>상품소개</h4>
           </div>
           <div className="tour-view-intro-wrap">
@@ -459,7 +504,7 @@ const TourView = (props) => {
               )}
             </div>
           </div>
-          <div className="tour-view-content-title">
+          <div className="tour-view-content-title" ref={usageInformationRef}>
             <h4>이용정보</h4>
           </div>
           <div className="tour-view-info-wrap">

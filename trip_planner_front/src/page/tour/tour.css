@@ -556,3 +556,13 @@
   font-size: 24px; /* 아이콘 크기 설정 */
   line-height: 24px; /* 아이콘과 텍스트의 높이를 맞추기 위해 추가 */
 }
+
+/* 상단 별점 평균 */
+.tour-view-star {
+  display: flex;
+  align-items: center; /* 별점과 평균 별점을 세로 가운데 정렬 */
+}
+
+.tour-view-star > div {
+  margin-left: 10px; /* 별점과 평균 별점 사이의 간격 설정 */
+}

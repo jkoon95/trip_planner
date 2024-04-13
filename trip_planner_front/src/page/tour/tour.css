@@ -435,6 +435,11 @@
   font-size: 18px;
 }
 
+.tour-info-zone > .tour-info-detail > span.material-icons {
+  float: right; /* 아이콘을 오른쪽으로 정렬합니다. */
+  font-size: 27px; /* 아이콘의 크기를 조절합니다. */
+}
+
 /* 리뷰 */
 .tour-review-input-wrap {
   display: flex;
@@ -469,4 +474,95 @@
 }
 .tour-review-input-wrap .review-btn {
   height: 36px;
+}
+
+/* 리뷰 모음 */
+.tour-review-list-wrap {
+  margin-top: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.tour-review-list-wrap .tour-reviewList-item {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0;
+}
+
+.tour-review-list-wrap .tour-reviewList-item .tour-reviewList-profile {
+  flex-shrink: 0;
+  padding-left: 20px;
+  margin-right: 30px;
+}
+.tour-review-list-wrap .tour-reviewList-item .tour-reviewList-profile span {
+  display: flex; /* 아이콘을 flex 컨테이너로 만듭니다. */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  font-size: 60px;
+  color: #035e7b;
+}
+
+.tour-review-list-wrap .tour-reviewList-item .tour-reviewList-content {
+  flex-grow: 1;
+}
+
+.tour-reviewList-item .tour-reviewList-content .tour-reviewList-header {
+  display: flex;
+  align-items: center;
+}
+
+.tour-reviewList-content .tour-reviewList-header .tour-reviewList-nickName {
+  font-family: pt-b;
+  padding: 0px 10px;
+  border-right: 1px solid #666;
+  color: #035e7b;
+}
+
+.tour-reviewList-content .tour-reviewList-header .tour-reviewList-date {
+  color: #666;
+  padding: 0px 10px;
+}
+
+.tour-reviewList-content .tour-reviewList-star {
+  padding-right: 10px;
+  border-right: 1px solid #666;
+  height: 24px;
+}
+
+.tour-reviewList-content .tour-reviewList-text {
+  color: #1e1e1e;
+  padding: 5px 10px;
+}
+
+.tour-view-content-wrap .tour-review-more-btn {
+  margin-top: 60px;
+  text-align: center;
+  width: 100%;
+}
+.tour-view-content-wrap .tour-review-more-btn .review-more-btn {
+  width: 50%;
+}
+
+.tour-reviewList-header .tour-reviewList-modify {
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+.tour-reviewList-header .tour-reviewList-modify > span {
+  cursor: pointer;
+}
+.tour-reviewList-header .tour-reviewList-modify > span:first-child {
+  margin-right: 5px;
+  font-size: 24px; /* 아이콘 크기 설정 */
+  line-height: 24px; /* 아이콘과 텍스트의 높이를 맞추기 위해 추가 */
+}
+
+/* 상단 별점 평균 */
+.tour-view-star {
+  display: flex;
+  align-items: center; /* 별점과 평균 별점을 세로 가운데 정렬 */
+}
+
+.tour-view-star > div {
+  margin-left: 10px; /* 별점과 평균 별점 사이의 간격 설정 */
 }

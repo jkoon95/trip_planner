@@ -3,7 +3,6 @@ package kr.or.iei.review.model.dto;
 import org.apache.ibatis.type.Alias;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.or.iei.partner.model.dto.Partner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +22,7 @@ public class Review {
 	private int refNo;
 	private String reviewDate;
 	
+	private int tourNo;
+	private String memberNickname;
+
 }

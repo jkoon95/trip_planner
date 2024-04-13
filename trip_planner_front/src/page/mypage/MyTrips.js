@@ -218,7 +218,7 @@ const BlogItem = (props) => {
 
   return(
     <li className="blogItem">
-      <Link to={"/mypage/"}>
+      <Link to={"/blogView/"+item.blogNo}>
         <div className="blog_thumb">
           {
             item.blogThumbnail !== "null" ? (

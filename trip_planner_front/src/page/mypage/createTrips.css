@@ -31,8 +31,16 @@
 .createTrips_wrap .place_list{position: relative; display: flex; flex-direction: column; gap: 12px;}
 .createTrips_wrap .day_items_wrap{position: relative;}
 .createTrips_wrap .day_items_wrap::before{content: ''; display: block; position: absolute; width: 2px; top: 0; bottom: 0; left: 13px; background-color: rgba(233,81,28,0.2);}
+.createTrips_wrap .set_day_wrap:nth-of-type(1n) .day_items_wrap::before{background-color: rgba(253, 81, 137, 0.2);}
+.createTrips_wrap .set_day_wrap:nth-of-type(2n) .day_items_wrap::before{background-color: rgba(255, 205, 48, 0.2);}
+.createTrips_wrap .set_day_wrap:nth-of-type(3n) .day_items_wrap::before{background-color: rgba(37, 211, 202, 0.2);}
+.createTrips_wrap .set_day_wrap:nth-of-type(4n) .day_items_wrap::before{background-color: rgba(57, 174, 253, 0.2);}
 .createTrips_wrap .place_list>.item{display: flex; gap: 4px; justify-content: space-between;}
 .createTrips_wrap .place_list>.item .tripRoute_no{align-self: center; display: inline-block; width: 20px; height: 20px; margin: 0 4px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 12px; line-height: 20px; text-align: center; z-index: 10;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color1{background-color: #FD5189;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color2{background-color: #FFCD30;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color3{background-color: #25D3CA;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color4{background-color: #39AEFD;}
 .createTrips_wrap .place_list>.item.tripTodo .tripRoute_no{width: 8px; height: 8px; margin: 0 auto; font-size: 0;}
 .createTrips_wrap .place_list>.item .item_box{position: relative; flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px; padding: 15px 11px 15px 19px; border: 1px solid var(--line_03); border-radius: 8px;}
 .createTrips_wrap .place_list>.item .item_box>.btn_area{flex: 1;}
@@ -72,7 +80,11 @@
 .createTrips_wrap .search_wrap>.btn_close{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / contain;}
 
 /* 지도 */
-.createTrips_wrap>.map_area .map_route {position: relative; bottom: 43px; width: 24px; height: 24px; border-radius: 50%; background-color: var(--main_02); color: #fff; font-family: pt-b; font-size: 14px; line-height: 24px; text-align: center;}
+.createTrips_wrap>.map_area .map_route {position: relative; bottom: 43px; width: 24px; height: 24px; border-radius: 50%; color: #fff; font-family: pt-b; font-size: 14px; line-height: 24px; text-align: center;}
+.createTrips_wrap>.map_area .map_route.color1{background-color: #FD5189;}
+.createTrips_wrap>.map_area .map_route.color2{background-color: #FFCD30;}
+.createTrips_wrap>.map_area .map_route.color3{background-color: #25D3CA;}
+.createTrips_wrap>.map_area .map_route.color4{background-color: #39AEFD;}
 .createTrips_wrap .infoWindow{position: relative; bottom: 52px; left: 0; right: 0; display: flex; gap: 4px; justify-content: space-between; border: 1px solid var(--line_02); border-radius: 8px; background-color: #fff;}
 .createTrips_wrap .infoWindow::after{content: ''; display: block; position: absolute; bottom: -7px; left: calc(50% - 6px); transform: rotate(45deg); width: 12px; height: 12px; border: 1px solid var(--line_02); border-top: none; border-left: none; background-color: #fff;}
 .createTrips_wrap .infoWindow .item_box{position: relative; flex: 1; width: 280px; padding: 15px 19px;}

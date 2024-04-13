@@ -71,8 +71,8 @@ public class InnService {
 		return innDao.reservationInn(innReservation);
 	}
 	public List selectInnList(SelectInnList selectInnList, String memberEmail) {
-		// TODO Auto-generated method stub
-		return null;
+		List list = innDao.selectInnList(selectInnList);
+		return list;
 	}
 	public List<InnReservation> selectBookInnsList(int bookInnsReqPage, String memberEmail) {
 		int amount = 5;

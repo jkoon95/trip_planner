@@ -7,11 +7,14 @@ import "./myBooks.css";
 const MyBooks = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [bookInnsReqPage, setBookInnsReqPage] = useState(1);
-  const [bookInnsList, setBookInnsList] = useState([]);
-  const [bookInnsBtnMoreShow, setBookInnsBtnMoreShow] = useState(false);
   const [bookTourReqPage, setBookTourReqPage] = useState(1);
+  const [bookPromotionReqPage, setBookPromotionReqPage] = useState(1);
+  const [bookInnsList, setBookInnsList] = useState([]);
   const [bookTourList, setBookTourList] = useState([]);
-  const [bookTourBtnMoreShow, setBookTourBtnMoreShow] = useState(false);
+  const [bookPromotionList, setBookPromotionList] = useState([]);
+  const [btnMoreShow1, setBtnMoreShow1] = useState(false);
+  const [btnMoreShow2, setBtnMoreShow2] = useState(false);
+  const [btnMoreShow3, setBtnMoreShow3] = useState(false);
   const [tabs, setTabs] = useState([
     { tabName: "숙소", active: true },
     { tabName: "투어", active: false },
@@ -35,9 +38,9 @@ const MyBooks = () => {
           bookInnsList.push(...res.data.data);
           setBookInnsList([...bookInnsList]);
           if(res.data.data.length < 5){
-            setBookInnsBtnMoreShow(false);
+            setBtnMoreShow1(false);
           }else{
-            setBookInnsBtnMoreShow(true);
+            setBtnMoreShow1(true);
           }
         }
       })
@@ -56,9 +59,9 @@ const MyBooks = () => {
           bookTourList.push(...res.data.data);
           setBookTourList([...bookTourList]);
           if(res.data.data.length < 5){
-            setBookTourBtnMoreShow(false);
+            setBtnMoreShow2(false);
           }else{
-            setBookTourBtnMoreShow(true);
+            setBtnMoreShow2(true);
           }
         }
       })
@@ -66,6 +69,27 @@ const MyBooks = () => {
         console.log(res);
       })
   }, [bookTourReqPage]);
+
+  // 프로모션 예약 내역 불러오기
+  useEffect(() => {
+    axios
+      .get(backServer + "/promotion/bookPromotionList/" + bookPromotionReqPage)
+      .then((res) => {
+        console.log(res.data.data);
+        if(res.data.message === "success"){
+          bookPromotionList.push(...res.data.data);
+          setBookPromotionList([...bookPromotionList]);
+          if(res.data.data.length < 5){
+            setBtnMoreShow3(false);
+          }else{
+            setBtnMoreShow3(true);
+          }
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+  }, [bookPromotionReqPage]);
   
   return(
     <div className="myBooks_wrap">
@@ -87,7 +111,7 @@ const MyBooks = () => {
                     tab.tabName === "숙소" ? (
                       <>
                         <h4 className="hidden">숙소 예약 내역</h4>
-                        <ul className="myBookInns_list">
+                        <ul className="myBook_list">
                           {bookInnsList.map((item, i) => {
                             return(
                               <BookInnListItem key={"myBookInns"+i} item={item} backServer={backServer} />
@@ -95,7 +119,7 @@ const MyBooks = () => {
                           })}
                         </ul>
                         {
-                          bookInnsBtnMoreShow ? (
+                          btnMoreShow1 ? (
                             <div className="btn_area">
                               <Button class="btn_primary outline" text="더보기" clickEvent={() => {setBookInnsReqPage(bookInnsReqPage+1)}} />
                             </div>
@@ -105,7 +129,7 @@ const MyBooks = () => {
                     ) : tab.tabName === "투어" ? (
                       <>
                         <h4 className="hidden">투어 예약 내역</h4>
-                        <ul className="myBookTour_list">
+                        <ul className="myBook_list">
                           {bookTourList.map((item, i) => {
                             return(
                               <BookTourListItem key={"myBookTour"+i} item={item} backServer={backServer} />
@@ -113,16 +137,31 @@ const MyBooks = () => {
                           })}
                         </ul>
                         {
-                          bookTourBtnMoreShow ? (
+                          btnMoreShow2 ? (
                             <div className="btn_area">
                               <Button class="btn_primary outline" text="더보기" clickEvent={() => {setBookTourReqPage(bookTourReqPage+1)}} />
                             </div>
                           ) : ""
                         }
                       </>
-                      
                     ) : (
-                      <h4>프로모션</h4>
+                      <>
+                        <h4 className="hidden">프로모션 예약 내역</h4>
+                        <ul className="myBook_list promotion">
+                          {bookPromotionList.map((item, i) => {
+                            return(
+                              <BookPromotionListItem key={"myBookPromotion"+i} item={item} backServer={backServer} />
+                            );
+                          })}
+                        </ul>
+                        {
+                          btnMoreShow3 ? (
+                            <div className="btn_area">
+                              <Button class="btn_primary outline" text="더보기" clickEvent={() => {setBookPromotionReqPage(bookPromotionReqPage+1)}} />
+                            </div>
+                          ) : ""
+                        }
+                      </>
                     )
                   ) : ""
                 }
@@ -144,7 +183,7 @@ const BookInnListItem = (props) => {
     <li className="bookItem">
       <Link to={"/mypage/"}>
         <div className="item_top_wrap">
-          <div className="partnerName">{item.partnerName}</div>
+          <div className="item_name">{item.partnerName}</div>
           <div className="badges">
             {
               item.bookStatus === 1 ? (
@@ -205,7 +244,7 @@ const BookTourListItem = (props) => {
     <li className="bookItem">
       <Link to={"/mypage/"}>
         <div className="item_top_wrap">
-          <div className="partnerName"><span className="badge orange">{item.tourTypeStr}</span> {item.tourName}</div>
+          <div className="item_name"><span className="badge orange">{item.tourTypeStr}</span> {item.tourName}</div>
           <div className="badges">
             <span className={item.bookStatusStr === "예약확정" ? "badge blue" : "badge red"}>{item.bookStatusStr}</span>
             {
@@ -243,6 +282,52 @@ const BookTourListItem = (props) => {
             <div className="row">
               <div className="title">예약자</div>
               <div className="cont">{item.memberName}</div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </li>
+  )
+}
+
+// 프로모션 예약 리스트 아이템
+const BookPromotionListItem = (props) => {
+  const item = props.item;
+  const backServer = props.backServer;
+
+  return(
+    <li className="bookItem">
+      <Link to={"/mypage/"}>
+        <div className="item_top_wrap">
+          <div className="item_name"><span className="badge orange">{item.promotionType}</span> {item.promotionName}</div>
+          <div className="badges">
+            {
+              new Date(item.promotionExpiredDate) > new Date() ? (
+                <span className="badge gray">이용완료</span>
+              ) : ""
+            }
+          </div>
+        </div>
+        <div className="item_contents_wrap">
+          <div className="item_thumbs">
+            {
+              item.promotionImg !== "null" ? (
+                <img src={backServer+"/promotion/promotionThumbnail/"+item.promotionImg} alt="상품 썸네일"></img>
+              ) : ""
+            }
+          </div>
+          <div className="item_details">
+            <div className="row">
+              <div className="title">주문 번호</div>
+              <div className="cont">{item.orderNo}</div>
+            </div>
+            <div className="row">
+              <div className="title">가격</div>
+              <div className="cont"><span>{item.promotionPrice}</span></div>
+            </div>
+            <div className="row">
+              <div className="title">만료 기한</div>
+              <div className="cont">{item.promotioniExpiredDate}</div>
             </div>
           </div>
         </div>

@@ -126,27 +126,31 @@ public class TripService {
 						else {//기존 날짜에 기존 장소가 변경된 경우
 							System.out.println("기존 날짜에 기존 장소가 변경된 경우");
 //							//기존 장소가 삭제예정인 경우
-//							if(tp.getDelNo() == 1) {
-//								System.out.println("기존 장소가 삭제예정인 경우");
-//								System.out.println("service1 : "+tp.getDelNo()+"/"+tp.getOldTripRoute());
-//								tpLength++;
-//								System.out.println("delNo가 1이다");
-//								//tripDetailNo와 oldTripRoute번호로 지우기
-//								tp.setTripRoute(tp.getOldTripRoute());
-//								System.out.println("oldTripRoute와 : "+tp.getOldTripRoute());
-//								System.out.println("detailNo로 : "+tp.getTripDetailNo());
-//								updateTpResult += tripDao.deleteTripPlace(tp);
-//							}else if(tp.getDelNo() != 1 && (tp.getOldTripRoute() != -1 && tp.getOldTripRoute() != tp.getTripRoute()) && (td.getTripDetailNo() != tp.getTripDetailNo())) {
+							if(tp.getDelNo() == 1) {
+								System.out.println("기존 장소가 삭제예정인 경우");
+								System.out.println("service1 : "+tp.getDelNo()+"/"+tp.getOldTripRoute());
+								tpLength++;
+								System.out.println("delNo가 1이다");
+								//tripDetailNo와 oldTripRoute번호로 지우기
+								tp.setTripRoute(tp.getOldTripRoute());
+								System.out.println("oldTripRoute와 : "+tp.getOldTripRoute());
+								System.out.println("detailNo로 : "+tp.getTripDetailNo());
+								updateTpResult += tripDao.deleteTripPlace(tp);
+							}
+//							else if(tp.getDelNo() != 1 && (tp.getOldTripRoute() != -1 && tp.getOldTripRoute() != tp.getTripRoute()) && (td.getTripDetailNo() != tp.getTripDetailNo())) {
 //								System.out.println("진짜 무슨 일일까"+tp.getTripDetailNo());
 //								System.out.println("service2 : "+tp.getDelNo()+"/"+tp.getOldTripRoute());
 //								System.out.println("여기가 돈걸까..?");
 //								tpLength++;
 //								updateTpResult += tripDao.updateTripPlace1(tp);
-//							}else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != tp.getTripRoute()) {
-//								System.out.println("여기가 이제 평범하게 순서 변경하는 곳");
-//								tpLength++;
-//								updateTpResult += tripDao.updateTripPlace1(tp);
 //							}
+							else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != 0 && (tp.getOldTripRoute() != tp.getTripRoute())) {
+								System.out.println("순서 변경했을 때");
+								System.out.println(tp.getTripPlaceName()+"oldTripRoute: "+tp.getOldTripRoute());
+								System.out.println("tripRoute: "+tp.getTripRoute());
+								tpLength++;
+								updateTpResult += tripDao.updateTripRoute(tp);
+							}
 							//기존 일정을 줄여서 장소의 정보가 변경된 경우
 							if(tp.getOldTripDay() != null && (!tp.getOldTripDay().equals(tp.getTripDay()))) {
 								System.out.println("기존 일정을 줄여서 장소의 정보가 변경된 경우");

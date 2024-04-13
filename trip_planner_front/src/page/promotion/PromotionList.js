@@ -11,6 +11,11 @@ const PromotionList = () => {
   const [promotionList, setPromotionList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
+  const [keyword, setKeyword] = useState("");
+  const inputKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+
   useEffect(() => {
     axios
       .get(backServer + "/promotion/promotionList/" + reqPage)
@@ -26,9 +31,26 @@ const PromotionList = () => {
       });
   }, [reqPage]);
 
-  const latest = () => {
+  const search = () => {
     axios
-      .get(backServer + "/promotion/promotionList/latest/" + reqPage)
+      .get(backServer + "/promotion/promotionList/search/" + reqPage, {
+        params: { keyword: keyword },
+      })
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setPromotionList(res.data.data.promotionList);
+          setPageInfo(res.data.data.pi);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
+  const region = () => {
+    axios
+      .get(backServer + "/promotion/promotionList/region/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
           console.log(res.data);
@@ -73,12 +95,18 @@ const PromotionList = () => {
     <section className="contents promotion">
       <div className="input_wrap">
         <div className="input_item">
-          <input id="search" className="input" placeholder="...검색어 입력" />
-          <button className="btn_search" />
+          <input
+            id="search"
+            className="input"
+            placeholder="...검색어 입력"
+            value={keyword}
+            onChange={inputKeyword}
+          />
+          <button className="btn_search" onClick={search} />
         </div>
       </div>
       <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Button onClick={latest}>최신순</Button>
+        <Button onClick={region}>지역순</Button>
         <Button onClick={price}>가격순</Button>
         <Button onClick={deadline}>마감순</Button>
       </ButtonGroup>

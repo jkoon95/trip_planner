@@ -34,7 +34,7 @@ const ListSideMenu = (props) => {
   const buttonFunction = props.buttonFunction;
   const checkIn = props.checkIn;
   const checkOut = props.checkOut;
-
+  console.log(checkInDate, checkOutDate);
   //숙소리스트 페이지 작업을위한 reqPage state
   const [reqPage, setReqPage] = useState(1);
 
@@ -258,6 +258,8 @@ const ListSideMenu = (props) => {
             setCheckInDate={setCheckInDate}
             checkOutDate={checkOutDate}
             setCheckOutDate={setCheckOutDate}
+            checkIn={checkIn}
+            checkOut={checkOut}
           />
         </div>
         <div className="search-guest">
@@ -350,6 +352,8 @@ const DateWrap = (props) => {
   const setCheckInDate = props.setCheckInDate;
   const checkOutDate = props.checkOutDate;
   const setCheckOutDate = props.setCheckOutDate;
+  console.log(checkInDate);
+  console.log(checkOutDate);
   const changeCheckInDate = (newValue) => {
     setCheckInDate(newValue);
   };
@@ -365,16 +369,15 @@ const DateWrap = (props) => {
       <DemoContainer components={["DatePicker, DatePicker"]}>
         <DatePicker
           label="체크인"
-          defaultValue={dayjs(new Date())}
           format="YYYY-MM-DD"
-          value={checkInDate}
+          value={dayjs(checkInDate)}
           onChange={changeCheckInDate}
           disablePast
         />
         <DatePicker
           label="체크아웃"
           format="YYYY-MM-DD"
-          value={checkOutDate}
+          value={dayjs(checkOutDate)}
           onChange={changeCheckOutDate}
           disablePast
         />

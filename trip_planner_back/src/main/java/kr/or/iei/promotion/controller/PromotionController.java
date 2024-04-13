@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,8 +78,8 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	*/
-	
-	@GetMapping("/selectOnePromotion")
+
+	@PostMapping("/selectOnePromotion/{promotionNo}")
 	public ResponseEntity<ResponseDTO> selectOnePromotion(@PathVariable int promotionNo) {
 		Promotion promotion = promotionService.selectOnePromotion(promotionNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", promotion);

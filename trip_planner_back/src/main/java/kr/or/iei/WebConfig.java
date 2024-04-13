@@ -57,9 +57,6 @@ public class WebConfig implements WebMvcConfigurer{
 						"/blog/list/*","/tour/thumbnail/*","/tour/intronail/","/tour","/tour/tourSearch","/tour/tourType","/tour/view/*"
 						+ "*","/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*","/inn/innFileList/*","/inn/innFileRoomList/*");
 		
-		//관리자
-		//registry.addInterceptor(adminInterceptor)
-		//.addPathPatterns("/admin/**");
 	}
 	
 	@Bean

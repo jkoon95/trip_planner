@@ -38,7 +38,6 @@ const PromotionList = () => {
       })
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -53,7 +52,6 @@ const PromotionList = () => {
       .get(backServer + "/promotion/promotionList/region/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -160,3 +158,5 @@ const PromotionItem = (props) => {
 };
 
 export default PromotionList;
+
+const Loading = () => {};

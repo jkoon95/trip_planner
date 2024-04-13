@@ -39,12 +39,12 @@ const Header = (props) => {
     menuRef.current.classList.remove("active");
   });
   window.addEventListener("scroll", () => {
-    if(window.scrollY > 60){
+    if (window.scrollY > 60) {
       document.querySelector(".header").classList.add("line");
-    }else{
+    } else {
       document.querySelector(".header").classList.remove("line");
     }
-  })
+  });
   return (
     <header className="header">
       <div className="header_inner">
@@ -122,7 +122,7 @@ const HeaderNavi = (props) => {
                 <Link to="/tourList">투어 예약하기</Link>
               </li>
               <li>
-                <Link to="#">프로모션</Link>
+                <Link to="/promotion/promotionList">프로모션</Link>
               </li>
               <li>
                 <Link to="/blogList">블로그</Link>

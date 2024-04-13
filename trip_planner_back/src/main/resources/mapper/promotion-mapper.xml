@@ -16,7 +16,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        	from promotion_tbl 
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
@@ -33,7 +33,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        from promotion_tbl 
 	        	 order by promotion_region desc)b)
 	where rnum between #{start} and #{end}
@@ -50,7 +50,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        from promotion_tbl 
 	        	 order by promotion_price asc)b)
 	where rnum between #{start} and #{end}
@@ -67,7 +67,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	         from promotion_tbl 
 	        	 order by promotion_expired_date asc)b)
 	where rnum between #{start} and #{end}
@@ -89,11 +89,30 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate 
 	        from promotion_tbl where promotion_name like '%'||#{keyword}||'%'
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
  	</select>
+ 	
+ 	<select id="selectOnePromotion" resultType="promotion">
+ 		select 
+ 			promotion_no,
+ 			promotion_tbl.partner_no,
+ 			promotion_name,
+ 			promotion_intro,
+ 			promotion_region,
+ 			promotion_limit,
+ 			promotion_img,
+ 			to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate,
+ 			partner_name,
+ 			partner_tel
+ 			from promotion_tbl join partner_tbl 
+ 			on promotion_tbl.partner_no = partner_tbl.partner_no 
+ 			where promotion_no = #{promotionNo}
+ 	</select>
+ 	
+ 	
  	<select id="selectBookPromotionList">
  		select * from
 			(select rownum rnum, pt.* from

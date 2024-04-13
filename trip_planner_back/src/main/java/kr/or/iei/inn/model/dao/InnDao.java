@@ -42,4 +42,6 @@ public interface InnDao {
 
 	List selectInnFileDetail(int innNo);
 
+	List selectInnFileRoom(int innNo);
+
 }

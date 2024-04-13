@@ -87,4 +87,7 @@ public class InnService {
 	public List selectInnFileDetail(int innNo) {
 		return innDao.selectInnFileDetail(innNo);
 	}
+	public List selectInnFileRoom(int innNo) {
+		return innDao.selectInnFileRoom(innNo);
+	}
 }

@@ -331,8 +331,7 @@ blog-list-box {
   background-color: var(--main_02);
   color: #fff;
 }
-.comment-insert-box {
-}
+
 .comment-content-box input {
   width: 85%;
   float: left;

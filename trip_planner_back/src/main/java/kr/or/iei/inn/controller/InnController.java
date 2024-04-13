@@ -136,7 +136,8 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	//숙소상세페이지
+	//숙소상세페이지 시작
+	
 	@GetMapping("/detail/{innNo}")
 	public ResponseEntity<ResponseDTO> selectInnDetail(@PathVariable int innNo){
 		Inn inn = innService.selectInnDetail(innNo);
@@ -170,8 +171,22 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	@GetMapping("/innFileRoom/{innNo}")
+	public ResponseEntity<ResponseDTO> selectInnFileRoom(@PathVariable int innNo){
+		List innFileRoom = innService.selectInnFileRoom(innNo);
+		
+		if(innFileRoom != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", innFileRoom);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 	
-	//숙소상세페이지
+	//숙소상세페이지 끝
+	
+	
 	@PostMapping("/reservationInn")
 	public ResponseEntity<ResponseDTO> reservationInn(@ModelAttribute InnReservation innReservation, @RequestAttribute String memberEmail){
 		int memberNo = memberService.getMemberNo(memberEmail);

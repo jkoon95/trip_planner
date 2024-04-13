@@ -28,4 +28,8 @@ public class PartnerService {
 		SelectInnInfo si = partnerDao.selectInnInfo(r);
 		return si;
 	}
+
+	public String selectPartnerName(int partnerNo) {
+		return partnerDao.selectPartnerName(partnerNo);
+	}
 }

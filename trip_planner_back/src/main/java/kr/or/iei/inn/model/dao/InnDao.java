@@ -47,4 +47,5 @@ public interface InnDao {
 	
 	List selectInnList(SelectInnList selectInnList);
 
+
 }

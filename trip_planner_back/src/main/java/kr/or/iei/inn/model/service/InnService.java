@@ -89,5 +89,5 @@ public class InnService {
 	}
 	public List selectInnFileRoom(int innNo) {
 		return innDao.selectInnFileRoom(innNo);
-	}
+	}	
 }

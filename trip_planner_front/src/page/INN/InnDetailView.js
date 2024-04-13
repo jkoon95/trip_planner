@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.inLogin;
-  const [partnerNo] = useState(61);
+  const [partnerName, setPartnerName] = useState("");
   const [innNo] = useState(41);
   {
     /* params로 innNo 받기  */
@@ -62,15 +62,51 @@ const InnDetailView = (props) => {
         console.log(res);
       });
   }, []);
+  useEffect(() => {
+    if (inn.partnerNo) {
+      const partnerNo = inn.partnerNo;
+      axios
+        .get(backServer + "/inn/partnerName/" + partnerNo)
+        .then((res) => {
+          setPartnerName(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, [inn.partnerNo, setPartnerName]);
   return (
     <section className="contents detail-view">
       <div className="inn-detail-wrap">
         <div className="inn-detail-img">
-          {/* 숙소 파일경로 */}
+          <Swiper
+            className="inn_slide"
+            navigation={true}
+            pagination={true}
+            modules={[Navigation, Pagination, Autoplay]}
+            slidesPerView={1}
+            loop={true}
+            speed={600}
+            autoplay={{ delay: 1500, disableOnInteraction: false }}
+          >
+            {innFile.map((innFile, index) => (
+              <SwiperSlide key={"innFile" + index}>
+                <img
+                  src={backServer + "/inn/innFileList/" + innFile.innFilePath}
+                  alt={"InnFile " + index}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        {/* 숙소 파일경로 
           {innFile.map((innFile, index) => {
             return <InnFileItem key={"innFile" + index} innFile={innFile} />;
           })}
         </div>
+        <div>
+        */}
         <div>
           {inn.innType === 1 && <span>호텔</span>}
           {inn.innType === 2 && <span>리조트</span>}
@@ -78,7 +114,7 @@ const InnDetailView = (props) => {
           {inn.innType === 4 && <span>게스트하우스</span>}
         </div>
         <div className="inn-detail-top">
-          <div>제주 롯데호텔</div>
+          <div>{partnerName}</div>
           {/* 업체 상호명 */}
           <div>{inn.innAddr}</div> {/* 숙소 유형 */}
         </div>
@@ -162,7 +198,8 @@ const RoomItem = (props) => {
     </div>
   );
 };
-
+{
+  /*
 const InnFileItem = (props) => {
   const innFile = props.innFile;
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -172,7 +209,8 @@ const InnFileItem = (props) => {
     </div>
   );
 };
-
+*/
+}
 const InnFileRoomItem = (props) => {
   const innFileRoom = props.innFileRoom;
   const backServer = process.env.REACT_APP_BACK_SERVER;

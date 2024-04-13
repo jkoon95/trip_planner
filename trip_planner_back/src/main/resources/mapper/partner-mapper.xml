@@ -18,4 +18,9 @@
 	    (SELECT INN_FILEPATH FROM INN_FILE_TBL WHERE INN_FILE_NO = (SELECT MIN(INN_FILE_NO) FROM INN_FILE_TBL WHERE INN_NO=#{innNo})) INN_FILEPATH
 	FROM ROOM_TBL WHERE ROOM_NO=#{roomNo}
   </select>
+  <select id="selectPartnerName" resultType="string">
+  select PARTNER_NAME from PARTNER_TBL where partner_no=#{partnerNo}
+  
+  </select>
+  
 </mapper>

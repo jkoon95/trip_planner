@@ -183,6 +183,18 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	@GetMapping("/partnerName/{partnerNo}")
+	public ResponseEntity<ResponseDTO> selectPartnerName(@PathVariable int partnerNo){
+		String partnerName = partnerService.selectPartnerName(partnerNo);
+		System.out.println(partnerName);
+		if(partnerName != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", partnerName);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
 	
 	//숙소상세페이지 끝
 	

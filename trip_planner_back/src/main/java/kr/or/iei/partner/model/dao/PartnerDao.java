@@ -15,4 +15,6 @@ public interface PartnerDao {
 
 	SelectInnInfo selectInnInfo(Room r);
 
+	String selectPartnerName(int partnerNo);
+
 }

@@ -1,17 +1,19 @@
-import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import "./promotion.css";
 import Pagination from "../../component/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "../../component/FormFrm";
 
-const PromotionList = () => {
+const PromotionList = (props) => {
+  const member = props.member;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [promotionList, setPromotionList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
   const inputKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -38,7 +40,6 @@ const PromotionList = () => {
       })
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -53,7 +54,6 @@ const PromotionList = () => {
       .get(backServer + "/promotion/promotionList/region/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -91,6 +91,10 @@ const PromotionList = () => {
       });
   };
 
+  const applyPromotion = () => {
+    navigate("/promotion/applyPromotion");
+  };
+
   return (
     <section className="contents promotion">
       <div className="input_wrap">
@@ -124,6 +128,13 @@ const PromotionList = () => {
           setReqPage={setReqPage}
         />
       </div>
+      {member.memberType === 2 && (
+        <Button
+          class="btn_primary"
+          text="프로모션 신청"
+          clickEvent={applyPromotion}
+        />
+      )}
     </section>
   );
 };
@@ -160,3 +171,5 @@ const PromotionItem = (props) => {
 };
 
 export default PromotionList;
+
+const Loading = () => {};

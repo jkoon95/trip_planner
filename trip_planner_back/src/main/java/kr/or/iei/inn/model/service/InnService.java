@@ -92,5 +92,8 @@ public class InnService {
 	}
 	public List selectHashTag(int roomNo) {		
 		return innDao.selectHashTag(roomNo);
+	@Transactional
+	public int likeUpdate(int innNo, int memberNo) {
+		return innDao.likeUpdate(innNo, memberNo);
 	}	
 }

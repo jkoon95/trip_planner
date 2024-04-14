@@ -288,9 +288,26 @@ const TourView = (props) => {
 
   const scrollToSection = (ref) => {
     window.scrollTo({
-      top: ref.current.offsetTop,
+      top: ref.current.offsetTop - 100,
       behavior: "smooth",
     });
+  };
+
+  const handleBookTicket = () => {
+    if (quantity.adult === 0 && quantity.youth === 0 && quantity.child === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "구매 수량을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      navigate("/tour/book/" + tourNo, {
+        state: {
+          startDate: startDate,
+          quantity: quantity,
+        },
+      });
+    }
   };
 
   return (
@@ -486,7 +503,10 @@ const TourView = (props) => {
                 </div>
               </div>
               <div className="tour-book-btn-zone">
-                <button className="btn_primary md handle-book-btn">
+                <button
+                  className="btn_primary md handle-book-btn"
+                  onClick={handleBookTicket}
+                >
                   예약하기
                 </button>
               </div>

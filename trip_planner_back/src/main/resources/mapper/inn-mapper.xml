@@ -177,4 +177,8 @@
 		
 		
 	</select>
+	
+	<insert id="likeUpdate">
+		insert into like_tbl values(like_seq.nextval,#{memberNo},1,#{innNo})
+	</insert>
 </mapper>

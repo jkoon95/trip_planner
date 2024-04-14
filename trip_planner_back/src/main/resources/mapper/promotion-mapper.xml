@@ -16,7 +16,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        	from promotion_tbl 
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
@@ -33,7 +33,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        from promotion_tbl 
 	        	 order by promotion_region desc)b)
 	where rnum between #{start} and #{end}
@@ -50,7 +50,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	        from promotion_tbl 
 	        	 order by promotion_price asc)b)
 	where rnum between #{start} and #{end}
@@ -67,7 +67,7 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate
 	         from promotion_tbl 
 	        	 order by promotion_expired_date asc)b)
 	where rnum between #{start} and #{end}
@@ -89,26 +89,57 @@
 	        	promotion_intro,
 	        	promotion_region,
 	        	promotion_limit,
-	        	to_char(promotion_expired_date,'YYYY-MM-DD') 
+	        	to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate 
 	        from promotion_tbl where promotion_name like '%'||#{keyword}||'%'
 	        	 order by promotion_no desc)b)
 	where rnum between #{start} and #{end}
  	</select>
+ 	
+ 	<select id="selectOnePromotion" resultType="promotion">
+ 		select 
+ 			promotion_no,
+ 			promotion_tbl.partner_no,
+ 			promotion_name,
+ 			promotion_intro,
+ 			promotion_price,
+ 			promotion_region,
+ 			promotion_limit,
+ 			promotion_img,
+ 			to_char(promotion_expired_date,'YYYY-MM-DD') as promotionExpiredDate,
+ 			partner_name,
+ 			partner_tel
+ 			from promotion_tbl join partner_tbl 
+ 			on promotion_tbl.partner_no = partner_tbl.partner_no 
+ 			where promotion_no = #{promotionNo}
+ 	</select>
+ 	
+ 	
  	<select id="selectBookPromotionList">
  		select * from
-			(select rownum rnum, pt.* from
-			(select promotion_no, promotion_name, promotion_expired_date, promotion_img,
-			(select order_no from promotion_order_tbl where promotion_no=p.promotion_no) order_no,
-			(select
-			    case
-			        when partner_type=1
-			        then '숙소'
-			        when partner_type=2
-			        then '투어'
-			    end
-			from partner_tbl where partner_no = p.partner_no) promotion_type
-			from promotion_tbl p
-			where promotion_no in (select promotion_no from promotion_order_tbl where member_no in (select member_no from member_tbl where member_email=#{memberEmail}))order by promotion_expired_date desc)pt)
-			where rnum between #{start} and #{end}
+		(select rownum rnum, pt.* from (select order_no, promotion_no, promotion_name, promotion_img, promotion_price, promotion_intro, promotion_region, to_char(promotion_expired_date, 'yyyy-mm-dd') promotion_expired_date,
+		(select
+		    case
+		        when partner_type=1
+		        then '숙소'
+		        when partner_type=2
+		        then '투어'
+		    end
+		from partner_tbl where partner_no = p.partner_no) promotion_type
+		from promotion_order_tbl join promotion_tbl p using(promotion_no) where member_no in (select member_no from member_tbl where member_email=#{memberEmail}) order by promotion_expired_date, order_no desc)pt)
+		where rnum between #{start} and #{end}
  	</select>
+ 	
+ 	<select id="checkRemainingSeat" resultType="int">
+ 		SELECT (promotion_limit - (
+        SELECT SUM(promotion_participants) 
+        FROM promotion_order_tbl 
+        WHERE promotion_no = #{promotionNo}
+    )) 
+    FROM promotion_tbl 
+    WHERE promotion_no = #{promotionNo}
+ 	</select>
+ 	
+ 	<insert id="purchasePromotion">
+ 		insert into promotion_order_tbl values (promotion_order_seq.nextval,#{memberNo},#{promotionNo},#{seat})
+ 	</insert>
 </mapper>

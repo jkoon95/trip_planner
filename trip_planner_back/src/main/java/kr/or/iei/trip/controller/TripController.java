@@ -233,7 +233,8 @@ public class TripController {
 			tripDetailList.add(td);
 		}
 		trip.setTripDetailList(tripDetailList);
-		System.out.println("trip!!!!!!!"+trip);
+//		System.out.println("trip!!!!!!!"+trip);
+//		return null;		
 		int result = tripService.updateTripDetail(trip);
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);

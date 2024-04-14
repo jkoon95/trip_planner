@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -255,4 +256,18 @@ public class InnController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookInnsList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
+	
+	@PostMapping("/likeUpdate/{innNo}")
+	public ResponseEntity<ResponseDTO> likeUpdate(@PathVariable int innNo, @RequestAttribute String memberEmail){
+		int memberNo = memberService.getMemberNo(memberEmail);
+		int result = innService.likeUpdate(innNo, memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
 }

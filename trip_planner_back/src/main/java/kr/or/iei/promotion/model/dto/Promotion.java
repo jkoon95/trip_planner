@@ -25,4 +25,5 @@ public class Promotion {
 	private int orderNo;
 	private String partnerName;
 	private String partnerTel;
+	private int remaingSeat;
 }

@@ -130,16 +130,20 @@ const MyCouponsListItem = (props) => {
           {
             item.couponStatusStr === "사용가능" ? (
               <div className="coupon_status">
-                <span className="status">{item.couponStatusStr}</span>
+                <div className="inner">
+                  <span className="status">{item.couponStatusStr}</span>
+                </div>
               </div>
             ) : item.couponStatusStr === "사용불가" (
               <div className="coupon_status">
-                <span className="status">{item.couponStatusStr}</span>
-                {
-                  item.expiredDate < new Date() ? (
-                    <span className="status">기간 만료</span>
-                  ) : ""
-                }
+                <div className="inner">
+                  <span className="status">{item.couponStatusStr}</span>
+                  {
+                    item.expiredDate < new Date() ? (
+                      <span className="status">기간 만료</span>
+                    ) : ""
+                  }
+                </div>
               </div>
             )
           }

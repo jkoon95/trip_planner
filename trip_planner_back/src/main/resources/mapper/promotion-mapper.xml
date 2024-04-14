@@ -101,6 +101,7 @@
  			promotion_tbl.partner_no,
  			promotion_name,
  			promotion_intro,
+ 			promotion_price,
  			promotion_region,
  			promotion_limit,
  			promotion_img,

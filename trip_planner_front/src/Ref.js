@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button, Input } from "./component/FormFrm";
+import { Button, Input, Textarea } from "./component/FormFrm";
 import "./ref.css";
 import Modal from "./component/Modal";
 
@@ -7,6 +7,7 @@ const Ref = () => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
+  const [textarea, setTextarea] = useState("");
   const [inputDisabled, setInputDisabled] = useState(true);
   const [inputReadOnly, setInputReadOnly] = useState(true);
 
@@ -190,6 +191,9 @@ const Ref = () => {
             />
           </div>
         </div>
+
+        <h4>textarea</h4>
+        <Textarea data={textarea} setData={setTextarea} placeholder="플레이스 홀더" />
       </section>
 
       <h3>badge</h3>

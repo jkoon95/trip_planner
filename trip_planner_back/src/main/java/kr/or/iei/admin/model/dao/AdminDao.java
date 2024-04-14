@@ -29,5 +29,6 @@ public interface AdminDao {
 
 	List selectPartnerList(PageInfo pi);
 
-
+	List<CouponList> selectMyCouponList(String memberEmail, int couponRange, int start, int end);
+	
 }

@@ -230,15 +230,4 @@ public class InnController {
 		}
 	}
 	
-	@Operation(summary = "내 숙소 예약 리스트 조회", description = "내 숙소 예약 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
-	})
-	@GetMapping("/bookInnsList/{bookInnsReqPage}")
-	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookInnsReqPage, @RequestAttribute String memberEmail){
-		List<InnReservation> bookInnsList = innService.selectBookInnsList(bookInnsReqPage, memberEmail);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookInnsList);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}
 }

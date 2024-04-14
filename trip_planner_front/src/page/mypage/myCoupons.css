@@ -1,0 +1,35 @@
+.myCoupons_wrap{padding: 24px; border-radius: 30px; background-color: var(--main_03);}
+.myCoupons_wrap>.title_area{display: flex; justify-content: space-between; align-items: center;}
+.myCoupons_wrap>.title_area>h3{display: inline-block; width: calc(100% / 3); margin-bottom: 0; border-radius: 16px 16px 0 0; background-color: #fff; font-family: pt-b; font-size: 16px; line-height: 60px; text-align: center;}
+.myCoupons_wrap .css-1869usk-MuiFormControl-root{margin: 0;}
+.myCoupons_wrap .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{background-color: #fff;}
+.myCoupons_wrap .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{font-family: pt-r;}
+.myCoupons_wrap>.myCoupons_content{min-height: 680px; padding: 24px 20px 40px 20px; background-color: #fff; border-radius: 0 16px 16px 16px;}
+.myCoupons_wrap>.myCoupons_content .item_top_wrap{display: flex;}
+.myCoupons_list{display: flex; flex-wrap: wrap; gap: 20px;}
+.myCoupons_list>li{width: calc(50% - 10px);}
+.myCoupons_list .couponItem{display: flex; box-shadow: 0 7px 20px rgba(0,0,0, 0.12);}
+.myCoupons_list .couponItem.disabled{opacity: 0.4;}
+.myCoupons_list .couponItem .item_top_wrap{display: flex; justify-content: space-between; align-items: center; gap: 8px;}
+.myCoupons_list .couponItem .item_top_wrap .badge{min-width: 64px; margin-top: -2px; padding: 0 8px; color: #fff; line-height: 24px;}
+.myCoupons_list .couponItem .item_top_wrap .badge.type1{background-color: #FD5189;}
+.myCoupons_list .couponItem .item_top_wrap .badge.type2{background-color: #FFCD30;}
+.myCoupons_list .couponItem .item_top_wrap .badge.type3{background-color: #25D3CA;}
+.myCoupons_list .couponItem .item_top_wrap .badge.type4{background-color: #39AEFD;}
+.myCoupons_list .couponItem .couponNo{font-family: pt-eb; font-size: 14px; line-height: 1.5;}
+.myCoupons_list .couponItem .coupon_info{position: relative; flex-grow: 1; padding: 20px 0; border-right: 1px dashed var(--line_02);}
+.myCoupons_list .couponItem .coupon_info::before{content: ''; position: absolute; top: -24px; right: -24px; width: 24px; height: 24px; border: 12px solid #fff; border-radius: 50%; background-color: transparent; clip: rect(24px, 24px, auto, auto); box-sizing: content-box;}
+.myCoupons_list .couponItem .coupon_info>.inner{width: calc(100% + 24px);}
+.myCoupons_list .couponItem .item_name{margin-top: 8px; font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.myCoupons_list .couponItem .discount{display: flex; align-items: flex-end; gap: 2px; font-family: pt-eb; font-size: 36px; line-height: 48px;}
+.myCoupons_list .couponItem .discount>span{font-family: pt-b; font-size: 20px; line-height: 48px;}
+.myCoupons_list .couponItem .expiredDate{color: var(--gray_05); font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.myCoupons_list .couponItem .coupon_status{display: flex; flex-direction: column; justify-content: center; align-items: center; width: 30%; max-width: 120px; padding: 12px; background-color: rgba(0, 92, 170, 0.8);}
+.myCoupons_list .couponItem .coupon_status>.status{color: #fff; font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.myCoupons_list .couponItem.disabled .coupon_status{background-color: rgba(0, 0, 0, 0.2);}
+
+
+.createTrips_wrap .place_list>.item .tripRoute_no.color1{background-color: #FD5189;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color2{background-color: #FFCD30;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color3{background-color: #25D3CA;}
+.createTrips_wrap .place_list>.item .tripRoute_no.color4{background-color: #39AEFD;}

@@ -45,5 +45,19 @@
 	        	 order by partner_no desc)b)
 	where rnum between #{start} and #{end}
  </select>
+ 
+ <select id="selectMyCouponList" resultType="couponList">
+ 	select * from
+ 	(select rownum rnum, c.* from (select coupon_no, case when coupon_status=1 then '사용가능' when coupon_status=2 then '사용불가' when coupon_status=3 then '사용완료' end coupon_status_str, issue_date,
+	coupon_name, case when coupon_range=1 then '숙소' when coupon_range=2 then '투어' when coupon_range=3 then '프로모션' when coupon_range=4 then '종합' end coupon_range_str, discount_rate, discount_amount, to_char(expired_date, 'yyyy-mm-dd') expired_date
+	from coupon_tbl join coupon_list_tbl using(coupon_no)
+	where member_no in (select member_no from member_tbl where member_email=#{memberEmail}) 
+	<if test="couponRange != 0">
+		and coupon_range in #{couponRange}
+	</if>
+	order by coupon_status, expired_date)c) where rnum between #{start} and #{end}
+ </select>
+ 
+ 
 
 </mapper>

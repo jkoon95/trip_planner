@@ -250,18 +250,4 @@ public class TourController {
 		}
 	}
 	
-	
-	
-	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
-	})
-	@GetMapping("/bookTourList/{bookTourReqPage}")
-	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookTourReqPage, @RequestAttribute String memberEmail){
-		List<TourBook> bookTourList = tourService.selectBookTourList(bookTourReqPage, memberEmail);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookTourList);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}
-	
 }

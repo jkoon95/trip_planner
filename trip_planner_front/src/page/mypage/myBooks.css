@@ -7,7 +7,7 @@
 .myBooks_tab .tab_btns .tab_btn:first-child:not(.active){opacity: 0.8;}
 .myBooks_tab .tab_contents{min-height: 620px; padding: 24px 20px 40px 20px; background-color: #fff; border-radius: 0 0 16px 16px;}
 
-.myBook_list{display: flex; flex-direction: column; gap: 24px;}
+.myBook_list{display: flex; flex-direction: column; gap: 20px;}
 .myBook_list>.bookItem{padding: 24px 24px 36px 24px; border-radius: 12px; border: 1px solid var(--line_03);}
 .myBook_list>.bookItem>a{display: block;}
 .myBook_list>.bookItem .item_top_wrap{display: flex; justify-content: space-between; padding-bottom: 16px;}

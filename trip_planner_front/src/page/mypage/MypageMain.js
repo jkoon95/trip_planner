@@ -109,7 +109,7 @@ const MypageMain = (props) => {
   const [menus, setMenus] = useState([
     { url: "myBooks", text: "내 예약", active: true },
     { url: "myTrips", text: "내 여행", active: false },
-    { url: "myCoupons", text: "쿠폰함", active: false },
+    { url: "myCoupons", text: "내 쿠폰함", active: false },
     { url: "myLikes", text: "찜 리스트", active: false },
     { url: "myReviews", text: "내 리뷰 보기", active: false },
     { url: "myInfo", text: "내 정보 수정", active: false },

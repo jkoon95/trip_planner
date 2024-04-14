@@ -61,17 +61,6 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@Operation(summary = "내 프로모션 예약 리스트 조회", description = "내 프로모션 예약 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
-	})
-	@GetMapping("/bookPromotionList/{bookPromotionReqPage}")
-	public ResponseEntity<ResponseDTO> selectBookPromotionList(@PathVariable int bookPromotionReqPage, @RequestAttribute String memberEmail){
-		List<Promotion> bookPromotionList = promotionService.selectBookPromotionList(bookPromotionReqPage, memberEmail);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookPromotionList);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}
 	/*
 	@GetMapping("/promotionList/search/{reqPage}")
 	public ResponseEntity<ResponseDTO> selectPromotionListSearch(@PathVariable int reqPage, @RequestParam String keyword){

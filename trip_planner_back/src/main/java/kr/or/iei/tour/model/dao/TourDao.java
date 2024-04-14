@@ -76,5 +76,9 @@ public interface TourDao {
 	List<TourBook> selectBookTourList(String memberEmail, int start, int end);
 
 	int insertBook(TourBook tourBook);
+
+	int totalBookCount(int memberNo);
+
+	List selectTourBook(int start, int end, int memberNo);
 	
 }

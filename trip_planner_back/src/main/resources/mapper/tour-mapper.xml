@@ -218,5 +218,34 @@
 	    INSERT INTO TOUR_BOOK_TBL
 	    VALUES (TOUR_BOOK_SEQ.NEXTVAL, #{tourNo}, #{memberNo}, #{bookDate}, #{bookGuest}, #{bookFee}, 1)
 	</insert>
-	
+	<select id="totalBookCount" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM TOUR_BOOK_TBL tb
+	    JOIN TOUR_TBL t ON tb.TOUR_NO = t.TOUR_NO
+	    JOIN PARTNER_TBL p ON t.PARTNER_NO = p.PARTNER_NO
+	    WHERE p.MEMBER_NO = #{memberNo}
+	</select>
+	<select id="selectTourBook" resultType="tourBook">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM AS rnum, t.*
+	        FROM (
+	            SELECT
+	                tb.tour_book_no,
+	                tb.tour_no,
+	                tb.member_no,
+	                TO_CHAR(tb.book_date, 'yyyy-mm-dd') AS book_date,
+	                tb.book_guest,
+	                tb.book_fee,
+	                tb.book_status,
+	                TO_CHAR(t.sales_period, 'yyyy-mm-dd') AS sales_period
+	            FROM tour_book_tbl tb
+	            JOIN tour_tbl t ON tb.tour_no = t.tour_no
+	            JOIN partner_tbl p ON t.partner_no = p.partner_no
+	            WHERE p.member_no = #{memberNo}
+	            ORDER BY tb.tour_no DESC
+	        ) t
+	    )
+	    WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
 </mapper>

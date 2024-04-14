@@ -20,6 +20,7 @@ import CouponReg from "../admin/CouponReg";
 import MemberMgmt from "../admin/MemberMgmt";
 import MemberView from "../admin/MemberView";
 import PartnerMgmt from "../admin/PartnerMgmt";
+import TourMgmgt from "../tour/TourMgmt";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -141,6 +142,8 @@ const MypageMain = (props) => {
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
             {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
+            <Route path="/tour/mgmt" element={<TourMgmgt member={member} />} />
+
             <Route
               path="/admin/couponReg"
               element={<CouponReg isLogin={isLogin} member={member} />}

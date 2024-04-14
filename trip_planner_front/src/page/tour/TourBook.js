@@ -161,7 +161,7 @@ const TourBook = (props) => {
         IMP.request_pay(data, (rsp) => {
           // callback
           if (rsp.success) {
-            console.log("결제 성공");
+            // console.log("결제 성공");
             axios
               .post(backServer + "/tour/book", paymentData)
               .then((res) => {

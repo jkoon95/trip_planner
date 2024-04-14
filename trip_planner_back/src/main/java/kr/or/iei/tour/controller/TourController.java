@@ -263,6 +263,13 @@ public class TourController {
 		}
 	}
 	
+	@GetMapping(value="/mgmt/{reqPage}/{memberNo}")
+	public ResponseEntity<ResponseDTO> tourBook(@PathVariable int reqPage, @PathVariable int memberNo){
+		Map map = tourService.selectTourBook(reqPage, memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 	
 	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
 	@ApiResponses({

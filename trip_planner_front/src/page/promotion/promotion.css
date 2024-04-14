@@ -155,3 +155,8 @@ td {
 .promotion-input-wrap {
   padding-bottom: 40px;
 }
+
+.contents.promotionApply .promotion-thumbnail-input {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}

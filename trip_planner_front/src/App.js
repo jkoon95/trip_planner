@@ -35,6 +35,7 @@ import NoticeMain from "./page/notice/NoticeMain";
 import TourView from "./page/tour/TourView";
 import MemberMgmt from "./page/admin/MemberMgmt";
 import PromotionMain from "./page/promotion/PromotionMain";
+import TourBook from "./page/tour/TourBook";
 function App() {
   //스토리지에 저장된 데이터를 꺼내서 객체형식으로 변환
   const navigate = useNavigate();
@@ -119,6 +120,11 @@ function App() {
             path="/tour/view/:tourNo"
             element={<TourView isLogin={isLogin} />}
           />
+          <Route
+            path="/tour/book/:tourNo"
+            element={<TourBook isLogin={isLogin} />}
+          />
+
           <Route path="/ref" element={<Ref />} />
           <Route
             path="/mypage/*"

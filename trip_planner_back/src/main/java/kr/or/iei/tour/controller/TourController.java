@@ -213,6 +213,7 @@ public class TourController {
 	
 	@GetMapping(value="/reviewList/{tourNo}")
 	public ResponseEntity<ResponseDTO> viewReviewList(@PathVariable int tourNo){
+		System.out.println("요청받음");
 		Map map = tourService.selectReviewList(tourNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -248,6 +249,8 @@ public class TourController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	
+	
 	
 	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
 	@ApiResponses({

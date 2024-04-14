@@ -47,5 +47,7 @@ public interface InnDao {
 	
 	List selectInnList(SelectInnList selectInnList);
 
+	List selectHashTag(int roomNo);
+
 
 }

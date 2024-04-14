@@ -72,7 +72,7 @@ public class PromotionService {
 	}
 	
 	public List<Promotion> selectBookPromotionList(int bookPromotionReqPage, String memberEmail) {
-		int amount = 5;
+		int amount = 6;
 		int end = bookPromotionReqPage * amount;
 		int start = end - amount + 1;
 		List<Promotion> bookPromotionList = promotionDao.selectBookPromotionList(memberEmail, start, end);

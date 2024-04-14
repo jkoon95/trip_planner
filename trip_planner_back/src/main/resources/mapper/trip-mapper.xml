@@ -126,6 +126,10 @@
 		delete trip_detail_tbl td where trip_day <![CDATA[ > ]]> (select trip_end_date from trip_tbl where trip_no=td.trip_no) and trip_no=#{tripNo}
 	</delete>
 	
+	<update id="updateTripRoute">
+		update trip_place_tbl set trip_route=#{tripRoute} where trip_route=#{oldTripRoute} and trip_detail_no=#{tripDetailNo}
+	</update>
+	
 </mapper>
 
 

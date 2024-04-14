@@ -84,8 +84,12 @@ public class TripService {
 		int returnResult = 0;
 		
 		ArrayList<TripPlace> routeChangeTpList = new ArrayList<TripPlace>();
-		int delTp = 0;
-		int rcTp = 0;
+//		int delTp = 0;
+//		int rcTp = 0;
+		int changeRoutelength = 0;
+		int copyTripRoute = -1;
+		int copyOldTripRoute = -1;
+		int changeRouteResult = 0;
 		int lastResult = 0;
 		
 		for(TripDetail td : trip.getTripDetailList()) {
@@ -156,10 +160,18 @@ public class TripService {
 								System.out.println("순서 변경했을 때");
 								System.out.println(tp.getTripPlaceName()+"oldTripRoute: "+tp.getOldTripRoute());
 								System.out.println("tripRoute: "+tp.getTripRoute());
-								//일단 지우고
-								delTp += tripDao.deleteTripPlace(tp);
-								//새로 insert할 수 있게 추가
-								routeChangeTpList.add(tp);
+								changeRoutelength++;
+								if(tp.getOldTripRoute() == copyTripRoute) {
+									changeRouteResult += tripDao.updateTripRoute(tp);
+								}else if(tp.getOldTripRoute() != copyTripRoute && tp.getTripRoute() == copyOldTripRoute){
+									changeRouteResult += tripDao.updateTripRoute(tp);
+								}else {
+									copyTripRoute = tp.getTripRoute();
+									copyOldTripRoute = tp.getOldTripRoute();
+									tp.setTripRoute(-1);
+									changeRouteResult += tripDao.updateTripRoute(tp);
+									routeChangeTpList.add(tp);
+								}
 							}else {
 								System.out.println("어떤 것에도 해당되지 않는다면 그냥 평범한 todo 수정이 아닐까?");
 								updateTpLength++;
@@ -189,13 +201,13 @@ public class TripService {
 							}
 						}
 					}
-					//for문 나와서 tripRoute insertTripPlace
+					//for문 나와서 tripRoute 업데이트 마무리
 					for(TripPlace tp : routeChangeTpList) {
-						System.out.println("for문 나와서 tripRoute insertTripPlace");
-						System.out.println("루트체인지할거 뭐뭐냐면: "+tp);
-						rcTp += tripDao.insertTripPlace(tp);
+						tp.setTripRoute(copyTripRoute);
+						tp.setOldTripRoute(-1);
+						changeRouteResult  += tripDao.updateTripRoute(tp);
 					}
-					routeChangeTpList.clear();
+				routeChangeTpList.clear();
 				}
 			}
 			//모든게 끝나고 난 후 tripDetail 빈거 정리
@@ -210,7 +222,7 @@ public class TripService {
 			returnResult = -1;
 		}
 		//장소 변경시 결과 리턴(장소 삭제||장소 루트 변경||장소 업데이트(todo 수정, 장소의 일정 변경))
-		if(deleteTpLength == deleteTpResult || delTp == rcTp || updateTpLength == updateTpResult) {
+		if(deleteTpLength == deleteTpResult || changeRoutelength+1 == changeRouteResult || updateTpLength == updateTpResult) {
 			returnResult = 1;
 		}else {
 			returnResult = -1;

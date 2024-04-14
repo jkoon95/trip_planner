@@ -79,7 +79,7 @@ const MyBooks = () => {
         if(res.data.message === "success"){
           bookPromotionList.push(...res.data.data);
           setBookPromotionList([...bookPromotionList]);
-          if(res.data.data.length < 5){
+          if(res.data.data.length < 6){
             setBtnMoreShow3(false);
           }else{
             setBtnMoreShow3(true);
@@ -193,7 +193,7 @@ const BookInnListItem = (props) => {
               )
             }
             {
-              new Date(item.checkOutDate) > new Date() ? (
+              new Date(item.checkOutDate) < new Date() ? (
                 <span className="badge gray">이용완료</span>
               ) : ""
             }
@@ -248,9 +248,9 @@ const BookTourListItem = (props) => {
           <div className="badges">
             <span className={item.bookStatusStr === "예약확정" ? "badge blue" : "badge red"}>{item.bookStatusStr}</span>
             {
-              new Date(item.bookDate) > new Date() ? (
+              new Date(item.bookDate) < new Date() ? (
                 <span className="badge gray">이용완료</span>
-              ) : ""
+              ) : <span className="badge green">이용가능</span>
             }
           </div>
         </div>
@@ -302,9 +302,9 @@ const BookPromotionListItem = (props) => {
           <div className="item_name"><span className="badge orange">{item.promotionType}</span> {item.promotionName}</div>
           <div className="badges">
             {
-              new Date(item.promotionExpiredDate) > new Date() ? (
+              new Date(item.promotionExpiredDate) < new Date() ? (
                 <span className="badge gray">이용완료</span>
-              ) : ""
+              ) : <span className="badge green">이용가능</span>
             }
           </div>
         </div>
@@ -327,7 +327,7 @@ const BookPromotionListItem = (props) => {
             </div>
             <div className="row">
               <div className="title">만료 기한</div>
-              <div className="cont">{item.promotioniExpiredDate}</div>
+              <div className="cont">{item.promotionExpiredDate}</div>
             </div>
           </div>
         </div>

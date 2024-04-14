@@ -294,19 +294,27 @@ const TourView = (props) => {
   };
 
   const handleBookTicket = () => {
-    if (quantity.adult === 0 && quantity.youth === 0 && quantity.child === 0) {
-      Swal.fire({
-        icon: "warning",
-        title: "구매 수량을 선택해주세요.",
-        confirmButtonText: "닫기",
-      });
+    if (isLogin) {
+      if (
+        quantity.adult === 0 &&
+        quantity.youth === 0 &&
+        quantity.child === 0
+      ) {
+        Swal.fire({
+          icon: "warning",
+          title: "구매 수량을 선택해주세요.",
+          confirmButtonText: "닫기",
+        });
+      } else {
+        navigate("/tour/book/" + tourNo, {
+          state: {
+            startDate: startDate.format("YYYY-MM-DD"),
+            quantity: quantity,
+          },
+        });
+      }
     } else {
-      navigate("/tour/book/" + tourNo, {
-        state: {
-          startDate: startDate,
-          quantity: quantity,
-        },
-      });
+      Swal.fire("로그인 후 이용해주세요.");
     }
   };
 

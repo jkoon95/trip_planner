@@ -178,5 +178,10 @@ public class TourService {
 		return bookTourList;
 	}
 
+	@Transactional
+	public int insertBook(TourBook tourBook) {
+		return tourDao.insertBook(tourBook);
+	}
+
 	
 }

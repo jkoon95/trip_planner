@@ -250,6 +250,18 @@ public class TourController {
 		}
 	}
 	
+	@PostMapping(value="/book")
+	public ResponseEntity<ResponseDTO> insertBook(@RequestBody TourBook tourBook){
+		System.out.println(tourBook);
+		int result = tourService.insertBook(tourBook);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 	
 	
 	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")

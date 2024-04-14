@@ -566,3 +566,198 @@
 .tour-view-star > div {
   margin-left: 10px; /* 별점과 평균 별점 사이의 간격 설정 */
 }
+
+/* 예약 페이지 */
+.tour-book-wrap {
+  margin-top: 40px;
+  /* width: 700px; */
+  display: flex;
+  justify-content: space-between;
+}
+.tour-book-content {
+  width: 60%; /* 오른쪽에 배치될 내용의 너비를 조정 */
+}
+
+.tour-book-wrap .tour-book-top > .tour-book-title {
+  font-family: pt-b;
+  font-size: 28px;
+}
+
+.tour-book-wrap .tour-book-top > .tour-book-name {
+  padding-top: 20px;
+  font-family: pt-b;
+  font-size: 18px;
+}
+.tour-book-wrap .tour-book-top > .tour-book-date {
+  padding-top: 10px;
+  font-family: pt-b;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.tour-book-wrap .tour-book-top > .tour-book-quantity-wrap {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f7fe;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.tour-book-wrap .tour-book-top > .tour-book-quantity-wrap > div {
+  display: flex;
+  justify-content: space-between; /* 텍스트를 오른쪽으로 정렬합니다. */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tour-book-quantity-wrap > div .tour-book-quantity-title {
+  font-size: 16px;
+}
+.tour-book-quantity {
+  font-family: pt-r;
+  font-size: 16px;
+}
+
+.tour-book-quantity-child {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9f0fe;
+}
+
+.tour-book-quantity-final .tour-book-quantity-final-price {
+  color: #005caa;
+  font-family: pt-b;
+  font-size: 20px;
+}
+
+/* 예약자 정보 */
+
+.tour-book-info-wrap {
+  margin-top: 40px;
+}
+.tour-book-info-title {
+  display: flex;
+  align-items: center;
+}
+
+.tour-book-info-title h3 {
+  margin: 0;
+}
+
+.tour-book-info-title h3:last-of-type {
+  color: red;
+}
+
+.tour-book-info-wrap > h4 {
+  padding: 10px 0;
+  color: #666;
+}
+
+.tour-book-info-box {
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 10px 30px;
+}
+
+.tour-book-info-box > .tour-book-info-box-top {
+  display: flex;
+}
+.tour-book-info-box-left,
+.tour-book-info-box-right {
+  flex: 1;
+  border-bottom: 1px solid #666;
+}
+.tour-book-info-box-left {
+  margin-right: 10px; /* 필요에 따라 두 요소 사이의 간격을 조정하세요 */
+}
+
+.tour-book-info-box .tour-book-info-box-title {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  color: #666;
+}
+.tour-book-info-box-name,
+.tour-book-info-box-nickname {
+  padding: 5px;
+}
+.tour-book-info-box-email,
+.tour-book-info-box-phone {
+  border-bottom: 1px solid #666;
+  padding: 5px;
+}
+.tour-book-info-box-btn {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* 할인 쿠폰 */
+.tour-book-coupon-wrap {
+  margin-top: 40px;
+}
+
+.tour-book-coupon-wrap .tour-book-coupon-title {
+  font-size: 20px;
+  font-family: pt-b;
+}
+
+/* 우측 결제창 */
+.tour-book-window {
+  position: fixed; /* 화면의 상단에 고정시킴 */
+  top: 200px; /* 원하는 수직 위치 지정 */
+  right: 200px; /* 원하는 수평 위치 지정 */
+  width: 25%;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  z-index: 1000; /* 다른 요소 위에 고정되도록 설정 */
+}
+
+.tour-book-all-wrap {
+  position: relative;
+}
+
+.tour-book-payment-title > h2 {
+  text-align: left;
+}
+
+.tour-book-sales-amount,
+.tour-book-sales-amount-price,
+.tour-book-total-amount,
+.tour-book-total-amount-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tour-book-sales-amount-price,
+.tour-book-total-amount-price {
+  text-align: right;
+}
+
+.tour-book-sales-amount {
+  margin-bottom: 10px;
+}
+
+.tour-book-total-amount {
+  border-top: 1px solid #ccc;
+  font-family: pt-b;
+  font-size: 20px;
+  padding: 20px 0px;
+}
+.tour-book-total-amount-price {
+  color: #005caa;
+  font-family: pt-b;
+}
+
+.tour-book-check-wrap {
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.tour-book-check-first span {
+  font-family: pt-b;
+}
+.tour-book-payment-button {
+  margin-top: 20px;
+  text-align: center;
+}

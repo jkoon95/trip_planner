@@ -214,4 +214,9 @@
 			from tour_book_tbl tb where member_no in (select member_no from member_tbl where member_email=#{memberEmail}) order by tour_book_no desc)tbt)
 			where rnum between #{start} and #{end}
 	</select>
+	<insert id="insertBook">
+	    INSERT INTO TOUR_BOOK_TBL
+	    VALUES (TOUR_BOOK_SEQ.NEXTVAL, #{tourNo}, #{memberNo}, #{bookDate}, #{bookGuest}, #{bookFee}, 1)
+	</insert>
+	
 </mapper>

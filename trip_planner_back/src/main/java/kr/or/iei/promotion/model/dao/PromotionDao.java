@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.util.PageInfo;
 
@@ -30,4 +31,8 @@ public interface PromotionDao {
 	Promotion selectOnePromotion(int promotionNo);
 
 	List<Promotion> selectBookPromotionList(String memberEmail, int start, int end);
+
+	int checkRemainingSeat(int promotionNo);
+
+	int purchasePromotion(int promotionNo, int memberNo, int seat);
 }

@@ -130,4 +130,18 @@
 			where promotion_no in (select promotion_no from promotion_order_tbl where member_no in (select member_no from member_tbl where member_email=#{memberEmail}))order by promotion_expired_date desc)pt)
 			where rnum between #{start} and #{end}
  	</select>
+ 	
+ 	<select id="checkRemainingSeat" resultType="int">
+ 		SELECT (promotion_limit - (
+        SELECT SUM(promotion_participants) 
+        FROM promotion_order_tbl 
+        WHERE promotion_no = #{promotionNo}
+    )) 
+    FROM promotion_tbl 
+    WHERE promotion_no = #{promotionNo}
+ 	</select>
+ 	
+ 	<insert id="purchasePromotion">
+ 		insert into promotion_order_tbl values (promotion_order_seq.nextval,#{memberNo},#{promotionNo},#{seat})
+ 	</insert>
 </mapper>

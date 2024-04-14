@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dao.PromotionDao;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.util.PageInfo;
@@ -79,6 +81,16 @@ public class PromotionService {
 
 	public Promotion selectOnePromotion(int promotionNo) {
 		return promotionDao.selectOnePromotion(promotionNo);
+	}
+
+	public int checkRemainingSeat(int promotionNo) {
+		return promotionDao.checkRemainingSeat(promotionNo);
+	}
+
+	@Transactional
+	public int purchasePromotion(int promotionNo, int memberNo, int seat) {
+		// TODO Auto-generated method stub
+		return promotionDao.purchasePromotion(promotionNo, memberNo, seat);
 	}
 	
 	/*

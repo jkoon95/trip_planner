@@ -90,7 +90,7 @@
 }
 
 .promotionView-header .promotionView-title {
-  font-size: 60px;
+  font-size: 50px;
   font-family: pt-b;
 }
 
@@ -100,7 +100,29 @@
 }
 
 .contents.promotion .promotionView-tbl {
-  width: 600px;
+  width: 1000px;
   margin: 0 auto;
   border-spacing: 0;
+}
+
+.contents.promotion .promotionView-content {
+  background-color: #f4f5ef;
+}
+
+.promotionView-tbl tr {
+  height: 100px;
+  line-height: 100px;
+}
+
+.promotionView-tbl .promotionView-intro {
+  height: 200px;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.promotionView-tbl th,
+td {
+  font-family: pt-r;
+  font-size: 20px;
 }

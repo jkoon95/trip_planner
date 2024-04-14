@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.promotion.model.service.PromotionService;
 import kr.or.iei.tour.model.dto.TourBook;
@@ -78,11 +80,34 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	*/
-
+	
 	@PostMapping("/selectOnePromotion/{promotionNo}")
 	public ResponseEntity<ResponseDTO> selectOnePromotion(@PathVariable int promotionNo) {
 		Promotion promotion = promotionService.selectOnePromotion(promotionNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", promotion);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
+
+	@PostMapping("/checkRemainingSeat/{promotionNo}")
+	public ResponseEntity<ResponseDTO> checkRemainingSeat(@PathVariable int promotionNo) {
+		int remainingSeat = promotionService.checkRemainingSeat(promotionNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", remainingSeat);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PostMapping("/purchasePromotion/{seat}")
+	public ResponseEntity<ResponseDTO> purchasePromotion(@ModelAttribute Member member, @ModelAttribute Promotion promotion,@PathVariable int seat){
+		int memberNo = member.getMemberNo();
+		int promotionNo = promotion.getPromotionNo();
+		int result = promotionService.purchasePromotion(promotionNo, memberNo, seat);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", result);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+		
+	}
+
 }

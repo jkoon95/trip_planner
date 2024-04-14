@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const PromotionList = () => {
+const PromotionList = (props) => {
+  const member = props.member;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [promotionList, setPromotionList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});

@@ -122,6 +122,7 @@
   display: flex;
   justify-content: space-between;
   align-content: space-between;
+  margin-bottom: 10px;
 }
 .inn-list-wrap > .inn-list-wrap-top > div > span {
   font-size: 24px;
@@ -132,6 +133,7 @@
 }
 .sort-option-box {
   position: relative;
+  z-index: 2;
 }
 .sort-option-box > .default-sort-option {
   display: flex;
@@ -146,6 +148,7 @@
   margin-top: 10px;
   position: absolute;
   right: 5px;
+  background-color: #fff;
 }
 .sort-option-box > .sort-option-menu > ul > li > .sort {
   padding: 20px 25px;
@@ -154,9 +157,10 @@
   display: flex;
   justify-content: space-between;
 }
-.sort-option-box > .sort-option-menu > ul > li:hover {
+.sort-option-box > .sort-option-menu > ul > li > div:hover {
   background-color: #eee;
   cursor: pointer;
+  border-radius: 5px;
 }
 .sort-option-box > .sort-option-menu > ul > li > .active > span:first-child {
   font-family: pt-b;
@@ -169,14 +173,17 @@
 }
 .inn-box {
   display: flex;
-  padding: 10px;
-  border: 1px solid #eee;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
   margin-bottom: 20px;
-  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
 }
 .inn-box > .inn-img-box {
   width: 300px;
   height: 200px;
+  margin-right: 10px;
 }
 .inn-box > .inn-img-box > img {
   width: 100%;
@@ -184,4 +191,46 @@
   text-align: center;
   height: 100%;
   object-fit: contain;
+  border-radius: 15px;
+}
+
+.content-box > .inn-name {
+  font-family: pt-b;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.content-box > .inn-addr2 {
+  font-size: 13px;
+  color: #717171;
+  font-family: pt-b;
+}
+.content-box > .inn-price {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  font-family: pt-b;
+  font-size: 20px;
+}
+.content-box > .like-review > * {
+  font-size: 12px;
+  color: #717171;
+  margin-right: 5px;
+}
+.content-box > .like-review > .review-box {
+  color: #1e1e1e;
+  font-family: pt-b;
+  color: #ccc;
+}
+.content-box > .inn-type {
+  font-size: 10px;
+  font-family: pt-b;
+  color: #717171;
+}
+.content-box > .like-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+.content-box > .like-btn > span.active-btn {
+  color: red;
 }

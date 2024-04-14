@@ -116,20 +116,17 @@
  	
  	<select id="selectBookPromotionList">
  		select * from
-			(select rownum rnum, pt.* from
-			(select promotion_no, promotion_name, promotion_expired_date, promotion_img,
-			(select order_no from promotion_order_tbl where promotion_no=p.promotion_no) order_no,
-			(select
-			    case
-			        when partner_type=1
-			        then '숙소'
-			        when partner_type=2
-			        then '투어'
-			    end
-			from partner_tbl where partner_no = p.partner_no) promotion_type
-			from promotion_tbl p
-			where promotion_no in (select promotion_no from promotion_order_tbl where member_no in (select member_no from member_tbl where member_email=#{memberEmail}))order by promotion_expired_date desc)pt)
-			where rnum between #{start} and #{end}
+		(select rownum rnum, pt.* from (select order_no, promotion_no, promotion_name, promotion_img, promotion_price, promotion_intro, promotion_region, to_char(promotion_expired_date, 'yyyy-mm-dd') promotion_expired_date,
+		(select
+		    case
+		        when partner_type=1
+		        then '숙소'
+		        when partner_type=2
+		        then '투어'
+		    end
+		from partner_tbl where partner_no = p.partner_no) promotion_type
+		from promotion_order_tbl join promotion_tbl p using(promotion_no) where member_no in (select member_no from member_tbl where member_email=#{memberEmail}) order by promotion_expired_date, order_no desc)pt)
+		where rnum between #{start} and #{end}
  	</select>
  	
  	<select id="checkRemainingSeat" resultType="int">

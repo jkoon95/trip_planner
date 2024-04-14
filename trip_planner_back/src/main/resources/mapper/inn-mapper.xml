@@ -66,6 +66,9 @@
 	<select id="selectInnFileRoom" resultType="innFile">
 		select * from inn_file_tbl where inn_no=#{innNo} and room_no is not null	
 	</select>
+	<select id="selectHashTag" resultType="roomHashTag">
+		select * from room_hashtag_tbl where room_no=#{roomNo}		
+	</select>
 	
 	<insert id="reservationInn">
 		insert into inn_book_tbl values
@@ -174,4 +177,8 @@
 		
 		
 	</select>
+	
+	<insert id="likeUpdate">
+		insert into like_tbl values(like_seq.nextval,#{memberNo},1,#{innNo})
+	</insert>
 </mapper>

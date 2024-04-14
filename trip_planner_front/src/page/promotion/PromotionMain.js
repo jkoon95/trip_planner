@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PromotionList from "./PromotionList";
 import PromotionView from "./PromotionView";
+import PromotionApply from "./PromotionApply";
 
 const PromotionMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -29,6 +30,10 @@ const PromotionMain = (props) => {
       <Route
         path="/view/:promotionNo"
         element={<PromotionView member={member} isLogin={isLogin} />}
+      />
+      <Route
+        path="/applyPromotion"
+        element={<PromotionApply member={member} isLogin={isLogin} />}
       />
     </Routes>
   );

@@ -37,6 +37,7 @@ const InnDetailView = (props) => {
       .get(backServer + "/inn/roomInfo/" + innNo)
       .then((res) => {
         setRoom(res.data.data);
+        console.log(res.data.data);
       })
       .catch((res) => {
         console.log(res);
@@ -69,13 +70,13 @@ const InnDetailView = (props) => {
         .get(backServer + "/inn/partnerName/" + partnerNo)
         .then((res) => {
           setPartnerName(res.data.data);
-          console.log(res.data.data);
         })
         .catch((res) => {
           console.log(res);
         });
     }
   }, [inn.partnerNo, setPartnerName]);
+
   return (
     <section className="contents detail-view">
       <div className="inn-detail-wrap">
@@ -118,9 +119,7 @@ const InnDetailView = (props) => {
           {/* 업체 상호명 */}
           <div>{inn.innAddr}</div> {/* 숙소 유형 */}
         </div>
-        <div className="hashTag-box">
-          #감성숙소 #핫플레이스 #제주최고 #연인 #가족 #신혼여행
-        </div>
+
         <div className="inn-detail-intro">
           {/* 숙소 소개 */}
           <h2>숙소 소개</h2>
@@ -152,6 +151,9 @@ const InnDetailView = (props) => {
           <span dangerouslySetInnerHTML={{ __html: inn.innInfo }}></span>
         </div>
       </div>
+      <div className="review-contents">
+        <h3>리뷰</h3>
+      </div>
     </section>
   );
 };
@@ -159,7 +161,20 @@ const RoomItem = (props) => {
   const room = props.room;
   const inn = props.inn;
   const innFileRoom = props.innFileRoom;
-
+  const [hashTag, setHashTag] = useState([]);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  useEffect(() => {
+    const roomNo = room.roomNo;
+    axios
+      .get(backServer + "/inn/hashTag/" + roomNo)
+      .then((res) => {
+        setHashTag(res.data.data);
+        setHashTag(res.data.data.map((tagData) => tagData.hashTag));
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [backServer, room.roomNo, setHashTag]);
   return (
     <div className="inn-detail-rooms">
       <div className="room-box-left">
@@ -177,6 +192,11 @@ const RoomItem = (props) => {
       </div>
       <div className="room-box-right">
         <div className="room-name">{room.roomName}</div>
+        <div className="hashTagItem">
+          {hashTag.map((hashTag, index) => (
+            <HashTagItem key={"hashTag" + index} hashTag={hashTag} />
+          ))}
+        </div>
         <div className="room-right-detail">
           <div className="room-check">
             <div>입실 : {inn.innCheckInTime}</div>
@@ -184,6 +204,7 @@ const RoomItem = (props) => {
           </div>
           <div>객실 최대인원 : {room.roomMaxPeople}</div>
         </div>
+
         <div className="room-bottom">
           <div className="room-price">
             <div>결제금액 : </div>
@@ -217,6 +238,10 @@ const InnFileRoomItem = (props) => {
   return (
     <img src={backServer + "/inn/innFileRoomList/" + innFileRoom.innFilePath} />
   );
+};
+const HashTagItem = (props) => {
+  const hashTag = props.hashTag;
+  return <span>{hashTag}</span>;
 };
 
 export default InnDetailView;

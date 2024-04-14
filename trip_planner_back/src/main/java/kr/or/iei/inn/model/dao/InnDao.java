@@ -47,5 +47,7 @@ public interface InnDao {
 	
 	List selectInnList(SelectInnList selectInnList);
 
+	int likeUpdate(int innNo, int memberNo);
+
 
 }

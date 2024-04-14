@@ -32,6 +32,10 @@ const TourBook = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    let script = document.querySelector(
+      `script[src="https://cdn.iamport.kr/v1/iamport.js"]`
+    );
+
     axios
       .get(backServer + "/tour/view/" + tourNo)
       .then((res) => {
@@ -129,6 +133,7 @@ const TourBook = (props) => {
   );
 
   const handlePaymentButtonClick = () => {
+    console.log(totalPrice());
     if (allTermsChecked()) {
       const paymentData = {
         tourNo: parseInt(tourNo),
@@ -137,26 +142,60 @@ const TourBook = (props) => {
         bookFee: parseInt(totalPrice()),
         bookDate: dayjs(startDate).format("YYYY-MM-DD"),
       };
-      console.log(paymentData);
 
-      if (totalPrice() !== 0) {
-        console.log("결제하셈");
-      }
+      if (parseInt(totalPrice()) !== 0) {
+        const { IMP } = window;
+        IMP.init("imp26315412");
 
-      axios
-        .post(backServer + "/tour/book", paymentData)
-        .then((res) => {
-          if (res.data.message === "success") {
-            Swal.fire({
-              icon: "success",
-              title: "결제가 완료되었습니다.",
-            });
-            navigate("/mypage");
+        const data = {
+          pg: "danal_tpay.9810030929", // PG사
+          pay_method: "card", // 결제수단
+          merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
+          name: tour.tourName, // 주문명
+          amount: parseInt(totalPrice()), // 결제금액
+          buyer_name: member.memberName, // 구매자 이름
+          buyer_tel: member.memberPhone, // 구매자 전화번호
+          buyer_email: member.memberEmail, // 구매자 이메일
+          buyer_addr: member.memberAddr, // 구매자 주소
+        };
+        IMP.request_pay(data, (rsp) => {
+          // callback
+          if (rsp.success) {
+            console.log("결제 성공");
+            axios
+              .post(backServer + "/tour/book", paymentData)
+              .then((res) => {
+                if (res.data.message === "success") {
+                  Swal.fire({
+                    icon: "success",
+                    title: "결제가 완료되었습니다.",
+                  });
+                  navigate("/mypage/tour/mgmt");
+                }
+              })
+              .catch((res) => {
+                console.log(res);
+              });
+          } else {
+            console.log("결제 실패");
           }
-        })
-        .catch((res) => {
-          console.log(res);
         });
+      } else {
+        axios
+          .post(backServer + "/tour/book", paymentData)
+          .then((res) => {
+            if (res.data.message === "success") {
+              Swal.fire({
+                icon: "success",
+                title: "결제가 완료되었습니다.",
+              });
+              navigate("/mypage/tour/mgmt");
+            }
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
     } else {
       Swal.fire({
         icon: "error",

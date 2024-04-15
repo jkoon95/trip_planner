@@ -253,5 +253,80 @@
 	    )
 	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
 	</select>
-
+	<select id="totalSearchProduct" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM TOUR_BOOK_TBL tb
+	    JOIN TOUR_TBL t ON tb.TOUR_NO = t.TOUR_NO
+	    JOIN PARTNER_TBL p ON t.PARTNER_NO = p.PARTNER_NO
+	    WHERE p.MEMBER_NO = #{memberNo}
+	    AND t.TOUR_NAME LIKE '%' || #{searchText} || '%'
+	</select>
+	<select id="searchTourMgmt1" resultType="tourBook">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM AS rnum, t.*
+	        FROM (
+	            SELECT
+	                tb.tour_book_no,
+	                tb.tour_no,
+	                t.tour_name,
+	                tb.member_no,
+	                m.member_name,
+	                m.member_phone,
+	                m.member_email,
+	                TO_CHAR(tb.book_date, 'yyyy-mm-dd') AS book_date,
+	                tb.book_guest,
+	                tb.book_fee,
+	                tb.book_status,
+	                TO_CHAR(t.sales_period, 'yyyy-mm-dd') AS sales_period
+	            FROM tour_book_tbl tb
+	            JOIN tour_tbl t ON tb.tour_no = t.tour_no
+	            JOIN partner_tbl p ON t.partner_no = p.partner_no
+	            JOIN member_tbl m ON tb.member_no = m.member_no
+	            WHERE p.member_no = #{memberNo}
+             	AND t.tour_name LIKE '%' || #{searchText} || '%'
+	            ORDER BY tb.tour_no DESC
+	        ) t
+	    )
+	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
+	</select>
+	<select id="totalSearchMember" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM TOUR_BOOK_TBL tb
+	    JOIN MEMBER_TBL m ON tb.MEMBER_NO = m.MEMBER_NO
+	    JOIN TOUR_TBL t ON tb.TOUR_NO = t.TOUR_NO
+	    JOIN PARTNER_TBL p ON t.PARTNER_NO = p.PARTNER_NO
+	    WHERE p.MEMBER_NO = #{memberNo}
+	    AND m.MEMBER_NAME LIKE '%' || #{searchText} || '%'
+	</select>
+	<select id="searchTourMgmt2" resultType="tourBook">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM AS rnum, t.*
+	        FROM (
+	            SELECT
+	                tb.tour_book_no,
+	                tb.tour_no,
+	                t.tour_name,
+	                tb.member_no,
+	                m.member_name,
+	                m.member_phone,
+	                m.member_email,
+	                TO_CHAR(tb.book_date, 'yyyy-mm-dd') AS book_date,
+	                tb.book_guest,
+	                tb.book_fee,
+	                tb.book_status,
+	                TO_CHAR(t.sales_period, 'yyyy-mm-dd') AS sales_period
+	            FROM tour_book_tbl tb
+	            JOIN tour_tbl t ON tb.tour_no = t.tour_no
+	            JOIN partner_tbl p ON t.partner_no = p.partner_no
+	            JOIN member_tbl m ON tb.member_no = m.member_no
+	            WHERE p.member_no = #{memberNo}
+	            AND m.member_name LIKE '%' || #{searchText} || '%'
+	            ORDER BY tb.tour_no DESC
+	        ) t
+	    )
+	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
+	</select>
+	
 </mapper>

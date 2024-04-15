@@ -197,3 +197,30 @@
 .tour-book-table .tour-book-row .tour-book-col:nth-child(3):hover {
   text-decoration: underline;
 }
+
+/* 예약관리 검색창 */
+.tour-mgmt-search-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tour-mgmt-search-box select,
+.tour-mgmt-search-box input[type="text"],
+.tour-mgmt-search-box button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.tour-mgmt-search-box input[type="text"] {
+  width: 200px;
+}
+.tour-mgmt-search-box button {
+  height: 38px;
+  width: 50px;
+}
+.tour-mgmt-search-box button {
+  background-color: #1795f0;
+  color: #fff;
+}

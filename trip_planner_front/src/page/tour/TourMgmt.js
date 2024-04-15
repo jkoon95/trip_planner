@@ -12,7 +12,7 @@ const TourMgmgt = ({ member }) => {
   const [pageInfo, setPageInfo] = useState({});
   const [reqPage, setReqPage] = useState(1);
   const [searchText, setSearchText] = useState("");
-  const [searchType, setSearchType] = useState("productName");
+  const [searchType, setSearchType] = useState("product");
 
   useEffect(() => {
     // console.log("회원번호 : " + memberNo);
@@ -50,7 +50,15 @@ const TourMgmgt = ({ member }) => {
     if (searchText !== "") {
       if (searchType === "product") {
         axios
-          .get(backServer + "/tour/mgmtSearch1/" + reqPage + "/" + searchText)
+          .get(
+            backServer +
+              "/tour/mgmtSearch1/" +
+              reqPage +
+              "/" +
+              searchText +
+              "/" +
+              memberNo
+          )
           .then((res) => {
             setTourBook(res.data.data.tourBook);
             setPageInfo(res.data.data.pi);
@@ -58,9 +66,17 @@ const TourMgmgt = ({ member }) => {
           .catch((res) => {
             console.log(res);
           });
-      } else {
+      } else if (searchType === "member") {
         axios
-          .get(backServer + "/tour/mgmtSearch2/" + searchText)
+          .get(
+            backServer +
+              "/tour/mgmtSearch2/" +
+              reqPage +
+              "/" +
+              searchText +
+              "/" +
+              memberNo
+          )
           .then((res) => {
             setTourBook(res.data.data.tourBook);
             setPageInfo(res.data.data.pi);
@@ -71,6 +87,12 @@ const TourMgmgt = ({ member }) => {
       }
     } else {
       Swal.fire("검색어를 입력해주세요.");
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
     }
   };
 
@@ -89,6 +111,7 @@ const TourMgmgt = ({ member }) => {
             type="text"
             value={searchText}
             onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
             placeholder="검색어를 입력하세요"
           />
           <button onClick={handleSearch}>검색</button>

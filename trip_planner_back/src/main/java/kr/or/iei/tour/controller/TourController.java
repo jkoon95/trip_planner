@@ -266,18 +266,23 @@ public class TourController {
 	@GetMapping(value="/mgmt/{reqPage}/{memberNo}")
 	public ResponseEntity<ResponseDTO> tourBook(@PathVariable int reqPage, @PathVariable int memberNo){
 		Map map = tourService.selectTourBook(reqPage, memberNo);
-		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@GetMapping(value="/mgmtSearch1/{reqPage}/{searchText}")
-	public ResponseEntity<ResponseDTO> searchTourMgmt1(@PathVariable int reqPage, @PathVariable String searchText){
-		System.out.println(searchText);
-//	    Map map = tourService.searchTourMgmt1(reqPage, searchText);
-//	    ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
-//	    return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-		return null;
+	@GetMapping(value="/mgmtSearch1/{reqPage}/{searchText}/{memberNo}")
+	public ResponseEntity<ResponseDTO> searchTourMgmt1(@PathVariable int reqPage, @PathVariable String searchText, @PathVariable int memberNo){
+	    Map map = tourService.searchTourMgmt1(reqPage, searchText, memberNo);
+	    ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+	    return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@GetMapping(value="/mgmtSearch2/{reqPage}/{searchText}/{memberNo}")
+	public ResponseEntity<ResponseDTO> searchTourMgmt2(@PathVariable int reqPage, @PathVariable String searchText, @PathVariable int memberNo){
+	    Map map = tourService.searchTourMgmt2(reqPage, searchText, memberNo);
+	    System.out.println(map);
+	    ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+	    return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
 }

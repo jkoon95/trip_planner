@@ -80,5 +80,13 @@ public interface TourDao {
 	int totalBookCount(int memberNo);
 
 	List selectTourBook(int start, int end, int memberNo);
+
+	int totalSearchProduct(String searchText, int memberNo);
+
+	List searchTourMgmt1(int start, int end, String searchText, int memberNo);
+
+	int totalSearchMember(String searchText, int memberNo);
+
+	List searchTourMgmt2(int start, int end, String searchText, int memberNo);
 	
 }

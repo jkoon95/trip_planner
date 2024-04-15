@@ -319,7 +319,6 @@ const TourView = (props) => {
   };
 
   const handleAddBookmark = () => {
-    console.log("찜 누름");
     if (!isLogin) {
       Swal.fire({
         icon: "warning",
@@ -328,11 +327,11 @@ const TourView = (props) => {
       });
     } else {
       const formData = new FormData();
-      formData.append("tourNo", tourNo); // 투어 번호
-      formData.append("userId", member.memberId); // 사용자 ID
+      formData.append("refNo", tourNo); // 투어 번호
+      formData.append("memberNo", member.memberNo); // 사용자 ID
 
       axios
-        .post(backServer + "/tour/bookmark", formData)
+        .post(backServer + "/tour/like", formData)
         .then((res) => {
           if (res.data.message === "success") {
             Swal.fire("찜하기 성공!", "찜 목록에서 확인하세요.", "success");
@@ -340,9 +339,8 @@ const TourView = (props) => {
             Swal.fire("찜하기 실패", "이미 찜한 투어입니다.", "error");
           }
         })
-        .catch((error) => {
-          console.error("찜하기 요청 에러:", error);
-          Swal.fire("에러 발생", "찜하기 도중 문제가 발생했습니다.", "error");
+        .catch((res) => {
+          console.log(res);
         });
     }
   };

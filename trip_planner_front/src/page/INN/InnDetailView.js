@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Input, Textarea } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Rating from "@mui/material/Rating";
+import { useParams } from "react-router-dom";
 
 {
   /* params로 innNo 받기  */
@@ -18,7 +19,6 @@ const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const [partnerName, setPartnerName] = useState("");
-  const [innNo] = useState(41);
   const [roomNo] = useState({});
   const [inn, setInn] = useState("");
   const [room, setRoom] = useState([]);
@@ -27,7 +27,8 @@ const InnDetailView = (props) => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewTitle, setReivewTitle] = useState("");
   const [reviewStar, setReviewStar] = React.useState(5);
-
+  const params = useParams();
+  const innNo = params.innNo;
   useEffect(() => {
     axios
       .get(backServer + "/inn/detail/" + innNo)

@@ -4,6 +4,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
+import InnDetailView from "./InnDetailView";
 
 const InnList = (props) => {
   const location = useLocation();
@@ -38,10 +39,6 @@ const InnList = (props) => {
       active: false,
     },
   ]);
-  const navigate = useNavigate();
-  const InnDetailView = () => {
-    navigate("/innDetailView");
-  };
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [innAddr, setInnAddr] = useState(place);
@@ -225,6 +222,7 @@ const InnListBox = (props) => {
   const index = props.index;
   const addrSpilt = innItem.innAddr.split(" ");
   const clickEvent = props.clickEvent;
+  const navigate = useNavigate();
 
   const likeRef = useRef();
   const likeCount = (innNo) => {
@@ -240,9 +238,13 @@ const InnListBox = (props) => {
         });
     }
   };
+  const InnDetailView = () => {
+    const innNo = innItem.innNo;
+    navigate("/innDetailView/" + innNo);
+  };
   return (
     <div className="inn-box">
-      <div className="inn-img-box" onClick={clickEvent}>
+      <div className="inn-img-box" onClick={InnDetailView}>
         <img src={backServer + "/inn/innList/" + innItem.filepath} />
       </div>
       <div className="content-box">

@@ -31,7 +31,7 @@ const InnDetailView = (props) => {
   const innNo = params.innNo;
   const location = useLocation();
   const checkInOutDates = location.state;
-  console.log(checkInOutDates);
+  const bookGuest = location.state;
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -190,6 +190,7 @@ const InnDetailView = (props) => {
                 innFileRoom={innFileRoom}
                 navigate={navigate}
                 checkInOutDates={checkInOutDates}
+                bookGuest={bookGuest}
                 isLogin={isLogin}
               />
             );
@@ -261,6 +262,7 @@ const RoomItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = props.navigate;
   const checkInOutDates = props.checkInOutDates;
+  const bookGuest = props.bookGuest;
   const isLogin = props.isLogin;
 
   useEffect(() => {
@@ -301,6 +303,7 @@ const RoomItem = (props) => {
     console.log(room);
     room.checkInDate = checkInOutDates.checkInDate;
     room.checkOutDate = checkInOutDates.checkOutDate;
+    room.bookGuest = bookGuest.bookGuest;
     navigate("/inn/reservationInn", { state: room });
   };
   return (

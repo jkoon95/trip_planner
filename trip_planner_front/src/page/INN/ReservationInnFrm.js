@@ -19,6 +19,8 @@ const ReservationInnFrm = (props) => {
   const setGuestPhone = props.setGuestPhone;
   const guestWish = props.guestWish;
   const setGuestWish = props.setGuestWish;
+  const ReservationInfo = props.ReservationInfo;
+  console.log(ReservationInfo);
 
   const [innNo, setInnNo] = useState(41);
   const [checkInDate, setCheckInDate] = useState("2024-04-10");
@@ -731,7 +733,7 @@ const SelectInnInfo = (props) => {
         .get(backServer + "/admin/selectCouponList")
         .then((res) => {
           console.log(res.data);
-          if(res.data.data !== null){
+          if (res.data.data !== null) {
             setCouponList(res.data.data);
           }
         })

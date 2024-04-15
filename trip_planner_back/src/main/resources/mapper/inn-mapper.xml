@@ -195,4 +195,15 @@
 	<insert id="likeUpdate">
 		insert into like_tbl values(like_seq.nextval,#{memberNo},1,#{innNo})
 	</insert>
+	
+	<select id="selectMainInnList" resultType="inn">
+		select * from
+		(select rownum rnum, rr.* from 
+		(select inn_no, inn_type,
+		(select partner_name from partner_tbl where partner_no=inn.partner_no) partner_name,
+		nvl((select avg(review_star) from review_tbl where review_type=1 and ref_no=inn_no),0) review_rate,
+		(select inn_filepath from inn_file_tbl innfile where inn.inn_no = innfile.inn_no and rownum=1) as filepath
+		from inn_tbl inn where inn_no in (select inn_no from review_tbl r where review_type=1)
+		order by review_rate desc, inn_no desc)rr) where rnum between 1 and 16
+	</select>
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.inn.model.dto.InnReservation;
+import kr.or.iei.like.model.dto.Like;
 import kr.or.iei.partner.model.dto.Partner;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.tour.model.dao.TourDao;
@@ -198,5 +199,46 @@ public class TourService {
 		return map;
 	}
 
+	public Map searchTourMgmt1(int reqPage, String searchText, int memberNo) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount = tourDao.totalSearchProduct(searchText, memberNo);	// 전체 게시물 수
+		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int end = reqPage*numPerPage;
+		int start = end-numPerPage+1;
+		List list = tourDao.searchTourMgmt1(start, end, searchText, memberNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourBook",list);
+		map.put("pi",pi);
+		return map;
+	}
+
+	public Map searchTourMgmt2(int reqPage, String searchText, int memberNo) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount = tourDao.totalSearchMember(searchText, memberNo);	// 전체 게시물 수
+		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int end = reqPage*numPerPage;
+		int start = end-numPerPage+1;
+		List list = tourDao.searchTourMgmt2(start, end, searchText, memberNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourBook",list);
+		map.put("pi",pi);
+		return map;
+	}
+
+	public Map selectTopTour() {
+		List topTour = tourDao.selectTopTour();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("topTour", topTour);
+		return map;
+	}
+	
+	@Transactional
+	public int insertLike(Like like) {
+		return tourDao.insertLike(like);
+	}
 	
 }

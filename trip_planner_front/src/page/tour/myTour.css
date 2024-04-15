@@ -174,3 +174,53 @@
   margin: 0 auto;
   margin-top: 20px;
 }
+
+/* 투어 예약관리 */
+.tour-book-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tour-book-table .tour-book-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tour-book-table .tour-book-row .tour-book-col {
+  flex: 1;
+  padding: 15px 10px;
+}
+.tour-book-table .tour-book-row .tour-book-col:nth-child(3) {
+  cursor: pointer;
+}
+.tour-book-table .tour-book-row .tour-book-col:nth-child(3):hover {
+  text-decoration: underline;
+}
+
+/* 예약관리 검색창 */
+.tour-mgmt-search-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tour-mgmt-search-box select,
+.tour-mgmt-search-box input[type="text"],
+.tour-mgmt-search-box button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.tour-mgmt-search-box input[type="text"] {
+  width: 200px;
+}
+.tour-mgmt-search-box button {
+  height: 38px;
+  width: 50px;
+}
+.tour-mgmt-search-box button {
+  background-color: #1795f0;
+  color: #fff;
+}

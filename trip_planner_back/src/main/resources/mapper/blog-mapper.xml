@@ -51,4 +51,7 @@
 	<select id="selectMyBlogList" resultType="blog">
 		select * from (select rownum rnum, b.* from (select * from blog_tbl where member_nickname in (select member_nickname from member_tbl where member_email=#{memberEmail}) order by 1 desc) b) where rnum between #{start} and #{end}
 	</select>
+	<select id="selectMainBlogList" resultType="blog">
+		select * from (select rownum rnum, b.* from (select blog_no, blog_title, to_char(blog_date, 'yyyy-mm-dd') blog_date, blog_thumbnail, (select count(*) from blog_comment where blog_no=b.blog_no) count from blog_tbl b order by count desc, blog_no desc)b) where rnum between 1 and 16
+	</select>
 </mapper>

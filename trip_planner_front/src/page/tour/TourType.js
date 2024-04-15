@@ -6,6 +6,7 @@ import axios from "axios";
 
 const TourType = () => {
   const location = useLocation();
+  const [tourType, setTourType] = useState("");
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
@@ -16,10 +17,12 @@ const TourType = () => {
     if (
       location.state &&
       location.state.tourList &&
-      location.state.ticketList
+      location.state.ticketList &&
+      location.state.tourType
     ) {
       setTourList(location.state.tourList);
       setTicketList(location.state.ticketList);
+      setTourType(location.state.tourType);
     }
   }, [location.state]);
 
@@ -38,7 +41,7 @@ const TourType = () => {
         <h2>카테고리 검색</h2>
       </div>
       <TourSearchBox />
-      <TourSearchOption />
+      <div className="tour-list-sort"></div>
       {tourList.slice(0, visibleTour).map((tour, index) => {
         const ticket = ticketList[index];
         return <TourItem key={index} tour={tour} ticket={ticket} />;
@@ -51,34 +54,6 @@ const TourType = () => {
         </div>
       )}
     </section>
-  );
-};
-
-const TourSearchOption = () => {
-  const [selectedOption, setSelectedOption] = useState("추천순");
-
-  const handleButtonClick = (option) => {
-    setSelectedOption(option);
-  };
-  return (
-    <div className="tour-option-wrap">
-      <button
-        className={`tour-option-btn ${
-          selectedOption === "가격 낮은순" ? "active" : ""
-        }`}
-        onClick={() => handleButtonClick("가격 낮은순")}
-      >
-        가격 낮은순
-      </button>
-      <button
-        className={`tour-option-btn ${
-          selectedOption === "추천순" ? "active" : ""
-        }`}
-        onClick={() => handleButtonClick("추천순")}
-      >
-        추천순
-      </button>
-    </div>
   );
 };
 

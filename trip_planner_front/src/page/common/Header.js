@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Input } from "../../component/FormFrm";
 
 const Header = (props) => {
+  const location = useLocation();
+  console.log(location)
   const isLogin = props.isLogin;
   const logout = props.logout;
   const [searchData, setSearchData] = useState("");
@@ -46,7 +48,7 @@ const Header = (props) => {
     }
   });
   return (
-    <header className="header">
+    <header className={location.pathname==="/"?"header":"header line"}>
       <div className="header_inner">
         <h1 className="logo">
           <Link to="/" onClick={menuClose}>

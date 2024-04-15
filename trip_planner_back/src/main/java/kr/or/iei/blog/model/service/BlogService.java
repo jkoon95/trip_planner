@@ -87,5 +87,10 @@ public class BlogService {
 		List<Blog> myBlogList = blogDao.selectMyBlogList(memberEmail, start, end);
 		return myBlogList;
 	}
+
+	public List<Blog> selectMainBlogList() {
+		List<Blog> selectMainBlogList = blogDao.selectMainBlogList();
+		return selectMainBlogList;
+	}
 	
 }

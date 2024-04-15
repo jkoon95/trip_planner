@@ -1,7 +1,7 @@
 import "./page/common/reset.css";
 import "./page/common/common.css";
 import InnList from "./page/INN/InnList";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./page/member/Login";
 import Main from "./page/common/Main";
 import BlogList from "./page/blog/BlogList";
@@ -113,7 +113,7 @@ function App() {
             path="/blogView/:blogNo"
             element={<BlogView isLogin={isLogin} />}
           />
-          <Route path="/tourList" element={<TourList />} />
+          <Route path="/tourList" element={<TourList isLogin={isLogin} />} />
           <Route path="/tourSearch" element={<TourSearch />} />
           <Route path="/tourType" element={<TourType />} />
           <Route

@@ -53,6 +53,7 @@
   height: 240px;
   width: 100%;
   border-radius: 20px;
+  cursor: pointer;
 }
 .tour-swiper .swiper-slide {
   padding: 0 30px;
@@ -136,17 +137,24 @@
 }
 
 /* 추천순, 가격낮은순 */
-.tour-option-wrap {
+.tour-list-sort {
   overflow: hidden;
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
   margin: 0 auto;
   margin-bottom: 60px;
 }
-.tour-option-wrap > .tour-option-btn {
+.tour-list-sort > .tour-search-sort-date,
+.tour-list-sort > .tour-search-sort-price {
   font-size: 16px;
   margin-right: 20px;
   float: right;
+  cursor: pointer;
+}
+
+.tour-search-sort-price > button,
+.tour-search-sort-date > button {
+  font-size: 16px;
 }
 
 /* 검색 상품 */

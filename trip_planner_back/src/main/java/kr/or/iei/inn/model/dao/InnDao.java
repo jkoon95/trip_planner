@@ -53,5 +53,6 @@ public interface InnDao {
 
 	List selectOption(int innNo, int roomNo);
 
+	List<Inn> selectMainInnList();
 
 }

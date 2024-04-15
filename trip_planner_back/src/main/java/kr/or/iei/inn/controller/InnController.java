@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
 import kr.or.iei.admin.model.service.AdminService;
+import kr.or.iei.blog.model.dto.Blog;
 import kr.or.iei.inn.model.dto.Inn;
 import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.inn.model.dto.InnReservation;
@@ -263,6 +264,18 @@ public class InnController {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
+	}
+	
+	@Operation(summary = "메인 숙소리스트 호출", description = "메인 숙소리스트 호출")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping(value="/main/innList")
+	public ResponseEntity<ResponseDTO> selectMainInnList() {
+		List<Inn> innList = innService.selectMainInnList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", innList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 	
 }

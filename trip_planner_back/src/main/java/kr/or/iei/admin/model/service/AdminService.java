@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.admin.model.dao.AdminDao;
 import kr.or.iei.admin.model.dto.CouponList;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -74,4 +75,12 @@ public class AdminService {
 		return map;
 	}
 
+	public List<CouponList> selectMyCouponList(int reqPage, int couponRange, String memberEmail) {
+		int amount = 5;
+		int end = reqPage * amount;
+		int start = end - amount + 1;
+		List<CouponList> myCouponList = adminDao.selectMyCouponList(memberEmail, couponRange, start, end);
+		return myCouponList;
+	}
+	
 }

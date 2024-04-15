@@ -43,119 +43,153 @@
   --info: #1795f0;
 }
 
-/* layout */
-html {
-  font-family: pt-r;
+h2,
+h3,
+h4,
+h5 {
+  color: #000;
+  line-height: 1.5
 }
+
+.footer .footer_txt,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.5
+}
+
+.badge,
+.modal .modal_title,
+.modal .title_sub,
+h2 {
+  text-align: center
+}
+
+html {
+  font-family: pt-r
+}
+
+.badge,
+h2,
+h3,
+h4,
+h5 {
+  font-family: pt-b
+}
+
 .hidden {
   position: absolute;
   left: -9999%;
   font-size: 0;
   line-height: 0;
   text-indent: -9999%;
-  overflow: hidden;
+  overflow: hidden
 }
-/* .scroll_fixed{position: fixed; left: 0; right: 0; top: 0; bottom: 0;} */
 
 .wrap {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh
 }
+
 .container {
   flex: 1;
-  padding: 0 40px;
+  padding: 0 40px
 }
-.contents {
+
+.contents,
+.footer>.footer_inner {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 60px 0;
-}
-h2 {
-  margin-bottom: 48px;
-  color: #000;
-  font-family: pt-b;
-  font-size: 24px;
-  text-align: center;
-  line-height: 1.5;
-}
-h3 {
-  margin-bottom: 24px;
-  color: #000;
-  font-family: pt-b;
-  font-size: 20px;
-  line-height: 1.5;
-}
-h4 {
-  margin-bottom: 20px;
-  color: #000;
-  font-family: pt-b;
-  font-size: 16px;
-  line-height: 1.5;
-}
-h5 {
-  margin-bottom: 8px;
-  color: #000;
-  font-family: pt-b;
-  font-size: 14px;
-  line-height: 1.5;
+  padding: 60px 0
 }
 
-/* header */
+h2 {
+  margin-bottom: 48px;
+  font-size: 24px
+}
+
+h3 {
+  margin-bottom: 24px;
+  font-size: 20px
+}
+
+h4 {
+  margin-bottom: 20px;
+  font-size: 16px
+}
+
+h5 {
+  margin-bottom: 8px;
+  font-size: 14px
+}
+
 .header {
   position: sticky;
   top: 0;
   background-color: #fff;
-  z-index: 1000;
+  z-index: 1000
 }
+
 .header.line {
-  border-bottom: 1px solid var(--line_03);
+  border-bottom: 1px solid var(--line_03)
 }
-.header > .header_inner {
+
+.header>.header_inner {
   display: flex;
   justify-content: space-between;
   width: 100%;
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0 auto
 }
-.logo > a {
-  display: block;
+
+.footer .logo,
+.logo>a {
   width: 140px;
-  height: 60px;
   font-size: 0;
   text-indent: -9999%;
-  overflow: hidden;
-  background: url(/public/images/logo.svg) no-repeat center / contain;
+  overflow: hidden
 }
+
+.logo>a {
+  display: block;
+  height: 60px;
+  background: url(/public/images/logo.svg) center/contain no-repeat
+}
+
 .header .header_navi {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: center
 }
+
 .header .search_wrap {
-  display: flex;
+  display: flex
 }
-.header .search_wrap > input {
+
+.header .search_wrap>input {
   width: 0;
   padding: 8px 0 7px;
   font-size: 14px;
   line-height: 20px;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: .3s cubic-bezier(.33, 1, .68, 1)
 }
-.header .search_wrap.active > input {
-  width: 270px;
+
+.header .search_wrap.active>input,
+.header .search_wrap.focus>input {
+  width: 270px
 }
-.header .search_wrap.focus > input {
-  width: 270px;
-}
-.header .search_wrap > .btn_search {
+
+.header .search_wrap>.btn_search {
   display: block;
   width: 36px;
   height: 36px;
-  background: url(/public/images/icon_search.svg) no-repeat center / contain;
+  background: url(/public/images/icon_search.svg) center/contain no-repeat
 }
-.header .menu_wrap > .menu_list {
+
+.header .menu_wrap>.menu_list {
   display: none;
   position: absolute;
   right: 0;
@@ -163,123 +197,122 @@ h5 {
   padding: 12px 0;
   border: 1px solid #000;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: #fff
 }
-.header .menu_wrap > .menu_list.active {
-  display: block;
+
+.header .menu_wrap>.menu_list.active {
+  display: block
 }
-.header .menu_wrap > .menu_list a {
+
+.header .menu_wrap>.menu_list a {
   display: block;
   min-width: 165px;
   padding: 0 38px;
   font-size: 16px;
   line-height: 40px;
-  text-align: center;
+  text-align: center
 }
-.header .menu_wrap > .menu_list a:hover {
-  background-color: var(--main_03);
+
+.header .menu_wrap>.menu_list a:hover {
+  background-color: var(--main_03)
 }
-.header .menu_wrap > .btn_menu {
+
+.header .menu_wrap>.btn_menu {
   display: block;
   width: 36px;
   height: 36px;
-  background: url(/public/images/icon_menu.svg) no-repeat center / contain;
+  background: url(/public/images/icon_menu.svg) center/contain no-repeat
 }
 
-/* footer */
 .footer {
   background-color: #000;
-  z-index: 1001;
+  z-index: 1001
 }
-.footer > .footer_inner {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 60px 0;
-}
+
 .footer .logo {
   display: block;
-  width: 140px;
   height: 20px;
-  font-size: 0;
-  text-indent: -9999%;
-  overflow: hidden;
-  background: url(/public/images/logo_white.svg) no-repeat center / contain;
+  background: url(/public/images/logo_white.svg) center/contain no-repeat
 }
-.footer .menu_list > ul {
+
+.footer .menu_list>ul {
   display: flex;
   gap: 24px;
-  margin-top: 20px;
+  margin-top: 20px
 }
-.footer .menu_list > ul > li > a {
+
+.footer .menu_list>ul>li>a {
   display: block;
   color: #fff;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.5
 }
+
 .footer .footer_txt {
   margin-top: 40px;
   color: #fff;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 14px
 }
 
-/* badge */
 .badge {
   display: inline-block;
   min-width: 69px;
   padding: 0 11px;
   border-radius: 30px;
-  font-family: pt-b;
   font-size: 13px;
-  line-height: 28px;
-  text-align: center;
+  line-height: 28px
 }
+
 .badge.blue {
   border: 1px solid var(--info);
-  background-color: rgba(23, 149, 240, 0.1);
-  color: var(--info);
+  background-color: rgba(23, 149, 240, .1);
+  color: var(--info)
 }
+
 .badge.red {
   border: 1px solid var(--error);
-  background-color: rgba(255, 40, 3, 0.1);
-  color: var(--error);
+  background-color: rgba(255, 40, 3, .1);
+  color: var(--error)
 }
+
 .badge.green {
   border: 1px solid var(--success);
-  background-color: rgba(48, 228, 98, 0.1);
-  color: var(--success);
+  background-color: rgba(48, 228, 98, .1);
+  color: var(--success)
 }
+
 .badge.gray {
   border: 1px solid var(--gray_02);
-  background-color: rgba(85, 85, 85, 0.1);
-  color: var(--gray_02);
+  background-color: rgba(85, 85, 85, .1);
+  color: var(--gray_02)
 }
+
 .badge.orange {
   min-width: 0;
   padding: 0 8px;
   border-radius: 4px;
   border: 1px solid var(--main_02);
-  background-color: rgba(233, 81, 28, 0.1);
-  color: var(--main_02);
-  line-height: 22px;
+  background-color: var(--main_02);
+  color: #fff;
+  line-height: 22px
 }
+
 .badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 8px
 }
 
-/* modal */
 .modal {
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1002;
+  background-color: rgba(0, 0, 0, .6);
+  z-index: 1002
 }
+
 .modal .modal_wrap {
   position: absolute;
   top: 50%;
@@ -292,51 +325,58 @@ h5 {
   max-height: 375px;
   padding: 40px 20px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 8px
 }
+
 .modal.lg .modal_wrap {
   width: 512px;
-  max-height: 480px;
+  max-height: 480px
 }
+
 .modal .modal_title {
   font-family: pt-b;
   font-size: 20px;
-  line-height: 1.5;
-  text-align: center;
+  line-height: 1.5
 }
+
 .modal .title_sub {
   margin-top: 12px;
   color: var(--gray_04);
   font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
+  line-height: 1.5
 }
+
 .modal .modal_container {
-  /*height:114px;*/
   padding: 0 20px;
-  overflow-y: auto;
+  overflow-y: auto
 }
+
 .modal .modal_content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 80px;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.5
 }
+
 .modal.lg .modal_content {
-  min-height: 180px;
+  min-height: 180px
 }
+
 .modal .modal_content .center {
-  text-align: enter;
+  text-align: enter
 }
-.modal .modal_content .img_wrap > img {
+
+.modal .modal_content .img_wrap>img {
   display: block;
-  width: 100%;
+  width: 100%
 }
+
 .modal .btn_area {
-  margin-top: 20px;
+  margin-top: 20px
 }
+
 .modal .btn_close {
   position: absolute;
   top: 12px;
@@ -344,5 +384,5 @@ h5 {
   display: block;
   width: 36px;
   height: 36px;
-  background: url(/public/images/icon_close.svg) no-repeat center / 14px;
+  background: url(/public/images/icon_close.svg) center/14px no-repeat
 }

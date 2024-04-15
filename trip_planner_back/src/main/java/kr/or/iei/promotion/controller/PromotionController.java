@@ -1,9 +1,11 @@
 package kr.or.iei.promotion.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,15 +17,19 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.or.iei.ResponseDTO;
+import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
+import kr.or.iei.promotion.model.dto.PromotionFile;
 import kr.or.iei.promotion.model.service.PromotionService;
 import kr.or.iei.tour.model.dto.TourBook;
+import kr.or.iei.util.FileUtils;
 
 @CrossOrigin("*")
 @RestController
@@ -32,6 +38,12 @@ public class PromotionController {
 	
 	@Autowired
 	private PromotionService promotionService;
+	
+	@Value("${file.root}")
+	private String root;
+	
+	@Autowired
+	private FileUtils fileUtils;
 	
 	@GetMapping("/promotionList/{reqPage}")
 	public ResponseEntity<ResponseDTO> selectPromotionList(@PathVariable int reqPage) {
@@ -61,17 +73,6 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@Operation(summary = "내 프로모션 예약 리스트 조회", description = "내 프로모션 예약 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
-	})
-	@GetMapping("/bookPromotionList/{bookPromotionReqPage}")
-	public ResponseEntity<ResponseDTO> selectBookPromotionList(@PathVariable int bookPromotionReqPage, @RequestAttribute String memberEmail){
-		List<Promotion> bookPromotionList = promotionService.selectBookPromotionList(bookPromotionReqPage, memberEmail);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookPromotionList);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-	}
 	/*
 	@GetMapping("/promotionList/search/{reqPage}")
 	public ResponseEntity<ResponseDTO> selectPromotionListSearch(@PathVariable int reqPage, @RequestParam String keyword){
@@ -109,5 +110,34 @@ public class PromotionController {
 		}
 		
 	}
+	/*
+	@PostMapping("/applyPromotion")
+	public ResponseEntity<ResponseDTO> applyPromotion(@ModelAttribute Promotion promotion, @ModelAttribute MultipartFile promotionImg, @ModelAttribute MultipartFile promotionFile){
+		String savepath = root+"/promotion/";
+		
+		String thumbnailFilepath = fileUtils.upload(savepath, promotionImg);
+		
+		promotion.setPromotionImg(thumbnailFilepath);
+		
+		ArrayList<PromotionFile> fileList = new ArrayList<PromotionFile>();
+		if(promotionFile != null) {
+			for(MultipartFile file : promotionFile) {
+				String filepath = fileUtils.upload(savepath, file);
+				PromotionFile promotionfile = new PromotionFile();
+				promotionfile.setProFilePath(filepath);
+				fileList.add(promotionfile);
+			}
+		}
+		int result = promotionService.applyPromotion(promotion,fileList);
+		if(result == 1+ fileList.size()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "faile", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	*/
+		
 
 }

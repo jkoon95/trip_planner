@@ -20,6 +20,7 @@ import CouponReg from "../admin/CouponReg";
 import MemberMgmt from "../admin/MemberMgmt";
 import MemberView from "../admin/MemberView";
 import PartnerMgmt from "../admin/PartnerMgmt";
+import TourMgmgt from "../tour/TourMgmt";
 
 const MypageMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -108,7 +109,7 @@ const MypageMain = (props) => {
   const [menus, setMenus] = useState([
     { url: "myBooks", text: "내 예약", active: true },
     { url: "myTrips", text: "내 여행", active: false },
-    { url: "myCoupons", text: "쿠폰함", active: false },
+    { url: "myCoupons", text: "내 쿠폰함", active: false },
     { url: "myLikes", text: "찜 리스트", active: false },
     { url: "myReviews", text: "내 리뷰 보기", active: false },
     { url: "myInfo", text: "내 정보 수정", active: false },
@@ -141,6 +142,8 @@ const MypageMain = (props) => {
             <Route path="/tour/edit/:tourNo" element={<TourEdit />} />
             {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
+            <Route path="/tour/mgmt" element={<TourMgmgt member={member} />} />
+
             <Route
               path="/admin/couponReg"
               element={<CouponReg isLogin={isLogin} member={member} />}

@@ -31,7 +31,7 @@ const MyBooks = () => {
   // 숙소 예약 내역 불러오기
   useEffect(() => {
     axios
-      .get(backServer + "/inn/bookInnsList/" + bookInnsReqPage)
+      .get(backServer + "/mypage/bookInnsList/" + bookInnsReqPage)
       .then((res) => {
         console.log(res.data.data);
         if(res.data.message === "success"){
@@ -52,7 +52,7 @@ const MyBooks = () => {
   // 투어 예약 내역 불러오기
   useEffect(() => {
     axios
-      .get(backServer + "/tour/bookTourList/" + bookTourReqPage)
+      .get(backServer + "/mypage/bookTourList/" + bookTourReqPage)
       .then((res) => {
         console.log(res.data.data);
         if(res.data.message === "success"){
@@ -73,7 +73,7 @@ const MyBooks = () => {
   // 프로모션 예약 내역 불러오기
   useEffect(() => {
     axios
-      .get(backServer + "/promotion/bookPromotionList/" + bookPromotionReqPage)
+      .get(backServer + "/mypage/bookPromotionList/" + bookPromotionReqPage)
       .then((res) => {
         console.log(res.data.data);
         if(res.data.message === "success"){

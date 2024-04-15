@@ -64,4 +64,25 @@ const Textarea = (props) => {
   );
 }
 
-export { Input, Button, Textarea };
+const Select = (props) => {
+  const options = props.options;
+  const data = props.data;
+  const setData = props.setData;
+  const changeData = (e) => {
+    setData(e.target.value);
+  };
+
+  return(
+    <div className="select">
+      <select onChange={changeData} value={data}>
+        {
+          options.map((item, i) => {
+            return <option key={"option"+i} value={item}>{item}</option>
+          })
+        }
+      </select>
+    </div>
+  );
+}
+
+export { Input, Button, Textarea, Select };

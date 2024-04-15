@@ -178,5 +178,25 @@ public class TourService {
 		return bookTourList;
 	}
 
+	@Transactional
+	public int insertBook(TourBook tourBook) {
+		return tourDao.insertBook(tourBook);
+	}
+
+	public Map selectTourBook(int reqPage, int memberNo) {
+		int numPerPage = 10;		// 한 페이지당 게시물 수
+		int pageNaviSize = 5;	// 페이지 네비게이션 길이
+		int totalCount = tourDao.totalBookCount(memberNo);	// 전체 게시물 수
+		// 페이징처리에 필요한 값을 계산해서 객체로 리턴받음
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int end = reqPage*numPerPage;
+		int start = end-numPerPage+1;
+		List list = tourDao.selectTourBook(start, end, memberNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourBook",list);
+		map.put("pi",pi);
+		return map;
+	}
+
 	
 }

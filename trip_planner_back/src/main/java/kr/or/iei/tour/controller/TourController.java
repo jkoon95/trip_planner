@@ -250,18 +250,24 @@ public class TourController {
 		}
 	}
 	
+	@PostMapping(value="/book")
+	public ResponseEntity<ResponseDTO> insertBook(@RequestBody TourBook tourBook){
+		System.out.println(tourBook);
+		int result = tourService.insertBook(tourBook);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 	
-	
-	@Operation(summary = "내 투어 예약 리스트 조회", description = "내 투어 예약 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
-	})
-	@GetMapping("/bookTourList/{bookTourReqPage}")
-	public ResponseEntity<ResponseDTO> selectBookInnsList(@PathVariable int bookTourReqPage, @RequestAttribute String memberEmail){
-		List<TourBook> bookTourList = tourService.selectBookTourList(bookTourReqPage, memberEmail);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", bookTourList);
-		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	@GetMapping(value="/mgmt/{reqPage}/{memberNo}")
+	public ResponseEntity<ResponseDTO> tourBook(@PathVariable int reqPage, @PathVariable int memberNo){
+		Map map = tourService.selectTourBook(reqPage, memberNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
 }

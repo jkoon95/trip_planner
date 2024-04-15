@@ -328,6 +328,16 @@
 	    )
 	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
 	</select>
-
+	<select id="selectTopTour" resultType="tour">
+		SELECT TOUR_TBL.TOUR_NO,
+		       TOUR_TBL.TOUR_NAME,
+		       TOUR_TBL.TOUR_IMG,
+		       AVG(REVIEW_TBL.REVIEW_STAR) AS AVG_STAR
+		FROM TOUR_TBL
+		LEFT JOIN REVIEW_TBL ON TOUR_TBL.TOUR_NO = REVIEW_TBL.REF_NO
+		WHERE REVIEW_TBL.REVIEW_TYPE = 2
+		GROUP BY TOUR_TBL.TOUR_NO, TOUR_TBL.TOUR_NAME, TOUR_TBL.TOUR_IMG
+		ORDER BY AVG_STAR DESC
+	</select>
 	
 </mapper>

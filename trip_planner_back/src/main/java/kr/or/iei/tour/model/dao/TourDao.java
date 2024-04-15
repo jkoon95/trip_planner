@@ -89,4 +89,6 @@ public interface TourDao {
 
 	List searchTourMgmt2(int start, int end, String searchText, int memberNo);
 
+	List selectTopTour();
+
 }

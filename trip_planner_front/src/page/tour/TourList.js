@@ -123,6 +123,25 @@ const TourIconBox = ({ searchType }) => {
 };
 
 const TourSwiper = () => {
+  const [topRatedTours, setTopRatedTours] = useState([]);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/tour/topTour")
+      .then((res) => {
+        setTopRatedTours(res.data.data.topTour);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
+  const handleTourView = (tourNo) => {
+    navigate("/tour/view/" + tourNo);
+  };
+
   return (
     <Swiper
       className="tour-swiper"
@@ -134,21 +153,15 @@ const TourSwiper = () => {
       loop={true}
       speed={600}
     >
-      <SwiperSlide>
-        <img alt="박람회" src="/images/테마파크.jpg" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img alt="박람회" src="/images/테마파크.jpg" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img alt="박람회" src="/images/테마파크.jpg" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img alt="박람회" src="/images/테마파크.jpg" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img alt="박람회" src="/images/테마파크.jpg" />
-      </SwiperSlide>
+      {topRatedTours.map((tour, index) => (
+        <SwiperSlide key={index} onClick={() => handleTourView(tour.tourNo)}>
+          {tour.tourImg === null || tour.tourImg === "null" ? (
+            <img src="/images/테마파크.jpg" />
+          ) : (
+            <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+          )}
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 };

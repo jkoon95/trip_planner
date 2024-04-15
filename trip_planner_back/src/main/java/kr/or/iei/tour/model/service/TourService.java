@@ -227,5 +227,12 @@ public class TourService {
 		map.put("pi",pi);
 		return map;
 	}
+
+	public Map selectTopTour() {
+		List topTour = tourDao.selectTopTour();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("topTour", topTour);
+		return map;
+	}
 	
 }

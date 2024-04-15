@@ -284,5 +284,12 @@ public class TourController {
 	    return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@GetMapping(value="/topTour")
+	public ResponseEntity<ResponseDTO> topTourList(){
+		Map map = tourService.selectTopTour();
+		System.out.println(map);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 	
 }

@@ -1,6 +1,7 @@
 package kr.or.iei.mypage.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,6 +84,19 @@ public class MypageController {
 	public ResponseEntity<ResponseDTO> selectMyCouponList(@PathVariable int reqPage, @RequestBody CouponList c, @RequestAttribute String memberEmail){
 		List<CouponList> myCouponList = adminService.selectMyCouponList(reqPage, c.getCouponRange(), memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", myCouponList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@Operation(summary = "내 투어 찜 리스트 조회", description = "내 투어 찜 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping("/likeTourList/{memberNo}")
+	public ResponseEntity<ResponseDTO> selectLikeTourList(@PathVariable int memberNo){
+		Map map = tourService.selectLikeTourList(memberNo);
+		System.out.println(map);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 

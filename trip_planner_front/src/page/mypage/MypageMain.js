@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import MypageSideMenu from "./MypageSideMenu";
 import "./mypage.css";
-import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import MyTrips from "./MyTrips";
 import MyBooks from "./MyBooks";
 import MyCoupons from "./MyCoupons";
@@ -30,7 +36,7 @@ const MypageMain = (props) => {
   const navigate = useNavigate();
   const [currMemberType, setCurrMemberType] = useState();
   const [currPartnerType, setCurrPartnerType] = useState();
-  
+
   if (!isLogin) {
     Swal.fire({
       icon: "warning",
@@ -58,48 +64,48 @@ const MypageMain = (props) => {
         } else if (res.data.data.memberType === 2) {
           //업체로 로그인 시
           axios
-          .get(backServer + "/partner/" + res.data.data.memberNo)
-          .then((res2) => {
-            // console.log(res2.data.data);
-            setCurrPartnerType(res2.data.data.partnerType);
-            if (res2.data.data !== null && res2.data.data.partnerType === 1) {
-              //숙소
-              setMenus([
-                { url: "innReg", text: "숙소 등록", active: true },
-                { url: "roomReg", text: "방 등록", active: false },
-                { url: "innMgmt", text: "숙소 관리", active: false },
-                { url: "bookMgmt", text: "예약 관리", active: false },
-              ]);
-              // navigate("/mypage/"+menus[0].url);
-            } else if (
-              res2.data.data !== null &&
-              res2.data.data.partnerType === 2
-            ) {
-              //투어
-              setMenus([
-                { url: "tour/mgmt", text: "투어 예약관리", active: true },
-                { url: "tour/reg", text: "투어 상품등록", active: false },
-                { url: "tour/sale", text: "투어 상품조회", active: false },
-                { url: "myInfo", text: "내 정보 수정", active: false },
-              ]);
-              // navigate("/mypage/"+menus[0].url);
-            } else {
-              //업체인데 등록한 업체가 없을 경우
-              axios
-              .get(backServer + "/member")
-              .then((res) => {
-                navigate("/businessAuth/", {
-                  state: { memberEmail: res.data.data.memberEmail },
-                });
-              })
-              .catch((res) => {
-                console.log(res);
-              });
-            }
-          })
-          .catch((res2) => {
-            console.log(res2);
-          });
+            .get(backServer + "/partner/" + res.data.data.memberNo)
+            .then((res2) => {
+              // console.log(res2.data.data);
+              setCurrPartnerType(res2.data.data.partnerType);
+              if (res2.data.data !== null && res2.data.data.partnerType === 1) {
+                //숙소
+                setMenus([
+                  { url: "innReg", text: "숙소 등록", active: true },
+                  { url: "roomReg", text: "방 등록", active: false },
+                  { url: "innMgmt", text: "숙소 관리", active: false },
+                  { url: "bookMgmt", text: "예약 관리", active: false },
+                ]);
+                // navigate("/mypage/"+menus[0].url);
+              } else if (
+                res2.data.data !== null &&
+                res2.data.data.partnerType === 2
+              ) {
+                //투어
+                setMenus([
+                  { url: "tour/mgmt", text: "투어 예약관리", active: true },
+                  { url: "tour/reg", text: "투어 상품등록", active: false },
+                  { url: "tour/sale", text: "투어 상품조회", active: false },
+                  { url: "myInfo", text: "내 정보 수정", active: false },
+                ]);
+                // navigate("/mypage/"+menus[0].url);
+              } else {
+                //업체인데 등록한 업체가 없을 경우
+                axios
+                  .get(backServer + "/member")
+                  .then((res) => {
+                    navigate("/businessAuth/", {
+                      state: { memberEmail: res.data.data.memberEmail },
+                    });
+                  })
+                  .catch((res) => {
+                    console.log(res);
+                  });
+              }
+            })
+            .catch((res2) => {
+              console.log(res2);
+            });
         } else {
           //회원으로 로그인 시
         }
@@ -123,7 +129,7 @@ const MypageMain = (props) => {
 
   useEffect(() => {
     // navigate("/mypage/"+menus[0].url);
-  }, [menus])
+  }, [menus]);
 
   // console.log(menus);
 
@@ -138,7 +144,7 @@ const MypageMain = (props) => {
           <Routes>
             <Route path="/myTrips" element={<MyTrips />} />
             <Route path="/myCoupons" element={<MyCoupons />} />
-            <Route path="/myLikes" element={<MyLikes />} />
+            <Route path="/myLikes" element={<MyLikes member={member} />} />
             <Route path="/myReviews" element={<MyReviews />} />
             <Route
               path="/myInfo"
@@ -154,7 +160,6 @@ const MypageMain = (props) => {
             {/* <Route path="/tour/ticket/:tourNo" element={<TourTicket />} /> */}
             <Route path="/tour/ticket/:tourNo" element={<TourTicket />} />
             <Route path="/tour/mgmt" element={<TourMgmgt member={member} />} />
-
 
             <Route
               path="/admin/couponReg"
@@ -174,13 +179,22 @@ const MypageMain = (props) => {
               path="/admin/partnerMgmt"
               element={<PartnerMgmt isLogin={isLogin} member={member} />}
             />
-            <Route path="/*" element={
-              currMemberType === 1 ? <MyBooks />
-              : currMemberType === 3 ? <MemberMgmt isLogin={isLogin} member={member} />
-              : currMemberType === 2 && currPartnerType === 1 ? <InnReg member={member} />
-              : currMemberType === 2 && currPartnerType === 2 ? <TourMgmgt member={member} />
-              : ""
-            }/>
+            <Route
+              path="/*"
+              element={
+                currMemberType === 1 ? (
+                  <MyBooks />
+                ) : currMemberType === 3 ? (
+                  <MemberMgmt isLogin={isLogin} member={member} />
+                ) : currMemberType === 2 && currPartnerType === 1 ? (
+                  <InnReg member={member} />
+                ) : currMemberType === 2 && currPartnerType === 2 ? (
+                  <TourMgmgt member={member} />
+                ) : (
+                  ""
+                )
+              }
+            />
           </Routes>
         </div>
       </section>

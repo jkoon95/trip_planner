@@ -240,5 +240,13 @@ public class TourService {
 	public int insertLike(Like like) {
 		return tourDao.insertLike(like);
 	}
+
+	public Map selectLikeTourList(int memberNo) {
+		List likeTourList = tourDao.selectLikeTourList(memberNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("likeTourList", likeTourList);
+		return map;
+	}
+
 	
 }

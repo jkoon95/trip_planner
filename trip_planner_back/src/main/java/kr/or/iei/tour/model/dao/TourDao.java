@@ -94,4 +94,6 @@ public interface TourDao {
 
 	int insertLike(Like like);
 
+	List selectLikeTourList(int memberNo);
+
 }

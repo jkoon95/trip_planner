@@ -29,4 +29,7 @@ public class Tour {
 	private String memberEmail;
 	private String searchText;
 	private String startDate;
+	private int ticketAdult;
+	private int ticketYouth;
+	private int ticketChild;
 }

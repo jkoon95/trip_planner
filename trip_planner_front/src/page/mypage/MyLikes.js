@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const MyLikes = () => {
+const MyLikes = (props) => {
+  const memberNo = props.member.memberNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [likeInnsList, setLikeInnsList] = useState([]);
   const [likeTourList, setLikeTourList] = useState([]);
@@ -19,6 +20,20 @@ const MyLikes = () => {
     tabs[index].active = true;
     setTabs([...tabs]);
   };
+
+  // 투어 찜 목록 불러오기
+  useEffect(() => {
+    axios
+      .get(backServer + "/mypage/likeTourList/" + memberNo)
+      .then((res) => {
+        console.log(res.data.data);
+        // if (res.data.message === "success") {
+        // }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return (
     <div className="myBooks_wrap">

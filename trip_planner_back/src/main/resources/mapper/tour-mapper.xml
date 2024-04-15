@@ -188,7 +188,7 @@
 		    SELECT rownum rnum, tbt.* FROM (
 		        SELECT 
 		            tb.tour_book_no, 
-		            tb.tour_no,  -- 추가된 부분: TOUR_NO 열을 선택
+		            tb.tour_no,
 		            tb.book_guest, 
 		            tb.book_fee, 
 		            tb.book_date,
@@ -351,5 +351,16 @@
 		    WHERE MEMBER_NO = #{memberNo} AND REF_NO = #{refNo}
 		)
 	</insert>
+	<select id="selectLikeTourList" resultType="tour">
+		SELECT T.*, TT.TICKET_ADULT, TT.TICKET_YOUTH, TT.TICKET_CHILD
+		FROM TOUR_TBL T
+		INNER JOIN TOUR_TICKET_TBL TT ON T.TOUR_NO = TT.TOUR_NO
+		WHERE T.TOUR_NO IN (
+		    SELECT REF_NO
+		    FROM LIKE_TBL
+		    WHERE MEMBER_NO = #{memberNo} AND LIKE_TYPE = 2
+		)
+		ORDER BY (SELECT LIKE_NO FROM LIKE_TBL WHERE REF_NO = T.TOUR_NO)
+	</select>
 	
 </mapper>

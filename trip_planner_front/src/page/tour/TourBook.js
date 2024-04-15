@@ -304,19 +304,19 @@ const TourBook = (props) => {
                   {member.memberPhone}
                 </div>
                 <div className="tour-book-info-box-btn">
-                  <button
+                  {/* <button
                     className="btn_primary outline md"
                     onClick={handleMyInfo}
                   >
                     정보변경
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
-            <div className="tour-book-coupon-wrap">
+            {/* <div className="tour-book-coupon-wrap">
               <div className="tour-book-coupon-title">할인 쿠폰</div>
               <div className="tour-book-coupon"></div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="tour-book-window">

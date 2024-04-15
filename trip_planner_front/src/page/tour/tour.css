@@ -577,13 +577,14 @@
 
 /* 예약 페이지 */
 .tour-book-wrap {
+  flex-grow: 1;
   margin-top: 40px;
   /* width: 700px; */
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+  /* justify-content: space-between; */
 }
 .tour-book-content {
-  width: 60%; /* 오른쪽에 배치될 내용의 너비를 조정 */
+  /* width: 60%;  오른쪽에 배치될 내용의 너비를 조정 */
 }
 
 .tour-book-wrap .tour-book-top > .tour-book-title {
@@ -709,19 +710,22 @@
 
 /* 우측 결제창 */
 .tour-book-window {
-  position: fixed; /* 화면의 상단에 고정시킴 */
-  top: 200px; /* 원하는 수직 위치 지정 */
-  right: 200px; /* 원하는 수평 위치 지정 */
+  position: sticky; /* 화면의 상단에 고정시킴 */
+  top: 204px; /* 원하는 수직 위치 지정 */
+  /* right: 200px;  원하는 수평 위치 지정 */
   width: 25%;
   box-sizing: border-box;
   padding: 20px;
   border: 1px solid #999;
   border-radius: 10px;
-  z-index: 1000; /* 다른 요소 위에 고정되도록 설정 */
+  z-index: 100; /* 다른 요소 위에 고정되도록 설정 */
 }
 
 .tour-book-all-wrap {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
 }
 
 .tour-book-payment-title > h2 {

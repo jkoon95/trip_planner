@@ -2,7 +2,9 @@ package kr.or.iei.inn.model.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,15 @@ import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
 import kr.or.iei.inn.model.dto.SelectInnList;
 import kr.or.iei.trip.model.dto.Trip;
+import kr.or.iei.util.PageInfo;
+import kr.or.iei.util.Pagination;
 
 @Service
 public class InnService {
 	@Autowired
 	private InnDao innDao;
+	@Autowired
+	private Pagination pagination;
 	
 
 	public List selectRoomOption() {
@@ -70,9 +76,19 @@ public class InnService {
 		
 		return innDao.reservationInn(innReservation);
 	}
-	public List selectInnList(SelectInnList selectInnList, String memberEmail) {
+	public Map selectInnList(SelectInnList selectInnList, String memberEmail) {
+		int numPerPage = 15;
+		int pageNaviSize = 10;
+		int totalCount = innDao.totalCount(selectInnList);
+		int reqPage = selectInnList.getReqPage();
+		PageInfo pi = pagination.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		selectInnList.setStart(pi.getStart());
+		selectInnList.setEnd(pi.getEnd());
 		List list = innDao.selectInnList(selectInnList);
-		return list;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("selectInnList", list);
+		map.put("pi",pi);
+		return map;
 	}
 	public List<InnReservation> selectBookInnsList(int bookInnsReqPage, String memberEmail) {
 		int amount = 5;
@@ -92,6 +108,7 @@ public class InnService {
 	}
 	public List selectHashTag(int roomNo) {		
 		return innDao.selectHashTag(roomNo);
+	}
 	@Transactional
 	public int likeUpdate(int innNo, int memberNo) {
 		return innDao.likeUpdate(innNo, memberNo);

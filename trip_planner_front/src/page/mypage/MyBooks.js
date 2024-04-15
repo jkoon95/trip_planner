@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
-import "./myBooks.css";
 
 const MyBooks = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;

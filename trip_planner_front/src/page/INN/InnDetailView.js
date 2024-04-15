@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./innDetailView.css";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,6 +6,9 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Input, Textarea } from "../../component/FormFrm";
+import Swal from "sweetalert2";
+import Rating from "@mui/material/Rating";
 
 {
   /* params로 innNo 받기  */
@@ -13,7 +16,7 @@ import "swiper/css/pagination";
 
 const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const isLogin = props.inLogin;
+  const isLogin = props.isLogin;
   const [partnerName, setPartnerName] = useState("");
   const [innNo] = useState(41);
   const [roomNo] = useState({});
@@ -21,6 +24,9 @@ const InnDetailView = (props) => {
   const [room, setRoom] = useState([]);
   const [innFile, setInnFile] = useState([]);
   const [innFileRoom, setInnFileRoom] = useState([]);
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewTitle, setReivewTitle] = useState("");
+  const [reviewStar, setReviewStar] = React.useState(5);
 
   useEffect(() => {
     axios
@@ -95,6 +101,23 @@ const InnDetailView = (props) => {
   }, [room, innNo]);
 */
   }
+
+  const insertReview = () => {
+    const form = new FormData();
+    form.append("reviewStar", reviewStar);
+    form.append("reviewTitle", reviewTitle);
+    form.append("reviewContent", reviewContent);
+    axios
+      .post(backServer + "/inn/innReview", form)
+      .then((res) => {
+        //setCommentContent("");
+        //setIsRegistComment(!isRegistComment);
+        Swal.fire("댓글이 등록되었습니다 :)");
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
   return (
     <section className="contents detail-view">
       <div className="inn-detail-wrap">
@@ -170,6 +193,50 @@ const InnDetailView = (props) => {
       </div>
       <div className="review-contents">
         <h3>리뷰</h3>
+        <>
+          {isLogin ? (
+            <div className="review-box">
+              <div className="review-top">
+                <div className="inn_review-star">
+                  <Rating
+                    name="size-large"
+                    size="large"
+                    defaultValue={5}
+                    value={reviewStar}
+                    onChange={(event, newValue) => {
+                      setReviewStar(newValue);
+                    }}
+                  />
+                </div>
+                <Input
+                  type="text"
+                  data={reviewTitle}
+                  setData={setReivewTitle}
+                  placeholder="리뷰의 제목을 정해주세요"
+                  content="review-title"
+                />
+              </div>
+              <div className="review-contents">
+                <Textarea
+                  data={reviewContent}
+                  setData={setReviewContent}
+                  placeholder="평점을 입력하고 숙소에 대한 리뷰를 남겨주세요 :)"
+                />
+                <div class="btn_area">
+                  <button
+                    type="button"
+                    class="btn_secondary md"
+                    onClick={insertReview}
+                  >
+                    등록
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </>
       </div>
     </section>
   );
@@ -234,6 +301,7 @@ const RoomItem = (props) => {
           </div>
           <div className="room-right-detail">
             <div className="room-check">
+              <span className="material-icons time">schedule</span>
               <div>입실 : {inn.innCheckInTime}</div>
               <div>퇴실 : {inn.innCheckOutTime}</div>
             </div>
@@ -243,7 +311,10 @@ const RoomItem = (props) => {
           <div className="room-bottom">
             <div className="room-price">
               <div>결제금액 : </div>
-              {room.roomPrice} 원
+              <div className="payment">
+                {Number(room.roomPrice).toLocaleString()} 원
+                <div>(1박 기준) </div>
+              </div>
             </div>
             <button type="button" className="btn_primary">
               {/* rommNo를 예약페이지로 보내주기*/}
@@ -252,7 +323,7 @@ const RoomItem = (props) => {
           </div>
         </div>
       </div>
-      <div className="option-title">※ 서비스 및 부대시설</div>
+      <div className="option-title">서비스 및 부대시설</div>
       <div className="inn-detail-btm">
         {option.map((option, index) => (
           <OptionItem key={"option" + index} option={option} />

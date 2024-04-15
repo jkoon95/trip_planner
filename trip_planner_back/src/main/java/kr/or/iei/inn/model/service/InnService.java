@@ -115,5 +115,8 @@ public class InnService {
 	}
 	public List selectOption(int innNo, int roomNo) {
 		return innDao.selectOption(innNo,roomNo);
+  }
+	public List<Inn> selectMainInnList() {
+		return innDao.selectMainInnList();
 	}	
 }

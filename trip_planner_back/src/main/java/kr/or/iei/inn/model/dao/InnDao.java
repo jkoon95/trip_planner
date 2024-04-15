@@ -55,8 +55,12 @@ public interface InnDao {
 
 	List selectOption(int innNo, int roomNo);
 
+
 	int totalCount(SelectInnList selectInnList);
 
+
+
+	List<Inn> selectMainInnList();
 
 
 }

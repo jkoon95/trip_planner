@@ -3,15 +3,18 @@ import TourSearchBox from "./TourSearchBox";
 import { Button } from "../../component/FormFrm";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const TourType = () => {
+const TourType = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const isLogin = props.isLogin;
+  const [member, setMember] = useState("");
   const location = useLocation();
   const [tourType, setTourType] = useState("");
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -24,6 +27,15 @@ const TourType = () => {
       setTicketList(location.state.ticketList);
       setTourType(location.state.tourType);
     }
+
+    axios
+      .get(backServer + "/tour/member")
+      .then((res) => {
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   }, [location.state]);
 
   const handleTourMore = () => {
@@ -44,7 +56,15 @@ const TourType = () => {
       <div className="tour-list-sort"></div>
       {tourList.slice(0, visibleTour).map((tour, index) => {
         const ticket = ticketList[index];
-        return <TourItem key={index} tour={tour} ticket={ticket} />;
+        return (
+          <TourItem
+            key={index}
+            tour={tour}
+            ticket={ticket}
+            isLogin={isLogin}
+            member={member}
+          />
+        );
       })}
       {visibleTour < tourList.length && (
         <div className="tour-list-more">
@@ -57,7 +77,7 @@ const TourType = () => {
   );
 };
 
-const TourItem = ({ tour, ticket }) => {
+const TourItem = ({ tour, ticket, isLogin, member }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const tourView = () => {
@@ -85,6 +105,33 @@ const TourItem = ({ tour, ticket }) => {
       tourTypeText = "기타";
   }
   const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
+
+  const handleAddBookmark = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        title: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      const formData = new FormData();
+      formData.append("refNo", tour.tourNo); // 투어 번호
+      formData.append("memberNo", member.memberNo); // 사용자 ID
+
+      axios
+        .post(backServer + "/tour/like", formData)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("찜하기 성공!", "찜 목록에서 확인하세요.", "success");
+          } else {
+            Swal.fire("찜하기 실패", "이미 찜한 투어입니다.", "error");
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  };
 
   return (
     <div className="tour-prod-zone">
@@ -114,6 +161,7 @@ const TourItem = ({ tour, ticket }) => {
             className="tour-prod-bookmark"
             alt="찜"
             src="/images/투어찜.png"
+            onClick={handleAddBookmark}
           />
         </div>
       </div>

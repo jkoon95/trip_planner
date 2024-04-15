@@ -191,7 +191,7 @@ const TourBook = (props) => {
                 icon: "success",
                 title: "결제가 완료되었습니다.",
               });
-              navigate("/mypage/tour/mgmt");
+              navigate("/mypage");
             }
           })
           .catch((res) => {

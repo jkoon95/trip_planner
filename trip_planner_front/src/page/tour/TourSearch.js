@@ -57,7 +57,15 @@ const TourSearch = (props) => {
       ) : (
         tourList.slice(0, visibleTour).map((tour, index) => {
           const ticket = ticketList[index];
-          return <TourItem key={index} tour={tour} ticket={ticket} />;
+          return (
+            <TourItem
+              key={index}
+              tour={tour}
+              ticket={ticket}
+              isLogin={isLogin}
+              member={member}
+            />
+          );
         })
       )}
       {visibleTour < tourList.length && (
@@ -71,7 +79,7 @@ const TourSearch = (props) => {
   );
 };
 
-const TourItem = ({ tour, ticket }) => {
+const TourItem = ({ tour, ticket, isLogin, member }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const tourView = () => {
@@ -100,32 +108,32 @@ const TourItem = ({ tour, ticket }) => {
   }
   const salesPeriod = tour.salesPeriod ? tour.salesPeriod.substring(0, 10) : "";
 
-  // const handleAddBookmark = () => {
-  //   if (!isLogin) {
-  //     Swal.fire({
-  //       icon: "warning",
-  //       title: "로그인 후 이용이 가능합니다.",
-  //       confirmButtonText: "닫기",
-  //     });
-  //   } else {
-  //     const formData = new FormData();
-  //     formData.append("refNo", tour.tourNo); // 투어 번호
-  //     formData.append("memberNo", member.memberNo); // 사용자 번호
+  const handleAddBookmark = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        title: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      const formData = new FormData();
+      formData.append("refNo", tour.tourNo); // 투어 번호
+      formData.append("memberNo", member.memberNo); // 사용자 번호
 
-  //     axios
-  //       .post(backServer + "/tour/like", formData)
-  //       .then((res) => {
-  //         if (res.data.message === "success") {
-  //           Swal.fire("찜하기 성공!", "찜 목록에서 확인하세요.", "success");
-  //         } else {
-  //           Swal.fire("찜하기 실패", "이미 찜한 투어입니다.", "error");
-  //         }
-  //       })
-  //       .catch((res) => {
-  //         console.log(res);
-  //       });
-  //   }
-  // };
+      axios
+        .post(backServer + "/tour/like", formData)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("찜하기 성공!", "찜 목록에서 확인하세요.", "success");
+          } else {
+            Swal.fire("찜하기 실패", "이미 찜한 투어입니다.", "error");
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  };
 
   return (
     <div className="tour-prod-zone">
@@ -155,7 +163,7 @@ const TourItem = ({ tour, ticket }) => {
             className="tour-prod-bookmark"
             alt="찜"
             src="/images/투어찜.png"
-            // onClick={handleAddBookmark}
+            onClick={handleAddBookmark}
           />
         </div>
       </div>

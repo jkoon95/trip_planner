@@ -92,6 +92,10 @@ public class PromotionService {
 		// TODO Auto-generated method stub
 		return promotionDao.purchasePromotion(promotionNo, memberNo, seat);
 	}
+
+	public List<Promotion> selectMainPromotionList() {
+		return promotionDao.selectMainPromotionList();
+	}
 	
 	/*
 	public Map selectPromotionListSearch(int reqPage) {

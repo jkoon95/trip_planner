@@ -122,4 +122,16 @@ public class BlogController {
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", myBlogList);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
+	
+	@Operation(summary = "메인 블로그리스트 호출", description = "메인 블로그리스트 호출")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping(value="/main/blogList")
+	public ResponseEntity<ResponseDTO> selectMainBlogList() {
+		List<Blog> blogList = blogService.selectMainBlogList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", blogList);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
 }

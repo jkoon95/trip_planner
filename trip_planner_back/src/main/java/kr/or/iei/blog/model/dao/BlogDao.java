@@ -29,4 +29,6 @@ public interface BlogDao {
 
 	List<Blog> selectMyBlogList(String memberEmail, int start, int end);
 
+	List<Blog> selectMainBlogList();
+
 }

@@ -113,8 +113,7 @@
  			where promotion_no = #{promotionNo}
  	</select>
  	
- 	
- 	<select id="selectBookPromotionList">
+ 	<select id="selectBookPromotionList" resultType="promotion">
  		select * from
 		(select rownum rnum, pt.* from (select order_no, promotion_no, promotion_name, promotion_img, promotion_price, promotion_intro, promotion_region, to_char(promotion_expired_date, 'yyyy-mm-dd') promotion_expired_date,
 		(select
@@ -142,4 +141,8 @@
  	<insert id="purchasePromotion">
  		insert into promotion_order_tbl values (promotion_order_seq.nextval,#{memberNo},#{promotionNo},#{seat})
  	</insert>
+ 	
+ 	<select id="selectMainPromotionList" resultType="promotion">
+ 		select * from (select rownum rnum, p.* from (select * from promotion_tbl where promotion_expired_date <![CDATA[>=]]> sysdate order by promotion_no desc)p) where rnum between 1 and 8 
+ 	</select>
 </mapper>

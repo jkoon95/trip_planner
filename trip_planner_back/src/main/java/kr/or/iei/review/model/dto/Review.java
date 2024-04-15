@@ -22,7 +22,11 @@ public class Review {
 	private int refNo;
 	private String reviewDate;
 	
+	private int innNo;
+	
 	private int tourNo;
 	private String memberNickname;
+	
+	
 
 }

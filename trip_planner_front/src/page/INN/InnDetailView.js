@@ -25,13 +25,15 @@ const InnDetailView = (props) => {
   const [innFile, setInnFile] = useState([]);
   const [innFileRoom, setInnFileRoom] = useState([]);
   const [reviewContent, setReviewContent] = useState("");
-  const [reviewTitle, setReivewTitle] = useState("");
+  const [reviewTitle, setReviewTitle] = useState("");
   const [reviewStar, setReviewStar] = React.useState(5);
   const params = useParams();
   const innNo = params.innNo;
   const location = useLocation();
   const checkInOutDates = location.state;
-  console.log(checkInOutDates);
+  //console.log(checkInOutDates);
+
+  const [innReviewList, setInnReviewList] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -113,15 +115,26 @@ const InnDetailView = (props) => {
     form.append("reviewStar", reviewStar);
     form.append("reviewTitle", reviewTitle);
     form.append("reviewContent", reviewContent);
+    form.append("innNo", innNo);
     axios
       .post(backServer + "/inn/innReview", form)
       .then((res) => {
-        //setCommentContent("");
-        //setIsRegistComment(!isRegistComment);
-        Swal.fire("댓글이 등록되었습니다 :)");
+        if (res.data.message === "success") {
+          Swal.fire("등록되었습니다 :)");
+          axios(backServer + "/inn/innReviewList/" + innNo)
+            .then((res) => {
+              console.log(res.data.data);
+              setInnReviewList(res.data.data.data.innReviewList);
+            })
+            .catch((res) => {
+              console.log(res);
+            });
+        } else {
+          Swal.fire("등록 중 문제 발생, 잠시후 다시 등록바랍니다. ");
+        }
       })
       .catch((res) => {
-        console.log(res.data);
+        console.log(res);
       });
   };
   return (
@@ -221,7 +234,7 @@ const InnDetailView = (props) => {
                 <Input
                   type="text"
                   data={reviewTitle}
-                  setData={setReivewTitle}
+                  setData={setReviewTitle}
                   placeholder="리뷰의 제목을 정해주세요"
                   content="review-title"
                 />

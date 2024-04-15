@@ -212,7 +212,7 @@
 			    (SELECT min(room_price) 
 			    FROM room_tbl r 
 			    WHERE r.inn_no=inn.inn_no) 
-			    BETWEEN #{minPrice} AND #{maxPrice}
+			    BETWEEN #{minPrice} and #{maxPrice}
 			</if>
 			<if test="hashTag != null">
 				<foreach collection="hashTag" item="hashTagItem">
@@ -250,7 +250,7 @@
 				order by (SELECT min(room_price) FROM room_tbl r WHERE r.inn_no=inn.inn_no) asc
 			</if>
 			<if test="selectSort == 'high-price'">
-				order by (SELECT max(room_price) FROM room_tbl r WHERE r.inn_no=inn.inn_no) desc
+				order by (SELECT max(room_price) FROM room_tbl) desc
 			</if>
 		)i)
 	where rnum between #{start}and #{end}

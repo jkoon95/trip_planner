@@ -284,12 +284,5 @@ public class TourController {
 	    return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@GetMapping(value="/sortStar/{tourType}")
-		public ResponseEntity<ResponseDTO> sortByStar(@PathVariable int tourType){
-		Map map = tourService.sortByStar(tourType);
-		System.out.println(map);
-		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
-		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
-	}
 	
 }

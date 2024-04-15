@@ -38,7 +38,6 @@ const TourSearch = (props) => {
         <h2>검색결과</h2>
       </div>
       <TourSearchBox />
-      <TourSearchOption />
       {tourList.length === 0 ? (
         <div className="tour-list-empty">
           <h2>검색어를 입력하세요</h2>
@@ -60,34 +59,6 @@ const TourSearch = (props) => {
         </div>
       )}
     </section>
-  );
-};
-
-const TourSearchOption = () => {
-  const [selectedOption, setSelectedOption] = useState("추천순");
-
-  const handleButtonClick = (option) => {
-    setSelectedOption(option);
-  };
-  return (
-    <div className="tour-option-wrap">
-      <button
-        className={`tour-option-btn ${
-          selectedOption === "가격 낮은순" ? "active" : ""
-        }`}
-        onClick={() => handleButtonClick("가격 낮은순")}
-      >
-        가격 낮은순
-      </button>
-      <button
-        className={`tour-option-btn ${
-          selectedOption === "추천순" ? "active" : ""
-        }`}
-        onClick={() => handleButtonClick("추천순")}
-      >
-        추천순
-      </button>
-    </div>
   );
 };
 

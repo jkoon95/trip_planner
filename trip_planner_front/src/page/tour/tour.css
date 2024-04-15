@@ -143,8 +143,8 @@
   margin: 0 auto;
   margin-bottom: 60px;
 }
-.tour-list-sort > .tour-search-sort-star,
-.tour-search-sort-price {
+.tour-list-sort > .tour-search-sort-date,
+.tour-list-sort > .tour-search-sort-price {
   font-size: 16px;
   margin-right: 20px;
   float: right;
@@ -152,7 +152,7 @@
 }
 
 .tour-search-sort-price > button,
-.tour-search-sort-star > button {
+.tour-search-sort-date > button {
   font-size: 16px;
 }
 

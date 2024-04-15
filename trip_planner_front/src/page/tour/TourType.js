@@ -34,19 +34,6 @@ const TourType = () => {
     navigate("/tourList");
   };
 
-  const handleSortStar = () => {
-    axios
-      .get(backServer + "/tour/sortStar/" + tourType)
-      .then((res) => {
-        setTourList(res.data.tourList);
-        setTicketList(res.data.ticketList);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
-  const handleSortPrice = () => {};
-
   return (
     <section className="contents">
       <div className="tour-list-title" onClick={handleTitleClick}>
@@ -54,14 +41,7 @@ const TourType = () => {
         <h2>카테고리 검색</h2>
       </div>
       <TourSearchBox />
-      <div className="tour-list-sort">
-        <div className="tour-search-sort-price">
-          <button onClick={handleSortPrice}>낮은 가격 순</button>
-        </div>
-        <div className="tour-search-sort-star">
-          <button onClick={handleSortStar}>추천순</button>
-        </div>
-      </div>
+      <div className="tour-list-sort"></div>
       {tourList.slice(0, visibleTour).map((tour, index) => {
         const ticket = ticketList[index];
         return <TourItem key={index} tour={tour} ticket={ticket} />;

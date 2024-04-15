@@ -328,10 +328,6 @@
 	    )
 	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
 	</select>
-	<select id="sortByStar" resultType="tour">
-	</select>
-	<select id="sortByStarTicket" resultType="tourTicket">
-	</select>
 
 	
 </mapper>

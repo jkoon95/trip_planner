@@ -45,6 +45,7 @@ const TourList = () => {
             state: {
               tourList: res.data.data.tourList,
               ticketList: res.data.data.ticketList,
+              tourType: type,
             },
           });
         }

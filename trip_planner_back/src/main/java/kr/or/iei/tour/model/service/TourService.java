@@ -228,5 +228,14 @@ public class TourService {
 		return map;
 	}
 
+	public Map sortByStar(int tourType) {
+		List tourList = tourDao.sortByStar(tourType);
+		List ticketList = tourDao.sortByStarTicket(tourType);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("tourList", tourList);
+		map.put("ticketList", ticketList);
+		return map;
+	}
+	
 	
 }

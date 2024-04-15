@@ -145,9 +145,11 @@ const TourBook = (props) => {
 
       if (parseInt(totalPrice()) !== 0) {
         const { IMP } = window;
+        // 내 계정관리 - 내 식별코드 - 고객사 식별코드
         IMP.init("imp26315412");
 
         const data = {
+          // 결제 연동 - PG상점아이디 (CPID)
           pg: "danal_tpay.9810030929", // PG사
           pay_method: "card", // 결제수단
           merchant_uid: `mid_${new Date().getTime()}`, // 주문번호

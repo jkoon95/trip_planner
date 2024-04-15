@@ -8,14 +8,16 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "./tour.css";
 import TourSearchBox from "./TourSearchBox";
 import axios from "axios";
-import { Swal } from "sweetalert2";
+import Swal from "sweetalert2";
 
-const TourList = () => {
+const TourList = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
+  const isLogin = props.isLogin;
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [visibleTour, setVisibleTour] = useState(8); // 8개만 표시
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  const navigate = useNavigate();
+  const [member, setMember] = useState("");
 
   useEffect(() => {
     axios
@@ -23,6 +25,15 @@ const TourList = () => {
       .then((res) => {
         setTourList(res.data.data.tourList.slice(0, 40));
         setTicketList(res.data.data.ticketList.slice(0, 40));
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+
+    axios
+      .get(backServer + "/tour/member")
+      .then((res) => {
+        setMember(res.data.data);
       })
       .catch((res) => {
         console.log(res);
@@ -75,7 +86,16 @@ const TourList = () => {
       <div className="tour-prod-wrap">
         {tourList.slice(0, visibleTour).map((tour, index) => {
           const ticket = ticketList[index];
-          return <TourProd key={"tour" + index} tour={tour} ticket={ticket} />;
+          return (
+            <TourProd
+              key={"tour" + index}
+              tour={tour}
+              ticket={ticket}
+              tourNo={tour.tourNo}
+              isLogin={isLogin}
+              member={member}
+            />
+          );
         })}
         {visibleTour < tourList.length && (
           <div className="show-tour-more">
@@ -167,8 +187,7 @@ const TourSwiper = () => {
 };
 
 const TourProd = (props) => {
-  const tour = props.tour;
-  const ticket = props.ticket;
+  const { tour, ticket, isLogin, member } = props;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const tourView = () => {
@@ -197,11 +216,43 @@ const TourProd = (props) => {
       tourTypeText = "기타";
   }
 
+  const handleAddBookmark = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        title: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      const formData = new FormData();
+      formData.append("refNo", tour.tourNo); // 투어 번호
+      formData.append("memberNo", member.memberNo); // 사용자 번호
+
+      axios
+        .post(backServer + "/tour/like", formData)
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire("찜하기 성공!", "찜 목록에서 확인하세요.", "success");
+          } else {
+            Swal.fire("찜하기 실패", "이미 찜한 투어입니다.", "error");
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  };
+
   return (
     <>
       <div className="tour-prod">
         <div className="tour-bookmark">
-          <img alt="찜" src="/images/투어찜.png" />
+          <img
+            alt="찜"
+            src="/images/투어찜.png"
+            onClick={handleAddBookmark}
+            style={{ cursor: "pointer" }}
+          />
         </div>
         <div className="tour-prod-img" onClick={tourView}>
           {tour.tourImg === null || tour.tourImg === "null" ? (

@@ -28,6 +28,7 @@ import kr.or.iei.ResponseDTO;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.inn.model.dto.InnReservation;
+import kr.or.iei.like.model.dto.Like;
 import kr.or.iei.tour.model.dto.Tour;
 import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.tour.model.dto.TourTicket;
@@ -290,6 +291,18 @@ public class TourController {
 		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
+	@PostMapping(value="/like")
+	public ResponseEntity<ResponseDTO> insertTourLike(@ModelAttribute Like like) {
+		int result = tourService.insertLike(like);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 	}
 	
 }

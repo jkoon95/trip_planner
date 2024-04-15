@@ -339,5 +339,15 @@
 		GROUP BY TOUR_TBL.TOUR_NO, TOUR_TBL.TOUR_NAME, TOUR_TBL.TOUR_IMG
 		ORDER BY AVG_STAR DESC
 	</select>
+	<insert id="insertLike">
+		INSERT INTO LIKE_TBL (LIKE_NO, MEMBER_NO, LIKE_TYPE, REF_NO)
+		SELECT LIKE_SEQ.nextval, #{memberNo}, 2, #{refNo}
+		FROM DUAL
+		WHERE NOT EXISTS (
+		    SELECT 1
+		    FROM LIKE_TBL
+		    WHERE MEMBER_NO = #{memberNo} AND REF_NO = #{refNo}
+		)
+	</insert>
 	
 </mapper>

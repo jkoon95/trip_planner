@@ -113,7 +113,7 @@ function App() {
             path="/blogView/:blogNo"
             element={<BlogView isLogin={isLogin} />}
           />
-          <Route path="/tourList" element={<TourList />} />
+          <Route path="/tourList" element={<TourList isLogin={isLogin} />} />
           <Route path="/tourSearch" element={<TourSearch />} />
           <Route path="/tourType" element={<TourType />} />
           <Route

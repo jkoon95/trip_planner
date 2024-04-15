@@ -100,7 +100,7 @@ const BlogView = (props) => {
               <>
                 <button
                   type="button"
-                  className="btn_secondary outline md"
+                  class="btn_secondary outline md"
                   onClick={deleteBoard}
                 >
                   삭제
@@ -137,10 +137,10 @@ const BlogView = (props) => {
             return <DayItem key={"list" + index} day={day} />;
           })}
         </div>
-        <div className="btn-area">
+        <div class="btn-area">
           <button
             type="button"
-            className="btn_secondary listBtn"
+            class="btn_secondary listBtn"
             onClick={blogList}
           >
             블로그 목록
@@ -160,7 +160,7 @@ const BlogView = (props) => {
                   />
                   <button
                     type="button"
-                    className="btn_secondary md"
+                    class="btn_secondary md"
                     onClick={insertComment}
                   >
                     등록
@@ -317,7 +317,7 @@ const CommentItem = (props) => {
           {isLogin &&
           member &&
           member.memberNickName === comment.memberNickName ? (
-            <div className="btn-area">
+            <div class="btn-area">
               <button
                 type="button"
                 className="btn_primary sm first"

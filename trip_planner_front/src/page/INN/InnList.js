@@ -4,9 +4,23 @@ import { Link, Route, Routes } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
+import Pagination from "../../component/Pagination";
+import InnDetailView from "./InnDetailView";
 
 const InnList = (props) => {
   const location = useLocation();
+  if (location.state == null) {
+    const defaultPlace = "";
+    const defaultCheckInDay = "";
+    const defaultCheckOutDay = "";
+    const defaultBookPeople = "";
+    location.state = {
+      detailPlace: defaultPlace,
+      detailCheckIn: defaultCheckInDay,
+      detailCheckOut: defaultCheckOutDay,
+      detailPeople: defaultBookPeople,
+    };
+  }
   const place = location.state.detailPlace;
   const checkInDay = dayjs(location.state.detailCheckIn, "YYYY-MM-DD").toDate();
   const checkOutDay = dayjs(
@@ -38,10 +52,6 @@ const InnList = (props) => {
       active: false,
     },
   ]);
-  const navigate = useNavigate();
-  const InnDetailView = () => {
-    navigate("/innDetailView");
-  };
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [innAddr, setInnAddr] = useState(place);
@@ -57,9 +67,12 @@ const InnList = (props) => {
   const [selectSort, setSelectSort] = useState("review");
   const checkIn = dayjs(checkInDate).format("YYYY-MM-DD"); //date picker로 받아온 체크인 날짜
   const checkOut = dayjs(checkOutDate).format("YYYY-MM-DD"); //date picker로 받아온 체크아웃 날짜
+
+  const [reqPage, setReqPage] = useState(1);
+  const [pageInfo, setPageInfo] = useState({});
   useEffect(() => {
     searchInn();
-  }, [innType, minPrice, maxPrice, innType, hashTag, option, selectSort]);
+  }, [minPrice, maxPrice, selectSort, reqPage, innAddr, innType]);
   const searchInn = () => {
     if (innAddr && checkInDate && checkOutDate && bookGuest) {
       const searchInnList = {
@@ -71,6 +84,7 @@ const InnList = (props) => {
         maxPrice: maxPrice,
         innType: innType,
         selectSort: selectSort,
+        reqPage: reqPage,
       };
 
       if (hashTag.length != 0) {
@@ -82,7 +96,8 @@ const InnList = (props) => {
       axios
         .post(backServer + "/inn/innList", searchInnList)
         .then((res) => {
-          setInnList(res.data.data);
+          setInnList(res.data.data.selectInnList);
+          setPageInfo(res.data.data.pi);
         })
         .catch((res) => {
           console.log(res);
@@ -148,7 +163,11 @@ const InnList = (props) => {
         <div className="inn-list-wrap">
           <div className="inn-list-wrap-top">
             <div>
-              <span className="searchArea">'{innAddr}' 로 검색한 결과</span>
+              {innAddr == "" ? (
+                <span className="seachArea">지역과 날짜를 선택해주세요</span>
+              ) : (
+                <span className="searchArea">'{innAddr}' 로 검색한 결과</span>
+              )}
             </div>
             <div className="sort-option-box">
               <div className="default-sort-option" onClick={openSortMenu}>
@@ -204,15 +223,13 @@ const InnList = (props) => {
               })}
             </div>
           </div>
-        </div>
-        <div className="innDetailView hidden">
-          {/* <button
-            type="button"
-            className="btn_primary outline"
-            onClick={InnDetailView}
-          >
-            숙소상세
-          </button> */}
+          <div className="inn-Page">
+            <Pagination
+              pageInfo={pageInfo}
+              reqPage={reqPage}
+              setReqPage={setReqPage}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -225,6 +242,7 @@ const InnListBox = (props) => {
   const index = props.index;
   const addrSpilt = innItem.innAddr.split(" ");
   const clickEvent = props.clickEvent;
+  const navigate = useNavigate();
 
   const likeRef = useRef();
   const likeCount = (innNo) => {
@@ -240,9 +258,13 @@ const InnListBox = (props) => {
         });
     }
   };
+  const InnDetailView = () => {
+    const innNo = innItem.innNo;
+    navigate("/innDetailView/" + innNo);
+  };
   return (
     <div className="inn-box">
-      <div className="inn-img-box" onClick={clickEvent}>
+      <div className="inn-img-box" onClick={InnDetailView}>
         <img src={backServer + "/inn/innList/" + innItem.filepath} />
       </div>
       <div className="content-box">
@@ -264,6 +286,7 @@ const InnListBox = (props) => {
         <div className="inn-addr2">{addrSpilt[1]}</div>
         <div className="like-review">
           {/* <span className="like-box">{innItem.likeCount}개의 찜</span> */}
+          <span className="material-icons icon">reviews</span>
           <span className="review-box">{innItem.reviewCount}개의 리뷰</span>
         </div>
         <div className="inn-price">{innItem.roomPrice.toLocaleString()}원</div>

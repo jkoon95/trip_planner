@@ -138,6 +138,17 @@ public class PromotionController {
 		}
 	}
 	*/
-		
+	
+	@Operation(summary = "메인 프로모션리스트 호출", description = "메인 프로모션리스트 호출")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@GetMapping("/main/promotionList")
+	public ResponseEntity<ResponseDTO> selectMainPromotionList() {
+		List<Promotion> promotionList = promotionService.selectMainPromotionList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", promotionList);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 
 }

@@ -35,4 +35,6 @@ public interface PromotionDao {
 	int checkRemainingSeat(int promotionNo);
 
 	int purchasePromotion(int promotionNo, int memberNo, int seat);
+
+	List<Promotion> selectMainPromotionList();
 }

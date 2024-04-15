@@ -27,7 +27,11 @@ const Main = () => {
   // const [searchObj, setSearchObj] = useState({});
   const mainHero = useRef();
   const heroInner = useRef();
+  const [blogList, setBlogList] = useState([]);
+  const [innList, setInnList] = useState([]);
+  const [promotionList, setPromotionList] = useState([]);
 
+  //티켓 마우스모션
   const ticketMoveFunc = (e) => {
     let heroWidth = mainHero.current.offsetWidth;
     let heroHeight = mainHero.current.offsetHeight;
@@ -45,6 +49,7 @@ const Main = () => {
     setDetailPeople(numberInput);
   }
 
+  //메인 숙소검색하는 티켓
   useEffect(() => {
     let calc = 0;
     if(detailCheckIn && detailCheckOut){
@@ -62,6 +67,48 @@ const Main = () => {
     console.log(searchObj);
     navigate("/innList", {state: searchObj});
   }
+
+  //프로모션 리스트 호출(별점 높은 순)
+  useEffect(() => {
+    axios.get(backServer + "/promotion/main/promotionList")
+    .then((res) => {
+      console.log(res.data.data);
+      if(res.data.message === "success"){
+        setPromotionList([...res.data.data]);
+      }
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }, [])
+
+  //블로그 리스트 호출
+  useEffect(() => {
+    axios.get(backServer + "/blog/main/blogList")
+    .then((res) => {
+      console.log(res.data.data);
+      if(res.data.message === "success"){
+        setBlogList([...res.data.data]);
+      }
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }, [])
+
+  //숙소 리스트 호출(별점 높은 순)
+  useEffect(() => {
+    axios.get(backServer + "/inn/main/innList")
+    .then((res) => {
+      console.log(res.data.data);
+      if(res.data.message === "success"){
+        setInnList([...res.data.data]);
+      }
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }, [])
 
   return (
     <>
@@ -139,7 +186,7 @@ const Main = () => {
       </section>
 
       <section className="contents main_promotion">
-        <h3>프로모션</h3>
+        <h3 className="hidden">프로모션</h3>
         <div className="slide_area">
           <Swiper
             className="promotion_slide"
@@ -151,21 +198,20 @@ const Main = () => {
             loop={true}
             speed={600}
           >
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample1.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample2.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample3.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
+            {promotionList.map((promotion, i) => {
+              return(
+                <SwiperSlide key={"promotion"+i}>
+                  <Link to={"/promotionView/"+promotion.promotionNO}>
+                    <img src={backServer + "/promotion/promotionList/" + promotion.promotionImg} />
+                    <div className="promotion_info">
+                      {/* <div className="promotionRegion">{promotion.promotionRegion}</div> */}
+                      <div className="promotionIntro">{promotion.promotionIntro}</div>
+                      <div className="promotionName">{promotion.promotionName}</div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              )
+            })}
           </Swiper>
         </div>
       </section>
@@ -180,40 +226,24 @@ const Main = () => {
             // autoplay={{ delay: 5000, disableOnInteraction: false }}
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={4}
+            slidesPerGroup={4}
             spaceBetween={20}
-            loop={true}
+            // loop={true}
             speed={600}
           >
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample1.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample2.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample3.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample1.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample2.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample3.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
+            {blogList.map((blog, i) => {
+              return(
+                <SwiperSlide key={"blog"+i}>
+                  <Link to={"/blogView/"+blog.blogNo}>
+                    <img src={backServer + "/blog/blogThumbnail/" + blog.blogThumbnail} />
+                    <div className="blog_info">
+                      <div className="blogTitle">{blog.blogTitle}</div>
+                      <div className="blogDate">{blog.blogDate}</div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              )
+            })}
           </Swiper>
         </div>
       </section>
@@ -228,40 +258,25 @@ const Main = () => {
             // autoplay={{ delay: 5000, disableOnInteraction: false }}
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={4}
+            slidesPerGroup={4}
             spaceBetween={20}
-            loop={true}
+            // loop={true}
             speed={600}
           >
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample1.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample2.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample3.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample1.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample2.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Link to="#">
-                <img src="/images/bg_sample3.jpg" alt="이미지 샘플" />
-              </Link>
-            </SwiperSlide>
+            {innList.map((inn, i) => {
+              return(
+                <SwiperSlide key={"inn"+i}>
+                  <Link to={"/innDetailView/"+inn.innNo}>
+                    <img src={backServer + "/inn/innFileList/" + inn.filepath} />
+                    <div className="inn_info">
+                      <div className="innType">{inn.innType === 1 ? '호텔' : inn.innType === 2 ? '리조트' : inn.innType === 3 ? '펜션' : '게스트하우스'}</div>
+                      <div className="partnerName">{inn.partnerName}</div>
+                      <div className="reviewRate">{inn.reviewRate}</div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              )
+            })}
           </Swiper>
         </div>
       </section>

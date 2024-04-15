@@ -198,7 +198,7 @@
 			AND 
 			    (SELECT COUNT(room_max_people) 
 			    FROM room_tbl r 
-			    WHERE room_max_people >= 2 
+			    WHERE room_max_people >= #{bookGuest} 
 			    AND r.inn_no=inn.inn_no) >= 1
 			    
 			AND

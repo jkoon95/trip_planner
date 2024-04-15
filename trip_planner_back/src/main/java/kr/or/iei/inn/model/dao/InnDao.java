@@ -48,7 +48,10 @@ public interface InnDao {
 	List selectInnList(SelectInnList selectInnList);
 
 	List selectHashTag(int roomNo);
+	
 	int likeUpdate(int innNo, int memberNo);
+
+	List selectOption(int innNo, int roomNo);
 
 
 }

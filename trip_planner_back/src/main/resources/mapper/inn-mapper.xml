@@ -69,6 +69,20 @@
 	<select id="selectHashTag" resultType="roomHashTag">
 		select * from room_hashtag_tbl where room_no=#{roomNo}		
 	</select>
+	<select id="selectOption" resultType="option">
+		SELECT
+			o.option_no,
+		    o.option_name
+		FROM
+		    room_tbl r
+		JOIN
+		    room_option_tbl ro ON r.room_no = ro.room_no
+		JOIN
+		    option_tbl o ON ro.option_no = o.option_no
+		WHERE
+		    r.inn_no = #{innNo}
+		    AND r.room_no = #{roomNo}
+	</select>
 	
 	<insert id="reservationInn">
 		insert into inn_book_tbl values

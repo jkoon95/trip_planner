@@ -7,14 +7,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+{
+  /* params로 innNo 받기  */
+}
+
 const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.inLogin;
   const [partnerName, setPartnerName] = useState("");
   const [innNo] = useState(41);
-  {
-    /* params로 innNo 받기  */
-  }
   const [roomNo] = useState({});
   const [inn, setInn] = useState("");
   const [room, setRoom] = useState([]);
@@ -37,7 +38,6 @@ const InnDetailView = (props) => {
       .get(backServer + "/inn/roomInfo/" + innNo)
       .then((res) => {
         setRoom(res.data.data);
-        console.log(res.data.data);
       })
       .catch((res) => {
         console.log(res);
@@ -77,6 +77,24 @@ const InnDetailView = (props) => {
     }
   }, [inn.partnerNo, setPartnerName]);
 
+  {
+    /* 
+  useEffect(() => {
+    room.forEach((roomItem) => {
+      const roomNo = roomItem.roomNo;
+      axios
+        .get(backServer + "/inn/optionList/" + innNo + "/" + roomNo)
+        .then((res) => {
+          console.log(res);
+          setOption(res.data.data);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    });
+  }, [room, innNo]);
+*/
+  }
   return (
     <section className="contents detail-view">
       <div className="inn-detail-wrap">
@@ -119,7 +137,6 @@ const InnDetailView = (props) => {
           {/* 업체 상호명 */}
           <div>{inn.innAddr}</div> {/* 숙소 유형 */}
         </div>
-
         <div className="inn-detail-intro">
           {/* 숙소 소개 */}
           <h2>숙소 소개</h2>
@@ -161,8 +178,11 @@ const RoomItem = (props) => {
   const room = props.room;
   const inn = props.inn;
   const innFileRoom = props.innFileRoom;
+  const innNo = props.inn.innNo;
+  const [option, setOption] = useState([]);
   const [hashTag, setHashTag] = useState([]);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+
   useEffect(() => {
     const roomNo = room.roomNo;
     axios
@@ -175,46 +195,68 @@ const RoomItem = (props) => {
         console.log(res);
       });
   }, [backServer, room.roomNo, setHashTag]);
+
+  useEffect(() => {
+    const innNo = inn.innNo;
+    const roomNo = room.roomNo;
+
+    axios
+      .get(backServer + "/inn/optionList/" + innNo + "/" + roomNo)
+      .then((res) => {
+        setOption(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, [backServer, innNo, room.roomNo, setOption]);
   return (
     <div className="inn-detail-rooms">
-      <div className="room-box-left">
-        {innFileRoom.map((innFileRoom, index) => {
-          if (innFileRoom.roomNo === room.roomNo) {
-            return (
-              <InnFileRoomItem
-                key={"innFileRoom" + index}
-                innFileRoom={innFileRoom}
-              />
-            );
-          }
-          return null;
-        })}
-      </div>
-      <div className="room-box-right">
-        <div className="room-name">{room.roomName}</div>
-        <div className="hashTagItem">
-          {hashTag.map((hashTag, index) => (
-            <HashTagItem key={"hashTag" + index} hashTag={hashTag} />
-          ))}
+      <div className="inn-detail-conts">
+        <div className="room-box-left">
+          {innFileRoom.map((innFileRoom, index) => {
+            if (innFileRoom.roomNo === room.roomNo) {
+              return (
+                <InnFileRoomItem
+                  key={"innFileRoom" + index}
+                  innFileRoom={innFileRoom}
+                />
+              );
+            }
+            return null;
+          })}
         </div>
-        <div className="room-right-detail">
-          <div className="room-check">
-            <div>입실 : {inn.innCheckInTime}</div>
-            <div>퇴실 : {inn.innCheckOutTime}</div>
+        <div className="room-box-right">
+          <div className="room-name">{room.roomName}</div>
+          <div className="hashTagItem">
+            {hashTag.map((hashTag, index) => (
+              <HashTagItem key={"hashTag" + index} hashTag={hashTag} />
+            ))}
           </div>
-          <div>객실 최대인원 : {room.roomMaxPeople}</div>
-        </div>
+          <div className="room-right-detail">
+            <div className="room-check">
+              <div>입실 : {inn.innCheckInTime}</div>
+              <div>퇴실 : {inn.innCheckOutTime}</div>
+            </div>
+            <div>객실 최대인원 : {room.roomMaxPeople}</div>
+          </div>
 
-        <div className="room-bottom">
-          <div className="room-price">
-            <div>결제금액 : </div>
-            {room.roomPrice} 원
+          <div className="room-bottom">
+            <div className="room-price">
+              <div>결제금액 : </div>
+              {room.roomPrice} 원
+            </div>
+            <button type="button" className="btn_primary">
+              {/* rommNo를 예약페이지로 보내주기*/}
+              객실 예약
+            </button>
           </div>
-          <button type="button" className="btn_primary">
-            {/* rommNo를 예약페이지로 보내주기*/}
-            객실 예약
-          </button>
         </div>
+      </div>
+      <div className="option-title">※ 서비스 및 부대시설</div>
+      <div className="inn-detail-btm">
+        {option.map((option, index) => (
+          <OptionItem key={"option" + index} option={option} />
+        ))}
       </div>
     </div>
   );
@@ -242,6 +284,53 @@ const InnFileRoomItem = (props) => {
 const HashTagItem = (props) => {
   const hashTag = props.hashTag;
   return <span>{hashTag}</span>;
+};
+const OptionItem = (props) => {
+  const option = props.option;
+  const getIcon = (optionNo) => {
+    switch (optionNo) {
+      case 1:
+        return "hot_tub"; // 사우나
+      case 2:
+        return "pool"; // 수영장
+      case 3:
+        return "restaurant"; // 레스토랑
+      case 4:
+        return "storefront"; // 매점
+      case 5:
+        return "local_convenience_store"; // 편의점
+      case 6:
+        return "fitness_center"; // 피트니스
+      case 7:
+        return "local_parking"; // 무료주차
+      case 8:
+        return "brunch_dining"; // 조식포함
+      case 9:
+        return "dining"; // 객실내취사
+      case 10:
+        return "wifi"; // 와이파이
+      case 11:
+        return "bathtub"; // 욕실용품
+      case 12:
+        return "directions_car"; // 픽업가능
+      case 13:
+        return "weekend"; // 라운지
+      case 14:
+        return "how_to_reg"; // 얼리체크인
+      case 15:
+        return "air"; // 에어컨
+      default:
+        return ""; // 기본값은 빈 문자열
+    }
+  };
+
+  return (
+    <div className="option-icon">
+      {/* 아이콘과 함께 옵션 이름 표시 */}
+      <span className="material-icons">{getIcon(option.optionNo)}</span>
+      <span>{option.optionName}</span>
+    </div>
+  );
 };
 
 export default InnDetailView;

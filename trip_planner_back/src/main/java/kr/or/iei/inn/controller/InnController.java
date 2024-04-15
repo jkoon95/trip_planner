@@ -197,9 +197,7 @@ public class InnController {
 	}
 	@GetMapping("/hashTag/{roomNo}")
 	public ResponseEntity<ResponseDTO> selectHashTag(@PathVariable int roomNo){
-		System.out.println(roomNo);
 		List hashTag = innService.selectHashTag(roomNo);
-		System.out.println(hashTag);
 		if(hashTag != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", hashTag);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -208,8 +206,17 @@ public class InnController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	
-	
+	@GetMapping("/optionList/{innNo}/{roomNo}")
+	public ResponseEntity<ResponseDTO> selectOption(@PathVariable int innNo, @PathVariable int roomNo){
+		List option = innService.selectOption(innNo,roomNo);
+		if(option != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", option);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}	
 	
 	//숙소상세페이지 끝
 	

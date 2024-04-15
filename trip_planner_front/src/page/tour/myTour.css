@@ -174,3 +174,26 @@
   margin: 0 auto;
   margin-top: 20px;
 }
+
+/* 투어 예약관리 */
+.tour-book-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tour-book-table .tour-book-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tour-book-table .tour-book-row .tour-book-col {
+  flex: 1;
+  padding: 15px 10px;
+}
+.tour-book-table .tour-book-row .tour-book-col:nth-child(3) {
+  cursor: pointer;
+}
+.tour-book-table .tour-book-row .tour-book-col:nth-child(3):hover {
+  text-decoration: underline;
+}

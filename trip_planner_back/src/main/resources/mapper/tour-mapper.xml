@@ -233,7 +233,11 @@
 	            SELECT
 	                tb.tour_book_no,
 	                tb.tour_no,
+	                t.tour_name,
 	                tb.member_no,
+	                m.member_name,
+	                m.member_phone,
+	                m.member_email,
 	                TO_CHAR(tb.book_date, 'yyyy-mm-dd') AS book_date,
 	                tb.book_guest,
 	                tb.book_fee,
@@ -242,10 +246,12 @@
 	            FROM tour_book_tbl tb
 	            JOIN tour_tbl t ON tb.tour_no = t.tour_no
 	            JOIN partner_tbl p ON t.partner_no = p.partner_no
+	            JOIN member_tbl m ON tb.member_no = m.member_no
 	            WHERE p.member_no = #{memberNo}
 	            ORDER BY tb.tour_no DESC
 	        ) t
 	    )
-	    WHERE rnum BETWEEN #{start} AND #{end}
+	    WHERE rnum BETWEEN #{start} AND #{end} order by 2 desc
 	</select>
+
 </mapper>

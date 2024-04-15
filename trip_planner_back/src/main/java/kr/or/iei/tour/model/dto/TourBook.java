@@ -24,6 +24,8 @@ public class TourBook {
 	private String tourName;
 	private String tourImg;
 	private String memberName;
+	private String memberPhone;
+	private String memberEmail;
 	private String bookStatusStr;
 	private String tourTypeStr;
 }

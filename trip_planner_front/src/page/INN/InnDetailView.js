@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { Input, Textarea } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Rating from "@mui/material/Rating";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 {
   /* params로 innNo 받기  */
@@ -29,6 +29,11 @@ const InnDetailView = (props) => {
   const [reviewStar, setReviewStar] = React.useState(5);
   const params = useParams();
   const innNo = params.innNo;
+  const location = useLocation();
+  const checkInOutDates = location.state;
+  console.log(checkInOutDates);
+
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(backServer + "/inn/detail/" + innNo)
@@ -183,6 +188,9 @@ const InnDetailView = (props) => {
                 room={room}
                 inn={inn}
                 innFileRoom={innFileRoom}
+                navigate={navigate}
+                checkInOutDates={checkInOutDates}
+                isLogin={isLogin}
               />
             );
           })}
@@ -224,10 +232,10 @@ const InnDetailView = (props) => {
                   setData={setReviewContent}
                   placeholder="평점을 입력하고 숙소에 대한 리뷰를 남겨주세요 :)"
                 />
-                <div class="btn_area">
+                <div className="btn_area">
                   <button
                     type="button"
-                    class="btn_secondary md"
+                    className="btn_secondary md"
                     onClick={insertReview}
                   >
                     등록
@@ -251,6 +259,9 @@ const RoomItem = (props) => {
   const [option, setOption] = useState([]);
   const [hashTag, setHashTag] = useState([]);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = props.navigate;
+  const checkInOutDates = props.checkInOutDates;
+  const isLogin = props.isLogin;
 
   useEffect(() => {
     const roomNo = room.roomNo;
@@ -278,6 +289,20 @@ const RoomItem = (props) => {
         console.log(res);
       });
   }, [backServer, innNo, room.roomNo, setOption]);
+
+  const reserveInn = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      }).then(navigate("/login"));
+    }
+    console.log(room);
+    room.checkInDate = checkInOutDates.checkInDate;
+    room.checkOutDate = checkInOutDates.checkOutDate;
+    navigate("/inn/reservationInn", { state: room });
+  };
   return (
     <div className="inn-detail-rooms">
       <div className="inn-detail-conts">
@@ -337,7 +362,7 @@ const RoomItem = (props) => {
                 <div>(1박 기준) </div>
               </div>
             </div>
-            <button type="button" className="btn_primary">
+            <button type="button" className="btn_primary" onClick={reserveInn}>
               {/* rommNo를 예약페이지로 보내주기*/}
               객실 예약
             </button>

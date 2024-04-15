@@ -218,6 +218,8 @@ const InnList = (props) => {
                     innItem={item}
                     index={index}
                     clickEvent={InnDetailView}
+                    checkInDate={checkInDate}
+                    checkOutDate={checkOutDate}
                   />
                 );
               })}
@@ -243,6 +245,8 @@ const InnListBox = (props) => {
   const addrSpilt = innItem.innAddr.split(" ");
   const clickEvent = props.clickEvent;
   const navigate = useNavigate();
+  const checkInDate = props.checkInDate;
+  const checkOutDate = props.checkOutDate;
 
   const likeRef = useRef();
   const likeCount = (innNo) => {
@@ -260,7 +264,12 @@ const InnListBox = (props) => {
   };
   const InnDetailView = () => {
     const innNo = innItem.innNo;
-    navigate("/innDetailView/" + innNo);
+    const checkInOutDates = {
+      checkInDate: dayjs(checkInDate).format("YYYY-MM-DD"),
+      checkOutDate: dayjs(checkOutDate).format("YYYY-MM-DD"),
+    };
+    console.log(checkInOutDates);
+    navigate("/innDetailView/" + innNo, { state: checkInOutDates });
   };
   return (
     <div className="inn-box">

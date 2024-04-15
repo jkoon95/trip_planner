@@ -4,7 +4,7 @@ const MyReviews = () => {
       <div>작성일자</div>
       <div>리뷰글</div>
       <div>
-        <span class="material-icons">delete_forever</span>
+        <span className="material-icons">delete_forever</span>
       </div>
     </div>
   );

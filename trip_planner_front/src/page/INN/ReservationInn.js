@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReservationInnFrm from "./ReservationInnFrm";
+import { useLocation, useParams } from "react-router-dom";
 
 const ReservationInn = () => {
+  const location = useLocation();
+  const room = location.state;
   const [guestName, setGuestName] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
   const [guestWish, setGuestWish] = useState("");
@@ -9,6 +12,7 @@ const ReservationInn = () => {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [bookStatus, setBookStatus] = useState(0);
   const [bookGuest, setBookGuest] = useState(0);
+  console.log(room);
 
   return (
     <div className="reservation-all-wrap">

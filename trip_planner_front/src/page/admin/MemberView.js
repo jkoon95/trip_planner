@@ -66,7 +66,7 @@ const MemberView = ({ isLogin, memberType }) => {
             : "관리자"}
         </h2>
         {member.memberStatus === 2 ? (
-          <span id="block-icons" class="material-icons">
+          <span id="block-icons" className="material-icons">
             block
           </span>
         ) : (
@@ -74,7 +74,7 @@ const MemberView = ({ isLogin, memberType }) => {
         )}
       </div>
       <div className="memberMgmtView_wrap">
-        <div class="memberMgmtView_area">
+        <div className="memberMgmtView_area">
           <JoinInputWrap
             label="회원번호"
             content="memberNo"

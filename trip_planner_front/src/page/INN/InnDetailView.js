@@ -131,6 +131,7 @@ const InnDetailView = (props) => {
             slidesPerView={1}
             loop={true}
             speed={600}
+            spaceBetween={20}
             autoplay={{ delay: 1500, disableOnInteraction: false }}
           >
             {innFile.map((innFile, index) => (
@@ -281,17 +282,36 @@ const RoomItem = (props) => {
     <div className="inn-detail-rooms">
       <div className="inn-detail-conts">
         <div className="room-box-left">
-          {innFileRoom.map((innFileRoom, index) => {
-            if (innFileRoom.roomNo === room.roomNo) {
-              return (
-                <InnFileRoomItem
-                  key={"innFileRoom" + index}
-                  innFileRoom={innFileRoom}
-                />
-              );
-            }
-            return null;
-          })}
+          {
+            <Swiper
+              className="inn_room_slide"
+              navigation={true}
+              pagination={true}
+              modules={[Navigation, Pagination, Autoplay]}
+              slidesPerView={1}
+              loop={true}
+              speed={600}
+              spaceBetween={20}
+              // autoplay={{ delay: 1500, disableOnInteraction: false }}
+            >
+              {innFileRoom.map((innFileRoom, index) => {
+                if (innFileRoom.roomNo === room.roomNo) {
+                  return (
+                    <SwiperSlide key={"innFileRoom" + index}>
+                      <img
+                        src={
+                          backServer +
+                          "/inn/innFileRoomList/" +
+                          innFileRoom.innFilePath
+                        }
+                      />
+                    </SwiperSlide>
+                  );
+                }
+                return null;
+              })}
+            </Swiper>
+          }
         </div>
         <div className="room-box-right">
           <div className="room-name">{room.roomName}</div>
@@ -346,13 +366,14 @@ const InnFileItem = (props) => {
 };
 */
 }
-const InnFileRoomItem = (props) => {
-  const innFileRoom = props.innFileRoom;
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  return (
-    <img src={backServer + "/inn/innFileRoomList/" + innFileRoom.innFilePath} />
-  );
-};
+// const InnFileRoomItem = (props) => {
+//   const innFileRoom = props.innFileRoom;
+//   const backServer = process.env.REACT_APP_BACK_SERVER;
+//   return (
+//     <img src={backServer + "/inn/innFileRoomList/" + innFileRoom.innFilePath} />
+//   );
+// };
+
 const HashTagItem = (props) => {
   const hashTag = props.hashTag;
   return <span>{hashTag}</span>;

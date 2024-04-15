@@ -87,7 +87,9 @@ const BlogView = (props) => {
         console.log(res.data);
       });
   };
-
+  const blogList = () => {
+    navigate("/blogList/");
+  };
   return (
     <section className="contents blogList">
       <div className="blog-view-wrap">
@@ -135,7 +137,15 @@ const BlogView = (props) => {
             return <DayItem key={"list" + index} day={day} />;
           })}
         </div>
-
+        <div class="btn-area">
+          <button
+            type="button"
+            class="btn_secondary listBtn"
+            onClick={blogList}
+          >
+            블로그 목록
+          </button>
+        </div>
         <div className="comment-content-box">
           <h3>댓글</h3>
           <>

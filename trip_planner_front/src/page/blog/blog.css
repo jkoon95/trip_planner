@@ -274,7 +274,9 @@ blog-list-box {
   font-size: 150%;
   color: var(--main_01);
 }
-
+.listBtn {
+  margin: 20px auto;
+}
 .blog-view-title span {
   color: var(--main_04);
 }

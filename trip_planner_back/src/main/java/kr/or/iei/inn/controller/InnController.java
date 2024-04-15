@@ -40,6 +40,7 @@ import kr.or.iei.inn.model.service.InnService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.partner.model.service.PartnerService;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.util.FileUtils;
 
 @RestController
@@ -217,8 +218,25 @@ public class InnController {
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}
+		}		
 	}	
+	@PostMapping(value="/innReview")
+	public ResponseEntity<ResponseDTO> insertInnReview(@ModelAttribute Review review, @RequestAttribute String memberEmail){
+		int result = innService.insertInnReview(review,memberEmail);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	@GetMapping(value="/innReviewList/{innNo}")
+	public ResponseEntity<ResponseDTO> innReviewList(@PathVariable int innNo){
+		Map map = innService.selectInnReviewList(innNo);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
 	
 	//숙소상세페이지 끝
 	

@@ -19,6 +19,7 @@ import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
 import kr.or.iei.inn.model.dto.SelectInnList;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.trip.model.dto.Trip;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
@@ -118,5 +119,16 @@ public class InnService {
   }
 	public List<Inn> selectMainInnList() {
 		return innDao.selectMainInnList();
+	}
+	public int insertInnReview(Review review, String memberEmail) {
+		int memberNo = innDao.searchMember(memberEmail);
+		review.setMemberNo(memberNo);
+		return innDao.insertInnReview(review);
+	}
+	public Map selectInnReviewList(int innNo) {
+		List innReviewList = innDao.selectInnReviewList(innNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("innReviewList",innReviewList);
+		return map;
 	}	
 }

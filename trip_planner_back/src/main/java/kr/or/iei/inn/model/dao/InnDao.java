@@ -11,6 +11,7 @@ import kr.or.iei.inn.model.dto.Room;
 import kr.or.iei.inn.model.dto.RoomHashTag;
 import kr.or.iei.inn.model.dto.RoomOption;
 import kr.or.iei.inn.model.dto.SelectInnList;
+import kr.or.iei.review.model.dto.Review;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -52,15 +53,17 @@ public interface InnDao {
 	
 	int likeUpdate(int innNo, int memberNo);
 
-
 	List selectOption(int innNo, int roomNo);
-
 
 	int totalCount(SelectInnList selectInnList);
 
-
-
 	List<Inn> selectMainInnList();
+
+	int searchMember(String memberEmail);
+
+	int insertInnReview(Review review);
+
+	List selectInnReviewList(int innNo);
 
 
 }

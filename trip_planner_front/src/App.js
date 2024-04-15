@@ -100,7 +100,7 @@ function App() {
           {/* 메인이니까 첫 번째 자리에 둘게요 */}
           <Route path="/" element={<Main />} />
           <Route
-            path="/innDetailView"
+            path="/innDetailView/:innNo"
             element={<InnDetailView isLogin={isLogin} />}
           />
           <Route path="/login" element={<Login login={login} />} />

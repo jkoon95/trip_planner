@@ -392,9 +392,12 @@ const CheckBoxInput = (props) => {
     <>
       {innTypeList.map((item, index) => {
         const selectInnType = () => {
-          innTypeList[index].checked = !innTypeList[index].checked;
+          innTypeList.forEach((type) => {
+            type.checked = false;
+          });
+          innTypeList[index].checked = !item.checked;
           setInnTypeList([...innTypeList]);
-          let checkedValue = innTypeList[index].defaultValue;
+          let checkedValue = item.defaultValue;
           setInnType(checkedValue);
         };
         return (
@@ -405,9 +408,10 @@ const CheckBoxInput = (props) => {
               name={item.name}
               id={item.content}
               checked={item.checked}
-              defaultValue={item.defaultValue}
+              value={item.defaultValue}
               onChange={(e) => {
-                selectInnType(index);
+                console.log(111111);
+                selectInnType();
               }}
             />
             <label htmlFor={item.content}>{item.text}</label>

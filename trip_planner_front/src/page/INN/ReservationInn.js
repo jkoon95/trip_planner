@@ -12,7 +12,6 @@ const ReservationInn = () => {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [bookStatus, setBookStatus] = useState(0);
   const [bookGuest, setBookGuest] = useState(0);
-  console.log(room);
 
   return (
     <div className="reservation-all-wrap">
@@ -34,6 +33,7 @@ const ReservationInn = () => {
         setBookStatus={setBookStatus}
         bookGuest={bookGuest}
         setBookGuest={setBookGuest}
+        ReservationInfo={room}
       />
     </div>
   );

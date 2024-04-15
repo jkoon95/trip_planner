@@ -96,7 +96,11 @@ const InnList = (props) => {
       axios
         .post(backServer + "/inn/innList", searchInnList)
         .then((res) => {
-          setInnList(res.data.data.selectInnList);
+          const updatedInnList = res.data.data.selectInnList.map((item) => ({
+            ...item,
+            bookGuest: Number(bookGuest),
+          }));
+          setInnList(updatedInnList);
           setPageInfo(res.data.data.pi);
         })
         .catch((res) => {
@@ -263,12 +267,14 @@ const InnListBox = (props) => {
     }
   };
   const InnDetailView = () => {
+    console.log(innItem);
     const innNo = innItem.innNo;
+    const bookGuest = innItem.bookGuest;
     const checkInOutDates = {
       checkInDate: dayjs(checkInDate).format("YYYY-MM-DD"),
       checkOutDate: dayjs(checkOutDate).format("YYYY-MM-DD"),
+      bookGuest: bookGuest,
     };
-    console.log(checkInOutDates);
     navigate("/innDetailView/" + innNo, { state: checkInOutDates });
   };
   return (

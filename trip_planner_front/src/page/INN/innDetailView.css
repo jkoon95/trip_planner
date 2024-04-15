@@ -71,9 +71,10 @@
   text-align: right;
 }
 .inn-detail-info {
-  margin-top: 30px;
+  margin: 30px 0;
   padding-top: 30px;
   border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
 }
 .inn-detail-info span {
   text-indent: 20px;
@@ -94,16 +95,16 @@
 }
 
 .room-name {
-  margin-top: 20px;
+  margin: 20px 0;
   text-align: center;
   font-family: pt-eb;
   color: var(--main_04);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   background-color: #f1f1f1;
 }
 .hashTagItem {
   text-align: center;
-  margin: 10px 0;
+  margin-bottom: 10px;
   color: var(--gray_03);
 }
 .hashTagItem span {
@@ -113,7 +114,7 @@
   display: block;
   max-width: 500px;
   height: auto;
-  max-height: 336px;
+  max-height: 376px;
   border-radius: 10px;
 }
 .room-box-right {
@@ -121,7 +122,7 @@
 }
 .room-right-detail {
   border-radius: 10px;
-  padding: 30px;
+  padding: 20px;
   color: var(--gray_03);
   display: flex;
   justify-content: space-between;
@@ -130,6 +131,9 @@
   background-color: rgb(255, 255, 255);
   margin-bottom: 10px;
 }
+.time {
+  font-size: 100%;
+}
 .room-bottom {
   text-align: right;
 }
@@ -137,15 +141,22 @@
   border-radius: 8px;
 }
 .room-price {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   padding: 20px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+}
+.payment div {
+  color: var(--gray_03);
+  font-size: 70%;
+}
+.payment {
   color: var(--main_02);
   font-family: pt-eb;
-  font-size: 1.125rem;
-  margin-bottom: 20px;
+  font-size: 1.25rem;
 }
 /* 메인 스와이퍼*/
 
@@ -222,5 +233,21 @@
 
 .option-title {
   font-family: pt-b;
-  margin-top: 10px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* 리뷰 */
+
+.review-top {
+  display: flex;
+
+  margin-bottom: 5px;
+}
+#review-title {
+  border: 1px solid var(--gray_03);
+  border-radius: 5px;
+}
+.review-box input {
+  text-indent: 10px;
 }

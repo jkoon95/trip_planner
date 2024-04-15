@@ -205,8 +205,6 @@ const CommentItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const member = props.member;
-  console.log(isLogin);
-  console.log(member);
   const comment = props.comment;
   const commentNumber = props.commentNumber;
   const isRegistComment = props.isRegistComment;

@@ -114,8 +114,11 @@ function App() {
             element={<BlogView isLogin={isLogin} />}
           />
           <Route path="/tourList" element={<TourList isLogin={isLogin} />} />
-          <Route path="/tourSearch" element={<TourSearch />} />
-          <Route path="/tourType" element={<TourType />} />
+          <Route
+            path="/tourSearch"
+            element={<TourSearch isLogin={isLogin} />}
+          />
+          <Route path="/tourType" element={<TourType isLogin={isLogin} />} />
           <Route
             path="/tour/view/:tourNo"
             element={<TourView isLogin={isLogin} />}

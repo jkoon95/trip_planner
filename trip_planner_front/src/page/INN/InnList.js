@@ -72,7 +72,7 @@ const InnList = (props) => {
   const [pageInfo, setPageInfo] = useState({});
   useEffect(() => {
     searchInn();
-  }, [minPrice, maxPrice, selectSort, reqPage, innAddr]);
+  }, [minPrice, maxPrice, selectSort, reqPage, innType]);
   const searchInn = () => {
     if (innAddr && checkInDate && checkOutDate && bookGuest) {
       const searchInnList = {

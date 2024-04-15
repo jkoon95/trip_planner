@@ -213,29 +213,7 @@ const ListSideMenu = (props) => {
       checked: false,
     },
   ]);
-  const searchInn = () => {
-    //장소, 날짜, 인원 선택 후 검색 버튼 누르면 해당하는 리스트 출력하는 함수
-    console.log(checkIn);
-    console.log(checkOut);
-    console.log(innAddr);
-    console.log(bookGuest);
-  };
-  // const array = new Array();
-  // hashTageMenu.forEach((item) => {
-  //   if (item.active) {
-  //     array.push(item.value);
-  //   }
-  // });
-  // const array = hashTageMenu.map((item) => {
-  //   if (item.active) {
-  //     return item.value;
-  //   }
-  // });
-  useEffect(() => {}, []);
 
-  const searchInnOption = () => {
-    //숙소 검색을 위한 객체
-  };
   return (
     <div className="sideMenu-wrap">
       <div className="search-wrap">
@@ -275,7 +253,7 @@ const ListSideMenu = (props) => {
           <Button
             text="btn_primary md"
             className="btn_primary md"
-            onClick={searchInn}
+            onClick={buttonFunction}
           >
             검색
           </Button>
@@ -414,9 +392,12 @@ const CheckBoxInput = (props) => {
     <>
       {innTypeList.map((item, index) => {
         const selectInnType = () => {
-          innTypeList[index].checked = !innTypeList[index].checked;
+          innTypeList.forEach((type) => {
+            type.checked = false;
+          });
+          innTypeList[index].checked = !item.checked;
           setInnTypeList([...innTypeList]);
-          let checkedValue = innTypeList[index].defaultValue;
+          let checkedValue = item.defaultValue;
           setInnType(checkedValue);
         };
         return (
@@ -427,9 +408,10 @@ const CheckBoxInput = (props) => {
               name={item.name}
               id={item.content}
               checked={item.checked}
-              defaultValue={item.defaultValue}
+              value={item.defaultValue}
               onChange={(e) => {
-                selectInnType(index);
+                console.log(111111);
+                selectInnType();
               }}
             />
             <label htmlFor={item.content}>{item.text}</label>

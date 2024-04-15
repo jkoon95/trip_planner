@@ -23,7 +23,6 @@ const PromotionList = (props) => {
       .get(backServer + "/promotion/promotionList/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -67,7 +66,6 @@ const PromotionList = (props) => {
       .get(backServer + "/promotion/promotionList/price/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }
@@ -81,7 +79,6 @@ const PromotionList = (props) => {
       .get(backServer + "/promotion/promotionList/deadline/" + reqPage)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res.data);
           setPromotionList(res.data.data.promotionList);
           setPageInfo(res.data.data.pi);
         }

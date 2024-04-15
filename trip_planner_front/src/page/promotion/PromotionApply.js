@@ -4,12 +4,17 @@ import axios from "axios";
 import { PromotionInputWrap } from "./PromotionFrm";
 import { Button } from "../../component/FormFrm";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import { ExpireDatePicker } from "../admin/AdminFrm";
 
 const PromotionApply = (props) => {
   const member = props.member;
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [partnerNo, setPartnerNo] = useState(0);
   const [promotionName, setPromotionName] = useState("");
-  const [promotionImg, setPromotionImg] = useState(null);
+  const [expiredDate, setExpiredDate] = useState(dayjs(new Date()));
+  const [promotionImage, setPromotionImage] = useState(null);
+  const [promotionThumbnail, setPromotionThumbnail] = useState(null);
   const [promotionPrice, setPromotionPrice] = useState(0);
   const [promotionIntro, setPromotionIntro] = useState("");
   const [promotionRegion, setPromotionRegion] = useState("");
@@ -19,16 +24,29 @@ const PromotionApply = (props) => {
   //썸네일 바꾸는 로직
   const changeThumbnail = (e) => {
     const files = e.currentTarget.files;
+    setPromotionImage(files[0]);
     if (files.length !== 0 && files[0] != 0) {
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        setPromotionImg(reader.result);
+        setPromotionThumbnail(reader.result);
       };
     } else {
-      setPromotionImg(null);
+      setPromotionImage(null);
     }
   };
+  useEffect(() => {
+    axios
+      .get(backServer + "/partner/" + member.memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setPartnerNo(res.data.data.partnerNo);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   //파일 추가 로직
   const changeFile = (e) => {
@@ -39,18 +57,16 @@ const PromotionApply = (props) => {
 
   //신청 로직
   const applyPromotion = () => {
+    const promotionExpiredDate = dayjs(expiredDate).toDate();
     const form = new FormData();
-    const promotion = {
-      promotionName,
-      promotionPrice,
-      promotionRegion,
-      promotionIntro,
-      promotionLimit,
-    };
-    form.append(promotion);
-    form.append(promotionImg);
-    form.append(promotionFile);
-
+    form.append("promotionName", promotionName);
+    form.append("partnerNo", partnerNo);
+    form.append("promotionIntro", promotionIntro);
+    form.append("promotionPrice", promotionPrice);
+    form.append("promotionRegion", promotionRegion);
+    form.append("promotionLimit", promotionLimit);
+    form.append("promotionExpiredDate", promotionExpiredDate);
+    form.append("promotionImage", promotionImage);
     axios
       .post(backServer + "/promotion/applyPromotion", form, {
         headers: {
@@ -112,6 +128,12 @@ const PromotionApply = (props) => {
           data={promotionIntro}
           setData={setPromotionIntro}
         />
+        <div className="couponReg-input">
+          <ExpireDatePicker
+            expireDate={expiredDate}
+            setExpireDate={setExpiredDate}
+          />
+        </div>
         <div className="promotion-thumbnail-input">
           <div className="input_title">
             <label className="input2" htmlFor="promotion-thumbnail">
@@ -120,18 +142,27 @@ const PromotionApply = (props) => {
           </div>
           <input
             type="file"
-            id="promoiton-thumbnail"
+            id="promotion-thumbnail"
             accept="image/*"
             onChange={changeThumbnail}
           />
         </div>
         <div className="promotion-thumbnail-image">
-          {promotionImg === null ? (
+          {promotionImage === null ? (
             <img src="/images/로딩.gif" />
           ) : (
-            <img src={promotionImg} />
+            <img src={promotionThumbnail} />
           )}
         </div>
+      </div>
+      <div className="btn_area">
+        <Button
+          class="btn_secondary"
+          text="프로모션 신청"
+          clickEvent={applyPromotion}
+        ></Button>
+      </div>
+      <div className="promotion_input_area">
         <div className="promotion-file-input">
           <div className="input_title">
             <label className="input2" htmlFor="promotion-file">
@@ -145,13 +176,6 @@ const PromotionApply = (props) => {
             multiple
           />
         </div>
-      </div>
-      <div className="btn_area">
-        <Button
-          class="btn_secondary"
-          text="프로모션 신청"
-          onClik={applyPromotion}
-        ></Button>
       </div>
     </section>
   );

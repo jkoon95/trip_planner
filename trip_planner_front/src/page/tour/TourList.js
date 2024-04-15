@@ -66,16 +66,12 @@ const TourList = (props) => {
       });
   };
 
-  const handleSearchBox = () => {
-    navigate("/tourSearch");
-  };
-
   return (
     <section className="contents">
       <div className="tour-list-title" onClick={handleTitleClick}>
         <h2>투어 · 티켓</h2>
       </div>
-      <div className="tour-search-box" onClick={handleSearchBox}>
+      <div className="tour-search-box">
         <TourSearchBox />
       </div>
       <TourIconBox searchType={searchType} />
@@ -151,7 +147,7 @@ const TourSwiper = () => {
     axios
       .get(backServer + "/tour/topTour")
       .then((res) => {
-        setTopRatedTours(res.data.data.topTour);
+        setTopRatedTours(res.data.data.topTour.slice(0, 10));
       })
       .catch((res) => {
         console.log(res);

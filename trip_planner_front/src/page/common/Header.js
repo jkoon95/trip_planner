@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Input } from "../../component/FormFrm";
+import axios from "axios";
 
 const Header = (props) => {
   const location = useLocation();
-  console.log(location)
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const logout = props.logout;
   const [searchData, setSearchData] = useState("");
@@ -40,13 +41,14 @@ const Header = (props) => {
   document.body.addEventListener("click", () => {
     menuRef.current.classList.remove("active");
   });
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 60) {
-      document.querySelector(".header").classList.add("line");
-    } else {
-      document.querySelector(".header").classList.remove("line");
-    }
-  });
+  // window.addEventListener("scroll", () => {
+  //   if (window.scrollY > 60) {
+  //     document.querySelector(".header").classList.add("line");
+  //   } else {
+  //     document.querySelector(".header").classList.remove("line");
+  //   }
+  // });
+
   return (
     <header className={location.pathname==="/"?"header":"header line"}>
       <div className="header_inner">
@@ -87,9 +89,10 @@ const HeaderNavi = (props) => {
   const searchInputRef = props.searchInputRef;
   const searchInputClick = props.searchInputClickFunc;
   const searchInputBlur = props.searchInputBlurFunc;
+
   return (
     <div className="header_navi">
-      <div
+      {/* <div
         className="search_wrap"
         ref={searchRef}
         onMouseOver={searchOpen}
@@ -106,7 +109,7 @@ const HeaderNavi = (props) => {
         <button className="btn_search">
           <span className="hidden">검색</span>
         </button>
-      </div>
+      </div> */}
       <div className="menu_wrap">
         <button className="btn_menu" onClick={menuOpen}>
           <span className="hidden">메뉴</span>

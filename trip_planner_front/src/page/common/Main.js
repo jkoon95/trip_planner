@@ -53,8 +53,8 @@ const Main = () => {
   useEffect(() => {
     let calc = 0;
     if(detailCheckIn && detailCheckOut){
-      if(new Date(detailCheckOut.$d) >= new Date(detailCheckIn.$d)){
-        calc = (new Date(detailCheckOut.$d) - new Date(detailCheckIn.$d))/(1000*60*60*24);
+      if(new Date(detailCheckOut) >= new Date(detailCheckIn)){
+        calc = (new Date(detailCheckOut) - new Date(detailCheckIn))/(1000*60*60*24);
       }
     }
     setCalcCount(calc);

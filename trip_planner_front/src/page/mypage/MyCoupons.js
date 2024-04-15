@@ -65,6 +65,7 @@ const MyCoupons = () => {
       <div className="myCoupons_content">
         <ul className="myCoupons_list">
           {myCouponList.map((item, i) => {
+            console.log(item);
             return(
               <MyCouponsListItem key={"myCoupons"+i} item={item}  />
             );
@@ -85,6 +86,7 @@ const MyCoupons = () => {
 // 쿠폰 리스트 아이템
 const MyCouponsListItem = (props) => {
   const item = props.item;
+  console.log(item.couponStatusStr);
   
   function priceToString(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -92,7 +94,7 @@ const MyCouponsListItem = (props) => {
 
   return(
     <li>
-      <Link to={"/mypage/"} className={item.couponStatusStr === "사용불가" ? "couponItem disalbed" : "couponItem"}>
+      <Link to={"/mypage/"} className={item.couponStatusStr === "사용불가" || item.couponStatusStr === "사용완료" ? "couponItem disabled" : "couponItem"}>
         <div className="coupon_info">
           <div className="inner">
             <div className="item_top_wrap">
@@ -133,7 +135,7 @@ const MyCouponsListItem = (props) => {
                   <span className="status">{item.couponStatusStr}</span>
                 </div>
               </div>
-            ) : item.couponStatusStr === "사용불가" (
+            ) : item.couponStatusStr === "사용불가" ? (
               <div className="coupon_status">
                 <div className="inner">
                   <span className="status">{item.couponStatusStr}</span>
@@ -144,7 +146,13 @@ const MyCouponsListItem = (props) => {
                   }
                 </div>
               </div>
-            )
+            ) : item.couponStatusStr === "사용완료" ? (
+              <div className="coupon_status">
+                <div className="inner">
+                  <span className="status">{item.couponStatusStr}</span>
+                </div>
+              </div>
+            ) : ""
           }
       </Link>
     </li>

@@ -70,7 +70,6 @@
 .myCoupons_list .couponItem .coupon_status::before{content: ''; position: absolute; top: -35px; left: -54px; width: 36px; height: 36px; border: 18px solid  #4285bd; border-radius: 50%; background-color: transparent; clip: rect(36px, auto, auto, 36px); box-sizing: content-box;}
 .myCoupons_list .couponItem .coupon_status::after{content: ''; position: absolute; bottom: -36px; left: -54px; width: 36px; height: 36px; border: 18px solid  #4285bd; border-radius: 50%; background-color: transparent; clip: rect(auto auto 36px 36px); box-sizing: content-box;}
 .myCoupons_list .couponItem .coupon_status .status{color: #fff; font-family: pt-b; font-size: 14px; line-height: 1.5;}
-.myCoupons_list .couponItem.disabled .coupon_status{background-color: rgba(0, 0, 0, 0.2);}
 
 .createTrips_wrap .place_list>.item .tripRoute_no.color1{background-color: #FD5189;}
 .createTrips_wrap .place_list>.item .tripRoute_no.color2{background-color: #FFCD30;}

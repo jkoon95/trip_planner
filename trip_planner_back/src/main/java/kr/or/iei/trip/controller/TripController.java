@@ -244,6 +244,7 @@ public class TripController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
+	
 }
 
 

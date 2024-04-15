@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dao.PromotionDao;
@@ -91,6 +92,17 @@ public class PromotionService {
 	public int purchasePromotion(int promotionNo, int memberNo, int seat) {
 		// TODO Auto-generated method stub
 		return promotionDao.purchasePromotion(promotionNo, memberNo, seat);
+	}
+	
+	@Transactional
+	public int applyPromotion(Promotion promotion) {
+		int result = promotionDao.applyPromotion(promotion);
+		/*
+		if(result > 0) {
+			result = promotionDao.applyPromotionFile(promotionFile);
+		}
+		*/
+		return result;
 	}
 	
 	/*

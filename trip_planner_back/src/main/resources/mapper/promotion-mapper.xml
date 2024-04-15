@@ -142,4 +142,13 @@
  	<insert id="purchasePromotion">
  		insert into promotion_order_tbl values (promotion_order_seq.nextval,#{memberNo},#{promotionNo},#{seat})
  	</insert>
+ 	
+ 	<insert id="applyPromotion">
+ 		insert into promotion_tbl values (promotion_seq.nextval,#{partnerNo},#{promotionName},#{promotionImg},#{promotionPrice},#{promotionIntro},#{promotionRegion},#{promotionLimit},#{promotionExpiredDate})
+ 	</insert>
+ 	
+ 	<insert id="applyPromotionFile">
+ 		insert into promotion_file_tbl values (promotion_file_seq.nextval,promotion_seq.currval,#{proFilePath},#{proFileName})
+ 	</insert>
+ 	
 </mapper>

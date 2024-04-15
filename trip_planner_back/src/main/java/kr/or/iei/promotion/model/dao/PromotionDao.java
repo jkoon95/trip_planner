@@ -3,6 +3,7 @@ package kr.or.iei.promotion.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
@@ -35,4 +36,9 @@ public interface PromotionDao {
 	int checkRemainingSeat(int promotionNo);
 
 	int purchasePromotion(int promotionNo, int memberNo, int seat);
+
+	int applyPromotion(Promotion promotion);
+
+	int applyPromotionFile(MultipartFile promotionFile);
+
 }

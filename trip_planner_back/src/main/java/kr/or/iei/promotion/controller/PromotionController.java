@@ -1,5 +1,6 @@
 package kr.or.iei.promotion.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -110,26 +111,39 @@ public class PromotionController {
 		}
 		
 	}
-	/*
+	
 	@PostMapping("/applyPromotion")
-	public ResponseEntity<ResponseDTO> applyPromotion(@ModelAttribute Promotion promotion, @ModelAttribute MultipartFile promotionImg, @ModelAttribute MultipartFile promotionFile){
+	public ResponseEntity<ResponseDTO> applyPromotion(@ModelAttribute String promotionName, @ModelAttribute int partnerNo, @ModelAttribute String promotionIntro, @ModelAttribute String promotionRegion, @ModelAttribute int promotionPrice, @ModelAttribute int promotionLimit, @ModelAttribute Object promotionExpiredDate, @ModelAttribute MultipartFile promotionImage){
 		String savepath = root+"/promotion/";
 		
-		String thumbnailFilepath = fileUtils.upload(savepath, promotionImg);
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+		
+		Promotion promotion = new Promotion();
+		promotion.setPromotionLimit(promotionLimit);
+		promotion.setPromotionPrice(promotionPrice);
+		promotion.setPromotionIntro(promotionIntro);
+		promotion.setPartnerNo(partnerNo);
+		promotion.setPromotionName(promotionName);
+		promotion.setPromotionExpiredDate(format.format(promotionExpiredDate));
+		
+		System.out.println();
+		
+		String thumbnailFilepath = fileUtils.upload(savepath, promotionImage);
+		
 		
 		promotion.setPromotionImg(thumbnailFilepath);
-		
-		ArrayList<PromotionFile> fileList = new ArrayList<PromotionFile>();
+		//PromotionFile promotionfile = new PromotionFile();
+		/*
 		if(promotionFile != null) {
-			for(MultipartFile file : promotionFile) {
-				String filepath = fileUtils.upload(savepath, file);
-				PromotionFile promotionfile = new PromotionFile();
-				promotionfile.setProFilePath(filepath);
-				fileList.add(promotionfile);
-			}
+			String filename = promotionFile.getOriginalFilename();
+			String filepath = fileUtils.upload(savepath, promotionFile);
+			promotionfile.setProFileName(filename);
+			promotionfile.setProFilePath(filepath);	
 		}
-		int result = promotionService.applyPromotion(promotion,fileList);
-		if(result == 1+ fileList.size()) {
+		*/
+		
+		int result = promotionService.applyPromotion(promotion);
+		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
@@ -137,7 +151,6 @@ public class PromotionController {
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}
 	}
-	*/
 		
 
 }

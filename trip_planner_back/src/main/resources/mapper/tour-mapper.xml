@@ -362,5 +362,7 @@
 		)
 		ORDER BY (SELECT LIKE_NO FROM LIKE_TBL WHERE REF_NO = T.TOUR_NO)
 	</select>
-	
+	<delete id="deleteLikeTour">
+	    DELETE FROM like_tbl WHERE member_no = #{memberNo} AND ref_no = #{tourNo}
+	</delete>
 </mapper>

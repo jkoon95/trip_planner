@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,9 +96,25 @@ public class MypageController {
 	@GetMapping("/likeTourList/{memberNo}")
 	public ResponseEntity<ResponseDTO> selectLikeTourList(@PathVariable int memberNo){
 		Map map = tourService.selectLikeTourList(memberNo);
-		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	}
+	
+	@Operation(summary = "내 투어 찜 삭제", description = "내 투어 찜 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@DeleteMapping("/cancelLikeTour/{memberNo}/{tourNo}")
+	public ResponseEntity<ResponseDTO> deleteLikeTour(@PathVariable int memberNo, @PathVariable int tourNo){
+		int result = tourService.deleteLikeTour(memberNo, tourNo);
+		if(result == 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
 	}
 
 }

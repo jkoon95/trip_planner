@@ -96,4 +96,6 @@ public interface TourDao {
 
 	List selectLikeTourList(int memberNo);
 
+	int deleteLikeTour(int memberNo, int tourNo);
+
 }

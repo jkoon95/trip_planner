@@ -248,5 +248,10 @@ public class TourService {
 		return map;
 	}
 
+	@Transactional
+	public int deleteLikeTour(int memberNo, int tourNo) {
+		return tourDao.deleteLikeTour(memberNo, tourNo);
+	}
+
 	
 }

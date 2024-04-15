@@ -15,5 +15,4 @@ public class PromotionFile {
 	private int promotionNo;
 	private String proFilePath;
 	private String proFileName;
-	private String promotionImg;
 }

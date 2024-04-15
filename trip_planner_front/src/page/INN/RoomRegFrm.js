@@ -251,7 +251,7 @@ const RoomImgReg = (props) => {
         {item === null ? (
           <>
             <label htmlFor={"roomImg" + index}>
-              <span class="material-icons">photo_camera</span>
+              <span className="material-icons">photo_camera</span>
             </label>
             <input
               type="file"

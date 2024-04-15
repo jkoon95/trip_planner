@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Input, Textarea } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Rating from "@mui/material/Rating";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 {
   /* params로 innNo 받기  */
@@ -18,7 +19,6 @@ const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const [partnerName, setPartnerName] = useState("");
-  const [innNo] = useState(41);
   const [roomNo] = useState({});
   const [inn, setInn] = useState("");
   const [room, setRoom] = useState([]);
@@ -27,7 +27,13 @@ const InnDetailView = (props) => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewTitle, setReivewTitle] = useState("");
   const [reviewStar, setReviewStar] = React.useState(5);
+  const params = useParams();
+  const innNo = params.innNo;
+  const location = useLocation();
+  const checkInOutDates = location.state;
+  console.log(checkInOutDates);
 
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(backServer + "/inn/detail/" + innNo)
@@ -130,6 +136,7 @@ const InnDetailView = (props) => {
             slidesPerView={1}
             loop={true}
             speed={600}
+            spaceBetween={20}
             autoplay={{ delay: 1500, disableOnInteraction: false }}
           >
             {innFile.map((innFile, index) => (
@@ -181,6 +188,9 @@ const InnDetailView = (props) => {
                 room={room}
                 inn={inn}
                 innFileRoom={innFileRoom}
+                navigate={navigate}
+                checkInOutDates={checkInOutDates}
+                isLogin={isLogin}
               />
             );
           })}
@@ -222,10 +232,10 @@ const InnDetailView = (props) => {
                   setData={setReviewContent}
                   placeholder="평점을 입력하고 숙소에 대한 리뷰를 남겨주세요 :)"
                 />
-                <div class="btn_area">
+                <div className="btn_area">
                   <button
                     type="button"
-                    class="btn_secondary md"
+                    className="btn_secondary md"
                     onClick={insertReview}
                   >
                     등록
@@ -249,6 +259,9 @@ const RoomItem = (props) => {
   const [option, setOption] = useState([]);
   const [hashTag, setHashTag] = useState([]);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = props.navigate;
+  const checkInOutDates = props.checkInOutDates;
+  const isLogin = props.isLogin;
 
   useEffect(() => {
     const roomNo = room.roomNo;
@@ -276,21 +289,54 @@ const RoomItem = (props) => {
         console.log(res);
       });
   }, [backServer, innNo, room.roomNo, setOption]);
+
+  const reserveInn = () => {
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인 후 이용이 가능합니다.",
+        confirmButtonText: "닫기",
+      }).then(navigate("/login"));
+    }
+    console.log(room);
+    room.checkInDate = checkInOutDates.checkInDate;
+    room.checkOutDate = checkInOutDates.checkOutDate;
+    navigate("/inn/reservationInn", { state: room });
+  };
   return (
     <div className="inn-detail-rooms">
       <div className="inn-detail-conts">
         <div className="room-box-left">
-          {innFileRoom.map((innFileRoom, index) => {
-            if (innFileRoom.roomNo === room.roomNo) {
-              return (
-                <InnFileRoomItem
-                  key={"innFileRoom" + index}
-                  innFileRoom={innFileRoom}
-                />
-              );
-            }
-            return null;
-          })}
+          {
+            <Swiper
+              className="inn_room_slide"
+              navigation={true}
+              pagination={true}
+              modules={[Navigation, Pagination, Autoplay]}
+              slidesPerView={1}
+              loop={true}
+              speed={600}
+              spaceBetween={20}
+              // autoplay={{ delay: 1500, disableOnInteraction: false }}
+            >
+              {innFileRoom.map((innFileRoom, index) => {
+                if (innFileRoom.roomNo === room.roomNo) {
+                  return (
+                    <SwiperSlide key={"innFileRoom" + index}>
+                      <img
+                        src={
+                          backServer +
+                          "/inn/innFileRoomList/" +
+                          innFileRoom.innFilePath
+                        }
+                      />
+                    </SwiperSlide>
+                  );
+                }
+                return null;
+              })}
+            </Swiper>
+          }
         </div>
         <div className="room-box-right">
           <div className="room-name">{room.roomName}</div>
@@ -316,7 +362,7 @@ const RoomItem = (props) => {
                 <div>(1박 기준) </div>
               </div>
             </div>
-            <button type="button" className="btn_primary">
+            <button type="button" className="btn_primary" onClick={reserveInn}>
               {/* rommNo를 예약페이지로 보내주기*/}
               객실 예약
             </button>
@@ -345,13 +391,14 @@ const InnFileItem = (props) => {
 };
 */
 }
-const InnFileRoomItem = (props) => {
-  const innFileRoom = props.innFileRoom;
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  return (
-    <img src={backServer + "/inn/innFileRoomList/" + innFileRoom.innFilePath} />
-  );
-};
+// const InnFileRoomItem = (props) => {
+//   const innFileRoom = props.innFileRoom;
+//   const backServer = process.env.REACT_APP_BACK_SERVER;
+//   return (
+//     <img src={backServer + "/inn/innFileRoomList/" + innFileRoom.innFilePath} />
+//   );
+// };
+
 const HashTagItem = (props) => {
   const hashTag = props.hashTag;
   return <span>{hashTag}</span>;

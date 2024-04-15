@@ -35,7 +35,7 @@ const CouponReg = ({ member, isLogin }) => {
   const [expireDate, setExpireDate] = useState(dayjs(new Date()));
   const assignCoupon = () => {
     const expiredDate = dayjs(expireDate).toDate();
-    console.log(expiredDate, typeof expiredDate);
+
     const obj = {
       couponName,
       couponRange,

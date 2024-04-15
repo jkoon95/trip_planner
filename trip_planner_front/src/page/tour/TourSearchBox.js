@@ -23,13 +23,6 @@ const TourSearchBox = (props) => {
   // useRef를 사용하여 searchInput 요소의 ref 생성
   const searchInputRef = useRef(null);
 
-  // 컴포넌트가 마운트될 때 searchInput에 포커스 설정
-  useEffect(() => {
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, []);
-
   const searchBtn = () => {
     if (searchText !== "") {
       const data = {

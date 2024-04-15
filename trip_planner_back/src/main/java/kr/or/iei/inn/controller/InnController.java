@@ -243,6 +243,8 @@ public class InnController {
 	@PostMapping("/innList")
 	public ResponseEntity<ResponseDTO> selectInnList(@RequestBody SelectInnList selectInnList , @RequestAttribute String memberEmail){	//@modelAttribute는 파일이 있을경우 받아올 때 사용
 		Map map = innService.selectInnList(selectInnList, memberEmail);
+		System.out.println(selectInnList);
+		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}

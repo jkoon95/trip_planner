@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
 import Pagination from "../../component/Pagination";
+import InnDetailView from "./InnDetailView";
 
 const InnList = (props) => {
   const location = useLocation();
@@ -51,10 +52,6 @@ const InnList = (props) => {
       active: false,
     },
   ]);
-  const navigate = useNavigate();
-  const InnDetailView = () => {
-    navigate("/innDetailView");
-  };
 
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [innAddr, setInnAddr] = useState(place);
@@ -75,7 +72,7 @@ const InnList = (props) => {
   const [pageInfo, setPageInfo] = useState({});
   useEffect(() => {
     searchInn();
-  }, [minPrice, maxPrice, selectSort, reqPage, innAddr]);
+  }, [minPrice, maxPrice, selectSort, reqPage, innType]);
   const searchInn = () => {
     if (innAddr && checkInDate && checkOutDate && bookGuest) {
       const searchInnList = {
@@ -221,6 +218,8 @@ const InnList = (props) => {
                     innItem={item}
                     index={index}
                     clickEvent={InnDetailView}
+                    checkInDate={checkInDate}
+                    checkOutDate={checkOutDate}
                   />
                 );
               })}
@@ -245,6 +244,9 @@ const InnListBox = (props) => {
   const index = props.index;
   const addrSpilt = innItem.innAddr.split(" ");
   const clickEvent = props.clickEvent;
+  const navigate = useNavigate();
+  const checkInDate = props.checkInDate;
+  const checkOutDate = props.checkOutDate;
 
   const likeRef = useRef();
   const likeCount = (innNo) => {
@@ -260,9 +262,18 @@ const InnListBox = (props) => {
         });
     }
   };
+  const InnDetailView = () => {
+    const innNo = innItem.innNo;
+    const checkInOutDates = {
+      checkInDate: dayjs(checkInDate).format("YYYY-MM-DD"),
+      checkOutDate: dayjs(checkOutDate).format("YYYY-MM-DD"),
+    };
+    console.log(checkInOutDates);
+    navigate("/innDetailView/" + innNo, { state: checkInOutDates });
+  };
   return (
     <div className="inn-box">
-      <div className="inn-img-box" onClick={clickEvent}>
+      <div className="inn-img-box" onClick={InnDetailView}>
         <img src={backServer + "/inn/innList/" + innItem.filepath} />
       </div>
       <div className="content-box">

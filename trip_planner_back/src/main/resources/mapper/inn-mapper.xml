@@ -116,30 +116,8 @@
 			(select member_no from member_tbl where member_email=#{memberEmail}) order by check_in_date, inn_book_no desc)ibt) where rnum between #{start} and #{end}
 	</select>
 	
-	<select id="selectInnList" resultType="selectInnList">
-		SELECT 
-		    inn.inn_no,
-		    inn.inn_addr,
-		    inn.inn_type,
-		    (SELECT inn_filepath 
-		     FROM inn_file_tbl innfile 
-		     WHERE inn.inn_no = innfile.inn_no 
-		     AND ROWNUM = 1) as file_path,
-		     (SELECT min(room_price) 
-		     FROM room_tbl r 
-		     WHERE r.inn_no=inn.inn_no) room_price,    
-		     (SELECT partner_name 
-		     FROM partner_tbl p 
-		     WHERE inn.partner_no = p.partner_no) partner_name,
-		     (SELECT COUNT(*) 
-		     FROM like_tbl 
-		     WHERE like_type=1 
-		     AND ref_no = inn.inn_no) like_count,
-		     (SELECT COUNT(*) 
-		     FROM review_tbl 
-		     WHERE review_type=1 
-		     AND ref_no = inn.inn_no) review_count
-		FROM inn_tbl inn
+	<select id="totalCount" resultType="int">
+		select count(*) from inn_tbl inn 
 		WHERE 
 		INN_ADDR LIKE '%'||#{innAddr}||'%' 
 		AND 
@@ -187,12 +165,100 @@
 				    AND option_no = #{optionItem}) > 0
 			</foreach>
 		</if>
-		
-		
-		
+	</select>
+	
+	<select id="selectInnList" resultType="selectInnList">
+	select * from
+		(select rownum as rnum, i.* from
+			(SELECT 
+			    inn.inn_no,
+			    inn.inn_addr,
+			    inn.inn_type,
+			    (SELECT inn_filepath 
+			     FROM inn_file_tbl innfile 
+			     WHERE inn.inn_no = innfile.inn_no 
+			     AND ROWNUM = 1) as file_path,
+			     (SELECT min(room_price) 
+			     FROM room_tbl r 
+			     WHERE r.inn_no=inn.inn_no) room_price,    
+			     (SELECT partner_name 
+			     FROM partner_tbl p 
+			     WHERE inn.partner_no = p.partner_no) partner_name,
+			     (SELECT COUNT(*) 
+			     FROM like_tbl 
+			     WHERE like_type=1 
+			     AND ref_no = inn.inn_no) like_count,
+			     (SELECT COUNT(*) 
+			     FROM review_tbl 
+			     WHERE review_type=1 
+			     AND ref_no = inn.inn_no) review_count
+			FROM inn_tbl inn
+			WHERE 
+			INN_ADDR LIKE '%'||#{innAddr}||'%' 
+			AND 
+			    (SELECT COUNT(room_max_people) 
+			    FROM room_tbl r 
+			    WHERE room_max_people >= 2 
+			    AND r.inn_no=inn.inn_no) >= 1
+			    
+			AND
+			    CHECK_BOOKING(inn.inn_no,#{checkInDate},#{checkOutDate}) = 0
+			    
+			<if test="innType != 0">
+				AND INN_TYPE=#{innType}
+			</if>
+			<if test="minPrice != 0 and maxPrice != 500000">
+				AND 
+			    (SELECT min(room_price) 
+			    FROM room_tbl r 
+			    WHERE r.inn_no=inn.inn_no) 
+			    BETWEEN #{minPrice} AND #{maxPrice}
+			</if>
+			<if test="hashTag != null">
+				<foreach collection="hashTag" item="hashTagItem">
+					AND 
+					    (SELECT COUNT (hashtag) 
+					    FROM ROOM_HASHTAG_TBL rt 
+					    WHERE room_no in 
+					            (SELECT room_no 
+					            FROM room_tbl r 
+					            WHERE r.inn_no =inn.inn_no 
+					            AND rt.room_no=room_no) 
+					    AND hashtag like #{hashTagItem}) > 0 
+				</foreach>
+			</if>
+			<if test="option != null">
+				<foreach collection="option" item="optionItem">
+					AND 
+					    (SELECT COUNT(option_no) 
+					    FROM ROOM_OPTION_TBL ro 
+					    WHERE room_no in 
+					            (SELECT room_no 
+					            FROM room_tbl r 
+					            WHERE r.inn_no = inn.inn_no 
+					            AND ro.room_no = room_no)
+					    AND option_no = #{optionItem}) > 0
+				</foreach>
+			</if>
+			<if test="selectSort == 'review'">
+				order by (select count(*) from review_tbl where ref_no = inn.inn_no) desc
+			</if>
+			<if test="selectSort == 'star'">
+				order by (select avg(review_star) from review_tbl where ref_no = inn_no) desc
+			</if>
+			<if test="selectSort == 'low-price'">
+				order by (SELECT min(room_price) FROM room_tbl r WHERE r.inn_no=inn.inn_no) asc
+			</if>
+			<if test="selectSort == 'high-price'">
+				order by (SELECT max(room_price) FROM room_tbl r WHERE r.inn_no=inn.inn_no) desc
+			</if>
+		)i)
+	where rnum between #{start}and #{end}
 	</select>
 	
 	<insert id="likeUpdate">
 		insert into like_tbl values(like_seq.nextval,#{memberNo},1,#{innNo})
 	</insert>
+	
+	
 </mapper>

@@ -26,4 +26,8 @@ public class SelectInnList {
 	private String selectSort;
 	private int likeCount;
 	private int reviewCount;
+	
+	private int reqPage;
+	private int start;
+	private int end;
 }

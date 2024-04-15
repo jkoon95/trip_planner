@@ -3,6 +3,7 @@ package kr.or.iei.inn.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -240,16 +241,9 @@ public class InnController {
 	}
 	@PostMapping("/innList")
 	public ResponseEntity<ResponseDTO> selectInnList(@RequestBody SelectInnList selectInnList , @RequestAttribute String memberEmail){	//@modelAttribute는 파일이 있을경우 받아올 때 사용
-		System.out.println(selectInnList);
-		List list = innService.selectInnList(selectInnList, memberEmail);
-		System.out.println(list);
-		if(!list.isEmpty()) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}else {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
-		}
+		Map map = innService.selectInnList(selectInnList, memberEmail);
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
+		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}
 	
 	@PostMapping("/likeUpdate/{innNo}")

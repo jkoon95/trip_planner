@@ -1,4 +1,3 @@
-import "./myCoupons.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,7 +11,7 @@ const MyCoupons = () => {
   const [reqPage, setReqPage] = useState(1);
   const [myCouponList, setMyCouponList] = useState([]);
   const [btnMoreShow, setBtnMoreShow] = useState(false);
-  const [selectOptions, setSelectOptions] = useState([{value: 0, text: "사용처 선택"}, {value: 1, text: "숙소"}, {value: 2, text: "투어"}, {value: 3, text: "프로모션"}, {value: 4, text: "종합"}]);
+  const [selectOptions, setSelectOptions] = useState([{value: 0, text: "전체"}, {value: 1, text: "숙소"}, {value: 2, text: "투어"}, {value: 3, text: "프로모션"}, {value: 4, text: "종합"}]);
   const [selectData, setSelectData] = useState(0);
   const changeSelectData = (e) => {
     setSelectData(e.target.value);

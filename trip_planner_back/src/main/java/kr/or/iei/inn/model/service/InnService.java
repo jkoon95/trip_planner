@@ -96,5 +96,8 @@ public class InnService {
 	@Transactional
 	public int likeUpdate(int innNo, int memberNo) {
 		return innDao.likeUpdate(innNo, memberNo);
+	}
+	public List<Inn> selectMainInnList() {
+		return innDao.selectMainInnList();
 	}	
 }

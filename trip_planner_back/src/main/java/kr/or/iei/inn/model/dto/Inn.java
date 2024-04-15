@@ -22,4 +22,7 @@ public class Inn {
 	private String innCheckOutTime;
 	private String innIntro;
 	private List fileList;
+	private String partnerName;
+	private double reviewRate;
+	private String filepath;
 }

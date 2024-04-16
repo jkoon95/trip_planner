@@ -6,10 +6,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const TourSearch = (props) => {
-  const location = useLocation();
   const isLogin = props.isLogin;
-  const [member, setMember] = useState("");
   const tourType = props.tourType;
+  const location = useLocation();
+  const [searchText, setSearchText] = useState("");
+  const [member, setMember] = useState("");
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [visibleTour, setVisibleTour] = useState(5); // 5개만 표시
@@ -24,6 +25,7 @@ const TourSearch = (props) => {
     ) {
       setTourList(location.state.tourList);
       setTicketList(location.state.ticketList);
+      setSearchText(location.state.searchText);
     }
     axios
       .get(backServer + "/tour/member")
@@ -44,14 +46,18 @@ const TourSearch = (props) => {
 
   return (
     <section className="contents">
-      <div className="tour-list-title" onClick={handleTitleClick}>
+      <div className="tour-list-title">
         <h2>투어 · 티켓</h2>
         <h2>검색결과</h2>
+      </div>
+      <div className="tour-view-prev" onClick={handleTitleClick}>
+        <span className="material-icons">reply</span>
+        <h5>투어 리스트 목록으로</h5>
       </div>
       <TourSearchBox />
       {tourList.length === 0 ? (
         <div className="tour-list-empty">
-          <h2>검색어를 입력하세요</h2>
+          <h2>일치하는 상품이 없습니다.</h2>
           <div className="tour-loading-icon"></div>
         </div>
       ) : (

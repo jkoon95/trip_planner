@@ -10,7 +10,7 @@
 }
 .tour-list-title > h2 {
   float: left;
-  cursor: pointer;
+  margin-bottom: 20px;
 }
 .tour-list-title > h2:first-child {
   margin-right: 40px;

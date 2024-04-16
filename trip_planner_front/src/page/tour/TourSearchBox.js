@@ -40,6 +40,7 @@ const TourSearchBox = (props) => {
               state: {
                 tourList: res.data.data.tourList,
                 ticketList: res.data.data.ticketList,
+                searchText: searchText,
               },
             });
           }
@@ -69,7 +70,7 @@ const TourSearchBox = (props) => {
           type="text"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyDown}
           placeholder="도시, 상품명으로 검색해주세요."
           ref={searchInputRef} // ref 설정
         />

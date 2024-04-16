@@ -130,7 +130,7 @@ const LikeTourListItem = (props) => {
       .delete(backServer + "/mypage/cancelLikeTour/" + memberNo + "/" + tourNo)
       .then((res) => {
         if (res.data.message === "success") {
-          Swal.fire("찜 삭제가 완료되었습니다.");
+          console.log(res);
         }
       })
       .catch((res) => {

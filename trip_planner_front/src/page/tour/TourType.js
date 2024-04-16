@@ -48,9 +48,13 @@ const TourType = (props) => {
 
   return (
     <section className="contents">
-      <div className="tour-list-title" onClick={handleTitleClick}>
+      <div className="tour-list-title">
         <h2>투어 · 티켓</h2>
         <h2>카테고리 검색</h2>
+      </div>
+      <div className="tour-view-prev" onClick={handleTitleClick}>
+        <span className="material-icons">reply</span>
+        <h5>투어 리스트 목록으로</h5>
       </div>
       <TourSearchBox />
       <div className="tour-list-sort"></div>

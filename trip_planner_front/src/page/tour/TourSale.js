@@ -152,6 +152,27 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit, goToTicketPage }) => {
   const tourView = () => {
     navigate("/tour/view/" + tour.tourNo);
   };
+  let tourTypeText;
+  switch (tour.tourType) {
+    case 1:
+      tourTypeText = "전시회";
+      break;
+    case 2:
+      tourTypeText = "액티비티";
+      break;
+    case 3:
+      tourTypeText = "테마파크";
+      break;
+    case 4:
+      tourTypeText = "박람회";
+      break;
+    case 5:
+      tourTypeText = "티켓·입장권";
+      break;
+    default:
+      tourTypeText = "기타";
+  }
+
   return (
     <div className="tour-item">
       <div className="tour-item-img">
@@ -184,7 +205,8 @@ const TourItem = ({ tour, toggleStatus, deleteTour, edit, goToTicketPage }) => {
             )}
           </div>
         </div>
-        <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div>
+        {/* <div className="tour-item-count">남은 판매수량 : {tour.salesCount}</div> */}
+        <div className="tour-item-count">{tourTypeText} 상품</div>
         <div className="tour-item-ticket">
           <button
             className="btn_secondary sm"

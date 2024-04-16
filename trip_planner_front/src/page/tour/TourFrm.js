@@ -119,7 +119,7 @@ const TourFrm = (props) => {
                   />
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>
                   <label htmlFor="salesCount">일일 판매수량</label>
                 </td>
@@ -132,7 +132,7 @@ const TourFrm = (props) => {
                     placeholder="숫자만 입력해주세요."
                   />
                 </td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>
                   <label htmlFor="salesPeriod">판매 종료날짜</label>

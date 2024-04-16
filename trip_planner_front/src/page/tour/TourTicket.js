@@ -107,10 +107,10 @@ const TourTicket = () => {
                     <td>투어 주소</td>
                     <td>{tourAddr}</td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>일일 판매수량</td>
                     <td>{salesCount}</td>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <td>판매 종료날짜</td>
                     <td>{salesPeriod}</td>

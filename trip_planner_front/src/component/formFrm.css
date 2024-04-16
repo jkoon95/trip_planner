@@ -20,8 +20,11 @@ button[disabled]{opacity: 0.2;}
 [class^=btn_].sm{min-width: 48px; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: normal;}
 /* [class^=btn_].view_more{padding-left: 36px; background: url(/images/icon_plus_gray.svg) no-repeats center left 24px / 12px;} */
 [class^=btn_].outline.view_more{color: var(--main_04);}
+.btn_text{font-size: 14px; text-decoration: underline; text-underline-offset: 4px; line-height: 28px;}
 .btn_area{display: flex; gap: 8px; margin-top: 40px; justify-content: center;}
+.btn_area+.btn_area{margin-top: 20px;}
 .btn_area [class^=btn_].lg{margin: 0 2px;}
+.btn_area .btn_text{padding: 4px 12px;}
 /* a태그가 링크일 때 */
 .btn_link,
 .btn_link:hover,

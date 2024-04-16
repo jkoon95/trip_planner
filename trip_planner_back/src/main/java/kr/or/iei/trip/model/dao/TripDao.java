@@ -42,5 +42,7 @@ public interface TripDao {
 	int deleteTripDay(TripDetail td);
 
 	int updateTripRoute(TripPlace tp);
+
+	int deleteTrip(int tripNo);
 	
 }

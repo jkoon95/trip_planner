@@ -143,8 +143,8 @@ const TourItem = ({ tour, ticket, isLogin, member }) => {
 
   return (
     <div className="tour-prod-zone">
-      <div className="tour-prod">
-        <div className="tour-prod-img" onClick={tourView}>
+      <div className="tour-prod" onClick={tourView}>
+        <div className="tour-prod-img">
           {tour.tourImg === null || tour.tourImg === "null" ? (
             <img src="/images/테마파크.jpg" />
           ) : (

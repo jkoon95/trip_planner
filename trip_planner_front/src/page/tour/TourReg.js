@@ -26,11 +26,24 @@ const TourReg = () => {
     // console.log(tourAddr);
     // console.log(thumbnail);
     // console.log(intronail);
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
     if (tourName !== "" && tourType !== "" && tourAddr !== "") {
       if (tourName.length > 16) {
         Swal.fire({
           title: "상품 이름은 16자 이하로 작성해주세요 (한글 기준)",
+          icon: "warning",
+        });
+        return;
+      } else if (salesCount !== "" && isNaN(salesCount)) {
+        Swal.fire({
+          title: "판매 수량은 숫자로 입력해주세요.",
+          icon: "warning",
+        });
+        return;
+      } else if (salesPeriod !== "" && !datePattern.test(salesPeriod)) {
+        Swal.fire({
+          title: "판매 기간은 2024-12-31 형식으로 입력해주세요.",
           icon: "warning",
         });
         return;

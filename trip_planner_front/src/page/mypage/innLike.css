@@ -1,0 +1,59 @@
+.inn-like-zone {
+}
+
+.inn-like-zone > .inn-like-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+.inn-like-zone > .inn-like-box > div:first-child {
+  align-items: center;
+  justify-content: space-between;
+}
+.inn-like-zone > .inn-like-box > div {
+  display: flex;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-img {
+  width: 300px;
+  height: 200px;
+  margin-right: 10px;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-img > img {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 15px;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info {
+  padding: 5px;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info > div {
+  margin-bottom: 10px;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info span {
+  font-size: 15px;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info span:first-child {
+  font-family: pt-b;
+  color: #717171;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info span:last-child {
+  font-family: pt-b;
+}
+.inn-like-zone > .inn-like-box > div > .inn-like-info span > .sub {
+  font-family: pt-b;
+  color: #e9511c;
+  font-size: 12px;
+}
+.inn-like-zone > .inn-like-box > .inn-like-view-btn {
+  padding: 5px;
+}
+.inn-like-zone > .inn-like-box > .inn-like-view-btn > .inn-view-btn {
+  width: 20px;
+}

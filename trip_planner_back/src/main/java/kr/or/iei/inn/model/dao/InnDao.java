@@ -66,6 +66,10 @@ public interface InnDao {
 	List selectInnReviewList(int innNo);
 
 	List selectInnMyReview(int memberNo);
+	
+	List selectLikeInnList(int memberNo);
+
+	int cancelInnLike(int memberNo, int innNo);
 
 
 }

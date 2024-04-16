@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 
 const TourBook = (props) => {
   const { state } = useLocation();
-  const { startDate, quantity } = state;
+  const { startDate, quantity } = state || {};
   // console.log(startDate); // 예약일자 확인
   // console.log(quantity); // 수량 확인
 
@@ -56,7 +56,7 @@ const TourBook = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [backServer, tourNo]);
+  }, []);
 
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
   const formattedStartDate = dayjs(startDate)
@@ -172,7 +172,7 @@ const TourBook = (props) => {
                     icon: "success",
                     title: "결제가 완료되었습니다.",
                   });
-                  navigate("/mypage/tour/mgmt");
+                  navigate("/mypage/");
                 }
               })
               .catch((res) => {

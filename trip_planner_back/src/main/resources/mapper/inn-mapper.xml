@@ -59,7 +59,19 @@
 		select * from inn_tbl where inn_no=#{innNo}		
 	</select>
 	<select id="selectRoomDetail" resultType="room">
-		select * from room_tbl where inn_no=#{innNo}
+		select 
+		    inn_no, 
+		    room_no,
+		    room_name,
+		    room_max_people,
+		    room_price,
+		    etc_option,
+		    room_min_people,
+		    inn_check_in_time,
+		    inn_check_out_time 
+		from room_tbl r 
+		join inn_tbl using(inn_no) 
+		where inn_no=#{innNo}
 	</select>	
 	<select id="selectInnFileDetail" resultType="innFile">
 		select * from inn_file_tbl where inn_no=#{innNo} and room_no is null	
@@ -129,8 +141,9 @@
 			            (select inn_no from room_tbl where room_no = ib.room_no))) partner_name,
 			            (select inn_filepath from inn_file_tbl where room_no = ib.room_no and rownum = 1) inn_filepath,
 			            (select room_name from room_tbl where room_no = ib.room_no) room_name, book_status,
-			            to_char(to_date(check_in_date), 'mm.dd(dy) ')||(select inn_check_in_time from inn_tbl where inn_no in(select inn_no from room_tbl where room_no=ib.room_no)) check_in_date,
-			            to_char(to_date(check_out_date), 'mm.dd(dy) ')||(select inn_check_out_time from inn_tbl where inn_no in(select inn_no from room_tbl where room_no=ib.room_no)) check_out_date,
+			            check_in_date, check_out_date,
+			            to_char(to_date(check_in_date), 'mm.dd(dy) ')||(select inn_check_in_time from inn_tbl where inn_no in(select inn_no from room_tbl where room_no=ib.room_no)) check_in_date_str,
+			            to_char(to_date(check_out_date), 'mm.dd(dy) ')||(select inn_check_out_time from inn_tbl where inn_no in(select inn_no from room_tbl where room_no=ib.room_no)) check_out_date_str,
 			            (to_date(check_out_date)-to_date(check_in_date)) night,
 			            book_guest, guest_name, guest_phone, to_char(book_date, 'yyyy-mm-dd') book_date, guest_wish
 			        from inn_book_tbl ib
@@ -210,6 +223,10 @@
 			     FROM like_tbl 
 			     WHERE like_type=1 
 			     AND ref_no = inn.inn_no) like_count,
+			     (SELECT avg(review_star) 
+		          FROM review_tbl 
+		          WHERE review_type=1 
+		          AND ref_no = inn.inn_no) review_star,
 			     (SELECT COUNT(*) 
 			     FROM review_tbl 
 			     WHERE review_type=1 
@@ -297,4 +314,22 @@
 		order by review_rate desc, inn_no desc)rr) where rnum between 1 and 16
 	</select>
 
+	<select id="selectLikeInnList" resultType="likeInnList">
+		select 
+		    inn_no, 
+		    partner_no,
+		    inn_type,
+		    inn_addr,
+		    inn_check_in_time,
+		    inn_check_out_time,
+		    (select partner_name from partner_tbl where inn.partner_no = partner_no) partner_name,
+		    (select min(room_price) from room_tbl where inn.inn_no = inn_no) min_room_price,
+		    (SELECT inn_filepath  FROM inn_file_tbl innfile  WHERE inn.inn_no = innfile.inn_no  AND ROWNUM = 1) as file_path
+		from inn_tbl inn 
+		where inn_no in (select ref_no from like_tbl where member_no = #{memberNo})
+	</select>
+	
+	<delete id="cancelInnLike">
+		delete from like_tbl where member_no = #{memberNo} AND ref_no = #{innNo}
+	</delete>
 </mapper>

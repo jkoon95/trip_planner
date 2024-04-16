@@ -87,7 +87,7 @@
     padding: 40px;
   }
 
-  .contents.memberMgmtView #block_btn{
+  .contents.memberMgmtView .block_btn{
     display: flex;
     justify-content: center;
   }

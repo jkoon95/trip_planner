@@ -34,7 +34,7 @@ const License = () => {
       navigate("/join/", { state: { value: 1 } });
     } else {
       Swal.fire({
-        title: "약관 동의 실패",
+        title: "약관 동의",
         text: "약관에 모두 동의해주세요",
         icon: "error",
       });
@@ -45,7 +45,7 @@ const License = () => {
       navigate("/join/", { state: { value: 2 } });
     } else {
       Swal.fire({
-        title: "약관 동의 실패",
+        title: "약관 동의",
         text: "약관에 모두 동의해주세요",
         icon: "error",
       });

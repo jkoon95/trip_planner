@@ -77,7 +77,6 @@ function App() {
     setIsLogin(false);
     Swal.fire({
       title: "로그아웃",
-      text: "로그인이 풀렸습니다.",
       icon: "success",
     });
     navigate("/");
@@ -125,7 +124,7 @@ function App() {
           />
           <Route
             path="/tour/book/:tourNo"
-            element={<TourBook isLogin={isLogin} />}
+            element={isLogin ? <TourBook isLogin={isLogin} /> : ""}
           />
 
           <Route path="/ref" element={<Ref />} />

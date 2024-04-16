@@ -30,4 +30,6 @@ public class InnReservation {
 	private int night;
 	private String roomName;
 	private String innFilepath;
+	private String checkInDateStr;
+	private String checkOutDateStr;
 }

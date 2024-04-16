@@ -1,18 +1,18 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./innLike.css";
+import { Button } from "../../component/FormFrm";
 
 const MyLikes = (props) => {
   const memberNo = props.member.memberNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [likeInnsList, setLikeInnsList] = useState([]);
+  const [likeInnList, setLikeInnList] = useState([]);
   const [likeTourList, setLikeTourList] = useState([]);
-  const [likePromotionList, setLikePromotionList] = useState([]);
   const [tabs, setTabs] = useState([
     { tabName: "숙소", active: true },
     { tabName: "투어", active: false },
-    { tabName: "프로모션", active: false },
   ]);
   const tabClickFunc = (index) => {
     tabs.forEach((item) => {
@@ -35,11 +35,23 @@ const MyLikes = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [likeTourList]);
+  }, []);
 
+  useEffect(() => {
+    axios
+      .get(backServer + "/mypage/likeInnList/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          setLikeInnList(res.data.data);
+        }
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
   return (
     <div className="myBooks_wrap">
-      <h3 className="hidden">찜 리스트</h3>
+      <h3 className="hidden">내 찜 목록</h3>
       <div className="myBooks_tab">
         <div className="tab_btns">
           {tabs.map((tab, index) => {
@@ -58,48 +70,122 @@ const MyLikes = (props) => {
           })}
         </div>
         <div className="tab_contents">
-          {tabs.map((tab, index) => {
-            return (
-              <div
-                key={"tab" + index}
-                className={
-                  tab.active === true ? "tab_content active" : "tab_content"
-                }
-              >
-                {tab.active === true ? (
-                  tab.tabName === "숙소" ? (
-                    <>
-                      <h4 className="hidden">숙소 찜 내역</h4>
-                      <ul className="myBook_list"></ul>
-                    </>
-                  ) : tab.tabName === "투어" ? (
-                    <LikeTourListItem
-                      likeTourList={likeTourList}
-                      backServer={backServer}
-                      memberNo={memberNo}
-                    />
-                  ) : (
-                    <>
-                      <h4 className="hidden">프로모션 찜 내역</h4>
-                      <ul className="myBook_list"></ul>
-                    </>
-                  )
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
+          {tabs.map((tab, index) => (
+            <div
+              key={"tab" + index}
+              className={tab.active ? "tab_content active" : "tab_content"}
+            >
+              {tab.active && tab.tabName === "숙소" && (
+                <LikeInnListItem
+                  likeInnList={likeInnList}
+                  setLikeInnList={setLikeInnList}
+                  backServer={backServer}
+                  memberNo={memberNo}
+                />
+              )}
+              {tab.active && tab.tabName === "투어" && (
+                <LikeTourListItem
+                  likeTourList={likeTourList}
+                  setLikeTourList={setLikeTourList}
+                  backServer={backServer}
+                  memberNo={memberNo}
+                />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
+//숙소 찜 리스트
+const LikeInnListItem = (props) => {
+  const backServer = props.backServer;
+  const likeInnList = props.likeInnList;
+  const setLikeInnList = props.setLikeInnList;
+  const memberNo = props.memberNo;
+  const naviGate = useNavigate();
+
+  return (
+    <div className="inn-like-zone">
+      {likeInnList.map((inn, index) => {
+        const cancelLikeInn = (innNo) => {
+          axios
+            .delete(
+              backServer + "/mypage/cancelInnLike/" + memberNo + "/" + innNo
+            )
+            .then((res) => {
+              if (res.data.message === "success") {
+                const newArray = likeInnList.filter((item) => {
+                  return item !== inn;
+                });
+                setLikeInnList(newArray);
+              }
+            })
+            .catch((res) => {
+              console.log(res);
+            });
+        };
+        return (
+          <React.Fragment key={"inn" + index}>
+            <div className="inn-like-box" key={"inn" + index}>
+              <div>
+                <div className="inn-like-img">
+                  <img src={backServer + "/inn/innList/" + inn.filePath} />
+                </div>
+                <div className="inn-like-info">
+                  <div className="inn-name-box">
+                    <span>숙소이름 : </span>
+                    <span className="inn-name">{inn.partnerName}</span>
+                  </div>
+                  <div className="inn-add-box">
+                    <span>주소 : </span>
+                    <span className="inn-addr">{inn.innAddr}</span>
+                  </div>
+                  <div className="inn-checkintime-box">
+                    <span>숙소 체크인 시간 : </span>
+                    <span className="inn-checkInTime">
+                      {inn.innCheckInTime}
+                    </span>
+                  </div>
+                  <div className="inn-checkouttime-box">
+                    <span>숙소 체크아웃 시간 : </span>
+                    <span className="inn-checkOutTime">
+                      {inn.innCheckOutTime}
+                    </span>
+                  </div>
+                  <div className="inn-checkouttime-box">
+                    <span>
+                      숙소 가격<sub className="sub">(최저가기준)</sub> :{" "}
+                    </span>
+                    <span className="inn-checkOutTime">
+                      {inn.minRoomPrice.toLocaleString()} 원
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="inn-like-cancel-btn">
+                <button
+                  type="button"
+                  className="badge red inn-view-btn"
+                  onClick={() => cancelLikeInn(inn.innNo)}
+                >
+                  찜취소
+                </button>
+              </div>
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+};
 // 투어 찜 리스트 아이템
 const LikeTourListItem = (props) => {
   const backServer = props.backServer;
   const likeTourList = props.likeTourList;
+  const setLikeTourList = props.setLikeTourList;
   const memberNo = props.memberNo;
   const navigate = useNavigate();
 
@@ -125,75 +211,88 @@ const LikeTourListItem = (props) => {
   const handleReservation = (tourNo) => {
     navigate("/tour/view/" + tourNo);
   };
-  const handleCancelLike = (tourNo) => {
-    axios
-      .delete(backServer + "/mypage/cancelLikeTour/" + memberNo + "/" + tourNo)
-      .then((res) => {
-        if (res.data.message === "success") {
-          console.log(res.data);
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
 
   return (
     <>
       <div className="tour-like-top">
-        {likeTourList.map((tour, index) => (
-          <>
-            <div key={index} className="tour-like-wrap">
-              <div className="tour-like-left">
-                <div className="tour-like-name">{tour.tourName}</div>
-                <div className="tour-like-type">
-                  {getTourAddr(tour.tourAddr)} {getTourTypeText(tour.tourType)}
-                </div>
-                <div className="tour-like-img">
-                  <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
-                </div>
-              </div>
-              <div className="tour-like-right">
-                <div className="tour-like-btn">
-                  <button
-                    type="button"
-                    className="btn_primary sm"
-                    onClick={() => handleReservation(tour.tourNo)}
-                  >
-                    예약하기
-                  </button>
-                  <button
-                    type="button"
-                    className="btn_primary outline sm"
-                    onClick={() => handleCancelLike(tour.tourNo)}
-                  >
-                    찜 취소
-                  </button>
-                </div>
-                <div className="tour-like-title">
-                  가격(성인 기준)
-                  <div className="tour-like-price">
-                    {tour.ticketAdult === 0
-                      ? "무료"
-                      : tour.ticketAdult.toLocaleString()}
-                    {tour.ticketAdult !== 0 && "원"}
-                  </div>
-                </div>
+        {likeTourList.map((tour, index) => {
+          const handleCancelLike = () => {
+            axios
+              .delete(
+                backServer +
+                  "/mypage/cancelLikeTour/" +
+                  memberNo +
+                  "/" +
+                  tour.tourNo
+              )
+              .then((res) => {
+                if (res.data.message === "success") {
+                  const newArray = likeTourList.filter((item) => {
+                    return item !== tour;
+                  });
+                  setLikeTourList(newArray);
+                }
+              })
+              .catch((res) => {
+                console.log(res);
+              });
+          };
 
-                <div className="tour-like-title">
-                  주소
-                  <div className="tour-like-addr">{tour.tourAddr}</div>
+          return (
+            <>
+              <div key={index} className="tour-like-wrap">
+                <div className="tour-like-left">
+                  <div className="tour-like-name">{tour.tourName}</div>
+                  <div className="tour-like-type">
+                    {getTourAddr(tour.tourAddr)}{" "}
+                    {getTourTypeText(tour.tourType)}
+                  </div>
+                  <div className="tour-like-img">
+                    <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+                  </div>
                 </div>
-                <div className="tour-like-title">
-                  판매종료 날짜
-                  <div className="tour-like-date">
-                    {new Date(tour.salesPeriod).toLocaleDateString("ko-KR")}
+                <div className="tour-like-right">
+                  <div className="tour-like-btn">
+                    <button
+                      type="button"
+                      className="btn_primary sm"
+                      onClick={() => handleReservation(tour.tourNo)}
+                    >
+                      예약하기
+                    </button>
+                    <button
+                      type="button"
+                      className="btn_primary outline sm"
+                      onClick={() => handleCancelLike(tour.tourNo)}
+                    >
+                      찜 취소
+                    </button>
+                  </div>
+                  <div className="tour-like-title">
+                    가격(성인 기준)
+                    <div className="tour-like-price">
+                      {tour.ticketAdult === 0
+                        ? "무료"
+                        : tour.ticketAdult.toLocaleString()}
+                      {tour.ticketAdult !== 0 && "원"}
+                    </div>
+                  </div>
+
+                  <div className="tour-like-title">
+                    주소
+                    <div className="tour-like-addr">{tour.tourAddr}</div>
+                  </div>
+                  <div className="tour-like-title">
+                    판매종료 날짜
+                    <div className="tour-like-date">
+                      {new Date(tour.salesPeriod).toLocaleDateString("ko-KR")}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        ))}
+            </>
+          );
+        })}
       </div>
     </>
   );

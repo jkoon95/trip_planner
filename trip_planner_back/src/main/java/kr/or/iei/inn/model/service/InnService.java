@@ -133,5 +133,15 @@ public class InnService {
 	}
 	public List selectMyInnReview(int memberNo) {
 		return innDao.selectInnMyReview(memberNo);
+
+	public List selectListInnList(int memberNo) {
+		List list = innDao.selectLikeInnList(memberNo);
+		System.out.println(list);
+		return list;
+	}
+	
+	@Transactional
+	public int cancelInnLike(int memberNo, int innNo) {
+		return innDao.cancelInnLike(memberNo, innNo);
 	}	
 }

@@ -74,10 +74,10 @@
 .createTrips_wrap .search_wrap .search_input_wrap .search_input{display: flex; border-bottom: 1px solid #000;}
 .createTrips_wrap .search_wrap .search_input_wrap .search_input>input{flex: 1; border: none;}
 .createTrips_wrap .search_wrap .search_input_wrap .search_input>.btn_search{display: block; width: 40px; height: 40px; background: url(/public/images/icon_search.svg) no-repeat center / 36px;}
-.createTrips_wrap .search_wrap .search_result_wrap{height: 100%; padding: 20px 20px 0; overflow-y: auto;}
+.createTrips_wrap .search_wrap .search_result_wrap{height: 100%; padding: 20px 0 60px;}
 .createTrips_wrap .search_wrap .search_result_wrap .result_title{font-family: pt-b; font-size: 16px; line-height: 1.5;}
 .createTrips_wrap .search_wrap .search_result_wrap .result_title~.result_title{margin-top: 20px;}
-.createTrips_wrap .search_wrap .search_result_wrap .result_place_area{margin: 8px 0; overflow-y: auto;}
+.createTrips_wrap .search_wrap .search_result_wrap .result_place_area{height: 100%; margin: 8px 0; padding: 0 20px; overflow-y: auto;}
 .createTrips_wrap .search_wrap #pagination{display: flex; justify-content: center; align-items: center; gap: 4px; padding: 20px 0;}
 .createTrips_wrap .search_wrap #pagination>a{display: block; width: 30px; font-size: 12px; line-height: 30px; text-align: center;}
 .createTrips_wrap .search_wrap #pagination>a.on{border-radius: 50%; background-color: var(--main_03); font-family: pt-eb; font-size: 13px;}

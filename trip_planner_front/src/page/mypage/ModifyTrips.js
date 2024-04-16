@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const { kakao } = window;
 
 const ModifyTrips = (props) => {
+  
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const params = useParams();
@@ -238,7 +239,6 @@ const ModifyTrips = (props) => {
   const [linePath, setLinePath] = useState([]);
   const [polylines, setPolylines] = useState([]);
   const [infoWindows, setInfoWindows] = useState([]);
-  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [mapPs, setMapPs] = useState(null);
   const [activePlaceIndex, setActivePlaceIndex] = useState(0);
   const placeRef = useRef();
@@ -249,7 +249,8 @@ const ModifyTrips = (props) => {
   const activeMyPlaceRef = useRef();
   const selectMyPlaceArea = useRef();
   useEffect(()=>{
-    if(activeMyPlaceRef.current){
+    console.log(1);
+    if(activePlaceRef.current){
       resultPlaceArea.current.scrollTop = activePlaceRef.current.offsetTop;
     }
   },[activePlaceIndex]);
@@ -382,6 +383,7 @@ const ModifyTrips = (props) => {
       setInfoWindows([...infoWindows]);
 
       kakao.maps.event.addListener(marker, 'click', function() {
+        console.log(11111111111);
         marker.setClickable(true);
         setActivePlaceIndex(index);
         console.log(resultPlaceArea.current.scrollHeight);
@@ -696,7 +698,7 @@ const ModifyTrips = (props) => {
               {
                 tripDetailList.map((item, index) => {
                   return(
-                    <SetDayWrap key={"day" + index} tripDetailItem={item} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} setTripTodo={setTripTodo} btnTripCostDisabled={btnTripCostDisabled} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnPlaceDisabled={btnPlaceDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled} myPlaceRef={myPlaceRef} activeMyPlaceRef={activeMyPlaceRef} activeMyPlaceIndex={activeMyPlaceIndex} setInfoWindowOpen={setInfoWindowOpen} map={map} infoWindows={infoWindows} markers={markers} setActiveMyPlaceIndex={setActiveMyPlaceIndex} />
+                    <SetDayWrap key={"day" + index} tripDetailItem={item} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} dayIndex={index} tripDays={tripDays[index]} setOpenSearchWrap={setOpenSearchWrap} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setSearchInput={setSearchInput} setTripCost={setTripCost} setOpenCostModal={setOpenCostModal} setDetailListNo={setDetailListNo} setTripTodo={setTripTodo} btnTripCostDisabled={btnTripCostDisabled} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnPlaceDisabled={btnPlaceDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled} myPlaceRef={myPlaceRef} activeMyPlaceRef={activeMyPlaceRef} activeMyPlaceIndex={activeMyPlaceIndex} map={map} infoWindows={infoWindows} markers={markers} setActiveMyPlaceIndex={setActiveMyPlaceIndex} />
                   );
                 })
               }
@@ -720,7 +722,7 @@ const ModifyTrips = (props) => {
                   </div>
                 </div>
                 <div className="search_result_wrap">
-                  <div className="result_title">장소</div>
+                  {/* <div className="result_title">장소</div> */}
                   <div className="result_place_area" ref={resultPlaceArea}>
                     <ul className="place_list">
                       {
@@ -730,7 +732,7 @@ const ModifyTrips = (props) => {
                             activePlace = true;
                           }
                           return(
-                            <ItemTripPlace key={"place"+index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} clickPlaceListFunc={clickPlaceListFunc} activePlace={activePlace} placeRef={placeRef} activePlaceRef={activePlaceRef} />
+                            <ItemTripPlace key={"place"+index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} place={place} thisIndex={detailListNo} listType="result_items" setOpenSearchWrap={setOpenSearchWrap} tripDays={tripDays} clickPlaceListFunc={clickPlaceListFunc} activePlace={activePlace} placeRef={placeRef} activePlaceRef={activePlaceRef} infoWindows={infoWindows} />
                           );
                         })
                       }
@@ -807,7 +809,6 @@ const SetDayWrap = (props) => {
   const activeMyPlaceRef = props.activeMyPlaceRef;
   const activeMyPlaceIndex = props.activeMyPlaceIndex;
   const setActiveMyPlaceIndex = props.setActiveMyPlaceIndex;
-  const setInfoWindowOpen = props.setInfoWindowOpen;
   const map = props.map;
   const infoWindows = props.infoWindows;
   const markers = props.markers;
@@ -856,7 +857,7 @@ const SetDayWrap = (props) => {
                 activeMyPlace = true;
               }
               return (
-                <ItemTripPlace key={"select" + index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled} activeMyPlace={activeMyPlace} myPlaceRef={myPlaceRef} activeMyPlaceRef={activeMyPlaceRef} setInfoWindowOpen={setInfoWindowOpen} map={map} infoWindows={infoWindows} markers={markers} activeMyPlaceIndex={activeMyPlaceIndex} setActiveMyPlaceIndex={setActiveMyPlaceIndex} />
+                <ItemTripPlace key={"select" + index} trip={trip} setTrip={setTrip} tripDetailList={tripDetailList} setTripDetailList={setTripDetailList} routeIndex={index} thisIndex={dayIndex} place={item} listType="day_items" setOpenTodoModal={setOpenTodoModal} setModalTitle={setModalTitle} setTodoDayIndex={setTodoDayIndex} setTodoIndex={setTodoIndex} setTripTodo={setTripTodo} btnChangeOrderDisabled={btnChangeOrderDisabled} btnTodoDisabled={btnTodoDisabled} btnDeltePlaceDisabled={btnDeltePlaceDisabled} activeMyPlace={activeMyPlace} myPlaceRef={myPlaceRef} activeMyPlaceRef={activeMyPlaceRef} map={map} infoWindows={infoWindows} markers={markers} activeMyPlaceIndex={activeMyPlaceIndex} setActiveMyPlaceIndex={setActiveMyPlaceIndex} />
               );
             })
           }
@@ -897,12 +898,13 @@ const ItemTripPlace = (props) => {
   const activeMyPlace = props.activeMyPlace;
   const myPlaceRef = props.myPlaceRef;
   const activeMyPlaceRef = props.activeMyPlaceRef;
-  const setInfoWindowOpen = props.setInfoWindowOpen;
   const map = props.map;
   const infoWindows = props.infoWindows;
   const markers = props.markers;
   const activeMyPlaceIndex = props.activeMyPlaceIndex;
   const setActiveMyPlaceIndex = props.setActiveMyPlaceIndex;
+
+  console.log(infoWindows);
 
   let colorIndex = 0;
   for(let i=0; i<thisIndex+1; i++){
@@ -1055,12 +1057,6 @@ const ItemTripPlace = (props) => {
     });
     console.log("아이고");
     console.log(markers);
-    // activeMyPlaceIndex.length = 0;
-    // activeMyPlaceIndex.push(index);
-    // activeMyPlaceIndex.push(idx);
-    // setActiveMyPlaceIndex([...activeMyPlaceIndex]);
-
-    setInfoWindowOpen(true);
   }
 
   return(

@@ -360,7 +360,7 @@
 		    FROM LIKE_TBL
 		    WHERE MEMBER_NO = #{memberNo} AND LIKE_TYPE = 2
 		)
-		ORDER BY (SELECT LIKE_NO FROM LIKE_TBL WHERE REF_NO = T.TOUR_NO)
+		ORDER BY T.TOUR_NO
 	</select>
 	<delete id="deleteLikeTour">
 	    DELETE FROM like_tbl WHERE member_no = #{memberNo} AND ref_no = #{tourNo}

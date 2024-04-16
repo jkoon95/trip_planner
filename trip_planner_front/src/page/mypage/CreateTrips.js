@@ -333,7 +333,7 @@ const CreateTrips = (props) => {
       removeMarker();
       removeInfoWindow();
       removeMyMarker();
-      // removeMyInfoWindow();
+      removeMyInfoWindow();
       removeLinePath();
       removePolyline();
 
@@ -836,7 +836,6 @@ const ItemTripPlace = (props) => {
         }
       })
     }
-    
     // console.log("아이고");
   }
 

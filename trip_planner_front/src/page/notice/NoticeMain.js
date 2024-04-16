@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import NoticeList from "./NoticeList";
 import { useEffect, useState } from "react";
 import NoticeView from "./NoticeView";
+import NoticeWrite from "./NoticeWrite";
 
 const NoticeMain = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -29,6 +30,10 @@ const NoticeMain = (props) => {
       <Route
         path="/view/:noticeNo"
         element={<NoticeView member={member} isLogin={isLogin} />}
+      />
+      <Route
+        path="/write"
+        element={<NoticeWrite member={member} isLogin={isLogin} />}
       />
     </Routes>
   );

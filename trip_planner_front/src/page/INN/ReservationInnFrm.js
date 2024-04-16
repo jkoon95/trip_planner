@@ -20,22 +20,31 @@ const ReservationInnFrm = (props) => {
   const guestWish = props.guestWish;
   const setGuestWish = props.setGuestWish;
   const ReservationInfo = props.ReservationInfo;
-  console.log(ReservationInfo);
 
-  const [innNo, setInnNo] = useState(41);
-  const [checkInDate, setCheckInDate] = useState("2024-04-10");
-  const [checkOutDate, setCheckOutDate] = useState("2024-04-13");
-  const [roomNo, setRoomNo] = useState(64);
+  const [innNo, setInnNo] = useState(ReservationInfo.innNo);
+  const [checkInDate, setCheckInDate] = useState(ReservationInfo.checkInDate);
+  const [checkOutDate, setCheckOutDate] = useState(
+    ReservationInfo.checkOutDate
+  );
+  const [roomNo, setRoomNo] = useState(ReservationInfo.roomNo);
   const [partnerName, setPartnerName] = useState("");
   const [memberNo, setMemberNo] = useState(29);
-  const [roomName, setRoomName] = useState("정원 전망 스탠다드 더블룸");
+  const [roomName, setRoomName] = useState("");
   const [roomPrice, setRoomPrice] = useState("");
-  const [roomMinPeople, setRoomMinPeople] = useState(2);
-  const [roomMaxPeople, setRoomMaxPeople] = useState(4);
-  const [innCheckInTime, setInnCheckInTime] = useState("14:00");
-  const [innCheckOutTime, setInnCheckOutTime] = useState("12:00");
+  const [roomMinPeople, setRoomMinPeople] = useState(
+    ReservationInfo.roomMinPeople
+  );
+  const [roomMaxPeople, setRoomMaxPeople] = useState(
+    ReservationInfo.roomMaxPeople
+  );
+  const [innCheckInTime, setInnCheckInTime] = useState(
+    ReservationInfo.innCheckInTime
+  );
+  const [innCheckOutTime, setInnCheckOutTime] = useState(
+    ReservationInfo.innCheckOutTime
+  );
   const [selectInn, setSelectInn] = useState([{}]);
-  const [bookGuest, setBookGuest] = useState(3);
+  const [bookGuest, setBookGuest] = useState(ReservationInfo.bookGuest);
   const [termsIndex, setTermsIndex] = useState(0);
   const [openModal1, setOpenModal1] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
@@ -258,7 +267,6 @@ const ReservationInnFrm = (props) => {
   */
 
   const discountPrice = (discountAmount, discountRate, couponList, index) => {
-    console.log(price);
     Swal.fire({
       title: "해당 쿠폰을 사용하시겠습니까?",
       icon: "info",
@@ -269,16 +277,13 @@ const ReservationInnFrm = (props) => {
         const selectCouponNo = couponList[index].couponNo;
         const discountRateValue =
           selectInn.roomPrice * lodgment * (discountRate / 100);
-        console.log(discountRateValue);
         const totalPrice = selectInn.roomPrice * lodgment - discountRateValue;
-        console.log(totalPrice);
         setPrice(totalPrice);
         setCounponNo(selectCouponNo);
       } else if (discountRate == 0 && res.isConfirmed) {
         const selectCouponNo = couponList[index].couponNo;
         const discountAmountValue =
           selectInn.roomPrice * lodgment - discountAmount;
-        console.log(discountAmountValue);
         setPrice(discountAmountValue);
         setCounponNo(selectCouponNo);
       }
@@ -341,8 +346,7 @@ const ReservationInnFrm = (props) => {
           axios
             .post(backServer + "/inn/reservationInn", form)
             .then((res) => {
-              console.log(res.data);
-              naviGate("/innList");
+              naviGate("/mypage/myBooks");
             })
             .catch((res) => {
               console.log(res);
@@ -599,37 +603,25 @@ const ReservationInput = (props) => {
 
 const SelectInnInfo = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const guestPhone = props.guestPhone;
-  const guestWish = props.guestWish;
-  const guestName = props.guestName;
+
   const checkInDate = props.checkInDate;
-  const setCheckInDate = props.setCheckInDate;
+
   const checkOutDate = props.checkOutDate;
-  const setCheckOutDate = props.setCheckOutDate;
+
   const roomNo = props.roomNo;
-  const setRoomNo = props.setRoomNo;
-  const memberNo = props.memberNo;
-  const setMemberNo = props.setMemberNo;
-  const roomName = props.roomName;
-  const setRoomName = props.setRoomName;
-  const roomPrice = props.roomPrice;
+
   const setRoomPrice = props.setRoomPrice;
-  const roomMinPeople = props.roomMinPeople;
-  const setRoomMinPeople = props.setRoomMinPeople;
-  const roomMaxPeople = props.roomMaxPeople;
-  const setRoomMaxPeople = props.setRoomMaxPeople;
+
   const innCheckInTime = props.innCheckInTime;
-  const setInnCheckInTime = props.setInnCheckInTime;
+
   const innCheckOutTime = props.innCheckOutTime;
-  const setInnCheckOutTime = props.setInnCheckOutTime;
+
   const innNo = props.innNo;
-  const setInnNo = props.setInnNo;
-  const partnerName = props.partnerName;
-  const setPartnerName = props.setPartnerName;
+
   const selectInn = props.selectInn;
   const setSelectInn = props.setSelectInn;
   const bookGuest = props.bookGuest;
-  const setBookGuest = props.setBookGuest;
+
   const checkInDay = props.checkInDay;
   const checkOutDay = props.checkOutDay;
   const lodgment = props.lodgment;
@@ -639,7 +631,7 @@ const SelectInnInfo = (props) => {
   const setAllChecked = props.setAllChecked;
   const setOpenModal1 = props.setOpenModal1;
   const setTermsIndex = props.setTermsIndex;
-  const setOpenModal2 = props.setOpenModal2;
+
   const setCouponList = props.setCouponList;
 
   useEffect(() => {
@@ -653,14 +645,12 @@ const SelectInnInfo = (props) => {
         console.log(res);
       });
   }, []);
-
   const checkAll = (e) => {
     const copyAllChecked = { ...allChecked };
     copyAllChecked.active = e.target.checked;
 
     setAllChecked(copyAllChecked);
     const copyCheckTerms = [...checkTerms];
-    console.log(copyCheckTerms);
     copyCheckTerms.forEach((item) => {
       item.active = copyAllChecked.active;
     });
@@ -692,7 +682,7 @@ const SelectInnInfo = (props) => {
         }
       }
       copyAllChecked.active = check;
-      console.log(check, copyAllChecked);
+
       setAllChecked(copyAllChecked);
     };
 
@@ -732,7 +722,6 @@ const SelectInnInfo = (props) => {
       axios
         .get(backServer + "/admin/selectCouponList")
         .then((res) => {
-          console.log(res.data);
           if (res.data.data !== null) {
             setCouponList(res.data.data);
           }

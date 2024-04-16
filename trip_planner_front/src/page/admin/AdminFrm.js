@@ -10,6 +10,9 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Button } from "../../component/FormFrm";
+import Modal from "../../component/Modal";
+import { useState } from "react";
 
 const SelectType = (props) => {
   const data = props.data;
@@ -105,4 +108,48 @@ const ExpireDatePicker = (props) => {
   );
 };
 
-export { SelectType, RadioType, ExpireDatePicker };
+const CouponModal = (props) => {
+  const title = props.title;
+  const openModal = props.openModal;
+  const content = props.content;
+  const closeModal = props.closeModal;
+  const useCloseBtn = props.useCloseBtn;
+  const couponList = props.couponList;
+
+  // 모달1
+  const [openModal1, setOpenModal1] = useState(false);
+  const openModalFunc1 = () => {
+    document.body.classList.add("scroll_fixed");
+    setOpenModal1(true);
+  };
+  const closeModalFunc1 = () => {
+    document.body.classList.remove("scroll_fixed");
+    setOpenModal1(false);
+  };
+  return (
+    <>
+      <Modal
+        class="modal lg"
+        open={openModal1}
+        title={title}
+        useCloseBtn={true}
+        closeModal={closeModalFunc1}
+      >
+        <div className="btn_area">
+          <Button
+            class="btn_secondary outline"
+            text="취소"
+            clickEvent={closeModalFunc1}
+          />
+          <Button
+            class="btn_secondary"
+            text="확인"
+            clickEvent={closeModalFunc1}
+          />
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export { SelectType, RadioType, ExpireDatePicker, CouponModal };

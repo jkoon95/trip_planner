@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "../../component/FormFrm";
-import { Padding } from "@mui/icons-material";
+import { Check, Padding } from "@mui/icons-material";
 import { JoinInputWrap } from "../member/MemberForm";
 
 const MemberView = ({ isLogin, memberType }) => {
@@ -11,6 +11,7 @@ const MemberView = ({ isLogin, memberType }) => {
   const params = useParams();
   const memberNo = params.memberNo;
   const navigate = useNavigate();
+  const [couponList, setCouponList] = useState([]);
   if (!isLogin) {
     Swal.fire({
       icon: "warning",
@@ -46,7 +47,6 @@ const MemberView = ({ isLogin, memberType }) => {
         if (res.data.message === "success") {
           Swal.fire({
             title: "차단 완료",
-            text: "차단완료하였습니다.",
             icon: "success",
           });
           navigate("/mypage/admin/memberMgmt");
@@ -54,6 +54,31 @@ const MemberView = ({ isLogin, memberType }) => {
       })
       .catch((res) => {});
   };
+
+  const adminMember = () => {
+    axios
+      .patch(backServer + "/admin/adminMember/" + memberNo)
+      .then((res) => {
+        if (res.data.message === "success") {
+          Swal.fire({
+            title: "등업 완료",
+            icon: "success",
+          });
+          navigate("/mypage/admin/memberMgmt");
+        }
+      })
+      .catch((res) => {});
+  };
+
+  const setCoupon = () => {
+    axios
+      .get(backServer + "/admin/selectAllCouponList")
+      .then((res) => {
+        setCouponList(res.data.data);
+      })
+      .catch((res) => {});
+  };
+
   return (
     <section className="contents memberMgmtView">
       <div className="memberMgmtView-title">
@@ -121,10 +146,24 @@ const MemberView = ({ isLogin, memberType }) => {
       </div>
       <div className="btn_area">
         <Button
-          id="block_btn"
           text="차단하기"
-          class="btn_primary"
+          class="btn_primary block_btn"
           clickEvent={blockMember}
+        />
+        <Button
+          text="관리자로 승급"
+          class="btn_primary outline block_btn"
+          clickEvent={adminMember}
+        />
+        <Button
+          text="쿠폰 부여"
+          class="btn_secondary block_btn"
+          clickEvent={setCoupon}
+        />
+        <Button
+          text="체크"
+          class="btn_secondary block_btn"
+          clickEvent={Check}
         />
       </div>
     </section>

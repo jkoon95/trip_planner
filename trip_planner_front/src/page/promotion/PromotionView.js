@@ -74,13 +74,10 @@ const PromotionView = (props) => {
   };
   return (
     <section className="contents promotion">
-      <div className="btn_area">
-        <Button text="시험용(임시)" class="btn_primary" clickEvent={check} />
-      </div>
       <div className="promotionView-wrap">
         <div className="promotionView-header">
           <div className="promotionView-title">
-            <h1>{promotion.promotionName}</h1>
+            <h3>{promotion.promotionName}</h3>
           </div>
           <div className="promotionView-thumbnail">
             <img
@@ -119,7 +116,7 @@ const PromotionView = (props) => {
                 <td>{promotion.promotionLimit}</td>
               </tr>
               <tr>
-                <td>모집인원</td>
+                <td>가격</td>
                 <td>{promotion.promotionPrice}</td>
               </tr>
               <tr>
@@ -140,18 +137,36 @@ const PromotionView = (props) => {
           결제수량 :{" "}
           <input
             id="purchase-input"
-            placeholder="숫자"
+            placeholder="ex)OO명 ('명' 제외하고 입력)"
             value={seat}
             onChange={changeData}
           />
         </div>
+        <div className="promotion-purchase-alert">
+          <ul>
+            * 프로모션 D-DAY 7일 이후로는 전액 환불이 어려우실 수 있습니다.
+          </ul>
+          <ul>* 프로모션 D-DAY 3일 이후에는 환불이 불가능합니다.</ul>
+          <ul>
+            * 고객 착오로 인한 구매실수에 대하여 (주) Trip_planner는 책임지지
+            않습니다
+          </ul>
+          <ul>
+            * 프로모션 관련 문의사항에 대하여는 상단의 상담 전화번호로
+            문의하세요
+          </ul>
+        </div>
       </div>
       <div className="btn_area">
-        <Button
-          text="프로모션 구매하기"
-          class="btn_primary"
-          clickEvent={purchasePromotion}
-        />
+        {totalPrice !== 0 && seat !== 0 ? (
+          <Button
+            text="프로모션 구매하기"
+            class="btn_primary"
+            clickEvent={purchasePromotion}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </section>
   );

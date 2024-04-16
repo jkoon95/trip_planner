@@ -8,11 +8,9 @@ const MyLikes = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [likeInnsList, setLikeInnsList] = useState([]);
   const [likeTourList, setLikeTourList] = useState([]);
-  const [likePromotionList, setLikePromotionList] = useState([]);
   const [tabs, setTabs] = useState([
     { tabName: "숙소", active: true },
     { tabName: "투어", active: false },
-    { tabName: "프로모션", active: false },
   ]);
   const tabClickFunc = (index) => {
     tabs.forEach((item) => {
@@ -58,38 +56,26 @@ const MyLikes = (props) => {
           })}
         </div>
         <div className="tab_contents">
-          {tabs.map((tab, index) => {
-            return (
-              <div
-                key={"tab" + index}
-                className={
-                  tab.active === true ? "tab_content active" : "tab_content"
-                }
-              >
-                {tab.active === true ? (
-                  tab.tabName === "숙소" ? (
-                    <>
-                      <h4 className="hidden">숙소 찜 내역</h4>
-                      <ul className="myBook_list"></ul>
-                    </>
-                  ) : tab.tabName === "투어" ? (
-                    <LikeTourListItem
-                      likeTourList={likeTourList}
-                      backServer={backServer}
-                      memberNo={memberNo}
-                    />
-                  ) : (
-                    <>
-                      <h4 className="hidden">프로모션 찜 내역</h4>
-                      <ul className="myBook_list"></ul>
-                    </>
-                  )
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
+          {tabs.map((tab, index) => (
+            <div
+              key={"tab" + index}
+              className={tab.active ? "tab_content active" : "tab_content"}
+            >
+              {tab.active && tab.tabName === "숙소" && (
+                <>
+                  <h4 className="hidden">숙소 찜 내역</h4>
+                  <ul className="myBook_list"></ul>
+                </>
+              )}
+              {tab.active && tab.tabName === "투어" && (
+                <LikeTourListItem
+                  likeTourList={likeTourList}
+                  backServer={backServer}
+                  memberNo={memberNo}
+                />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

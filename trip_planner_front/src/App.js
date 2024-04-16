@@ -77,7 +77,6 @@ function App() {
     setIsLogin(false);
     Swal.fire({
       title: "로그아웃",
-      text: "로그인이 풀렸습니다.",
       icon: "success",
     });
     navigate("/");

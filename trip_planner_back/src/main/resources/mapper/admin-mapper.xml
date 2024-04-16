@@ -30,6 +30,10 @@
  <update id="blockMember">
  	update member_tbl set member_status = 2 where member_no = #{memberNo} 
  </update>
+ 
+ <update id="adminMember">
+ 	update member_tbl set member_type = 3 where member_no = #{memberNo} 
+ </update>
 
   <update id="updateCoupon">
   	update coupon_tbl set coupon_status = 3 where coupon_no=#{couponNo}
@@ -56,6 +60,10 @@
 		and coupon_range in #{couponRange}
 	</if>
 	order by coupon_status, expired_date)c) where rnum between #{start} and #{end}
+ </select>
+ 
+ <select id="selectAllCouponList" resultType="hashmap">
+ 	select * from coupon_list_tbl
  </select>
  
  

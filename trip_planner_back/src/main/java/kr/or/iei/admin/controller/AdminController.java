@@ -85,6 +85,26 @@ public class AdminController {
 		}
 	}
 	
+	@PatchMapping(value="/adminMember/{memberNo}")
+	public ResponseEntity<ResponseDTO> adminMember(@PathVariable int memberNo){
+		int result = adminService.adminMember(memberNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
+	
+	
+	@GetMapping(value="/selectAllCouponList")
+	public ResponseEntity<ResponseDTO> selectCouponList(){
+		List list = adminService.selectAllCouponList();
+		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+	}
+	
 	@GetMapping(value="/partnerList/{reqPage}")
 	public ResponseEntity<ResponseDTO> partnerList(@PathVariable int reqPage) {
 		Map map = adminService.selectPartnerList(reqPage);

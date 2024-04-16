@@ -87,22 +87,33 @@
 
 .contents.promotion .promotionView-header {
   text-align: center;
+  margin-bottom: 200px;
 }
 
 .promotionView-header .promotionView-title {
-  font-size: 50px;
+  font-size: 32px;
   font-family: pt-b;
 }
 
 .promotionView-header .promotionView-thumbnail {
-  width: 600px;
-  height: 800px;
+  display: inline-block;
+  width: 900px;
+  height: 440px;
+}
+
+.promotionView-header .promotionView-thumbnail>img{
+  width: 100%;
+  height: 100%;
 }
 
 .contents.promotion .promotionView-tbl {
-  width: 1000px;
+  width: 800px;
   margin: 0 auto;
   border-spacing: 0;
+}
+
+.promotionView-tbl td:first-child{
+  width: 20%;
 }
 
 .contents.promotion .promotionView-content {
@@ -116,24 +127,30 @@
 
 .promotionView-tbl .promotionView-intro {
   height: 200px;
-  padding: 20px;
-  border: 1px solid black;
+  border: 1px solid #f4f5ef;
   background-color: white;
 }
 
 .promotionView-tbl th,
 td {
   font-family: pt-r;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .contents.promotion .purchase-wrap {
   border: 5px solid #1795f0;
   border-radius: 20px;
-  height: 200px;
+  height: 150px;
   padding: 30px;
-  font-size: 30px;
+  font-size: 15px;
   font-family: pt-b;
+  position: relative;
+}
+
+.contents.promotion .purchase-wrap .promotion-purchase-alert{
+  position: absolute;
+  top: 20px;
+  right: 30px;
 }
 
 .contents.promotion .purchase-price {
@@ -142,7 +159,8 @@ td {
 
 .contents.promotion #purchase-input {
   border-bottom: 1px solid black;
-  font-size: 30px;
+  font-size: 15px;
+  font-family: pt-r;
 }
 
 .promotion_input_area {

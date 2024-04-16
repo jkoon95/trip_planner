@@ -181,6 +181,7 @@
   width: 300px;
   margin-right: 40px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .tour-prod-zone > .tour-prod > .tour-prod-info {

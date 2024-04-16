@@ -47,6 +47,9 @@ public class WebConfig implements WebMvcConfigurer{
 		registry
 		.addResourceHandler("/promotion/promotionThumbnail/**")
 		.addResourceLocations("file:///C:/Temp/trip_planner/promotion/");
+		registry
+		.addResourceHandler("/notice/editor/**")
+		.addResourceLocations("file:///C:/Temp/trip_planner/notice/");
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

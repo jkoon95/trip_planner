@@ -32,4 +32,8 @@
 		        	from notice_tbl join member_tbl 
 		        	on member_tbl.member_no = notice_tbl.member_no where notice_no =#{notice_no}
 	 </select>
+	 <insert id="writeNotice">
+	 	insert into notice_tbl values (notice_seq.nextval, #{memberNo}, #{noticeTitle},#{noticeContent},sysdate)
+	 </insert>
+	 
 </mapper>

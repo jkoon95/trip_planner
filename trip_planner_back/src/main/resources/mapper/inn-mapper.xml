@@ -306,4 +306,22 @@
 		order by review_rate desc, inn_no desc)rr) where rnum between 1 and 16
 	</select>
 
+	<select id="selectLikeInnList" resultType="likeInnList">
+		select 
+		    inn_no, 
+		    partner_no,
+		    inn_type,
+		    inn_addr,
+		    inn_check_in_time,
+		    inn_check_out_time,
+		    (select partner_name from partner_tbl where inn.partner_no = partner_no) partner_name,
+		    (select min(room_price) from room_tbl where inn.inn_no = inn_no) min_room_price,
+		    (SELECT inn_filepath  FROM inn_file_tbl innfile  WHERE inn.inn_no = innfile.inn_no  AND ROWNUM = 1) as file_path
+		from inn_tbl inn 
+		where inn_no in (select ref_no from like_tbl where member_no = #{memberNo})
+	</select>
+	
+	<delete id="cancelInnLike">
+		delete from like_tbl where member_no = #{memberNo} AND ref_no = #{innNo}
+	</delete>
 </mapper>

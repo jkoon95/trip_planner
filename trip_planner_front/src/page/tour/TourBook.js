@@ -56,7 +56,7 @@ const TourBook = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [backServer, tourNo]);
+  }, []);
 
   const simpleTourAddr = tour.tourAddr ? tour.tourAddr.slice(0, 2) : "";
   const formattedStartDate = dayjs(startDate)

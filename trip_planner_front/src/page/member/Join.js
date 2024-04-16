@@ -20,6 +20,7 @@ const Join = () => {
   const [checkPwMsg, setCheckPwMsg] = useState("");
   const [checkPwReMsg, setCheckPwReMsg] = useState("");
   const [checkNickNameMsg, setCheckNickNameMsg] = useState("");
+  const [checkPhoneMsg, setCheckPhoneMsg] = useState("");
   const [zonecode, setZonecode] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddr, setDetailAddr] = useState("");
@@ -67,6 +68,15 @@ const Join = () => {
       setCheckPwReMsg("비밀번호가 일치하지 않습니다.");
     }
   };
+  const phoneChk = () => {
+    const phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
+    if (phoneReg.test(memberPhone)) {
+      setCheckPhoneMsg("");
+    } else {
+      setCheckPhoneMsg("전화번호 형식이 올바르지 않습니다.");
+    }
+  };
+
   const nickNameChk = () => {
     axios
       .get(backServer + "/member/nickName/" + memberNickName)
@@ -101,15 +111,25 @@ const Join = () => {
       checkEmailMsg === "" &&
       checkPwMsg === "" &&
       checkPwReMsg === "" &&
-      checkNickNameMsg === ""
+      checkNickNameMsg === "" &&
+      checkPhoneMsg === ""
     ) {
       axios
         .post(backServer + "/member/join", obj)
         .then((res) => {
           if (res.data.message === "success") {
             if (memberType === 1) {
+              Swal.fire({
+                icon: "success",
+                title: "회원가입 완료",
+              });
               navigate("/login");
             } else {
+              Swal.fire({
+                icon: "success",
+                title: "회원가입 완료",
+                text: "사업자 인증을 완료해주세요",
+              });
               navigate("/businessAuth/", {
                 state: { memberEmail: memberEmail },
               });
@@ -126,7 +146,10 @@ const Join = () => {
           console.log(res);
         });
     } else {
-      Swal.fire("입력값을 확인하세요.");
+      Swal.fire({
+        icon: "warning",
+        title: "입력값을 확인하세요",
+      });
     }
   };
 
@@ -186,6 +209,8 @@ const Join = () => {
           placeholder="ex)010-0000-0000"
           data={memberPhone}
           setData={setMemberPhone}
+          checkMsg={checkPhoneMsg}
+          blurEvent={phoneChk}
         />
         <JoinInputWrap
           label="주소"

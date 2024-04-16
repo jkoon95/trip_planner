@@ -59,7 +59,6 @@ public class AdminService {
 
 	@Transactional
 	public int updateCoupon(int couponNo) {
-		
 		return adminDao.updateCoupon(couponNo);
 	}
 
@@ -81,6 +80,16 @@ public class AdminService {
 		int start = end - amount + 1;
 		List<CouponList> myCouponList = adminDao.selectMyCouponList(memberEmail, couponRange, start, end);
 		return myCouponList;
+	}
+	
+	@Transactional
+	public int adminMember(int memberNo) {
+		// TODO Auto-generated method stub
+		return adminDao.adminMember(memberNo);
+	}
+
+	public List selectAllCouponList() {
+		return adminDao.selectAllCouponList();
 	}
 	
 }

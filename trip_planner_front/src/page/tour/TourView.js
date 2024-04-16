@@ -68,12 +68,14 @@ const TourView = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [backServer, tourNo]);
+  }, []);
 
   useEffect(() => {
     if (reviewList.length > 0) {
       const initialReviews = reviewList.slice(0, displayedReviewCount);
       setDisplayedReviews(initialReviews);
+    } else {
+      setDisplayedReviews(reviewList);
     }
   }, [reviewList, displayedReviewCount]);
 
@@ -162,6 +164,7 @@ const TourView = (props) => {
               .get(backServer + "/tour/reviewList/" + tourNo)
               .then((res) => {
                 setReviewList(res.data.data.reviewList);
+                setReviewContent("");
               })
               .catch((res) => {
                 console.log(res);

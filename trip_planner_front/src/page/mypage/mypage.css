@@ -1,83 +1,387 @@
-.contents.mypage{display: flex; gap: 20px;}
-.contents.mypage .side_wrap{width: 15%; min-width: 197px;}
-.contents.mypage .side_wrap > h2{margin-bottom: 40px; text-align: left;}
-.contents.mypage .side_menu > li{padding: 8px 0;}
-.contents.mypage .side_menu > li > a{display: block; font-size: 16px; line-height: 1.5;}
-.contents.mypage .side_menu > li > a.active{font-family: pt-b;}
-.contents.mypage .content_wrap{flex-grow: 1; border-radius: 30px;}
+.contents.mypage {
+  display: flex;
+  gap: 20px;
+}
+.contents.mypage .side_wrap {
+  width: 15%;
+  min-width: 197px;
+}
+.contents.mypage .side_wrap > h2 {
+  margin-bottom: 40px;
+  text-align: left;
+}
+.contents.mypage .side_menu > li {
+  padding: 8px 0;
+}
+.contents.mypage .side_menu > li > a {
+  display: block;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.contents.mypage .side_menu > li > a.active {
+  font-family: pt-b;
+}
+.contents.mypage .content_wrap {
+  flex-grow: 1;
+  border-radius: 30px;
+}
 
 /* myBooks */
-.myBooks_wrap{padding: 24px; border-radius: 30px; background-color: var(--main_03);} 
-.myBooks_tab{display: flex; flex-direction: column;}
-.myBooks_tab .tab_btns{display: flex;}
-.myBooks_tab .tab_btns .tab_btn{flex: 1; display: block; border-radius: 16px 16px 0 0; background-color: #89CFF0; color: #fff; font-family: pt-b; font-size: 16px; line-height: 60px;}
-.myBooks_tab .tab_btns .tab_btn.active{background-color: #fff; color: #50B8EA;}
-.myBooks_tab .tab_btns .tab_btn.active+.tab_btn+.tab_btn{opacity: 0.8;}
-.myBooks_tab .tab_btns .tab_btn:first-child:not(.active){opacity: 0.8;}
-.myBooks_tab .tab_contents{min-height: 620px; padding: 24px 20px 40px 20px; background-color: #fff; border-radius: 0 0 16px 16px;}
+.myBooks_wrap {
+  padding: 24px;
+  border-radius: 30px;
+  background-color: var(--main_03);
+}
+.myBooks_tab {
+  display: flex;
+  flex-direction: column;
+}
+.myBooks_tab .tab_btns {
+  display: flex;
+}
+.myBooks_tab .tab_btns .tab_btn {
+  flex: 1;
+  display: block;
+  border-radius: 16px 16px 0 0;
+  background-color: #89cff0;
+  color: #fff;
+  font-family: pt-b;
+  font-size: 16px;
+  line-height: 60px;
+}
+.myBooks_tab .tab_btns .tab_btn.active {
+  background-color: #fff;
+  color: #50b8ea;
+}
+.myBooks_tab .tab_btns .tab_btn.active + .tab_btn + .tab_btn {
+  opacity: 0.8;
+}
+.myBooks_tab .tab_btns .tab_btn:first-child:not(.active) {
+  opacity: 0.8;
+}
+.myBooks_tab .tab_contents {
+  min-height: 620px;
+  padding: 24px 20px 40px 20px;
+  background-color: #fff;
+  border-radius: 0 0 16px 16px;
+}
 
-.myBook_list{display: flex; flex-direction: column; gap: 20px;}
-.myBook_list>.bookItem{padding: 24px 24px 36px 24px; border-radius: 12px; border: 1px solid var(--line_03);}
-.myBook_list>.bookItem>a{display: block;}
-.myBook_list>.bookItem .item_top_wrap{display: flex; justify-content: space-between; padding-bottom: 16px;}
-.myBook_list>.bookItem .item_top_wrap .item_name{display: flex; align-items: center; gap: 6px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
-.myBook_list>.bookItem .item_top_wrap .badges{margin-top: -4px; margin-right: -4px;}
-.myBook_list>.bookItem .item_contents_wrap{display: flex; gap: 24px;}
-.myBook_list>.bookItem .item_thumbs{width: 396px; height: 240px; background-color: #f2f2f2;}
-.myBook_list>.bookItem .item_thumbs>img{display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;}
-.myBook_list>.bookItem .item_details{display: flex; flex-direction: column; gap: 12px;}
-.myBook_list>.bookItem .item_details .row{display: flex; gap: 20px;}
-.myBook_list>.bookItem .item_details .row .title{width: 100px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
-.myBook_list>.bookItem .item_details .row .cont{font-size: 16px; line-height: 1.5;}
-.myBook_list>.bookItem .item_details .row .cont>span{display: block; flex: 1;}
-.myBook_list>.bookItem .item_details .row .cont>span+span{margin-top: 12px;}
+.myBook_list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.myBook_list > .bookItem {
+  padding: 24px 24px 36px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--line_03);
+}
+.myBook_list > .bookItem > a {
+  display: block;
+}
+.myBook_list > .bookItem .item_top_wrap {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+}
+.myBook_list > .bookItem .item_top_wrap .item_name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: pt-b;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.myBook_list > .bookItem .item_top_wrap .badges {
+  margin-top: -4px;
+  margin-right: -4px;
+}
+.myBook_list > .bookItem .item_contents_wrap {
+  display: flex;
+  gap: 24px;
+}
+.myBook_list > .bookItem .item_thumbs {
+  width: 396px;
+  height: 240px;
+  background-color: #f2f2f2;
+}
+.myBook_list > .bookItem .item_thumbs > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.myBook_list > .bookItem .item_details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.myBook_list > .bookItem .item_details .row {
+  display: flex;
+  gap: 20px;
+}
+.myBook_list > .bookItem .item_details .row .title {
+  width: 100px;
+  font-family: pt-b;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.myBook_list > .bookItem .item_details .row .cont {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.myBook_list > .bookItem .item_details .row .cont > span {
+  display: block;
+  flex: 1;
+}
+.myBook_list > .bookItem .item_details .row .cont > span + span {
+  margin-top: 12px;
+}
 
-.myBook_list.promotion{flex-direction: row; flex-wrap: wrap;}
-.myBook_list.promotion>.bookItem{width: calc(50% - 12px); padding: 20px 20px 24px 20px;}
-.myBook_list.promotion>.bookItem .item_thumbs{width: 200px; height: 140px; background-color: #f2f2f2;}
-.myBook_list.promotion>.bookItem .item_details .row .title{width: 90px;}
+.myBook_list.promotion {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.myBook_list.promotion > .bookItem {
+  width: calc(50% - 12px);
+  padding: 20px 20px 24px 20px;
+}
+.myBook_list.promotion > .bookItem .item_thumbs {
+  width: 200px;
+  height: 140px;
+  background-color: #f2f2f2;
+}
+.myBook_list.promotion > .bookItem .item_details .row .title {
+  width: 90px;
+}
 
 /* myCoupons */
-.myCoupons_wrap{padding: 24px; border-radius: 30px; background-color: var(--main_03);}
-.myCoupons_wrap>.title_area{display: flex; justify-content: space-between; align-items: center;}
-.myCoupons_wrap>.title_area>h3{display: inline-block; width: calc(100% / 3); margin-bottom: 0; border-radius: 16px 16px 0 0; background-color: #fff; font-family: pt-b; font-size: 16px; line-height: 60px; text-align: center;}
-.myCoupons_wrap .css-1869usk-MuiFormControl-root{margin: 0;}
-.myCoupons_wrap .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{background-color: #fff;}
-.myCoupons_wrap .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{font-family: pt-r;}
-.myCoupons_wrap>.myCoupons_content{min-height: 680px; padding: 32px 32px 40px 32px; background-color: #fff; border-radius: 0 16px 16px 16px;}
-.myCoupons_wrap>.myCoupons_content .item_top_wrap{display: flex;}
-.myCoupons_list{display: flex; flex-wrap: wrap; gap: 20px;}
-.myCoupons_list>li{width: calc(50% - 10px);}
-.myCoupons_list .couponItem{display: flex;}
+.myCoupons_wrap {
+  padding: 24px;
+  border-radius: 30px;
+  background-color: var(--main_03);
+}
+.myCoupons_wrap > .title_area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.myCoupons_wrap > .title_area > h3 {
+  display: inline-block;
+  width: calc(100% / 3);
+  margin-bottom: 0;
+  border-radius: 16px 16px 0 0;
+  background-color: #fff;
+  font-family: pt-b;
+  font-size: 16px;
+  line-height: 60px;
+  text-align: center;
+}
+.myCoupons_wrap .css-1869usk-MuiFormControl-root {
+  margin: 0;
+}
+.myCoupons_wrap
+  .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  background-color: #fff;
+}
+.myCoupons_wrap
+  .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  font-family: pt-r;
+}
+.myCoupons_wrap > .myCoupons_content {
+  min-height: 680px;
+  padding: 32px 32px 40px 32px;
+  background-color: #fff;
+  border-radius: 0 16px 16px 16px;
+}
+.myCoupons_wrap > .myCoupons_content .item_top_wrap {
+  display: flex;
+}
+.myCoupons_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.myCoupons_list > li {
+  width: calc(50% - 10px);
+}
+.myCoupons_list .couponItem {
+  display: flex;
+}
 .myCoupons_list .couponItem.completed,
-.myCoupons_list .couponItem.disabled{opacity: 0.4;}
-.myCoupons_list .couponItem .coupon_info{flex-grow: 1; padding: 20px 0; box-shadow: 7px 7px 20px rgba(0,0,0, 0.12);}
-.myCoupons_list .couponItem .coupon_info>.inner{position: relative; width: calc(100% + 24px); padding: 0 20px; border-right: 1px dashed var(--line_02); background-color: #fff;}
-.myCoupons_list .couponItem .coupon_info>.inner::before{content: ''; position: absolute; top: -56px; right: -36px; width: 36px; height: 36px; border: 18px solid #fff; border-radius: 50%; background-color: transparent; clip: rect(36px, 36px, auto, auto); box-sizing: content-box;}
-.myCoupons_list .couponItem .coupon_info>.inner::after{content: ''; position: absolute; bottom: -56px; right: -36px; width: 36px; height: 36px; border: 18px solid #fff; border-radius: 50%; background-color: transparent; clip: rect(auto 36px 36px auto); box-sizing: content-box;}
-.myCoupons_list .couponItem .item_top_wrap{position: relative; display: flex; justify-content: space-between; align-items: center; gap: 8px; z-index: 1;}
-.myCoupons_list .couponItem .item_top_wrap .badge{min-width: 64px; margin-top: -2px; padding: 0 8px; color: #fff; line-height: 24px;}
-.myCoupons_list .couponItem .item_top_wrap .badge.type1{background-color: #FD5189;}
-.myCoupons_list .couponItem .item_top_wrap .badge.type2{background-color: #FFCD30;}
-.myCoupons_list .couponItem .item_top_wrap .badge.type3{background-color: #25D3CA;}
-.myCoupons_list .couponItem .item_top_wrap .badge.type4{background-color: #39AEFD;}
-.myCoupons_list .couponItem .couponNo{font-family: pt-eb; font-size: 14px; line-height: 1.5;}
-.myCoupons_list .couponItem .item_name{margin-top: 8px; font-family: pt-b; font-size: 14px; line-height: 1.5;}
-.myCoupons_list .couponItem .discount{display: flex; align-items: flex-end; gap: 2px; font-family: pt-eb; font-size: 36px; line-height: 48px;}
-.myCoupons_list .couponItem .discount>span{font-family: pt-b; font-size: 20px; line-height: 48px;}
-.myCoupons_list .couponItem .expiredDate{color: var(--gray_05); font-family: pt-b; font-size: 14px; line-height: 1.5;}
-.myCoupons_list .couponItem .coupon_status{position: relative;  width: 96px; margin-left: 42px; padding: 20px 0; background-color: #4285bd; box-shadow: 7px 7px 20px rgba(0,0,0, 0.12);}
-.myCoupons_list .couponItem .coupon_status>.inner{position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; width: calc(100% + 18px); height: 100%; margin-left: -18px; background-color: #4285bd;}
-.myCoupons_list .couponItem .coupon_status::before{content: ''; position: absolute; top: -35px; left: -54px; width: 36px; height: 36px; border: 18px solid  #4285bd; border-radius: 50%; background-color: transparent; clip: rect(36px, auto, auto, 36px); box-sizing: content-box;}
-.myCoupons_list .couponItem .coupon_status::after{content: ''; position: absolute; bottom: -36px; left: -54px; width: 36px; height: 36px; border: 18px solid  #4285bd; border-radius: 50%; background-color: transparent; clip: rect(auto auto 36px 36px); box-sizing: content-box;}
-.myCoupons_list .couponItem .coupon_status .status{color: #fff; font-family: pt-b; font-size: 14px; line-height: 1.5;}
+.myCoupons_list .couponItem.disabled {
+  opacity: 0.4;
+}
+.myCoupons_list .couponItem .coupon_info {
+  flex-grow: 1;
+  padding: 20px 0;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.12);
+}
+.myCoupons_list .couponItem .coupon_info > .inner {
+  position: relative;
+  width: calc(100% + 24px);
+  padding: 0 20px;
+  border-right: 1px dashed var(--line_02);
+  background-color: #fff;
+}
+.myCoupons_list .couponItem .coupon_info > .inner::before {
+  content: "";
+  position: absolute;
+  top: -56px;
+  right: -36px;
+  width: 36px;
+  height: 36px;
+  border: 18px solid #fff;
+  border-radius: 50%;
+  background-color: transparent;
+  clip: rect(36px, 36px, auto, auto);
+  box-sizing: content-box;
+}
+.myCoupons_list .couponItem .coupon_info > .inner::after {
+  content: "";
+  position: absolute;
+  bottom: -56px;
+  right: -36px;
+  width: 36px;
+  height: 36px;
+  border: 18px solid #fff;
+  border-radius: 50%;
+  background-color: transparent;
+  clip: rect(auto 36px 36px auto);
+  box-sizing: content-box;
+}
+.myCoupons_list .couponItem .item_top_wrap {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+.myCoupons_list .couponItem .item_top_wrap .badge {
+  min-width: 64px;
+  margin-top: -2px;
+  padding: 0 8px;
+  color: #fff;
+  line-height: 24px;
+}
+.myCoupons_list .couponItem .item_top_wrap .badge.type1 {
+  background-color: #fd5189;
+}
+.myCoupons_list .couponItem .item_top_wrap .badge.type2 {
+  background-color: #ffcd30;
+}
+.myCoupons_list .couponItem .item_top_wrap .badge.type3 {
+  background-color: #25d3ca;
+}
+.myCoupons_list .couponItem .item_top_wrap .badge.type4 {
+  background-color: #39aefd;
+}
+.myCoupons_list .couponItem .couponNo {
+  font-family: pt-eb;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.myCoupons_list .couponItem .item_name {
+  margin-top: 8px;
+  font-family: pt-b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.myCoupons_list .couponItem .discount {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: pt-eb;
+  font-size: 36px;
+  line-height: 48px;
+}
+.myCoupons_list .couponItem .discount > span {
+  font-family: pt-b;
+  font-size: 20px;
+  line-height: 48px;
+}
+.myCoupons_list .couponItem .expiredDate {
+  color: var(--gray_05);
+  font-family: pt-b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.myCoupons_list .couponItem .coupon_status {
+  position: relative;
+  width: 96px;
+  margin-left: 42px;
+  padding: 20px 0;
+  background-color: #4285bd;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.12);
+}
+.myCoupons_list .couponItem .coupon_status > .inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% + 18px);
+  height: 100%;
+  margin-left: -18px;
+  background-color: #4285bd;
+}
+.myCoupons_list .couponItem .coupon_status::before {
+  content: "";
+  position: absolute;
+  top: -35px;
+  left: -54px;
+  width: 36px;
+  height: 36px;
+  border: 18px solid #4285bd;
+  border-radius: 50%;
+  background-color: transparent;
+  clip: rect(36px, auto, auto, 36px);
+  box-sizing: content-box;
+}
+.myCoupons_list .couponItem .coupon_status::after {
+  content: "";
+  position: absolute;
+  bottom: -36px;
+  left: -54px;
+  width: 36px;
+  height: 36px;
+  border: 18px solid #4285bd;
+  border-radius: 50%;
+  background-color: transparent;
+  clip: rect(auto auto 36px 36px);
+  box-sizing: content-box;
+}
+.myCoupons_list .couponItem .coupon_status .status {
+  color: #fff;
+  font-family: pt-b;
+  font-size: 14px;
+  line-height: 1.5;
+}
 
-.myCoupons_list .couponItem.disabled .coupon_status{background-color: #717171;}
-.myCoupons_list .couponItem.disabled .coupon_status>.inner{background-color: #717171;}
-.myCoupons_list .couponItem.disabled .coupon_status::before{border-color: #717171;}
-.myCoupons_list .couponItem.disabled .coupon_status::after{border-color: #717171;}
+.myCoupons_list .couponItem.disabled .coupon_status {
+  background-color: #717171;
+}
+.myCoupons_list .couponItem.disabled .coupon_status > .inner {
+  background-color: #717171;
+}
+.myCoupons_list .couponItem.disabled .coupon_status::before {
+  border-color: #717171;
+}
+.myCoupons_list .couponItem.disabled .coupon_status::after {
+  border-color: #717171;
+}
 
-.createTrips_wrap .place_list>.item .tripRoute_no.color1{background-color: #FD5189;}
-.createTrips_wrap .place_list>.item .tripRoute_no.color2{background-color: #FFCD30;}
-.createTrips_wrap .place_list>.item .tripRoute_no.color3{background-color: #25D3CA;}
-.createTrips_wrap .place_list>.item .tripRoute_no.color4{background-color: #39AEFD;}
+.createTrips_wrap .place_list > .item .tripRoute_no.color1 {
+  background-color: #fd5189;
+}
+.createTrips_wrap .place_list > .item .tripRoute_no.color2 {
+  background-color: #ffcd30;
+}
+.createTrips_wrap .place_list > .item .tripRoute_no.color3 {
+  background-color: #25d3ca;
+}
+.createTrips_wrap .place_list > .item .tripRoute_no.color4 {
+  background-color: #39aefd;
+}

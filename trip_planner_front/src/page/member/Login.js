@@ -22,7 +22,6 @@ const Login = (props) => {
             loginFunction(res.data.data);
             Swal.fire({
               title: "로그인 성공",
-              text: "로그인을 성공했습니다",
               icon: "success",
             });
             navigate("/");

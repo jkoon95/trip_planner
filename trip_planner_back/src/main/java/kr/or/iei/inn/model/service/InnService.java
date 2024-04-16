@@ -130,5 +130,14 @@ public class InnService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("innReviewList",innReviewList);
 		return map;
+	}
+	public List selectListInnList(int memberNo) {
+		List list = innDao.selectLikeInnList(memberNo);
+		System.out.println(list);
+		return list;
+	}
+	@Transactional
+	public int cancelInnLike(int memberNo, int innNo) {
+		return innDao.cancelInnLike(memberNo, innNo);
 	}	
 }

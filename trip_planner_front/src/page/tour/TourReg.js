@@ -35,13 +35,13 @@ const TourReg = () => {
           icon: "warning",
         });
         return;
-      } else if (isNaN(salesCount)) {
+      } else if (salesCount !== "" && isNaN(salesCount)) {
         Swal.fire({
           title: "판매 수량은 숫자로 입력해주세요.",
           icon: "warning",
         });
         return;
-      } else if (!datePattern.test(salesPeriod)) {
+      } else if (salesPeriod !== "" && !datePattern.test(salesPeriod)) {
         Swal.fire({
           title: "판매 기간은 2024-12-31 형식으로 입력해주세요.",
           icon: "warning",

@@ -53,7 +53,7 @@ const MyBooks = () => {
     axios
       .get(backServer + "/mypage/bookTourList/" + bookTourReqPage)
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         if (res.data.message === "success") {
           bookTourList.push(...res.data.data);
           setBookTourList([...bookTourList]);
@@ -232,7 +232,7 @@ const BookInnListItem = (props) => {
           ) : (
             <span className="badge red">예약취소</span>
           )}
-          {new Date(item.checkOutDate) < new Date() ? (
+          {new Date(item.checkOutDate).toLocaleDateString("ko-KR") < new Date().toLocaleDateString("ko-KR") ? (
             <span className="badge gray">이용완료</span>
           ) : (
             ""
@@ -286,8 +286,9 @@ const BookInnListItem = (props) => {
 const BookTourListItem = (props) => {
   const item = props.item;
   const backServer = props.backServer;
-  const bookDate = new Date(item.bookDate).toLocaleDateString("ko-KR");
-  const today = new Date().toLocaleDateString("ko-KR");
+
+  console.log(new Date(item.bookDate).toLocaleDateString("ko-KR"));
+  console.log(new Date().toLocaleDateString("ko-KR"));
 
   return (
     <li className="bookItem">
@@ -305,13 +306,12 @@ const BookTourListItem = (props) => {
             >
               {item.bookStatusStr}
             </span>
-            {bookDate === today ? (
+            {new Date(item.bookDate).toLocaleDateString("ko-KR") >= new Date().toLocaleDateString("ko-KR") ? (
               <span className="badge green">이용가능</span>
-            ) : new Date(item.bookDate) < new Date() ? (
-              <span className="badge gray">이용완료</span>
-            ) : (
-              <span className="badge green">이용가능</span>
-            )}
+              ) : new Date(item.bookDate).toLocaleDateString("ko-KR") < new Date().toLocaleDateString("ko-KR") ? (
+                <span className="badge gray">이용완료</span>
+              ) : ""
+            }
           </div>
         </div>
         <div className="item_contents_wrap">
@@ -343,7 +343,7 @@ const BookTourListItem = (props) => {
             </div>
             <div className="row">
               <div className="title">이용 날짜</div>
-              <div className="cont">{bookDate}</div>
+              <div className="cont">{item.bookDate}</div>
             </div>
             <div className="row">
               <div className="title">예약자</div>
@@ -370,7 +370,7 @@ const BookPromotionListItem = (props) => {
             {item.promotionName}
           </div>
           <div className="badges">
-            {new Date(item.promotionExpiredDate) < new Date() ? (
+            {new Date(item.promotionExpiredDate.toLocaleDateString("ko-KR")) < new Date().toLocaleDateString("ko-KR") ? (
               <span className="badge gray">이용완료</span>
             ) : (
               <span className="badge green">이용가능</span>

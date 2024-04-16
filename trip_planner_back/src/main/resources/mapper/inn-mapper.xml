@@ -58,7 +58,19 @@
 		select * from inn_tbl where inn_no=#{innNo}		
 	</select>
 	<select id="selectRoomDetail" resultType="room">
-		select * from room_tbl where inn_no=#{innNo}
+		select 
+		    inn_no, 
+		    room_no,
+		    room_name,
+		    room_max_people,
+		    room_price,
+		    etc_option,
+		    room_min_people,
+		    inn_check_in_time,
+		    inn_check_out_time 
+		from room_tbl r 
+		join inn_tbl using(inn_no) 
+		where inn_no=#{innNo}
 	</select>	
 	<select id="selectInnFileDetail" resultType="innFile">
 		select * from inn_file_tbl where inn_no=#{innNo} and room_no is null	
@@ -202,6 +214,10 @@
 			     FROM like_tbl 
 			     WHERE like_type=1 
 			     AND ref_no = inn.inn_no) like_count,
+			     (SELECT avg(review_star) 
+		          FROM review_tbl 
+		          WHERE review_type=1 
+		          AND ref_no = inn.inn_no) review_star,
 			     (SELECT COUNT(*) 
 			     FROM review_tbl 
 			     WHERE review_type=1 

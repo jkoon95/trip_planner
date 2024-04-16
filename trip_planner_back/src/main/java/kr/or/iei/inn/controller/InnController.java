@@ -156,6 +156,7 @@ public class InnController {
 	@GetMapping("/roomInfo/{innNo}")
 	public ResponseEntity<ResponseDTO> selectRoomDetail(@PathVariable int innNo){
 		List room= innService.selectRoomDetail(innNo);		
+		System.out.println(room);
 		if(room != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", room);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -243,14 +244,15 @@ public class InnController {
 	
 	@PostMapping("/reservationInn")
 	public ResponseEntity<ResponseDTO> reservationInn(@ModelAttribute InnReservation innReservation, @RequestAttribute String memberEmail){
+		System.out.println(innReservation);
 		int memberNo = memberService.getMemberNo(memberEmail);
 		innReservation.setMemberNo(memberNo);
 		int result = innService.reservationInn(innReservation);
-		
+		System.out.println(result);
 		int couponNo = innReservation.getCouponNo();
 		result += adminService.updateCoupon(couponNo);
-		
-		if(result > 1) {
+		System.out.println(result);
+		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 		}else {
@@ -261,8 +263,6 @@ public class InnController {
 	@PostMapping("/innList")
 	public ResponseEntity<ResponseDTO> selectInnList(@RequestBody SelectInnList selectInnList , @RequestAttribute String memberEmail){	//@modelAttribute는 파일이 있을경우 받아올 때 사용
 		Map map = innService.selectInnList(selectInnList, memberEmail);
-		System.out.println(selectInnList);
-		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
 	}

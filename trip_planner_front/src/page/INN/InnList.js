@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import Pagination from "../../component/Pagination";
 import InnDetailView from "./InnDetailView";
+import Swal from "sweetalert2";
 
 const InnList = (props) => {
   const location = useLocation();
@@ -254,20 +255,22 @@ const InnListBox = (props) => {
 
   const likeRef = useRef();
   const likeCount = (innNo) => {
-    likeRef.current.classList.toggle("active-btn");
-    if (innItem.likeCount < 1) {
-      axios
-        .post(backServer + "/inn/likeUpdate/" + innNo)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((res) => {
-          console.log(res);
-        });
+    console.log(innNo);
+    if (likeRef.current) {
+      if (innItem.likeCount < 1) {
+        axios
+          .post(backServer + "/inn/likeUpdate/" + innNo)
+          .then((res) => {
+            console.log(res.data);
+            likeRef.current.classList.toggle("active-btn");
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
     }
   };
   const InnDetailView = () => {
-    console.log(innItem);
     const innNo = innItem.innNo;
     const bookGuest = innItem.bookGuest;
     const checkInOutDates = {
@@ -299,6 +302,17 @@ const InnListBox = (props) => {
         </div>
         {/*<div className="inn-addr">{innItem.innAddr}</div> */}
         <div className="inn-addr2">{addrSpilt[1]}</div>
+        {innItem.reviewStar !== 0 ? (
+          <div className="review-star">
+            <span className="material-icons star">star</span>
+            <span className="review-star-avg">
+              {innItem.reviewStar.toFixed(1)}
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="like-review">
           {/* <span className="like-box">{innItem.likeCount}개의 찜</span> */}
           <span className="material-icons icon">reviews</span>
@@ -320,6 +334,7 @@ const InnListBox = (props) => {
             <span
               className="material-icons"
               onClick={() => likeCount(innItem.innNo)}
+              ref={likeRef}
             >
               favorite_border
             </span>

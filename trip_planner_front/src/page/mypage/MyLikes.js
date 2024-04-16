@@ -35,6 +35,17 @@ const MyLikes = (props) => {
       });
   }, [likeTourList]);
 
+  useEffect(() => {
+    axios
+      .get(backServer + "/mypage/likeInnList/" + memberNo)
+      .then((res) => {
+        console.log(res.data);
+        setLikeInnsList(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
   return (
     <div className="myBooks_wrap">
       <h3 className="hidden">찜 리스트</h3>

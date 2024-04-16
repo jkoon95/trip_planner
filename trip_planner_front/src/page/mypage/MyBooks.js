@@ -224,62 +224,60 @@ const BookInnListItem = (props) => {
 
   return (
     <li className="bookItem">
-      <Link to={"/mypage/"}>
-        <div className="item_top_wrap">
-          <div className="item_name">{item.partnerName}</div>
-          <div className="badges">
-            {item.bookStatus === 1 ? (
-              <span className="badge blue">예약확정</span>
-            ) : (
-              <span className="badge red">예약취소</span>
-            )}
-            {new Date(item.checkOutDate) < new Date() ? (
-              <span className="badge gray">이용완료</span>
-            ) : (
-              ""
-            )}
+      <div className="item_top_wrap">
+        <div className="item_name">{item.partnerName}</div>
+        <div className="badges">
+          {item.bookStatus === 1 ? (
+            <span className="badge blue">예약확정</span>
+          ) : (
+            <span className="badge red">예약취소</span>
+          )}
+          {new Date(item.checkOutDate) < new Date() ? (
+            <span className="badge gray">이용완료</span>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
+      <div className="item_contents_wrap">
+        <div className="item_thumbs">
+          <img
+            src={backServer + "/inn/innFileRoomList/" + item.innFilepath}
+            alt="숙소 썸네일"
+          ></img>
+        </div>
+        <div className="item_details">
+          <div className="row">
+            <div className="title">예약 객실</div>
+            <div className="cont">{item.roomName}</div>
+          </div>
+          <div className="row">
+            <div className="title">예약 일정</div>
+            <div className="cont">
+              {item.checkInDateStr} - {item.checkOutDateStr}({item.night}박)
+            </div>
+          </div>
+          <div className="row">
+            <div className="title">예약 인원</div>
+            <div className="cont">{item.bookGuest} 명</div>
+          </div>
+          <div className="row">
+            <div className="title">투숙객 정보</div>
+            <div className="cont">
+              <span>{item.guestName}</span>
+              <span>{item.guestPhone}</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="title">예약 일시</div>
+            <div className="cont">{item.bookDate}</div>
+          </div>
+          <div className="row">
+            <div className="title">요청사항</div>
+            <div className="cont">{item.guestWish}</div>
           </div>
         </div>
-        <div className="item_contents_wrap">
-          <div className="item_thumbs">
-            <img
-              src={backServer + "/inn/reservationInn/" + item.innFilepath}
-              alt="숙소 썸네일"
-            ></img>
-          </div>
-          <div className="item_details">
-            <div className="row">
-              <div className="title">예약 객실</div>
-              <div className="cont">{item.roomName}</div>
-            </div>
-            <div className="row">
-              <div className="title">예약 일정</div>
-              <div className="cont">
-                {item.checkInDate} - {item.checkOutDate}({item.night}박)
-              </div>
-            </div>
-            <div className="row">
-              <div className="title">예약 인원</div>
-              <div className="cont">{item.bookGuest} 명</div>
-            </div>
-            <div className="row">
-              <div className="title">투숙객 정보</div>
-              <div className="cont">
-                <span>{item.guestName}</span>
-                <span>{item.guestPhone}</span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="title">예약 일시</div>
-              <div className="cont">{item.bookDate}</div>
-            </div>
-            <div className="row">
-              <div className="title">요청사항</div>
-              <div className="cont">{item.guestWish}</div>
-            </div>
-          </div>
-        </div>
-      </Link>
+      </div>
     </li>
   );
 };
@@ -293,10 +291,10 @@ const BookTourListItem = (props) => {
 
   return (
     <li className="bookItem">
-      <Link to={"/mypage/"}>
+      <Link to={"/tour/view/" + item.tourNo}>
         <div className="item_top_wrap">
           <div className="item_name">
-            <span className="badge orange">{item.tourTypeStr}</span>{" "}
+            <span className="badge orange">{item.tourTypeStr}</span>
             {item.tourName}
           </div>
           <div className="badges">
@@ -317,19 +315,17 @@ const BookTourListItem = (props) => {
           </div>
         </div>
         <div className="item_contents_wrap">
-          <Link to={"/tour/view/" + item.tourNo}>
-            <div className="item_thumbs">
-              {item.tourImg !== "null" ? (
-                <img
-                  src={backServer + "/tour/thumbnail/" + item.tourImg}
-                  alt="투어 썸네일"
-                  style={{ width: "396px", height: "240px" }}
-                ></img>
-              ) : (
-                ""
-              )}
-            </div>
-          </Link>
+          <div className="item_thumbs">
+            {item.tourImg !== "null" ? (
+              <img
+                src={backServer + "/tour/thumbnail/" + item.tourImg}
+                alt="투어 썸네일"
+                style={{ width: "396px", height: "240px" }}
+              ></img>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="item_details">
             <div className="row">
               <div className="title">예약 번호</div>

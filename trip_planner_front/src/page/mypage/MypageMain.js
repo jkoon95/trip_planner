@@ -46,7 +46,8 @@ const MypageMain = (props) => {
   }
 
   useEffect(() => {
-    axios
+    if(isLogin){
+      axios
       .get(backServer + "/member")
       .then((res) => {
         // console.log(res.data.data);
@@ -113,7 +114,8 @@ const MypageMain = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+    }
+  }, [isLogin]);
 
   console.log(currMemberType);
   console.log(currPartnerType);

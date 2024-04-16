@@ -125,7 +125,7 @@ function App() {
           />
           <Route
             path="/tour/book/:tourNo"
-            element={<TourBook isLogin={isLogin} />}
+            element={isLogin ? <TourBook isLogin={isLogin} /> : ""}
           />
 
           <Route path="/ref" element={<Ref />} />

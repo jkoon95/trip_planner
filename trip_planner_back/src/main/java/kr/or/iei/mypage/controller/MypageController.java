@@ -116,5 +116,10 @@ public class MypageController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	@GetMapping("/likeInnList/{memberNo}")
+	public ResponseEntity<ResponseDTO> selectLikeInnList(@PathVariable int memberNo){
+		List list = innService.selectListInnList(memberNo);
+		return null;
+	}
 
 }

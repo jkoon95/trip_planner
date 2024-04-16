@@ -92,7 +92,7 @@
 	    VALUES (REVIEW_SEQ.nextval, #{memberNo}, 1, #{reviewTitle}, #{reviewContent}, #{reviewStar}, #{innNo}, sysdate)
 	</insert> 
 	<select id="selectInnReviewList" resultType="review">
-		SELECT review_no,member_nickname,review_title,review_content,review_star,ref_no,review_date
+		SELECT review_no,member_nickname,review_title,review_content,review_star,ref_no,to_char(review_date, 'yyyy-mm-dd')as review_date
 		FROM review_tbl
 		join member_tbl using(member_no)
 		WHERE ref_no = #{innNo} ORDER BY 1 DESC

@@ -26,7 +26,7 @@
 		(select trip_place_name from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no) and rownum = 1) trip_place_name,
 		(select count(*) from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no)) trip_place_count
 		from trip_tbl t where member_no in(select member_no from member_tbl where member_email=#{memberEmail})
-		and trip_end_date <![CDATA[ > ]]> to_char(sysdate, 'yyyy-mm-dd')
+		and trip_end_date <![CDATA[ < ]]> sysdate
 		order by trip_start_date desc)t) where rnum between #{start} and #{end}
 	</select>
 	
@@ -35,7 +35,7 @@
 		(select trip_place_name from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no) and rownum = 1) trip_place_name,
 		(select count(*) from trip_place_tbl where trip_detail_no in (select trip_detail_no from trip_detail_tbl where trip_no=t.trip_no)) trip_place_count
 		from trip_tbl t where member_no in(select member_no from member_tbl where member_email=#{memberEmail})
-		and trip_end_date <![CDATA[ < ]]> to_char(sysdate, 'yyyy-mm-dd')
+		and trip_end_date <![CDATA[ > ]]> sysdate
 		order by trip_start_date desc)t) where rnum between #{start} and #{end}
 	</select>
 

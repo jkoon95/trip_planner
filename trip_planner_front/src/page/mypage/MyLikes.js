@@ -33,7 +33,7 @@ const MyLikes = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [likeTourList]);
+  }, []);
 
   return (
     <div className="myBooks_wrap">
@@ -70,6 +70,7 @@ const MyLikes = (props) => {
               {tab.active && tab.tabName === "투어" && (
                 <LikeTourListItem
                   likeTourList={likeTourList}
+                  setLikeTourList={setLikeTourList}
                   backServer={backServer}
                   memberNo={memberNo}
                 />
@@ -86,6 +87,7 @@ const MyLikes = (props) => {
 const LikeTourListItem = (props) => {
   const backServer = props.backServer;
   const likeTourList = props.likeTourList;
+  const setLikeTourList = props.setLikeTourList;
   const memberNo = props.memberNo;
   const navigate = useNavigate();
 
@@ -111,75 +113,88 @@ const LikeTourListItem = (props) => {
   const handleReservation = (tourNo) => {
     navigate("/tour/view/" + tourNo);
   };
-  const handleCancelLike = (tourNo) => {
-    axios
-      .delete(backServer + "/mypage/cancelLikeTour/" + memberNo + "/" + tourNo)
-      .then((res) => {
-        if (res.data.message === "success") {
-          console.log(res.data);
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
 
   return (
     <>
       <div className="tour-like-top">
-        {likeTourList.map((tour, index) => (
-          <>
-            <div key={index} className="tour-like-wrap">
-              <div className="tour-like-left">
-                <div className="tour-like-name">{tour.tourName}</div>
-                <div className="tour-like-type">
-                  {getTourAddr(tour.tourAddr)} {getTourTypeText(tour.tourType)}
-                </div>
-                <div className="tour-like-img">
-                  <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
-                </div>
-              </div>
-              <div className="tour-like-right">
-                <div className="tour-like-btn">
-                  <button
-                    type="button"
-                    className="btn_primary sm"
-                    onClick={() => handleReservation(tour.tourNo)}
-                  >
-                    예약하기
-                  </button>
-                  <button
-                    type="button"
-                    className="btn_primary outline sm"
-                    onClick={() => handleCancelLike(tour.tourNo)}
-                  >
-                    찜 취소
-                  </button>
-                </div>
-                <div className="tour-like-title">
-                  가격(성인 기준)
-                  <div className="tour-like-price">
-                    {tour.ticketAdult === 0
-                      ? "무료"
-                      : tour.ticketAdult.toLocaleString()}
-                    {tour.ticketAdult !== 0 && "원"}
-                  </div>
-                </div>
+        {likeTourList.map((tour, index) => {
+          const handleCancelLike = () => {
+            axios
+              .delete(
+                backServer +
+                  "/mypage/cancelLikeTour/" +
+                  memberNo +
+                  "/" +
+                  tour.tourNo
+              )
+              .then((res) => {
+                if (res.data.message === "success") {
+                  const newArray = likeTourList.filter((item) => {
+                    return item !== tour;
+                  });
+                  setLikeTourList(newArray);
+                }
+              })
+              .catch((res) => {
+                console.log(res);
+              });
+          };
 
-                <div className="tour-like-title">
-                  주소
-                  <div className="tour-like-addr">{tour.tourAddr}</div>
+          return (
+            <>
+              <div key={index} className="tour-like-wrap">
+                <div className="tour-like-left">
+                  <div className="tour-like-name">{tour.tourName}</div>
+                  <div className="tour-like-type">
+                    {getTourAddr(tour.tourAddr)}{" "}
+                    {getTourTypeText(tour.tourType)}
+                  </div>
+                  <div className="tour-like-img">
+                    <img src={backServer + "/tour/thumbnail/" + tour.tourImg} />
+                  </div>
                 </div>
-                <div className="tour-like-title">
-                  판매종료 날짜
-                  <div className="tour-like-date">
-                    {new Date(tour.salesPeriod).toLocaleDateString("ko-KR")}
+                <div className="tour-like-right">
+                  <div className="tour-like-btn">
+                    <button
+                      type="button"
+                      className="btn_primary sm"
+                      onClick={() => handleReservation(tour.tourNo)}
+                    >
+                      예약하기
+                    </button>
+                    <button
+                      type="button"
+                      className="btn_primary outline sm"
+                      onClick={() => handleCancelLike(tour.tourNo)}
+                    >
+                      찜 취소
+                    </button>
+                  </div>
+                  <div className="tour-like-title">
+                    가격(성인 기준)
+                    <div className="tour-like-price">
+                      {tour.ticketAdult === 0
+                        ? "무료"
+                        : tour.ticketAdult.toLocaleString()}
+                      {tour.ticketAdult !== 0 && "원"}
+                    </div>
+                  </div>
+
+                  <div className="tour-like-title">
+                    주소
+                    <div className="tour-like-addr">{tour.tourAddr}</div>
+                  </div>
+                  <div className="tour-like-title">
+                    판매종료 날짜
+                    <div className="tour-like-date">
+                      {new Date(tour.salesPeriod).toLocaleDateString("ko-KR")}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        ))}
+            </>
+          );
+        })}
       </div>
     </>
   );

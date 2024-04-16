@@ -214,7 +214,6 @@ public class TourController {
 	
 	@GetMapping(value="/reviewList/{tourNo}")
 	public ResponseEntity<ResponseDTO> viewReviewList(@PathVariable int tourNo){
-		System.out.println("요청받음");
 		Map map = tourService.selectReviewList(tourNo);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -222,6 +221,7 @@ public class TourController {
 	
 	@GetMapping(value="/member")
 	public ResponseEntity<ResponseDTO> selectLoginMember(@RequestAttribute String memberEmail){
+		System.out.println("멤버 메소드");
 		Member member = tourService.selectLoginMember(memberEmail);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", member);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
@@ -253,7 +253,6 @@ public class TourController {
 	
 	@PostMapping(value="/book")
 	public ResponseEntity<ResponseDTO> insertBook(@RequestBody TourBook tourBook){
-		System.out.println(tourBook);
 		int result = tourService.insertBook(tourBook);
 		if(result == 1) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
@@ -288,7 +287,6 @@ public class TourController {
 	@GetMapping(value="/topTour")
 	public ResponseEntity<ResponseDTO> topTourList(){
 		Map map = tourService.selectTopTour();
-		System.out.println(map);
 		ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", map);
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}

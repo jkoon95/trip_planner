@@ -539,7 +539,7 @@ const CreateTrips = (props) => {
                   </div>
                 </div>
                 <div className="search_result_wrap">
-                  <div className="result_title">장소</div>
+                  {/* <div className="result_title">장소</div> */}
                   <div className="result_place_area">
                     <ul className="place_list">
                       {
@@ -553,7 +553,7 @@ const CreateTrips = (props) => {
                     </ul>
                     <div id="pagination"></div>
                   </div>
-                  <div className="result_title">숙소</div>
+                  {/* <div className="result_title">숙소</div>
                   <div className="result_inns_area">
                     <ul className="inn_list">
                       <li>
@@ -563,7 +563,7 @@ const CreateTrips = (props) => {
                     <div className="btn_area">
                       <Button text="숙소 검색 결과 더보기" class="btn_primary outline md" />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <button type="button" className="btn_close" onClick={closeSearchWrap}><span className="hidden">닫기</span></button>
               </div>
@@ -760,42 +760,39 @@ const ItemTripPlace = (props) => {
   return(
     listType === "day_items" ? (
       <>
-        {place.delNo !== 1 ? (
-          <li className="item tripPlace">
-            <div className={"tripRoute_no color"+colorIndex}>{(routeIndex+1)}</div>
-            <div className="item_box">
-              <div className="item_box_content">
-                <div className="place_name">{place.tripPlaceName}</div>
-                <div className="place_info">
-                  <span>{place.tripPlaceCategory}</span>
-                  <span>{place.tripPlaceAddress}</span>
-                </div>
+        <li className="item tripPlace">
+          <div className={"tripRoute_no color"+colorIndex}>{(routeIndex+1)}</div>
+          <div className="item_box">
+            <div className="item_box_content">
+              <div className="place_name">{place.tripPlaceName}</div>
+              <div className="place_info">
+                <span>{place.tripPlaceCategory}</span>
+                <span>{place.tripPlaceAddress}</span>
               </div>
-              <div className="item_btn_wrap">
-                {
-                  routeIndex === 0 ? (
-                    <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
-                  ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
-                    <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                  ) : (
-                    <>
-                      <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
-                      <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
-                    </>
-                  )
-                }
-              </div>
-              {!place.tripTodo ? (
-                <div className="btn_area">
-                  <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
-                </div>
-              ) : ""}
-              <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
             </div>
-          </li>
-          ) : ""
-        }
-        {place.delNo !== 1 && place.tripTodo ? (
+            <div className="item_btn_wrap">
+              {
+                routeIndex === 0 ? (
+                  <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                ) : routeIndex === tripDetailList[thisIndex].selectPlaceList.length - 1 ? (
+                  <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
+                ) : (
+                  <>
+                    <button type="button" className="btn_changeOrder down" onClick={tripRouteDown}><span className="hidden">내리기</span></button>
+                    <button type="button" className="btn_changeOrder up" onClick={tripRouteUp}><span className="hidden">올리기</span></button>
+                  </>
+                )
+              }
+            </div>
+            {!place.tripTodo ? (
+              <div className="btn_area">
+                <Button text="할 일 추가" class="btn_secondary outline md" clickEvent={openTodoModalFunc} />
+              </div>
+            ) : ""}
+            <button type="button" className="btn_delete" onClick={deletePlace}><span className="hidden">삭제</span></button>
+          </div>
+        </li>
+        {place.tripTodo ? (
           <li className="item tripTodo">
           <div className={"tripRoute_no color"+colorIndex}></div>
           <div className="item_box">

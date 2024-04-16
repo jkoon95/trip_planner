@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { ExpireDatePicker } from "../admin/AdminFrm";
 
 const PromotionApply = (props) => {
-  const member = props.member;
+  const memberNo = props.member.memberNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [partnerNo, setPartnerNo] = useState(0);
   const [promotionName, setPromotionName] = useState("");
@@ -37,9 +37,10 @@ const PromotionApply = (props) => {
   };
   useEffect(() => {
     axios
-      .get(backServer + "/partner/" + member.memberNo)
+      .get(backServer + "/partner/" + memberNo)
       .then((res) => {
         if (res.data.message === "success") {
+          console.log(res.data);
           setPartnerNo(res.data.data.partnerNo);
         }
       })
@@ -57,8 +58,9 @@ const PromotionApply = (props) => {
 
   //신청 로직
   const applyPromotion = () => {
-    const promotionExpiredDate = dayjs(expiredDate).toDate();
+    const promotionExpiredDate = dayjs(expiredDate).format("YYYY-MM-DD");
     const form = new FormData();
+    console.log(promotionExpiredDate);
     form.append("promotionName", promotionName);
     form.append("partnerNo", partnerNo);
     form.append("promotionIntro", promotionIntro);
@@ -81,7 +83,6 @@ const PromotionApply = (props) => {
             title: "프로모션 신청 성공",
             text: "프로모션 신청에 성공했습니다.",
           });
-          navigate("/promotion/promotionList");
         }
       })
       .catch((res) => {
@@ -155,13 +156,7 @@ const PromotionApply = (props) => {
           )}
         </div>
       </div>
-      <div className="btn_area">
-        <Button
-          class="btn_secondary"
-          text="프로모션 신청"
-          clickEvent={applyPromotion}
-        ></Button>
-      </div>
+      {/*
       <div className="promotion_input_area">
         <div className="promotion-file-input">
           <div className="input_title">
@@ -176,6 +171,14 @@ const PromotionApply = (props) => {
             multiple
           />
         </div>
+      </div>
+        */}
+      <div className="btn_area">
+        <Button
+          class="btn_secondary"
+          text="프로모션 파일 등록"
+          clickEvent={applyPromotion}
+        ></Button>
       </div>
     </section>
   );

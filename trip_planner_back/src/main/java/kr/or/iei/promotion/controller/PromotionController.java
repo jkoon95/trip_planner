@@ -113,36 +113,26 @@ public class PromotionController {
 	}
 	
 	@PostMapping("/applyPromotion")
-	public ResponseEntity<ResponseDTO> applyPromotion(@ModelAttribute String promotionName, @ModelAttribute int partnerNo, @ModelAttribute String promotionIntro, @ModelAttribute String promotionRegion, @ModelAttribute int promotionPrice, @ModelAttribute int promotionLimit, @ModelAttribute Object promotionExpiredDate, @ModelAttribute MultipartFile promotionImage){
+	public ResponseEntity<ResponseDTO> applyPromotion(@ModelAttribute Promotion promotion, @ModelAttribute MultipartFile promotionImage, @ModelAttribute MultipartFile promotionFile){
 		String savepath = root+"/promotion/";
 		
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
-		
-		Promotion promotion = new Promotion();
-		promotion.setPromotionLimit(promotionLimit);
-		promotion.setPromotionPrice(promotionPrice);
-		promotion.setPromotionIntro(promotionIntro);
-		promotion.setPartnerNo(partnerNo);
-		promotion.setPromotionName(promotionName);
-		promotion.setPromotionExpiredDate(format.format(promotionExpiredDate));
-		
-		System.out.println();
+		System.out.println(promotion);
 		
 		String thumbnailFilepath = fileUtils.upload(savepath, promotionImage);
 		
 		
 		promotion.setPromotionImg(thumbnailFilepath);
-		//PromotionFile promotionfile = new PromotionFile();
-		/*
+		PromotionFile promotionfile = new PromotionFile();
+		System.out.println(promotionFile);
 		if(promotionFile != null) {
 			String filename = promotionFile.getOriginalFilename();
 			String filepath = fileUtils.upload(savepath, promotionFile);
 			promotionfile.setProFileName(filename);
 			promotionfile.setProFilePath(filepath);	
 		}
-		*/
 		
-		int result = promotionService.applyPromotion(promotion);
+		
+		int result = promotionService.applyPromotion(promotion,promotionFile);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

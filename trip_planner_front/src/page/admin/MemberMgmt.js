@@ -46,7 +46,7 @@ const MemberMgmt = ({ member, isLogin }) => {
   }, [reqPage, member]);
   return (
     <section className="contents memberMgmt">
-      <h2>공지사항</h2>
+      <h2>회원관리</h2>
       <div className="memberMgmt_wrap">
         <div className="memberMgmt-tbl-wrap">
           <table className="memberMgmt-tbl">

@@ -42,5 +42,10 @@ public class NoticeService {
 
 	public Notice selectOneNotice(int noticeNo) {
 		return noticeDao.selectOneNotice(noticeNo);
+	}
+
+	public int writeNotice(Notice notice) {
+		// TODO Auto-generated method stub
+		return noticeDao.writeNotice(notice);
 	}	
 }

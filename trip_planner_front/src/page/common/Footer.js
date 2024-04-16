@@ -11,13 +11,10 @@ const Footer = () => {
               <Link to="/notice/noticeList">공지사항</Link>
             </li>
             <li>
-              <Link to="#">이용약관</Link>
+              <span>고객센터</span>
             </li>
             <li>
-              <Link to="#">고객센터</Link>
-            </li>
-            <li>
-              <Link to="#">블로그</Link>
+              <Link to="/blogList">블로그</Link>
             </li>
             <li>
               <Link to="/consult">고객상담</Link>

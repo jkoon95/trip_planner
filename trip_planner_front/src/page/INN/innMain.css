@@ -240,3 +240,23 @@
 .content-box > .like-btn > span.active-btn {
   color: red;
 }
+.content-box > .review-star {
+  display: flex;
+}
+.content-box > .review-star > .star {
+  width: 12px;
+  font-size: 16px;
+  margin-right: 4px;
+}
+.content-box > .review-star > .review-star-avg {
+  font-size: 12px;
+  font-family: pt-b;
+}
+.content-box > .review-star {
+  border: 1px solid rgb(255 173 10);
+  width: 46px;
+  padding: 3px;
+  border-radius: 8px;
+  background-color: rgb(255 173 10);
+  margin-bottom: 5px;
+}

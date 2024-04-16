@@ -34,7 +34,7 @@ const ListSideMenu = (props) => {
   const buttonFunction = props.buttonFunction;
   const checkIn = props.checkIn;
   const checkOut = props.checkOut;
-  console.log(checkInDate, checkOutDate);
+
   //숙소리스트 페이지 작업을위한 reqPage state
   const [reqPage, setReqPage] = useState(1);
 
@@ -330,8 +330,7 @@ const DateWrap = (props) => {
   const setCheckInDate = props.setCheckInDate;
   const checkOutDate = props.checkOutDate;
   const setCheckOutDate = props.setCheckOutDate;
-  console.log(checkInDate);
-  console.log(checkOutDate);
+
   const changeCheckInDate = (newValue) => {
     setCheckInDate(newValue);
   };
@@ -410,7 +409,6 @@ const CheckBoxInput = (props) => {
               checked={item.checked}
               value={item.defaultValue}
               onChange={(e) => {
-                console.log(111111);
                 selectInnType();
               }}
             />

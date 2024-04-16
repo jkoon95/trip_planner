@@ -18,6 +18,8 @@ public class Room {
 	private String roomPrice;
 	private String etcOption;
 	private int roomMinPeople;
+	private String innCheckInTime;
+	private String innCheckOutTime;
 	
 	private String[] hashTagName;
 	private String[] optionNo;

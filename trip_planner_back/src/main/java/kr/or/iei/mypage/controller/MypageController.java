@@ -121,12 +121,18 @@ public class MypageController {
 		List InnReview = innService.selectMyInnReview(memberNo);
 		if(InnReview != null) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", InnReview);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}			
+			
 	@Operation(summary = "내 숙소 찜 리스트 조회", description = "내 숙소 찜 리스트 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "message 값 확인"),
-		@ApiResponse(responseCode = "500", description = "서버 에러")
+		@ApiResponse(responseCode = "500", description = "서버 에러")		
 	})
-	
 	@GetMapping("/likeInnList/{memberNo}")
 	public ResponseEntity<ResponseDTO> selectLikeInnList(@PathVariable int memberNo){
 		List list = innService.selectListInnList(memberNo);

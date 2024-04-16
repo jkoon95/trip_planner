@@ -133,7 +133,7 @@ public class InnService {
 	}
 	public List selectMyInnReview(int memberNo) {
 		return innDao.selectInnMyReview(memberNo);
-
+	}
 	public List selectListInnList(int memberNo) {
 		List list = innDao.selectLikeInnList(memberNo);
 		System.out.println(list);

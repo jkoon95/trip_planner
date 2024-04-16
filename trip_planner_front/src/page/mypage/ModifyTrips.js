@@ -508,7 +508,7 @@ const ModifyTrips = (props) => {
             path: linePath,
             strokeWeight: 5,
             strokeColor: '#E9511C',
-            strokeOpacity: 0.2,
+            strokeOpacity: 0.6,
             strokeStyle: 'dashed'
           });
 

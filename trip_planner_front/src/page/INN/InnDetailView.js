@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { Input, Textarea } from "../../component/FormFrm";
 import Swal from "sweetalert2";
 import Rating from "@mui/material/Rating";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 {
   /* params로 innNo 받기  */
@@ -35,8 +35,21 @@ const InnDetailView = (props) => {
   //console.log(checkInOutDates);
 
   const [innReviewList, setInnReviewList] = useState([]);
-
   const navigate = useNavigate();
+
+  const getAverageReviewStar = () => {
+    if (innReviewList.length === 0) {
+      return 0; // 리뷰가 없을 경우 평균 별점을 0으로 반환
+    }
+    const totalStars = innReviewList.reduce(
+      (acc, review) => acc + review.reviewStar,
+      0
+    );
+    const averageStar = totalStars / innReviewList.length;
+    return averageStar.toFixed(1); // 소수점 첫째 자리까지만 표시
+  };
+  const averageReviewStar = getAverageReviewStar();
+
   useEffect(() => {
     axios
       .get(backServer + "/inn/detail/" + innNo)
@@ -110,33 +123,34 @@ const InnDetailView = (props) => {
   }, [room, innNo]);
 */
   }
-
-  const insertReview = () => {
-    const form = new FormData();
-    form.append("reviewStar", reviewStar);
-    form.append("reviewTitle", reviewTitle);
-    form.append("reviewContent", reviewContent);
-    form.append("innNo", innNo);
-    axios
-      .post(backServer + "/inn/innReview", form)
+  useEffect(() => {
+    axios(backServer + "/inn/innReviewList/" + innNo)
       .then((res) => {
-        if (res.data.message === "success") {
-          Swal.fire("등록되었습니다 :)");
-          axios(backServer + "/inn/innReviewList/" + innNo)
-            .then((res) => {
-              console.log(res.data.data);
-              setInnReviewList(res.data.data.data.innReviewList);
-            })
-            .catch((res) => {
-              console.log(res);
-            });
-        } else {
-          Swal.fire("등록 중 문제 발생, 잠시후 다시 등록바랍니다. ");
-        }
+        console.log(res.data.data.innReviewList);
+        console.log(res.data.data);
+        setInnReviewList(res.data.data.innReviewList);
       })
       .catch((res) => {
         console.log(res);
       });
+  }, []);
+  const insertReview = () => {
+    const form = new FormData();
+    if (reviewContent && reviewTitle !== null) {
+      form.append("reviewStar", reviewStar);
+      form.append("reviewTitle", reviewTitle);
+      form.append("reviewContent", reviewContent);
+      form.append("innNo", innNo);
+      axios
+        .post(backServer + "/inn/innReview", form)
+        .then((res) => {
+          Swal.fire("등록되었습니다 :)");
+        })
+        .catch((res) => {
+          console.log(res);
+          Swal.fire("모든항목을 입력해주시기바랍니다.");
+        });
+    }
   };
   return (
     <section className="contents detail-view">
@@ -170,11 +184,21 @@ const InnDetailView = (props) => {
         </div>
         <div>
         */}
-        <div>
-          {inn.innType === 1 && <span>호텔</span>}
-          {inn.innType === 2 && <span>리조트</span>}
-          {inn.innType === 3 && <span>펜션</span>}
-          {inn.innType === 4 && <span>게스트하우스</span>}
+        <div className="inn-top">
+          <div className="inn-star-avg">
+            <Rating
+              name="average-rating"
+              value={parseFloat(averageReviewStar)}
+              readOnly
+            />
+            <div>{averageReviewStar}</div>
+          </div>
+          <div className="inn-type">
+            {inn.innType === 1 && <span>호텔</span>}
+            {inn.innType === 2 && <span>리조트</span>}
+            {inn.innType === 3 && <span>펜션</span>}
+            {inn.innType === 4 && <span>게스트하우스</span>}
+          </div>
         </div>
         <div className="inn-detail-top">
           <div>{partnerName}</div>
@@ -262,6 +286,21 @@ const InnDetailView = (props) => {
             ""
           )}
         </>
+        <div className="review-contents">
+          {/* 리뷰제목 not null */}
+          <h3>리뷰</h3>
+          <div>
+            {innReviewList.map((review, index) => (
+              <div key={index} className="review-item">
+                <h4>{review.reviewTitle}</h4>
+                <Rating value={review.reviewStar} readOnly />
+                <p>{review.reviewContent}</p>
+                <p>작성자: {review.memberNickname}</p>
+                <p>작성일: {review.reviewDate}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

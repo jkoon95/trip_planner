@@ -296,3 +296,24 @@
 .review-box input {
   text-indent: 10px;
 }
+
+/* 평점 */
+.inn-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.inn-star-avg {
+  display: flex;
+  align-items: center;
+}
+.inn-star-avg * {
+  margin-right: 0.1rem;
+}
+.inn-star-avg > div {
+  margin-left: 8%;
+}
+.inn-type span {
+  font-family: pt-b;
+  font-size: 120%;
+}

@@ -20,11 +20,11 @@
 .myBook_list>.bookItem{padding: 24px 24px 36px 24px; border-radius: 12px; border: 1px solid var(--line_03);}
 .myBook_list>.bookItem>a{display: block;}
 .myBook_list>.bookItem .item_top_wrap{display: flex; justify-content: space-between; padding-bottom: 16px;}
-.myBook_list>.bookItem .item_top_wrap .item_name{display: flex; align-items: center; gap: 4px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
+.myBook_list>.bookItem .item_top_wrap .item_name{display: flex; align-items: center; gap: 6px; font-family: pt-b; font-size: 16px; line-height: 1.5;}
 .myBook_list>.bookItem .item_top_wrap .badges{margin-top: -4px; margin-right: -4px;}
 .myBook_list>.bookItem .item_contents_wrap{display: flex; gap: 24px;}
 .myBook_list>.bookItem .item_thumbs{width: 396px; height: 240px; background-color: #f2f2f2;}
-.myBook_list>.bookItem .item_thumbs>img{display: block;}
+.myBook_list>.bookItem .item_thumbs>img{display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;}
 .myBook_list>.bookItem .item_details{display: flex; flex-direction: column; gap: 12px;}
 .myBook_list>.bookItem .item_details .row{display: flex; gap: 20px;}
 .myBook_list>.bookItem .item_details .row .title{width: 100px; font-family: pt-b; font-size: 16px; line-height: 1.5;}

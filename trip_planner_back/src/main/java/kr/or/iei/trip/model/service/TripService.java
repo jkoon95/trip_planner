@@ -229,4 +229,9 @@ public class TripService {
 		}
 		return returnResult;
 	}
+
+	@Transactional
+	public int deleteTrip(int tripNo) {
+		return tripDao.deleteTrip(tripNo);
+	}
 }

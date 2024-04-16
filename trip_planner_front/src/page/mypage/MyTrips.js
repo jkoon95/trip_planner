@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../component/FormFrm";
+import Swal from "sweetalert2";
 
 const MyTrips = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -116,7 +117,7 @@ const MyTrips = () => {
                         <ul className="myTrips_list">
                           {comingTripList.map((item, i) => {
                             return(
-                              <TripListItem key={"myTrips"+i} item={item} />
+                              <TripListItem key={"myTrips"+i} item={item} itemType="coming" backServer={backServer} thisIndex={i} comingTripList={comingTripList} setComingTripList={setComingTripList} />
                             );
                           })}
                         </ul>
@@ -133,7 +134,7 @@ const MyTrips = () => {
                         <ul className="myTrips_list">
                           {pastTripList.map((item, i) => {
                             return(
-                              <TripListItem key={"myTrips"+i} item={item} />
+                              <TripListItem key={"myTrips"+i} item={item} itemType="past" backServer={backServer} thisIndex={i} pastTripList={pastTripList} setPastTripList={setPastTripList} />
                             );
                           })}
                         </ul>
@@ -176,10 +177,42 @@ const MyTrips = () => {
 
 const TripListItem = (props) => {
   const item = props.item;
+  const itemType = props.itemType;
+  const thisIndex = props.thisIndex;
+  const comingTripList = props.comingTripList;
+  const setComingTripList = props.setComingTripList;
+  const pastTripList = props.pastTripList;
+  const setPastTripList = props.setPastTripList;
   const [openMenu, setOpenMenu] = useState(false);
+  const backServer = props.backServer;
   const menuOpenFunc = () => {
     openMenu ? setOpenMenu(false) : setOpenMenu(true);
   }
+  const deleteTripFunc = () => {
+    Swal.fire({icon: "info", text: "여행 일정을 삭제하시겠습니까?", showCancelButton: true, confirmButtonText: "삭제", cancelButtonText: "취소"})
+    .then((res) => {
+      if(res.isConfirmed){
+        axios.delete(backServer + "/trip/" + item.tripNo)
+        .then((res) => {
+          if(res.data.message === "success"){
+            Swal.fire({icon: "success", text: "여행 일정이 삭제되었습니다.", confirmButtonText: "닫기"});
+            if(itemType === "coming"){
+              comingTripList.splice(comingTripList[thisIndex], 1);
+              setComingTripList([...comingTripList]);
+            }else if(itemType === "past"){
+              pastTripList.splice(pastTripList[thisIndex], 1);
+              setPastTripList([...pastTripList]);
+            }
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+          Swal.fire({icon: "warning", text: "문제가 발생했습니다. 잠시 후 다시 시도해주세요.", confirmButtonText: "닫기"});
+        })
+      }
+    })
+  }
+
   return(
     <li>
       <Link to={"/mypage/myTrips/modifyTrips/"+item.tripNo}>
@@ -187,26 +220,26 @@ const TripListItem = (props) => {
           <div className="trip_title">{item.tripTitle}</div>
           <div className="trip_date">{item.tripStartDate.replaceAll("-",".")} - {item.tripEndDate.replaceAll("-",".")}</div>
           <div className="btm_info">
-            <span className="trip_place_count">{item.tripPlaceName} 외 {item.tripPlaceCount-1}개 장소</span>
+            <span className="trip_place_count">{item.tripPlaceCount !== 0 ? item.tripPlaceName + "외" + (item.tripPlaceCount-1) + "개 장소" : "0개 장소"}</span>
             {/* <span className="book_inn">예약한 숙소: 1</span> */}
             {/* <span className="book_tour">예약한 투어: 1</span> */}
           </div>
         </div>
       </Link>
       <div className="btn_wrap">
+        <button type="button" className="btn_delete" onClick={deleteTripFunc}><span className="hidden">삭제</span></button>
         {/* <button type="button" className="btn_share"><span className="hidden">공유하기</span></button> */}
-        <div className="small_menu_wrap">
+        {/* <div className="small_menu_wrap">
           <button className="btn_menu" onClick={menuOpenFunc}><span className="hidden">메뉴</span></button>
           {
             openMenu ? (
               <ul className="menu_list">
-                {/* <li><Link to={"/mypage/myTrips/modifyTrips/"+item.tripNo}>수정하기</Link></li> */}
                 <li><button type="button">공유하기</button></li>
-                <li><button type="button">삭제</button></li>
+                <li><button type="button" onClick={deleteTripFunc}>삭제</button></li>
               </ul>
             ) : ""
           }
-        </div>
+        </div> */}
       </div>
     </li>
   )

@@ -46,7 +46,8 @@ const MypageMain = (props) => {
   }
 
   useEffect(() => {
-    axios
+    if(isLogin){
+      axios
       .get(backServer + "/member")
       .then((res) => {
         // console.log(res.data.data);
@@ -113,7 +114,8 @@ const MypageMain = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, []);
+    }
+  }, [isLogin]);
 
   console.log(currMemberType);
   console.log(currPartnerType);
@@ -122,8 +124,8 @@ const MypageMain = (props) => {
     { url: "myBooks", text: "내 예약", active: true },
     { url: "myTrips", text: "내 여행", active: false },
     { url: "myCoupons", text: "내 쿠폰함", active: false },
-    { url: "myLikes", text: "찜 리스트", active: false },
-    { url: "myReviews", text: "내 리뷰 보기", active: false },
+    { url: "myLikes", text: "내 찜 목록", active: false },
+    { url: "myReviews", text: "내 리뷰", active: false },
     { url: "myInfo", text: "내 정보 수정", active: false },
   ]);
 

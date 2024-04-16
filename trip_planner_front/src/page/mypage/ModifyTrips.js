@@ -98,6 +98,11 @@ const ModifyTrips = (props) => {
 
   // 여행 수정하기
   const modifyTripsFunc = () => {
+    if(btnModifyText === "수정완료"){
+      Swal.fire({icon: "success", title: "수정 완료", text: "여행 일정이 수정되었습니다.", confirmButtonText: "닫기"});
+      navigate("/mypage/myTrips");
+      return;
+    }
     for(let i=0; i<trip.tripDetailList.length; i++){
       for(let j=0; j<trip.tripDetailList[i].selectPlaceList.length; j++){
         trip.tripDetailList[i].selectPlaceList[j].oldTripRoute = 0;
@@ -697,7 +702,12 @@ const ModifyTrips = (props) => {
               }
             </div>
             <div className="btn_area">
-              <Button text={btnModifyText} class="btn_primary" clickEvent={modifyTripsFunc} />
+              {
+                  new Date(trip.tripEndDate).toLocaleDateString("ko-KR") >= new Date().toLocaleDateString("ko-KR") ? (
+                  <Button text={btnModifyText} class="btn_primary" clickEvent={modifyTripsFunc} />
+                ) : ""
+              }
+              
             </div>
           </div>
           {

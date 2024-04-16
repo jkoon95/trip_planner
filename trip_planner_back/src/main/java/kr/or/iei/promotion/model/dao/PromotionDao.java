@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
+import kr.or.iei.promotion.model.dto.PromotionFile;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -42,5 +43,7 @@ public interface PromotionDao {
 	int applyPromotion(Promotion promotion);
 
 	int applyPromotionFile(MultipartFile promotionFile);
+
+	int applyPromotionFile(PromotionFile promotionFile);
 
 }

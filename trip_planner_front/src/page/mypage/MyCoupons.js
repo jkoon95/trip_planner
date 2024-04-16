@@ -140,7 +140,7 @@ const MyCouponsListItem = (props) => {
                 <div className="inner">
                   <span className="status">{item.couponStatusStr}</span>
                   {
-                    item.expiredDate < new Date() ? (
+                    new Date(item.expiredDate).toLocaleDateString("ko-KR") < new Date().toLocaleDateString("ko-KR") ? (
                       <span className="status">기간 만료</span>
                     ) : ""
                   }

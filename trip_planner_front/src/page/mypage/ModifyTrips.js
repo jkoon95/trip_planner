@@ -9,7 +9,6 @@ import Modal from "../../component/Modal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import zIndex from "@mui/material/styles/zIndex";
 const { kakao } = window;
 
 const ModifyTrips = (props) => {

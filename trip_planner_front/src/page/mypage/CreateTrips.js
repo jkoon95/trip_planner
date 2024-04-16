@@ -1,5 +1,5 @@
 import "./createTrips.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Input, Textarea } from "../../component/FormFrm";
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -117,8 +117,18 @@ const CreateTrips = (props) => {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [mapRoutes, setMapRoutes] = useState([]);
+  const [linePath, setLinePath] = useState([]);
+  const [polylines, setPolylines] = useState([]);
   const [infoWindows, setInfoWindows] = useState([]);
   const [mapPs, setMapPs] = useState(null);
+  const [activePlaceIndex, setActivePlaceIndex] = useState(0);
+  const placeRef = useRef();
+  const activePlaceRef = useRef();
+  const resultPlaceArea = useRef();
+  const [activeMyPlaceIndex, setActiveMyPlaceIndex] = useState([]);
+  const myPlaceRef = useRef();
+  const activeMyPlaceRef = useRef();
+  const selectMyPlaceArea = useRef();
   useEffect(() => {
     const container = document.getElementById('map');
     const ps = new kakao.maps.services.Places();
@@ -142,12 +152,18 @@ const CreateTrips = (props) => {
     // 지도 표시를 위한 영역값
     const bounds = new kakao.maps.LatLngBounds();
 
+    removeMarker();
+    removeMapRoute();
+    removeInfoWindow();
+    removeLinePath();
+    removePolyline();
+
     // 담아놓은 여행장소가 하나라도 있으면
     const emptySp = tripDetailList.filter((item) => {
       return item.selectPlaceList.length === 0;
     })
     // 내 장소들 최초 표시
-    const linePath = [];
+    // const linePath = [];
     if(tripDetailList.length !== 0 && emptySp.length !== tripDetailList.length){
       displayMyMarker();
     }
@@ -160,10 +176,13 @@ const CreateTrips = (props) => {
       if(status === kakao.maps.services.Status.OK) {
         removeMarker();
         removeInfoWindow();
+        removeLinePath();
+        removePolyline();
 
         if(openSearchWrap){
-          data.forEach((place) => {
-            displayMarker(place);
+          data.forEach((place, index) => {
+            setActivePlaceIndex(0);
+            displayMarker(place, index);
             
             placeResultList.push({
               tripPlaceName : place.place_name,
@@ -175,38 +194,76 @@ const CreateTrips = (props) => {
             });
             setPlaceResultList([...placeResultList]);
           })
-        }else{
+
+          displayPagination(pagination);
+        }
+        // else{
           if(tripDetailList.length !== 0){
             displayMyMarker();
           }
-        }
+        // }
       }
     }
 
+    function displayPagination(pagination) {
+      let paginationEl = document.getElementById('pagination'),
+          fragment = document.createDocumentFragment(),
+          i;
+
+      while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild(paginationEl.lastChild);
+      }
+
+      for (i = 1; i <= pagination.last; i++) {
+        let el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i === pagination.current) {
+          el.className = 'on';
+        } else {
+          el.onclick = (function (i) {
+            return function () {
+              pagination.gotoPage(i);
+            }
+          })(i);
+        }
+
+        fragment.appendChild(el);
+      }
+      paginationEl.appendChild(fragment);
+    }
+
     if(searchPlaces !== "") {
-      mapPs.keywordSearch(searchPlaces, placesSearchCB);
+      mapPs.keywordSearch(searchPlaces, placesSearchCB, {size: 10});
     }
 
     // 검색한 장소 마커와 인포윈도우
-    const displayMarker = (place) => {
+    const displayMarker = (place, index) => {
       bounds.extend(new kakao.maps.LatLng(place.y, place.x));
 
       const marker = new kakao.maps.Marker({
         map: map,
-        position: new kakao.maps.LatLng(place.y, place.x) 
+        position: new kakao.maps.LatLng(place.y, place.x),
+        zIndex: 30
       });
       markers.push(marker);
       setMarkers([...markers]);
         
       const infoWindow = new kakao.maps.CustomOverlay({
-        zIndex: 2,
-        yAnchor: 1
+        zIndex: 45,
+        yAnchor: 1.7
       });
       infoWindows.push(infoWindow);
       setInfoWindows([...infoWindows]);
 
       kakao.maps.event.addListener(marker, 'click', function() {
         marker.setClickable(true);
+        setActivePlaceIndex(index);
+        console.log(resultPlaceArea.current.scrollHeight);
+        console.log(activePlaceRef.current.offsetTop);
+        //resultPlaceArea.current.scrollTop = activePlaceRef.current.offsetTop;
+
         let infoWindowStr = [
           "<div class='infoWindow'>",
             "<div class='item_box'>",
@@ -230,36 +287,45 @@ const CreateTrips = (props) => {
         map.setCenter(new kakao.maps.LatLng(place.y, place.x));
       });
 
-      kakao.maps.event.addListener(marker, 'custom_action', function(data){
-        console.log(data + '가 발생했습니다.');
-      });
-      kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
+      // kakao.maps.event.addListener(marker, 'custom_action', function(data){
+      //   console.log(data + '가 발생했습니다.');
+      // });
+      // kakao.maps.event.trigger(marker, 'custom_action', '내 이벤트');
 
       map.setBounds(bounds);
     }
-
+    
     // 내 장소 마커, 루트, 인포윈도우
     function displayMyMarker() {
-      removeMarker();
+      // removeMarker();
       removeMapRoute();
-      removeInfoWindow();
-      linePath.length = 0;
+      // removeInfoWindow();
+      // removeLinePath();
+      // removePolyline();
       
-      tripDetailList.forEach((detail) => {
-        
-        detail.selectPlaceList.forEach((place) => {
+      tripDetailList.forEach((detail, index) => {
+        detail.selectPlaceList.forEach((place, idx) => {
           bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+          
+          let colorIndex = 0;
+          for(let i=0; i<index+1; i++){
+            colorIndex = colorIndex+1;
+            if(i%4 === 0){
+                colorIndex = 1;
+            }
+          }
 
           const marker = new kakao.maps.Marker({
             map: map,
-            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng) 
+            position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
+            zIndex: 40
           });
           markers.push(marker);
           setMarkers([...markers]);
 
           const infoWindow = new kakao.maps.CustomOverlay({
-            zIndex: 2,
-            yAnchor: 1
+            zIndex: 50,
+            yAnchor: 1.7,
           });
           infoWindows.push(infoWindow);
           setInfoWindows([...infoWindows]);
@@ -267,8 +333,8 @@ const CreateTrips = (props) => {
           const mapRoute = new kakao.maps.CustomOverlay({
             map: map,
             position: new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng),
-            content: "<div class='map_route'>"+(place.tripRoute)+"</div>",
-            yAnchor: 1,
+            content: "<div class='map_route color"+colorIndex+"'>"+(place.tripRoute)+"</div>",
+            yAnchor: 2.8,
             zIndex: 3,
             clickable: true
           });
@@ -276,11 +342,23 @@ const CreateTrips = (props) => {
           mapRoutes.push(mapRoute);
           setMapRoutes([...mapRoutes]);
             
+          setActiveMyPlaceIndex([0,0]);
           kakao.maps.event.addListener(marker, 'click', function() {
+            
+            marker.setClickable(true);
+            activeMyPlaceIndex.length = 0;
+            activeMyPlaceIndex.push(index);
+            activeMyPlaceIndex.push(idx);
+            setActiveMyPlaceIndex([...activeMyPlaceIndex]);
+            console.log(activeMyPlaceIndex);
+            // console.log(selectMyPlaceArea.current.scrollHeight);
+            // console.log(activeMyPlaceRef.current.offsetTop);
+            // selectMyPlaceArea.current.scrollTop = activeMyPlaceRef.current.offsetTop;
+
             const tripPlacePhone = place.tripPlacePhone ? place.tripPlacePhone : "";
             const tripPlaceCategory = place.tripPlaceCategory ? place.tripPlaceCategory : "";
             let infoWindowStr = [
-              "<div class='infoWindow'>",
+              "<div class='infoWindow myList'>",
                 "<div class='item_box'>",
                   "<div class='item_box_content'>",
                     "<div class='place_name'>"+place.tripPlaceName+"</div>",
@@ -294,30 +372,39 @@ const CreateTrips = (props) => {
               "</div>"
             ].join("");
             infoWindow.setContent(infoWindowStr);
-            infoWindow.setPosition(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+            infoWindow.setPosition(new kakao.maps.LatLng(tripDetailList[activeMyPlaceIndex[0]].selectPlaceList[activeMyPlaceIndex[1]].tripPlaceLat, tripDetailList[activeMyPlaceIndex[0]].selectPlaceList[activeMyPlaceIndex[1]].tripPlaceLng));
             for (let i=0; i<infoWindows.length; i++) {
               infoWindows[i].setMap(null);
             }
             infoWindow.setMap(map);
+            map.setCenter(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
           });
 
           // 장소에 이을 선 좌표 배열 추가
           linePath.push(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
+
+          // 선 생성
+          const polyline = new kakao.maps.Polyline({
+            path: linePath,
+            strokeWeight: 5,
+            strokeColor: '#E9511C',
+            strokeOpacity: 0.2,
+            strokeStyle: 'dashed'
+          });
+
+          polylines.push(polyline);
+          setPolylines([...polylines]);
+
+          // 선 표시
+          for (let i=0; i<polylines.length; i++) {
+            polylines[i].setMap(null);
+          }
+          polyline.setMap(map);
+          map.setBounds(bounds);
         })
 
       })
 
-      // 선 생성
-      const polyline = new kakao.maps.Polyline({
-        path: linePath,
-        strokeWeight: 5,
-        strokeColor: '#E9511C',
-        strokeOpacity: 0.2,
-        strokeStyle: 'dashed'
-      });
-      // 선 표시
-      polyline.setMap(map);  
-      map.setBounds(bounds);
     }
 
     function removeMarker(){
@@ -325,6 +412,7 @@ const CreateTrips = (props) => {
         markers[i].setMap(null);
       }   
       markers.length = 0;
+      setMarkers([...markers]);
     }
 
     function removeMapRoute(){
@@ -332,6 +420,7 @@ const CreateTrips = (props) => {
         mapRoutes[i].setMap(null);
       }   
       mapRoutes.length = 0;
+      setMapRoutes([...mapRoutes]);
     }
 
     function removeInfoWindow(){
@@ -339,6 +428,20 @@ const CreateTrips = (props) => {
         infoWindows[i].setMap(null);
       }   
       infoWindows.length = 0;
+      setInfoWindows([...infoWindows]);
+    }
+
+    function removeLinePath(){
+      linePath.length = 0;
+      setLinePath([...linePath]);
+    }
+
+    function removePolyline(){
+      for (let i=0; i<polylines.length; i++) {
+        polylines[i].setMap(null);
+      }   
+      polylines.length = 0;
+      setPolylines([...polylines]);
     }
 
   }, [map, trip, openSearchWrap, searchPlaces])
@@ -448,6 +551,7 @@ const CreateTrips = (props) => {
                         })
                       }
                     </ul>
+                    <div id="pagination"></div>
                   </div>
                   <div className="result_title">숙소</div>
                   <div className="result_inns_area">
@@ -579,6 +683,14 @@ const ItemTripPlace = (props) => {
   const setTripTodo = props.setTripTodo;
   const tripDays = props.tripDays;
 
+  let colorIndex = 0;
+  for(let i=0; i<thisIndex+1; i++){
+    colorIndex = colorIndex+1;
+    if(i%4 === 0){
+        colorIndex = 1;
+    }
+  }
+
   const addPlaceFunc = () => {
     tripDetailList[thisIndex].tripDay = tripDays[thisIndex];
     // tripDetailList[thisIndex].selectPlaceList.push({tripPlace: place});
@@ -650,7 +762,7 @@ const ItemTripPlace = (props) => {
       <>
         {place.delNo !== 1 ? (
           <li className="item tripPlace">
-            <div className="tripRoute_no">{(routeIndex+1)}</div>
+            <div className={"tripRoute_no color"+colorIndex}>{(routeIndex+1)}</div>
             <div className="item_box">
               <div className="item_box_content">
                 <div className="place_name">{place.tripPlaceName}</div>
@@ -685,7 +797,7 @@ const ItemTripPlace = (props) => {
         }
         {place.delNo !== 1 && place.tripTodo ? (
           <li className="item tripTodo">
-          <div className="tripRoute_no"></div>
+          <div className={"tripRoute_no color"+colorIndex}></div>
           <div className="item_box">
             <div className="item_box_content" onClick={modifyTodo}>{place.tripTodo}</div>
             <button type="button" className="btn_delete" onClick={deleteTodo}><span className="hidden">삭제</span></button>

@@ -68,7 +68,7 @@ const TourView = (props) => {
       .catch((res) => {
         console.log(res);
       });
-  }, [backServer, tourNo]);
+  }, []);
 
   useEffect(() => {
     if (reviewList.length > 0) {

@@ -14,9 +14,11 @@ const TourSearchBox = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const location = useLocation();
+  const value = props.value;
+  const date = props.date;
 
-  const [searchText, setSearchText] = useState("");
-  const [startDate, setStartDate] = React.useState(dayjs());
+  const [searchText, setSearchText] = useState(value || "");
+  const [startDate, setStartDate] = React.useState(dayjs(date || undefined));
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
 
@@ -41,6 +43,7 @@ const TourSearchBox = (props) => {
                 tourList: res.data.data.tourList,
                 ticketList: res.data.data.ticketList,
                 searchText: searchText,
+                startDate: startDate.format("YYYY-MM-DD"),
               },
             });
           }
@@ -81,8 +84,8 @@ const TourSearchBox = (props) => {
             <DatePicker
               format="YYYY년 MM월 DD일"
               label="이용일"
-              value={startDate}
-              onChange={(newValue) => setStartDate(newValue)}
+              value={startDate.isValid() ? startDate : undefined}
+              onChange={(newValue) => setStartDate(dayjs(newValue))}
               showDaysOutsideCurrentMonth
               disablePast
             />

@@ -130,7 +130,7 @@ const LikeTourListItem = (props) => {
       .delete(backServer + "/mypage/cancelLikeTour/" + memberNo + "/" + tourNo)
       .then((res) => {
         if (res.data.message === "success") {
-          console.log(res);
+          console.log(res.data);
         }
       })
       .catch((res) => {

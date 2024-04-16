@@ -4,12 +4,13 @@ import { Button } from "../../component/FormFrm";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 const TourSearch = (props) => {
   const isLogin = props.isLogin;
-  const tourType = props.tourType;
   const location = useLocation();
-  const [searchText, setSearchText] = useState("");
+  const searchText = location.state ? location.state.searchText : "";
+  const startDate = location.state ? location.state.startDate : dayjs();
   const [member, setMember] = useState("");
   const [tourList, setTourList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
@@ -25,7 +26,6 @@ const TourSearch = (props) => {
     ) {
       setTourList(location.state.tourList);
       setTicketList(location.state.ticketList);
-      setSearchText(location.state.searchText);
     }
     axios
       .get(backServer + "/tour/member")
@@ -54,7 +54,7 @@ const TourSearch = (props) => {
         <span className="material-icons">reply</span>
         <h5>투어 리스트 목록으로</h5>
       </div>
-      <TourSearchBox />
+      <TourSearchBox value={searchText} date={startDate} />
       {tourList.length === 0 ? (
         <div className="tour-list-empty">
           <h2>일치하는 상품이 없습니다.</h2>

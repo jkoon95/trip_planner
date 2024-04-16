@@ -28,6 +28,7 @@
 .myTrips_wrap .myTrips_list>li .btn_wrap{position: absolute; top: 8px; right: 8px; display: flex; z-index: 100;}
 .myTrips_wrap .myTrips_list>li .btn_wrap .btn_menu{width: 36px; height: 36px; background: url(/public/images/icon_small_menu_gray.svg) no-repeat center / 24px;}
 .myTrips_wrap .myTrips_list>li .btn_wrap .btn_share{width: 36px; height: 36px; background: url(/public/images/icon_share.svg) no-repeat center / 24px;}
+.myTrips_wrap .myTrips_list>li .btn_wrap .btn_delete{position: absolute; display: block; top: 0; right: 0; width: 30px; height: 30px; background: url(/public/images/icon_close_gray.svg) no-repeat center / 24px;}
 .myTrips_wrap .small_menu_wrap{position: relative; display: flex;}
 .myTrips_wrap .small_menu_wrap .menu_list{position: absolute; right: 0; top: 36px; padding: 12px 0; border: 1px solid #000; border-radius: 12px; background-color: #fff;}
 .myTrips_wrap .small_menu_wrap>.menu_list a,

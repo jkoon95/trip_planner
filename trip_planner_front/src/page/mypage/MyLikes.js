@@ -37,7 +37,7 @@ const MyLikes = (props) => {
 
   return (
     <div className="myBooks_wrap">
-      <h3 className="hidden">찜 리스트</h3>
+      <h3 className="hidden">내 찜 목록</h3>
       <div className="myBooks_tab">
         <div className="tab_btns">
           {tabs.map((tab, index) => {

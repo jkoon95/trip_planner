@@ -702,7 +702,12 @@ const ModifyTrips = (props) => {
               }
             </div>
             <div className="btn_area">
-              <Button text={btnModifyText} class="btn_primary" clickEvent={modifyTripsFunc} />
+              {
+                  new Date(trip.tripEndDate).toLocaleDateString("ko-KR") >= new Date().toLocaleDateString("ko-KR") ? (
+                  <Button text={btnModifyText} class="btn_primary" clickEvent={modifyTripsFunc} />
+                ) : ""
+              }
+              
             </div>
           </div>
           {

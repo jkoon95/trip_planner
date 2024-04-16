@@ -398,7 +398,7 @@ const CreateTrips = (props) => {
             zIndex: 40
           });
           myMarkers.push(marker);
-          setMyMarkers([...markers]);
+          setMyMarkers([...myMarkers]);
 
           const infoWindow = new kakao.maps.CustomOverlay({
             zIndex: 50,

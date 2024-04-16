@@ -116,10 +116,37 @@ public class MypageController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
+	@Operation(summary = "내 숙소 찜 리스트 조회", description = "내 숙소 찜 리스트 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
 	@GetMapping("/likeInnList/{memberNo}")
 	public ResponseEntity<ResponseDTO> selectLikeInnList(@PathVariable int memberNo){
 		List list = innService.selectListInnList(memberNo);
-		return null;
+		if(!list.isEmpty()) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", list);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	@Operation(summary = "내 투어 찜 삭제", description = "내 투어 찜 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "message 값 확인"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
+	@DeleteMapping("/cancelInnLike/{memberNo}/{innNo}")
+	public ResponseEntity<ResponseDTO> cancelInnLike(@PathVariable int memberNo, @PathVariable int innNo){
+		int result = innService.cancelInnLike(memberNo,innNo);
+		if(result > 0) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
 	}
 
 }

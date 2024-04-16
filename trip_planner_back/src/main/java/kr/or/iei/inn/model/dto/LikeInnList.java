@@ -18,4 +18,6 @@ public class LikeInnList {
 	private int innNo;
 	private int partnerNo;
 	private int innType;
+	private String filePath;
+	private String innAddr;
 }

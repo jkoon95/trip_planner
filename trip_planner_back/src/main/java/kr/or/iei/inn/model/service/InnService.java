@@ -134,6 +134,10 @@ public class InnService {
 	public List selectListInnList(int memberNo) {
 		List list = innDao.selectLikeInnList(memberNo);
 		System.out.println(list);
-		return null;
+		return list;
+	}
+	@Transactional
+	public int cancelInnLike(int memberNo, int innNo) {
+		return innDao.cancelInnLike(memberNo, innNo);
 	}	
 }

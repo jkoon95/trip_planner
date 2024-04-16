@@ -145,7 +145,7 @@ const MypageMain = (props) => {
             <Route path="/myTrips" element={<MyTrips />} />
             <Route path="/myCoupons" element={<MyCoupons />} />
             <Route path="/myLikes" element={<MyLikes member={member} />} />
-            <Route path="/myReviews" element={<MyReviews />} />
+            <Route path="/myReviews" element={<MyReviews member={member} />} />
             <Route
               path="/myInfo"
               element={<MyInfo isLogin={isLogin} member={member} />}

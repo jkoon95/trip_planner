@@ -116,5 +116,16 @@ public class MypageController {
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 		}
 	}
-
+	@GetMapping("/innReviewList/{memberNo}")
+	public ResponseEntity<ResponseDTO> selectMyInnReview(@PathVariable int memberNo){
+		List InnReview = innService.selectMyInnReview(memberNo);
+		if(InnReview != null) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", InnReview);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+		}
+	}
+	
 }

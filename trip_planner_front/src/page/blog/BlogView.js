@@ -26,7 +26,7 @@ const BlogView = (props) => {
       .get(backServer + "/blogComment/commentList/" + blogNo)
       .then((res) => {
         setComment(res.data.data);
-        console.log(res.data);
+        // console.log(res.data.data);
       })
       .catch((res) => {});
   }, [isRegistComment]);
@@ -35,6 +35,7 @@ const BlogView = (props) => {
     axios
       .get(backServer + "/blog/one/" + blogNo)
       .then((res) => {
+        console.log(res.data.data);
         setBlog(res.data.data.blog);
         setlist(res.data.data.list);
       })
@@ -100,7 +101,7 @@ const BlogView = (props) => {
               <>
                 <button
                   type="button"
-                  class="btn_secondary outline md"
+                  className="btn_secondary outline md"
                   onClick={deleteBoard}
                 >
                   삭제
@@ -137,10 +138,10 @@ const BlogView = (props) => {
             return <DayItem key={"list" + index} day={day} />;
           })}
         </div>
-        <div class="btn-area">
+        <div className="btn-area">
           <button
             type="button"
-            class="btn_secondary listBtn"
+            className="btn_secondary listBtn"
             onClick={blogList}
           >
             블로그 목록
@@ -160,7 +161,7 @@ const BlogView = (props) => {
                   />
                   <button
                     type="button"
-                    class="btn_secondary md"
+                    className="btn_secondary md"
                     onClick={insertComment}
                   >
                     등록
@@ -193,12 +194,14 @@ const BlogView = (props) => {
 
 const DayItem = (props) => {
   const day = props.day;
+  console.log(day);
   return (
     <div className="day-list">
       <div className="day-titie-box">
         <span className="blog-date-day-view">
           🚕 Day <span>{day.blogDateDay + 1}</span> 💨
         </span>
+
         <br></br>
         <p className="schedule-title">
           <span>일정 제목</span> : {day.blogDateScheduleTitle}
@@ -317,7 +320,7 @@ const CommentItem = (props) => {
           {isLogin &&
           member &&
           member.memberNickName === comment.memberNickName ? (
-            <div class="btn-area">
+            <div className="btn-area">
               <button
                 type="button"
                 className="btn_primary sm first"

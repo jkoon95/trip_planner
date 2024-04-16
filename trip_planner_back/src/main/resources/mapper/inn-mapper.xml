@@ -54,6 +54,7 @@
 		insert into room_hashtag_tbl values(#{roomNo},#{hashTag})
 	</insert>
 	
+	
 	<select id="selectInnDetail" resultType="inn">
 		select * from inn_tbl where inn_no=#{innNo}		
 	</select>
@@ -97,6 +98,13 @@
 		join member_tbl using(member_no)
 		WHERE ref_no = #{innNo} ORDER BY 1 DESC
 	</select>
+	<select id="selectInnMyReview" resultType="review">
+		select review_no,member_nickname,review_title,review_content,ref_no,to_char(review_date, 'yyyy-mm-dd')as review_date 
+		from review_tbl 
+		join member_tbl using(member_no)
+		where member_no=#{memberNo} 
+	</select>
+
 	   
 	<insert id="reservationInn">
 		insert into inn_book_tbl values

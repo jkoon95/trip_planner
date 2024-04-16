@@ -1,0 +1,14 @@
+.myreview-item {
+  background-color: #f1f1f1;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+}
+.myreview-box-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}

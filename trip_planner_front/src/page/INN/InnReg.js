@@ -46,7 +46,6 @@ const InnReg = (props) => {
       form.append("innCheckInTime", innCheckInTime);
       form.append("innCheckOutTime", innCheckOutTime);
       form.append("innIntro", innIntro);
-      form.append("innInfo", innInfo);
       for (let i = 0; i < innFile.length; i++) {
         form.append("innFile", innFile[i]);
       }

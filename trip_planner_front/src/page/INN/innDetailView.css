@@ -282,21 +282,6 @@
   text-align: center;
 }
 
-/* 리뷰 */
-
-.review-top {
-  display: flex;
-
-  margin-bottom: 5px;
-}
-#review-title {
-  border: 1px solid var(--gray_03);
-  border-radius: 5px;
-}
-.review-box input {
-  text-indent: 10px;
-}
-
 /* 평점 */
 .inn-top {
   display: flex;
@@ -311,9 +296,49 @@
   margin-right: 0.1rem;
 }
 .inn-star-avg > div {
-  margin-left: 8%;
+  margin-left: 5px;
 }
 .inn-type span {
   font-family: pt-b;
   font-size: 120%;
+}
+.review-contents {
+  margin-bottom: 15px;
+}
+
+/* 리뷰작성펌 */
+
+.review-top {
+  display: flex;
+  margin-bottom: 5px;
+}
+#review-title {
+  border: 1px solid var(--gray_03);
+  border-radius: 5px;
+}
+.review-box input {
+  text-indent: 10px;
+}
+/* 리뷰 박스  */
+
+.review-item {
+  border-top: 1px solid #f1f1f1;
+  padding: 40px 20px;
+}
+.review-box-top > div:first-child {
+  font-family: pt-eb;
+  font-size: 120%;
+}
+.review-box-top {
+  display: flex;
+  justify-content: space-between;
+}
+.review-box-middle {
+  margin: 20px 0;
+}
+.review-box-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  color: var(--main_04);
 }

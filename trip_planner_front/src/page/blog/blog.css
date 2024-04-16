@@ -280,6 +280,10 @@ blog-list-box {
 .blog-view-title span {
   color: var(--main_04);
 }
+.blog-view-content img {
+  width: auto;
+  max-width: 100%;
+}
 .day-list:nth-child(1) {
   border-top: 5px solid #f1f1f1;
 }

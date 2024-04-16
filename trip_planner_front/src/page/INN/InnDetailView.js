@@ -37,6 +37,8 @@ const InnDetailView = (props) => {
   const [innReviewList, setInnReviewList] = useState([]);
   const navigate = useNavigate();
 
+  const [isRegistComment, setIsRegistComment] = useState(true);
+
   const getAverageReviewStar = () => {
     if (innReviewList.length === 0) {
       return 0; // 리뷰가 없을 경우 평균 별점을 0으로 반환
@@ -145,6 +147,7 @@ const InnDetailView = (props) => {
         .post(backServer + "/inn/innReview", form)
         .then((res) => {
           Swal.fire("등록되었습니다 :)");
+          setIsRegistComment(!isRegistComment);
         })
         .catch((res) => {
           console.log(res);
@@ -286,17 +289,20 @@ const InnDetailView = (props) => {
             ""
           )}
         </>
-        <div className="review-contents">
+        <div className="review-contents-wrap">
           {/* 리뷰제목 not null */}
-          <h3>리뷰</h3>
-          <div>
+          <div className="review-contents-box">
             {innReviewList.map((review, index) => (
               <div key={index} className="review-item">
-                <h4>{review.reviewTitle}</h4>
-                <Rating value={review.reviewStar} readOnly />
-                <p>{review.reviewContent}</p>
-                <p>작성자: {review.memberNickname}</p>
-                <p>작성일: {review.reviewDate}</p>
+                <div className="review-box-top">
+                  <div>제목 : {review.reviewTitle}</div>
+                  <Rating value={review.reviewStar} readOnly />
+                </div>
+                <div className="review-box-middle">{review.reviewContent}</div>
+                <div className="review-box-bottom">
+                  <div>{review.memberNickname}</div>
+                  <div>{review.reviewDate}</div>
+                </div>
               </div>
             ))}
           </div>

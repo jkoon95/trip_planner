@@ -130,5 +130,8 @@ public class InnService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("innReviewList",innReviewList);
 		return map;
+	}
+	public List selectMyInnReview(int memberNo) {
+		return innDao.selectInnMyReview(memberNo);
 	}	
 }

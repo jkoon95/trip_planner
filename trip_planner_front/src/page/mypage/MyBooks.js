@@ -232,7 +232,7 @@ const BookInnListItem = (props) => {
           ) : (
             <span className="badge red">예약취소</span>
           )}
-          {new Date(item.checkOutDate).toLocaleDateString("ko-KR") < new Date().toLocaleDateString("ko-KR") ? (
+          {new Date(item.checkOutDate) < new Date() ? (
             <span className="badge gray">이용완료</span>
           ) : (
             ""

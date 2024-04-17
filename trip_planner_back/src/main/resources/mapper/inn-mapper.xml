@@ -153,7 +153,7 @@
 			            book_guest, guest_name, guest_phone, to_char(book_date, 'yyyy-mm-dd') book_date, guest_wish
 			        from inn_book_tbl ib
 			    where member_no in
-			(select member_no from member_tbl where member_email=#{memberEmail}) order by check_in_date, inn_book_no desc)ibt) where rnum between #{start} and #{end}
+			(select member_no from member_tbl where member_email=#{memberEmail}) order by inn_book_no desc)ibt) where rnum between #{start} and #{end}
 	</select>
 	
 	<select id="totalCount" resultType="int">

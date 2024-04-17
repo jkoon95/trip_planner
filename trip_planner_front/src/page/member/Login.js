@@ -138,11 +138,12 @@ const Login = (props) => {
             </span>
           </div>
         </div>
-
+        {/*
         <div className="btn_area">
           <Button class="kakao" clickEvent={kakaoLogin}></Button>
           <Button class="naver" clickEvent={login}></Button>
         </div>
+  */}
         <div className="btn_area">
           <Button text="회원가입" class="btn_text" clickEvent={join}></Button>
           <Button text="로그인" class="btn_primary" clickEvent={login}></Button>

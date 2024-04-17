@@ -130,9 +130,9 @@
  	
  	<select id="checkRemainingSeat" resultType="int">
  		SELECT (promotion_limit - (
-        SELECT SUM(promotion_participants) 
-        FROM promotion_order_tbl 
-        WHERE promotion_no = #{promotionNo}
+        SELECT COALESCE(SUM(promotion_participants), 0) 
+		FROM promotion_order_tbl 
+		WHERE promotion_no = #{promotionNo}
     )) 
     FROM promotion_tbl 
     WHERE promotion_no = #{promotionNo}

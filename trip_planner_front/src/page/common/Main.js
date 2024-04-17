@@ -271,7 +271,7 @@ const Main = () => {
                     <div className="inn_info">
                       <div className="innType">{inn.innType === 1 ? '호텔' : inn.innType === 2 ? '리조트' : inn.innType === 3 ? '펜션' : '게스트하우스'}</div>
                       <div className="partnerName">{inn.partnerName}</div>
-                      <div className="reviewRate">{inn.reviewRate}</div>
+                      <div className="reviewRate">{Math.round(inn.reviewRate*10)*0.1}</div>
                     </div>
                   </Link>
                 </SwiperSlide>

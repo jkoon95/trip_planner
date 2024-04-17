@@ -39,6 +39,10 @@ const InnDetailView = (props) => {
 
   const [isRegistComment, setIsRegistComment] = useState(true);
 
+  useEffect(() => {
+    window.scrollTo({top: 0});
+  }, [])
+
   const getAverageReviewStar = () => {
     if (innReviewList.length === 0) {
       return 0; // 리뷰가 없을 경우 평균 별점을 0으로 반환

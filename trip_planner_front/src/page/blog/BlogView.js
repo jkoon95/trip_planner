@@ -22,6 +22,10 @@ const BlogView = (props) => {
   const [isRegistComment, setIsRegistComment] = useState(true);
 
   useEffect(() => {
+    window.scrollTo({top: 0});
+  }, [])
+
+  useEffect(() => {
     axios
       .get(backServer + "/blogComment/commentList/" + blogNo)
       .then((res) => {

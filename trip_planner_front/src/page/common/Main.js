@@ -202,7 +202,7 @@ const Main = () => {
               return(
                 <SwiperSlide key={"promotion"+i}>
                   <Link to={"/promotionView/"+promotion.promotionNO}>
-                    <img src={backServer + "/promotion/promotionList/" + promotion.promotionImg} />
+                    <img src={backServer + "/promotion/promotionThumbnail/" + promotion.promotionImg} />
                     <div className="promotion_info">
                       {/* <div className="promotionRegion">{promotion.promotionRegion}</div> */}
                       <div className="promotionIntro">{promotion.promotionIntro}</div>

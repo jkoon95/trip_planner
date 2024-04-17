@@ -258,7 +258,8 @@ blog-list-box {
 .blog-view-top {
   overflow: hidden;
   line-height: 300px;
-  margin: 20px 0;
+  /* margin: 20px 0; */
+  padding: 24px 0;
   text-align: center;
 }
 .blog-view-top img {
@@ -268,7 +269,9 @@ blog-list-box {
   float: left;
   border: 5px solid #f1f1f1;
 }
-
+.blog-view-content{
+  padding: 60px 0;
+}
 .blog-view-title {
   font-family: pt-eb;
   font-size: 150%;
@@ -285,42 +288,46 @@ blog-list-box {
   max-width: 100%;
 }
 .day-list:nth-child(1) {
-  border-top: 5px solid #f1f1f1;
+  /* border-top: 1px solid #000; */
 }
 .day-list {
-  padding: 80px;
+  /* padding: 80px; */
 }
 .day-titie-box {
   width: 100%;
+  padding: 20px 0;
+  /* border-bottom: 1px solid var(--line_02); */
+  border-radius: 8px;
+  background-color: var(--main_03);
+  font-size: 24px;
   text-align: center;
 }
-.day-titie-box .schedule-title {
-  text-align: left;
-  margin-top: 30px;
+.day-titie-box > span{
+  font-family: pt-eb;
 }
 .blog-date-day {
   color: var(--main_02);
   font-family: pt-l;
   font-size: 100%;
 }
-.blog-date-day-view {
-  font-size: 150%;
-  border-bottom: 1px solid #f1f1f1;
-  border-top: 1px solid #f1f1f1;
-  padding: 15px 0;
-}
-.blog-date-day-view span {
-  color: var(--main_02);
-  font-family: pt-eb;
-}
 .schedule-title {
+  padding: 16px 0;
+  /* border-top: 1px solid var(--line_02); */
   color: var(--main_02);
   font-size: 100%;
-  margin: 0 auto;
 }
 .schedule-title span {
   color: var(--main_04);
   font-family: pt-eb;
+}
+.schedule-content.ql-editor{
+  min-height: 500px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line_02);
+  /* border-bottom: 1px solid var(--line_02); */
+}
+.day-content + .day-content{
+  border-top: 1px solid var(--line_02);
 }
 .date-day {
   color: var(--main_02);

@@ -37,7 +37,25 @@ const BlogView = (props) => {
       .then((res) => {
         console.log(res.data.data);
         setBlog(res.data.data.blog);
-        setlist(res.data.data.list);
+        const arr = res.data.data.list;
+        const array = new Array();
+        for(let i=0;i<arr.length;i++){
+          if(i == 0){
+            const innerArray = new Array();
+            innerArray.push(arr[i]);
+            array.push(innerArray);
+          }else{
+            if(arr[i].blogDateDay === arr[i-1].blogDateDay){
+              array[array.length-1].push(arr[i]);
+            }else{
+              const innerArray = new Array();
+              innerArray.push(arr[i]);
+              array.push(innerArray);
+            }
+          }
+        }
+        console.log(array);
+        setlist(array);
       })
       .catch((res) => {
         console.log(res);
@@ -135,7 +153,7 @@ const BlogView = (props) => {
         </div>
         <div className="blog-view-content">
           {list.map((day, index) => {
-            return <DayItem key={"list" + index} day={day} />;
+            return <DayItem key={"list" + index} day={day} index={index} />;
           })}
         </div>
         <div className="btn-area">
@@ -194,23 +212,27 @@ const BlogView = (props) => {
 
 const DayItem = (props) => {
   const day = props.day;
+  const index = props.index;
   console.log(day);
+
   return (
     <div className="day-list">
       <div className="day-titie-box">
-        <span className="blog-date-day-view">
-          🚕 Day <span>{day.blogDateDay + 1}</span> 💨
-        </span>
-
-        <br></br>
-        <p className="schedule-title">
-          <span>일정 제목</span> : {day.blogDateScheduleTitle}
-        </p>
-      </div>
-      <span
-        className="schedule-content ql-editor"
-        dangerouslySetInnerHTML={{ __html: day.blogDateScheduleContent }}
-      ></span>
+        Day <span>{index + 1}</span>
+      </div>  
+      {day.map((dayDetail, i)=>{
+        return (
+          <div key={"detail"+i} className="day-content">
+            <div className="schedule-title">
+              <span>일정 제목</span> : {dayDetail.blogDateScheduleTitle}
+            </div>
+            <div
+              className="schedule-content ql-editor"
+              dangerouslySetInnerHTML={{ __html: dayDetail.blogDateScheduleContent }}
+            ></div>
+          </div>
+        )
+      })}
     </div>
   );
 };

@@ -229,7 +229,11 @@ const CommentItem = (props) => {
     updateComment.commentContent = value;
     setUpdateComment({ ...updateComment });
   };
-
+  useEffect(() => {
+    if (!openComment) {
+      setUpdateComment({ ...comment });
+    }
+  }, [openComment, comment]);
   const openCommentFunc = () => {
     setOpenComment(true);
   };

@@ -288,7 +288,7 @@ blog-list-box {
   border-top: 5px solid #f1f1f1;
 }
 .day-list {
-  padding-top: 50px;
+  padding: 80px;
 }
 .day-titie-box {
   width: 100%;
@@ -337,7 +337,9 @@ blog-list-box {
   background-color: var(--main_02);
   color: #fff;
 }
-
+.comment-content-box {
+  margin-top: 30px;
+}
 .comment-content-box input {
   width: 85%;
   float: left;

@@ -323,7 +323,7 @@
 
 .review-item {
   border-top: 1px solid #f1f1f1;
-  padding: 40px 20px;
+  padding: 40px 200px;
 }
 .review-box-top > div:first-child {
   font-family: pt-eb;
@@ -340,5 +340,8 @@
   display: flex;
   justify-content: flex-end;
   gap: 20px;
-  color: var(--main_04);
+}
+.review-box-bottom > div:first-child {
+  color: var(--main_02);
+  font-family: pt-l;
 }

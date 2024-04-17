@@ -125,35 +125,49 @@ const InnDetailView = (props) => {
   }, [room, innNo]);
 */
   }
-  useEffect(() => {
-    axios(backServer + "/inn/innReviewList/" + innNo)
+  useEffect(() => {}, []);
+  axios(backServer + "/inn/innReviewList/" + innNo)
+    .then((res) => {
+      console.log(res.data.data.innReviewList);
+      console.log(res.data.data);
+      setInnReviewList(res.data.data.innReviewList);
+    })
+    .catch((res) => {
+      console.log(res);
+    });
+  const insertReview = () => {
+    const form = new FormData();
+    if (reviewTitle === "" || reviewContent === "") {
+      Swal.fire("리뷰 제목과 내용을 입력해주세요.");
+      return;
+    }
+    form.append("reviewStar", reviewStar);
+    form.append("reviewTitle", reviewTitle);
+    form.append("reviewContent", reviewContent);
+    form.append("innNo", innNo);
+    axios
+      .post(backServer + "/inn/innReview", form)
       .then((res) => {
-        console.log(res.data.data.innReviewList);
-        console.log(res.data.data);
-        setInnReviewList(res.data.data.innReviewList);
+        Swal.fire("등록되었습니다 :)");
+        setIsRegistComment(!isRegistComment);
+
+        axios(backServer + "/inn/innReviewList/" + innNo)
+          .then((res) => {
+            console.log(res.data.data.innReviewList);
+            console.log(res.data.data);
+            setInnReviewList(res.data.data.innReviewList);
+          })
+          .catch((res) => {
+            console.log(res);
+          });
       })
       .catch((res) => {
         console.log(res);
+        Swal.fire("모든항목을 입력해주시기바랍니다.");
       });
-  }, []);
-  const insertReview = () => {
-    const form = new FormData();
-    if (reviewContent && reviewTitle !== null) {
-      form.append("reviewStar", reviewStar);
-      form.append("reviewTitle", reviewTitle);
-      form.append("reviewContent", reviewContent);
-      form.append("innNo", innNo);
-      axios
-        .post(backServer + "/inn/innReview", form)
-        .then((res) => {
-          Swal.fire("등록되었습니다 :)");
-          setIsRegistComment(!isRegistComment);
-        })
-        .catch((res) => {
-          console.log(res);
-          Swal.fire("모든항목을 입력해주시기바랍니다.");
-        });
-    }
+
+    setReviewTitle("");
+    setReviewContent("");
   };
   return (
     <section className="contents detail-view">

@@ -323,7 +323,7 @@
 
 .review-item {
   border-top: 1px solid #f1f1f1;
-  padding: 40px 200px;
+  padding: 40px 10px;
 }
 .review-box-top > div:first-child {
   font-family: pt-eb;
@@ -335,6 +335,10 @@
 }
 .review-box-middle {
   margin: 20px 0;
+  border: 1px solid var(--gray_04);
+  border-radius: 5px;
+  padding: 20px 0;
+  text-indent: 10px;
 }
 .review-box-bottom {
   display: flex;
@@ -344,4 +348,16 @@
 .review-box-bottom > div:first-child {
   color: var(--main_02);
   font-family: pt-l;
+}
+.btn_area.deleteReview {
+  margin: 0;
+}
+.btn_area.deleteReview button {
+  margin: 0;
+  color: var(--main_02);
+  border: 1px solid var(--main_02);
+}
+.btn_area.deleteReview button:hover {
+  background-color: var(--main_02);
+  color: #fff;
 }

@@ -116,7 +116,12 @@
 		join member_tbl using(member_no)
 		where member_no=#{memberNo} 
 	</select>
-
+	<delete id="deleteReview">
+		delete from review_tbl where review_no = #{reviewNo}
+	</delete>
+	
+	
+	
 	   
 	<insert id="reservationInn">
 		insert into inn_book_tbl values

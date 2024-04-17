@@ -19,7 +19,7 @@ const InnDetailView = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const isLogin = props.isLogin;
   const [partnerName, setPartnerName] = useState("");
-  const [roomNo] = useState({});
+  const [member, setMember] = useState("");
   const [inn, setInn] = useState("");
   const [room, setRoom] = useState([]);
   const [innFile, setInnFile] = useState([]);
@@ -51,6 +51,18 @@ const InnDetailView = (props) => {
     return averageStar.toFixed(1); // 소수점 첫째 자리까지만 표시
   };
   const averageReviewStar = getAverageReviewStar();
+
+  useEffect(() => {
+    axios
+      .get(backServer + "/member")
+      .then((res) => {
+        console.log(res.data.data);
+        setMember(res.data.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -125,16 +137,17 @@ const InnDetailView = (props) => {
   }, [room, innNo]);
 */
   }
-  useEffect(() => {}, []);
-  axios(backServer + "/inn/innReviewList/" + innNo)
-    .then((res) => {
-      console.log(res.data.data.innReviewList);
-      console.log(res.data.data);
-      setInnReviewList(res.data.data.innReviewList);
-    })
-    .catch((res) => {
-      console.log(res);
-    });
+
+  useEffect(() => {
+    axios(backServer + "/inn/innReviewList/" + innNo)
+      .then((res) => {
+        setInnReviewList(res.data.data.innReviewList);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }, []);
+
   const insertReview = () => {
     const form = new FormData();
     if (reviewTitle === "" || reviewContent === "") {
@@ -153,8 +166,6 @@ const InnDetailView = (props) => {
 
         axios(backServer + "/inn/innReviewList/" + innNo)
           .then((res) => {
-            console.log(res.data.data.innReviewList);
-            console.log(res.data.data);
             setInnReviewList(res.data.data.innReviewList);
           })
           .catch((res) => {
@@ -168,6 +179,28 @@ const InnDetailView = (props) => {
 
     setReviewTitle("");
     setReviewContent("");
+  };
+  const deleteReview = (review) => {
+    const reviewNo = review.reviewNo;
+    Swal.fire({
+      icon: "warning",
+      text: "리뷰를 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancleButtonText: "취소",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axios
+          .delete(backServer + "/inn/deleteReview/" + reviewNo)
+          .then((res) => {
+            Swal.fire("삭제되었습니다 :)");
+            setIsRegistComment(!isRegistComment);
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
+    });
   };
   return (
     <section className="contents detail-view">
@@ -288,6 +321,7 @@ const InnDetailView = (props) => {
                   setData={setReviewContent}
                   placeholder="평점을 입력하고 숙소에 대한 리뷰를 남겨주세요 :)"
                 />
+
                 <div className="btn_area">
                   <button
                     type="button"
@@ -316,6 +350,19 @@ const InnDetailView = (props) => {
                 <div className="review-box-bottom">
                   <div>{review.memberNickname}</div>
                   <div>{review.reviewDate}</div>
+                  {isLogin &&
+                    member &&
+                    member.memberNickName === review.memberNickname && (
+                      <div className="btn_area deleteReview">
+                        <button
+                          type="button"
+                          className="btn_primary outline sm"
+                          onClick={() => deleteReview(review)}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    )}
                 </div>
               </div>
             ))}
@@ -438,10 +485,19 @@ const RoomItem = (props) => {
                 <div>(1박 기준) </div>
               </div>
             </div>
-            <button type="button" className="btn_primary" onClick={reserveInn}>
-              {/* rommNo를 예약페이지로 보내주기*/}
-              객실 예약
-            </button>
+            <>
+              {isLogin ? (
+                <button
+                  type="button"
+                  className="btn_primary"
+                  onClick={reserveInn}
+                >
+                  객실 예약
+                </button>
+              ) : (
+                ""
+              )}
+            </>
           </div>
         </div>
       </div>

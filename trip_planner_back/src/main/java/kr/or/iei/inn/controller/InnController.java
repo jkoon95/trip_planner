@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -239,6 +240,17 @@ public class InnController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
+	@DeleteMapping(value="/deleteReview/{reviewNo}")
+	public ResponseEntity<ResponseDTO> deleteReview(@PathVariable int reviewNo){
+		int result = innService.deleteReview(reviewNo);
+		if(result > 1) {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		} else {
+			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
+			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
+		}
+	}
 	//숙소상세페이지 끝
 	
 	

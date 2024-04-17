@@ -71,5 +71,7 @@ public interface InnDao {
 
 	int cancelInnLike(int memberNo, int innNo);
 
+	int deleteReview(int reviewNo);
+
 
 }

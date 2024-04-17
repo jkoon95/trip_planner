@@ -38,7 +38,7 @@ public class JwtUtil {
 					.parseClaimsJws(token)
 					.getBody().getExpiration().before(new Date());
 	}
-	//매개변수로 토큰을 받아서 회원 아이디값을 추출하는 메소드
+	//매개변수로 토큰을 받아서 회원 이메일값을 추출하는 메소드
 	public String getMemberEmail(String token) {
 		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
 		return Jwts.parserBuilder()

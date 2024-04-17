@@ -10,7 +10,7 @@ public interface MemberDao {
 
 	Member login(Member member);
 
-	Member kakaoLogin(Member member);
+	Member kakaoLogin(String memberEmail);
 
 	Member selectOneMember(String memberEmail);
 

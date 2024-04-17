@@ -24,17 +24,22 @@ public class MemberService {
 	public String login(Member member) {
 		Member m = memberDao.selectOneMember(member.getMemberEmail());
 		if(m != null  && bCryptPasswordEncoder.matches(member.getMemberPw(), m.getMemberPw())) {
-			long expiredDateMs = 60*60*1000l;
-			String accessToken = jwtUtil.createToken(member.getMemberEmail(), expiredDateMs);
-			return accessToken;
+			if(m.getMemberStatus() == 2) {
+				String accessToken = "block";
+				return accessToken;
+			}else {				
+				long expiredDateMs = 60*60*1000l;
+				String accessToken = jwtUtil.createToken(member.getMemberEmail(), expiredDateMs);
+				return accessToken;
+			}
 		}else {			
 			return null;
 		}
 	}
 
-	public Member kakaoLogin(Member member) {
-		System.out.println(member);
-		return memberDao.kakaoLogin(member);
+	public Member kakaoLogin(String memberEmail) {
+		System.out.println(memberEmail);
+		return memberDao.kakaoLogin(memberEmail);
 	}
 	
 	public Member selectOneMember(String memberEmail) {

@@ -227,6 +227,7 @@ const ListSideMenu = (props) => {
             content="innAddr"
             data={innAddr}
             setData={setInnAddr}
+            placeholder="지역명 및 숙소이름으로 입력해주세요"
           />
         </div>
         <div className="search-day">
@@ -368,6 +369,7 @@ const SearchInput = (props) => {
   const content = props.content;
   const data = props.data;
   const setData = props.setData;
+  const placeholder = props.placeholder;
   const chageData = (e) => {
     setData(e.target.value);
   };
@@ -378,6 +380,7 @@ const SearchInput = (props) => {
       id={content}
       value={data}
       onChange={chageData}
+      placeholder={placeholder}
     />
   );
 };

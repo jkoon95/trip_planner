@@ -59,6 +59,38 @@
     border-top-right-radius: 20px;
   }
 
+  /*업체관리*/
+.contents.partnerMgmt .partnerMgmt_wrap{
+  width: 1200px;
+}
+
+.contents.partnerMgmt .partnerMgmt-tbl{
+  width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contents.partnerMgmt .partnerMgmt-tbl>thead{
+  background-color: rgba(244, 245, 239, 0.3);
+  outline: 1px solid #e9511c;
+}
+
+.contents.partnerMgmt tr {
+  height: 50px;
+  line-height: 50px;
+}
+
+.contents.partnerMgmt tbody > tr:hover {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid #c1c1c1;
+}
+
+.contents.partnerMgmt thead > tr {
+  background-color: rgba(244, 245, 239, 0.3);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
   .contents.memberMgmtView .memberMgmtView-title{
     position: relative;
   }
@@ -91,5 +123,7 @@
     display: flex;
     justify-content: center;
   }
+
+
 
 

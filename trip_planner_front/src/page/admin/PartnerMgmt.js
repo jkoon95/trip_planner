@@ -56,7 +56,6 @@ const PartnerMgmt = ({ member, isLogin }) => {
                 <td width={"20%"}>상호명</td>
                 <td width={"20%"}>업체 전화번호</td>
                 <td width={"20%"}>업체 유형</td>
-                <td width={"20%"}>승인여부</td>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +96,7 @@ const PartnerMgmtItem = (props) => {
       </td>
       <td>{partnerItem.partnerTel}</td>
       <td>{partnerItem.partnerType === 1 ? "숙소" : "레저"}</td>
+      {/*
       {partnerItem.partnerStatus === 1 ? (
         <td>
           <span className="badge blue">승인</span>
@@ -106,6 +106,7 @@ const PartnerMgmtItem = (props) => {
           <span className="badge red">미승인</span>
         </td>
       )}
+    */}
     </tr>
   );
 };

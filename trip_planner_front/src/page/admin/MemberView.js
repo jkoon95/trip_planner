@@ -151,19 +151,9 @@ const MemberView = ({ isLogin, memberType }) => {
           clickEvent={blockMember}
         />
         <Button
-          text="관리자로 승급"
+          text="관리자 등업"
           class="btn_primary outline block_btn"
           clickEvent={adminMember}
-        />
-        <Button
-          text="쿠폰 부여"
-          class="btn_secondary block_btn"
-          clickEvent={setCoupon}
-        />
-        <Button
-          text="체크"
-          class="btn_secondary block_btn"
-          clickEvent={Check}
         />
       </div>
     </section>

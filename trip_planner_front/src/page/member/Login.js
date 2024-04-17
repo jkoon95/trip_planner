@@ -145,11 +145,7 @@ const Login = (props) => {
         </div>
         */}
         <div className="btn_area">
-          {/* <Button
-            text="회원가입"
-            class="btn_primary outline"
-            clickEvent={join}
-          ></Button> */}
+          <Button text="회원가입" class="btn_text" clickEvent={join}></Button>
           <Button text="로그인" class="btn_primary" clickEvent={login}></Button>
         </div>
       </div>

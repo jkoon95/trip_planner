@@ -76,10 +76,10 @@ const Login = (props) => {
           window.Kakao.API.request({
             url: "/v2/user/me",
             success: (res) => {
-              const form = new FormData();
-              form.append("memberEmail", res.kakao_account.email);
+              const kakaoMemberEmail = res.kakao_account.email;
+              console.log(kakaoMemberEmail);
               axios
-                .post(backServer + "/member/kakaoLogin", form)
+                .post(backServer + "/kakaoLogin/" + kakaoMemberEmail)
                 .then((res) => {
                   if (res.data.message === "success") {
                     loginFunction(res.data.data);
@@ -138,12 +138,11 @@ const Login = (props) => {
             </span>
           </div>
         </div>
-        {/*
+
         <div className="btn_area">
           <Button class="kakao" clickEvent={kakaoLogin}></Button>
           <Button class="naver" clickEvent={login}></Button>
         </div>
-        */}
         <div className="btn_area">
           {/* <Button
             text="회원가입"

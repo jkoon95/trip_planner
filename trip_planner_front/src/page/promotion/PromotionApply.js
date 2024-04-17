@@ -176,7 +176,7 @@ const PromotionApply = (props) => {
       <div className="btn_area">
         <Button
           class="btn_secondary"
-          text="프로모션 파일 등록"
+          text="프로모션 등록"
           clickEvent={applyPromotion}
         ></Button>
       </div>

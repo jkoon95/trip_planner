@@ -37,9 +37,21 @@ public class MemberService {
 		}
 	}
 
-	public Member kakaoLogin(String memberEmail) {
-		System.out.println(memberEmail);
-		return memberDao.kakaoLogin(memberEmail);
+	public String kakaoLogin(String kakaoMemberEmail) {
+		Member m = memberDao.selectOnekakaoMember(kakaoMemberEmail);
+		System.out.println(m);
+		if(m != null) {
+			if(m.getMemberStatus() == 2) {
+				String accessToken = "block";
+				return accessToken;
+			}else {				
+				long expiredDateMs = 60*60*1000l;
+				String accessToken = jwtUtil.createToken(kakaoMemberEmail, expiredDateMs);
+				return accessToken;
+			}
+		}else {			
+			return null;
+		}
 	}
 	
 	public Member selectOneMember(String memberEmail) {

@@ -27,4 +27,8 @@
 	<update id="updateMember">
 		update member_tbl set member_pw=#{memberPw}, member_name=#{memberName}, member_nickname=#{memberNickName}, member_phone=#{memberPhone} where member_no = #{memberNo}
 	</update>
+	
+	<select id="selectOnekakaoMember" resultType="member">
+		select * from member_tbl where member_email=#{kakaoMemberEmail}
+	</select>
 </mapper>

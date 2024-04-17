@@ -52,10 +52,10 @@ public class MemberController {
 		}
 	}
 	
-	@PostMapping(value="/kakaoLogin")
-	public ResponseEntity<ResponseDTO> kakaoLogin(@ModelAttribute Member member){
-		System.out.println(member);
-		String accessToken = memberService.login(member);
+	@PostMapping(value="/kakaoLogin/{kakaoMemberEmail}")
+	public ResponseEntity<ResponseDTO> kakaoLogin(@PathVariable String kakaoMemberEmail){
+		System.out.println(kakaoMemberEmail);
+		String accessToken = memberService.kakaoLogin(kakaoMemberEmail);
 		System.out.println(accessToken);
 		if(accessToken != null) {
 			if(accessToken.equals("block")) {

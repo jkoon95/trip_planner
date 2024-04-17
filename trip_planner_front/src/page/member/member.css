@@ -71,6 +71,7 @@
 
 .b_auth{
     width: 120px;
+    height: 50px;
 }
 
 .contents.login #password-input{

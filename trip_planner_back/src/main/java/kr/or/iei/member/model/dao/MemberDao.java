@@ -27,4 +27,6 @@ public interface MemberDao {
 
 	int updateMember(Member member);
 
+	Member selectOnekakaoMember(String kakaoMemberEmail);
+
 }

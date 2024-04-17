@@ -116,7 +116,7 @@ const BusinessAuth = (isLogin) => {
           />
           <Button
             text="사업자 인증"
-            class="btn_primary b_auth"
+            class="btn_primary outline b_auth"
             clickEvent={businessAuthApi}
           ></Button>
         </div>

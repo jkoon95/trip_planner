@@ -57,3 +57,7 @@
 .inn-like-zone > .inn-like-box > .inn-like-view-btn > .inn-view-btn {
   width: 20px;
 }
+.review-star-box > .review-star {
+  border: 1px solid gold;
+  padding: 3px;
+}

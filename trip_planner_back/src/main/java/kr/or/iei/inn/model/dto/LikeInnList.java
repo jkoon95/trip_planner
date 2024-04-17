@@ -20,4 +20,6 @@ public class LikeInnList {
 	private int innType;
 	private String filePath;
 	private String innAddr;
+	private int reviewStar;
+	private int likeCount;
 }

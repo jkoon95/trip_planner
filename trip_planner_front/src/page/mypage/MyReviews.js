@@ -26,6 +26,7 @@ const MyReviews = (props) => {
   return (
     <div className="myreview-contents-box">
       <h3>리뷰 목록</h3>
+      <p>✅ 리뷰박스를 누르시면 리뷰를 작성한 숙소페이지로 이동됩니다.</p>
       {innReviewList &&
         innReviewList.map((review, index) => (
           <div

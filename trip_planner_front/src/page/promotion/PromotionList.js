@@ -94,6 +94,19 @@ const PromotionList = (props) => {
 
   return (
     <section className="contents promotion">
+      {member.memberType === 2 && (
+        <Button
+          class="btn_primary"
+          text="프로모션 신청"
+          clickEvent={applyPromotion}
+        />
+      )}
+      <ButtonGroup variant="contained" aria-label="Basic button group">
+        <Button onClick={region}>지역순</Button>
+        <Button onClick={price}>가격순</Button>
+        <Button onClick={deadline}>마감순</Button>
+      </ButtonGroup>
+      {/*
       <div className="input_wrap">
         <div className="input_item">
           <input
@@ -106,11 +119,7 @@ const PromotionList = (props) => {
           <button className="btn_search" onClick={search} />
         </div>
       </div>
-      <ButtonGroup variant="contained" aria-label="Basic button group">
-        <Button onClick={region}>지역순</Button>
-        <Button onClick={price}>가격순</Button>
-        <Button onClick={deadline}>마감순</Button>
-      </ButtonGroup>
+    */}
       <div className="promotion_content_wrap">
         {promotionList.map((promotion, index) => {
           return (
@@ -125,13 +134,6 @@ const PromotionList = (props) => {
           setReqPage={setReqPage}
         />
       </div>
-      {member.memberType === 2 && (
-        <Button
-          class="btn_primary"
-          text="프로모션 신청"
-          clickEvent={applyPromotion}
-        />
-      )}
     </section>
   );
 };
@@ -168,5 +170,3 @@ const PromotionItem = (props) => {
 };
 
 export default PromotionList;
-
-const Loading = () => {};

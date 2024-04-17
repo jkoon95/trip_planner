@@ -56,7 +56,7 @@ const BlogWrite = () => {
           Swal.fire({
             icon: "error",
             title: "ERROR",
-            text: "입력란을 확인하세요 :)",
+            text: "대표사진 및 입력란을 확인해주세요 :)",
           });
         });
     }

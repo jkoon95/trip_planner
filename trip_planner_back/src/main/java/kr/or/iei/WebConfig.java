@@ -59,7 +59,8 @@ public class WebConfig implements WebMvcConfigurer{
 				.excludePathPatterns("/member/login","/member/join","/member/nickName/*","/member/email/*","/member/businessAuth",
 						"/blog/list/*","/tour/thumbnail/*","/tour/intronail/*","/tour","/tour/tourSearch","/tour/tourType","/tour/view/*","/tour/reviewList/*","/tour/topTour",
 						"/blog/editor/*","/inn/innList/*","/blog/blogThumbnail/*","/blog/one/*","/inn/reservationInn/*","/inn/innFileList/*","/inn/innFileRoomList/*",
-            "/blog/main/*","/inn/main/*","/promotion/main/*","/promotion/promotionThumbnail/**");
+            "/blog/main/*","/inn/main/*","/promotion/main/*","/promotion/promotionThumbnail/**","/inn/detail/*","/inn/roomInfo/*","/inn/innFile/*","/inn/innFileRoom/*","/inn/partnerName/*",
+            "/inn/hashTag/*","/inn/optionList/*","/inn/innReview/","/inn/innReviewList/*");
 		
 	}
 	

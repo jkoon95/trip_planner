@@ -120,6 +120,7 @@ public class InnService {
 	public List<Inn> selectMainInnList() {
 		return innDao.selectMainInnList();
 	}
+	@Transactional
 	public int insertInnReview(Review review, String memberEmail) {
 		int memberNo = innDao.searchMember(memberEmail);
 		review.setMemberNo(memberNo);
@@ -143,5 +144,9 @@ public class InnService {
 	@Transactional
 	public int cancelInnLike(int memberNo, int innNo) {
 		return innDao.cancelInnLike(memberNo, innNo);
+	}
+	@Transactional
+	public int deleteReview(int reviewNo) {
+		return innDao.deleteReview(reviewNo);
 	}	
 }

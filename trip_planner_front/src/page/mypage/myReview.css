@@ -1,11 +1,16 @@
+.myreview-contents-box > p {
+  color: var(--main_02);
+}
+
 .myreview-item {
   background-color: #f1f1f1;
-  margin-bottom: 20px;
+  margin: 20px 0;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   padding: 20px;
   border-radius: 10px;
+  width: 80%;
 }
 .myreview-box-right {
   display: flex;

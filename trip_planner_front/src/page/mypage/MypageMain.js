@@ -46,74 +46,76 @@ const MypageMain = (props) => {
   }
 
   useEffect(() => {
-    if(isLogin){
+    if (isLogin) {
       axios
-      .get(backServer + "/member")
-      .then((res) => {
-        // console.log(res.data.data);
-        setMember(res.data.data);
-        setCurrMemberType(res.data.data.memberType);
-        if (res.data.data.memberType === 3) {
-          //관리자로 로그인 시
-          setMenus([
-            { url: "admin/memberMgmt", text: "회원 관리", active: true },
-            { url: "admin/partnerMgmt", text: "업체 관리", active: false },
-            { url: "promotionMgmt", text: "프로모션 관리", active: false },
-            { url: "admin/couponReg", text: "쿠폰 등록", active: false },
-          ]);
-          // navigate("/mypage/"+menus[0].url);
-        } else if (res.data.data.memberType === 2) {
-          //업체로 로그인 시
-          axios
-            .get(backServer + "/partner/" + res.data.data.memberNo)
-            .then((res2) => {
-              // console.log(res2.data.data);
-              setCurrPartnerType(res2.data.data.partnerType);
-              if (res2.data.data !== null && res2.data.data.partnerType === 1) {
-                //숙소
-                setMenus([
-                  { url: "innReg", text: "숙소 등록", active: true },
-                  { url: "roomReg", text: "방 등록", active: false },
-                  { url: "innMgmt", text: "숙소 관리", active: false },
-                  { url: "bookMgmt", text: "예약 관리", active: false },
-                ]);
-                // navigate("/mypage/"+menus[0].url);
-              } else if (
-                res2.data.data !== null &&
-                res2.data.data.partnerType === 2
-              ) {
-                //투어
-                setMenus([
-                  { url: "tour/mgmt", text: "투어 예약관리", active: true },
-                  { url: "tour/reg", text: "투어 상품등록", active: false },
-                  { url: "tour/sale", text: "투어 상품조회", active: false },
-                  { url: "myInfo", text: "내 정보 수정", active: false },
-                ]);
-                // navigate("/mypage/"+menus[0].url);
-              } else {
-                //업체인데 등록한 업체가 없을 경우
-                axios
-                  .get(backServer + "/member")
-                  .then((res) => {
-                    navigate("/businessAuth/", {
-                      state: { memberEmail: res.data.data.memberEmail },
+        .get(backServer + "/member")
+        .then((res) => {
+          // console.log(res.data.data);
+          setMember(res.data.data);
+          setCurrMemberType(res.data.data.memberType);
+          if (res.data.data.memberType === 3) {
+            //관리자로 로그인 시
+            setMenus([
+              { url: "admin/memberMgmt", text: "회원 관리", active: true },
+              { url: "admin/partnerMgmt", text: "업체 관리", active: false },
+              { url: "admin/couponReg", text: "쿠폰 등록", active: false },
+            ]);
+            // navigate("/mypage/"+menus[0].url);
+          } else if (res.data.data.memberType === 2) {
+            //업체로 로그인 시
+            axios
+              .get(backServer + "/partner/" + res.data.data.memberNo)
+              .then((res2) => {
+                // console.log(res2.data.data);
+                setCurrPartnerType(res2.data.data.partnerType);
+                if (
+                  res2.data.data !== null &&
+                  res2.data.data.partnerType === 1
+                ) {
+                  //숙소
+                  setMenus([
+                    { url: "innReg", text: "숙소 등록", active: true },
+                    { url: "roomReg", text: "방 등록", active: false },
+                    { url: "innMgmt", text: "숙소 관리", active: false },
+                    { url: "bookMgmt", text: "예약 관리", active: false },
+                  ]);
+                  // navigate("/mypage/"+menus[0].url);
+                } else if (
+                  res2.data.data !== null &&
+                  res2.data.data.partnerType === 2
+                ) {
+                  //투어
+                  setMenus([
+                    { url: "tour/mgmt", text: "투어 예약관리", active: true },
+                    { url: "tour/reg", text: "투어 상품등록", active: false },
+                    { url: "tour/sale", text: "투어 상품조회", active: false },
+                    { url: "myInfo", text: "내 정보 수정", active: false },
+                  ]);
+                  // navigate("/mypage/"+menus[0].url);
+                } else {
+                  //업체인데 등록한 업체가 없을 경우
+                  axios
+                    .get(backServer + "/member")
+                    .then((res) => {
+                      navigate("/businessAuth/", {
+                        state: { memberEmail: res.data.data.memberEmail },
+                      });
+                    })
+                    .catch((res) => {
+                      console.log(res);
                     });
-                  })
-                  .catch((res) => {
-                    console.log(res);
-                  });
-              }
-            })
-            .catch((res2) => {
-              console.log(res2);
-            });
-        } else {
-          //회원으로 로그인 시
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
+                }
+              })
+              .catch((res2) => {
+                console.log(res2);
+              });
+          } else {
+            //회원으로 로그인 시
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+        });
     }
   }, [isLogin]);
 

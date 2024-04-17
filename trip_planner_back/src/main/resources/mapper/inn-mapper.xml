@@ -233,7 +233,9 @@
 			     AND ref_no = inn.inn_no) review_count
 			FROM inn_tbl inn
 			WHERE 
-			INN_ADDR LIKE '%'||#{innAddr}||'%' 
+			INN_ADDR||(SELECT partner_name 
+			     FROM partner_tbl p 
+			     WHERE inn.partner_no = p.partner_no) LIKE '%'||#{innAddr}||'%' 
 			AND 
 			    (SELECT COUNT(room_max_people) 
 			    FROM room_tbl r 
@@ -324,7 +326,9 @@
 		    inn_check_out_time,
 		    (select partner_name from partner_tbl where inn.partner_no = partner_no) partner_name,
 		    (select min(room_price) from room_tbl where inn.inn_no = inn_no) min_room_price,
-		    (SELECT inn_filepath  FROM inn_file_tbl innfile  WHERE inn.inn_no = innfile.inn_no  AND ROWNUM = 1) as file_path
+		    (SELECT inn_filepath  FROM inn_file_tbl innfile  WHERE inn.inn_no = innfile.inn_no  AND ROWNUM = 1) as file_path,
+		    (SELECT avg(review_star) FROM review_tbl WHERE review_type=1 AND ref_no = inn.inn_no) review_star,
+		    (SELECT COUNT(*) FROM like_tbl WHERE like_type=1 AND ref_no = inn.inn_no) like_count	      
 		from inn_tbl inn 
 		where inn_no in (select ref_no from like_tbl where member_no = #{memberNo})
 	</select>

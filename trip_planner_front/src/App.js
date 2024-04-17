@@ -104,7 +104,7 @@ function App() {
           />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/join" element={<Join />} />
-          <Route path="/innList" element={<InnList />} />
+          <Route path="/innList" element={<InnList isLogin={isLogin} />} />
           <Route path="/innReg" element={<InnReg isLogin={isLogin} />} />
           <Route path="/roomReg" element={<RoomReg />} />
           <Route path="/blogList" element={<BlogList isLogin={isLogin} />} />

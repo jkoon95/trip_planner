@@ -9,6 +9,8 @@ import InnDetailView from "./InnDetailView";
 import Swal from "sweetalert2";
 
 const InnList = (props) => {
+  const naviGate = useNavigate();
+  const isLogin = props.isLogin;
   const location = useLocation();
   if (location.state == null) {
     const defaultPlace = "";
@@ -73,7 +75,16 @@ const InnList = (props) => {
   const [pageInfo, setPageInfo] = useState({});
   useEffect(() => {
     searchInn();
-  }, [minPrice, maxPrice, selectSort, reqPage, innType]);
+  }, [minPrice, maxPrice, selectSort, reqPage, innType, hashTag, option]);
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      title: "로그인 후 이용이 가능합니다.",
+      confirmButtonText: "닫기",
+    }).then(() => {
+      naviGate("/");
+    });
+  }
   const searchInn = () => {
     if (innAddr && checkInDate && checkOutDate && bookGuest) {
       const searchInnList = {
@@ -231,11 +242,15 @@ const InnList = (props) => {
             </div>
           </div>
           <div className="inn-Page">
-            <Pagination
-              pageInfo={pageInfo}
-              reqPage={reqPage}
-              setReqPage={setReqPage}
-            />
+            {innAddr == "" ? (
+              ""
+            ) : (
+              <Pagination
+                pageInfo={pageInfo}
+                reqPage={reqPage}
+                setReqPage={setReqPage}
+              />
+            )}
           </div>
         </div>
       </div>

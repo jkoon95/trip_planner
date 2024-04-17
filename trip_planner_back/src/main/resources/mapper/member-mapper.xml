@@ -5,7 +5,7 @@
 		select * from member_tbl where member_email=#{memberEmail} and member_pw=#{memberPw}
 	</select>
 	<select id="kakaoLogin" resultType="member">
-		SELECT * FROM member_tbl WHERE member_email = #{memberId}||'@'||#{memberDomain}	
+		SELECT * FROM member_tbl WHERE member_email = #{memberId}	
 	</select>
 	<select id="selectOneMember" resultType="member">
 		select * from member_tbl where member_email=#{memberEmail}

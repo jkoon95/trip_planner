@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +37,15 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody Member member){
 		String accessToken = memberService.login(member);
+		System.out.println(accessToken);
 		if(accessToken != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			if(accessToken.equals("block")) {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "block", null);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}else {				
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
@@ -46,11 +53,18 @@ public class MemberController {
 	}
 	
 	@PostMapping(value="/kakaoLogin")
-	public ResponseEntity<ResponseDTO> kakaoLogin(@RequestBody Member member){
-		Member m = memberService.kakaoLogin(member);
-		if(m != null) {
-			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", m);
-			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+	public ResponseEntity<ResponseDTO> kakaoLogin(@ModelAttribute Member member){
+		System.out.println(member);
+		String accessToken = memberService.login(member);
+		System.out.println(accessToken);
+		if(accessToken != null) {
+			if(accessToken.equals("block")) {
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "block", null);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}else {				
+				ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", accessToken);
+				return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());
+			}
 		}else {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "fail", null);
 			return new ResponseEntity<ResponseDTO>(response, response.getHttpStatus());

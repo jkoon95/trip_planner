@@ -26,6 +26,7 @@
 		            tour_no,
 		            tour_name,
 		            tour_img,
+		            tour_type,
 		            sales_count,
 		            sales_status,
 		            to_char(sales_period,'yyyy-mm-dd') as sales_period

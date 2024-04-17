@@ -83,7 +83,7 @@ const TourBook = (props) => {
     if (quantity.child !== 0) {
       total += quantity.child * ticket.ticketChild;
     }
-    return total.toLocaleString("ko-KR");
+    return `${total}`;
   };
 
   const [termsChecked, setTermsChecked] = useState({
@@ -161,6 +161,7 @@ const TourBook = (props) => {
           buyer_addr: member.memberAddr, // 구매자 주소
         };
         IMP.request_pay(data, (rsp) => {
+          console.log(rsp);
           // callback
           if (rsp.success) {
             // console.log("결제 성공");

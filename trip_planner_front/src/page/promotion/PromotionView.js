@@ -6,15 +6,15 @@ import Swal from "sweetalert2";
 
 const PromotionView = (props) => {
   const member = props.member;
+  const memberNo = member.memberNo;
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const promotionNo = params.promotionNo;
   const [promotion, setPromotion] = useState({});
   const [seat, setSeat] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [remainingSeat, setRemaingSeat] = useState(0);
+  const [remainingSeat, setRemainingSeat] = useState(0);
   const navigate = useNavigate();
-
   useEffect(() => {
     axios
       .post(backServer + "/promotion/selectOnePromotion/" + promotionNo)
@@ -23,55 +23,83 @@ const PromotionView = (props) => {
       })
       .catch((res) => {});
   }, [promotionNo]);
-  const check = () => {
-    console.log(totalPrice);
-    console.log(seat);
-    console.log(promotion);
-  };
+  console.log(promotion);
+  console.log(member);
   const changeData = (e) => {
     setSeat(e.target.value);
     setTotalPrice(promotion.promotionPrice * e.target.value);
   };
 
   const purchasePromotion = () => {
-    const formData = new FormData();
-    formData.append("promotion", promotion);
-    formData.append("member", member);
-    //먼저 남은인원 체크
-    axios
-      .post(backServer + "/promotion/checkRemainingSeat/" + promotionNo)
-      .then((res) => {
-        setRemaingSeat(res.data.data);
-        //남은 인원보다 구매 인원이 많으면 거부
-        if (seat > res.data.data) {
+    const dateString = new Date().toISOString();
+    const { IMP } = window;
+    IMP.init("imp82445436");
+
+    IMP.request_pay(
+      {
+        pg: "danal_tpay.9810030929",
+        pay_method: "card",
+        merchant_uid: "product_no_" + dateString,
+        name: "주문명:결제테스트",
+        amount: 100,
+        buyer_email: member.memberEmail,
+        buyer_name: member.memberName,
+        buyer_tel: member.memberPhone,
+        buyer_addr: member.memberAddr,
+      },
+      function (rsp) {
+        if (rsp.success) {
           Swal.fire({
-            icon: "warning",
-            text: `잔여인원보다 많습니다. 잔여인원은 ${res.data.data}명 입니다.`,
-            confirmButtonText: "닫기",
+            title: "결제 완료",
+            text: "결제가 완료되었습니다.",
+            icon: "success",
           });
-        } else {
-          //구매 제한 안걸리면 주문
+
+          //먼저 남은인원 체크
           axios
-            .post(backServer + "/promotion/purchasePromotion/" + seat, formData)
+            .post(backServer + "/promotion/checkRemainingSeat/" + promotionNo)
             .then((res) => {
-              if (res.data.message === "success") {
+              setRemainingSeat(res.data.data);
+
+              //남은 인원보다 구매 인원이 많으면 거부
+              if (seat > res.data.data) {
                 Swal.fire({
-                  icon: "success",
-                  text: "주문 성공",
+                  icon: "warning",
+                  text: `잔여인원보다 많습니다. 잔여인원은 ${res.data.data}명 입니다.`,
                   confirmButtonText: "닫기",
                 });
-                navigate("/promotion/promotionList");
+              } else {
+                //구매 제한 안걸리면 주문
+                const formData = new FormData();
+                formData.append("promotionNo", promotionNo);
+                formData.append("memberNo", memberNo);
+                formData.append("seat", seat);
+
+                axios
+                  .post(backServer + "/promotion/purchasePromotion", formData)
+                  .then((res) => {
+                    if (res.data.message === "success") {
+                      Swal.fire({
+                        icon: "success",
+                        text: "주문 성공",
+                        confirmButtonText: "닫기",
+                      });
+                      navigate("/promotion/promotionList");
+                    }
+                  })
+                  .catch((res) => {
+                    console.log(res);
+                  });
               }
             })
             .catch((res) => {
               console.log(res);
             });
         }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
+      }
+    );
   };
+
   return (
     <section className="contents promotion">
       <div className="promotionView-wrap">

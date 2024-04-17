@@ -28,6 +28,7 @@ import kr.or.iei.inn.model.dto.InnFile;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.promotion.model.dto.PromotionFile;
+import kr.or.iei.promotion.model.dto.PromotionOrder;
 import kr.or.iei.promotion.model.service.PromotionService;
 import kr.or.iei.tour.model.dto.TourBook;
 import kr.or.iei.util.FileUtils;
@@ -97,11 +98,9 @@ public class PromotionController {
 		return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());
 	}
 	
-	@PostMapping("/purchasePromotion/{seat}")
-	public ResponseEntity<ResponseDTO> purchasePromotion(@ModelAttribute Member member, @ModelAttribute Promotion promotion,@PathVariable int seat){
-		int memberNo = member.getMemberNo();
-		int promotionNo = promotion.getPromotionNo();
-		int result = promotionService.purchasePromotion(promotionNo, memberNo, seat);
+	@PostMapping("/purchasePromotion")
+	public ResponseEntity<ResponseDTO> purchasePromotion(@ModelAttribute PromotionOrder promotionOrder){
+		int result = promotionService.purchasePromotion(promotionOrder);
 		if(result > 0) {
 			ResponseDTO response = new ResponseDTO(200, HttpStatus.OK, "success", result);
 			return new ResponseEntity<ResponseDTO>(response,response.getHttpStatus());

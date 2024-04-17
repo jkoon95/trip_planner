@@ -13,6 +13,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dao.PromotionDao;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.promotion.model.dto.PromotionFile;
+import kr.or.iei.promotion.model.dto.PromotionOrder;
 import kr.or.iei.util.PageInfo;
 import kr.or.iei.util.Pagination;
 
@@ -89,12 +90,6 @@ public class PromotionService {
 		return promotionDao.checkRemainingSeat(promotionNo);
 	}
 
-	@Transactional
-	public int purchasePromotion(int promotionNo, int memberNo, int seat) {
-		// TODO Auto-generated method stub
-		return promotionDao.purchasePromotion(promotionNo, memberNo, seat);
-	}
-
 	public List<Promotion> selectMainPromotionList() {
 		return promotionDao.selectMainPromotionList();
 	}
@@ -108,6 +103,11 @@ public class PromotionService {
 		}
 		
 		return result;
+	}
+	@Transactional
+	public int purchasePromotion(PromotionOrder promotionOrder) {
+		// TODO Auto-generated method stub
+		return promotionDao.purchasePromotion(promotionOrder);
 	}
 	
 	/*

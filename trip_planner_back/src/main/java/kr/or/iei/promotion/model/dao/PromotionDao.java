@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.promotion.model.dto.Promotion;
 import kr.or.iei.promotion.model.dto.PromotionFile;
+import kr.or.iei.promotion.model.dto.PromotionOrder;
 import kr.or.iei.util.PageInfo;
 
 @Mapper
@@ -36,8 +37,6 @@ public interface PromotionDao {
 
 	int checkRemainingSeat(int promotionNo);
 
-	int purchasePromotion(int promotionNo, int memberNo, int seat);
-
 	List<Promotion> selectMainPromotionList();
 
 	int applyPromotion(Promotion promotion);
@@ -45,5 +44,7 @@ public interface PromotionDao {
 	int applyPromotionFile(MultipartFile promotionFile);
 
 	int applyPromotionFile(PromotionFile promotionFile);
+
+	int purchasePromotion(PromotionOrder promotionOrder);
 
 }

@@ -25,11 +25,16 @@ const Login = (props) => {
               icon: "success",
             });
             navigate("/");
+          } else if (res.data.message === "block") {
+            Swal.fire({
+              title: "이용정지중입니다",
+              icon: "warning",
+            });
           } else {
             Swal.fire({
               title: "로그인 실패",
               text: "아이디/비밀번호를 확인하세요",
-              icon: "fail",
+              icon: "warning",
             });
           }
         })
@@ -71,11 +76,10 @@ const Login = (props) => {
           window.Kakao.API.request({
             url: "/v2/user/me",
             success: (res) => {
-              const kakaoEmail = res.kakao_account.email;
-              const obj = kakaoEmail.split("@");
-              const arr = { memberId: obj[0], memberDomain: obj[1] };
+              const form = new FormData();
+              form.append("memberEmail", res.kakao_account.email);
               axios
-                .post(backServer + "/member/kakaoLogin", arr)
+                .post(backServer + "/member/kakaoLogin", form)
                 .then((res) => {
                   if (res.data.message === "success") {
                     loginFunction(res.data.data);
@@ -134,16 +138,14 @@ const Login = (props) => {
             </span>
           </div>
         </div>
+        {/*
         <div className="btn_area">
           <Button class="kakao" clickEvent={kakaoLogin}></Button>
           <Button class="naver" clickEvent={login}></Button>
         </div>
+        */}
         <div className="btn_area">
-          {/* <Button
-            text="회원가입"
-            class="btn_primary outline"
-            clickEvent={join}
-          ></Button> */}
+          <Button text="회원가입" class="btn_text" clickEvent={join}></Button>
           <Button text="로그인" class="btn_primary" clickEvent={login}></Button>
         </div>
       </div>

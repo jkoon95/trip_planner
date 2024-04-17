@@ -44,7 +44,7 @@
 }
 
 /* layout */
-html{font-family: pt-r; scroll-behavior: smooth;}
+html{font-family: pt-r;}
 .hidden{position: absolute; left: -9999%; font-size: 0; line-height: 0; text-indent: -9999%; overflow: hidden;}
 /* .scroll_fixed{position: fixed; left: 0; right: 0; top: 0; bottom: 0;} */
 

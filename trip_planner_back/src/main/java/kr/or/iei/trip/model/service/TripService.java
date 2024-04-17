@@ -134,6 +134,9 @@ public class TripService {
 					//기존 날짜에 장소가 있는 경우 
 					System.out.println("기존 날짜에 장소가 있는 경우");
 					for(TripPlace tp : td.getSelectPlaceList()) {
+						System.out.println("----------------------------------------------------------------------------------");
+						System.out.println(tp);
+						System.out.println("----------------------------------------------------------------------------------");
 						//기존 날짜에 장소가 새로 추가된 경우
 						if(tp.getTripDetailNo() == 0) {
 							System.out.println("기존 날짜에 장소가 새로 추가된 경우");
@@ -156,7 +159,7 @@ public class TripService {
 								System.out.println("oldTripRoute와 : "+tp.getOldTripRoute());
 								System.out.println("detailNo로 : "+tp.getTripDetailNo());
 								deleteTpResult += tripDao.deleteTripPlace(tp);
-							}else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != 0 && (tp.getOldTripRoute() != tp.getTripRoute())) {
+							}else if(tp.getDelNo() != 1 && tp.getOldTripRoute() != 0 && (tp.getOldTripRoute() != tp.getTripRoute()) && tp.getOldTripDay() == null) {
 								System.out.println("순서 변경했을 때");
 								System.out.println(tp.getTripPlaceName()+"oldTripRoute: "+tp.getOldTripRoute());
 								System.out.println("tripRoute: "+tp.getTripRoute());
@@ -211,9 +214,12 @@ public class TripService {
 				}
 			}
 			//모든게 끝나고 난 후 tripDetail 빈거 정리
-			System.out.println("모든게 끝나고 난 후 tripDetail 빈거 정리");
-			lastResult = tripDao.deleteTripDay(td);
 		}
+		System.out.println("모든게 끝나고 난 후 tripDetail 빈거 정리");
+		System.out.println("*************************************************************************");
+		System.out.println(trip);
+		System.out.println("*************************************************************************");
+		lastResult = tripDao.deleteTripDay(trip);
 		
 		//일정 추가시 결과 리턴
 		if(insertTdLength == insertTdResult && insertTpLength == insertTpResult) {

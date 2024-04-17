@@ -127,7 +127,7 @@ const ModifyTrips = (props) => {
 
       //if(tripDetailList.length != 0){
         const tripObj = {tripNo: tripNo, tripStartDate: trip.tripStartDate, tripEndDate: trip.tripEndDate, tripDetailList: trip.tripDetailList, tripDetailListStr: JSON.stringify(trip.tripDetailList)};
-
+        console.log(tripObj);
         axios.patch(backServer + "/trip/tripDetailTbl", tripObj)
         .then((res) => {
           console.log("디테일 수정 axios!!!!!");
@@ -309,6 +309,28 @@ const ModifyTrips = (props) => {
     myInfoWindows.length = 0;
     setMyInfoWindows([...myInfoWindows]);
   }
+
+  //맵루트번호 초기화 함수
+  function removeMapRoute(){
+    for (let i=0; i<mapRoutes.length; i++) {
+      mapRoutes[i].setMap(null);
+    }   
+    mapRoutes.length = 0;
+    setMapRoutes([...mapRoutes]);
+  }
+  //맵루트라인 초기화 함수들
+  function removeLinePath(){
+    linePath.length = 0;
+    setLinePath([...linePath]);
+  }
+  function removePolyline(){
+    for (let i=0; i<polylines.length; i++) {
+      polylines[i].setMap(null);
+    }   
+    polylines.length = 0;
+    setPolylines([...polylines]);
+  }
+  console.log(myMarkers);
   
   //최초 지도 세팅
   useEffect(() => {
@@ -400,7 +422,7 @@ const ModifyTrips = (props) => {
         paginationEl.removeChild(paginationEl.lastChild);
       }
 
-      for (i=1; i <= pagination.last; i++) {
+      for(i=1; i <= pagination.last; i++) {
         let el = document.createElement('a');
         el.href = "#";
         el.innerHTML = i;
@@ -410,6 +432,10 @@ const ModifyTrips = (props) => {
         } else {
           el.onclick = (function (i) {
             return function () {
+              removeMarker();
+              removeInfoWindow();
+              removeMyMarker();
+              removeMyInfoWindow();
               pagination.gotoPage(i);
             }
           })(i);
@@ -432,8 +458,8 @@ const ModifyTrips = (props) => {
       removeInfoWindow();
       removeMyMarker();
       removeMyInfoWindow();
-      removeLinePath();
-      removePolyline();
+      // removeLinePath();
+      // removePolyline();
 
       placeResultList.forEach((place, index) => {
         bounds.extend(new kakao.maps.LatLng(place.tripPlaceLat, place.tripPlaceLng));
@@ -562,27 +588,27 @@ const ModifyTrips = (props) => {
       })
     }
 
-    //맵루트번호 초기화 함수
-    function removeMapRoute(){
-      for (let i=0; i<mapRoutes.length; i++) {
-        mapRoutes[i].setMap(null);
-      }   
-      mapRoutes.length = 0;
-      setMapRoutes([...mapRoutes]);
-    }
-    //맵루트라인 초기화 함수들
-    function removeLinePath(){
-      linePath.length = 0;
-      setLinePath([...linePath]);
-    }
-    function removePolyline(){
-      for (let i=0; i<polylines.length; i++) {
-        polylines[i].setMap(null);
-      }   
-      polylines.length = 0;
-      setPolylines([...polylines]);
-    }
-    console.log(myMarkers);
+    // //맵루트번호 초기화 함수
+    // function removeMapRoute(){
+    //   for (let i=0; i<mapRoutes.length; i++) {
+    //     mapRoutes[i].setMap(null);
+    //   }   
+    //   mapRoutes.length = 0;
+    //   setMapRoutes([...mapRoutes]);
+    // }
+    // //맵루트라인 초기화 함수들
+    // function removeLinePath(){
+    //   linePath.length = 0;
+    //   setLinePath([...linePath]);
+    // }
+    // function removePolyline(){
+    //   for (let i=0; i<polylines.length; i++) {
+    //     polylines[i].setMap(null);
+    //   }   
+    //   polylines.length = 0;
+    //   setPolylines([...polylines]);
+    // }
+    // console.log(myMarkers);
   }, [map, trip, openSearchWrap, searchPlaces])
 
   /* datepicker */

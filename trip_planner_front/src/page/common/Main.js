@@ -202,7 +202,7 @@ const Main = () => {
               return(
                 <SwiperSlide key={"promotion"+i}>
                   <Link to={"/promotionView/"+promotion.promotionNO}>
-                    <img src={backServer + "/promotion/promotionList/" + promotion.promotionImg} />
+                    <img src={backServer + "/promotion/promotionThumbnail/" + promotion.promotionImg} />
                     <div className="promotion_info">
                       {/* <div className="promotionRegion">{promotion.promotionRegion}</div> */}
                       <div className="promotionIntro">{promotion.promotionIntro}</div>
@@ -271,7 +271,7 @@ const Main = () => {
                     <div className="inn_info">
                       <div className="innType">{inn.innType === 1 ? '호텔' : inn.innType === 2 ? '리조트' : inn.innType === 3 ? '펜션' : '게스트하우스'}</div>
                       <div className="partnerName">{inn.partnerName}</div>
-                      <div className="reviewRate">{inn.reviewRate}</div>
+                      <div className="reviewRate">{Math.round(inn.reviewRate*10)*0.1}</div>
                     </div>
                   </Link>
                 </SwiperSlide>

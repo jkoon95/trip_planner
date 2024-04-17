@@ -37,6 +37,7 @@ const MyLikes = (props) => {
       });
   }, []);
 
+  // 숙소 찜 목록 불러오기
   useEffect(() => {
     axios
       .get(backServer + "/mypage/likeInnList/" + memberNo)

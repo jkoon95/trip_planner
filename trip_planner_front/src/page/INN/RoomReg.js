@@ -39,50 +39,61 @@ const RoomReg = (props) => {
   console.log(optionList);
   const roomWrite = () => {
     console.log("방등록 시작");
-    console.log(roomFile);
-    console.log(roomName);
-    console.log(roomMaxPeople);
-    console.log(roomPrice);
-    console.log(hashTagOption);
-    console.log(newOptionValue);
-    const form = new FormData();
-    form.append("roomName", roomName);
-    form.append("roomMinPeople", roomMinPeople);
-    form.append("roomMaxPeople", roomMaxPeople);
-    form.append("roomPrice", roomPrice);
-    for (let i = 0; i < hashTagOption.length; i++) {
-      form.append("hashTagName", hashTagOption[i]);
-    }
-    for (let i = 0; i < newOptionValue.length; i++) {
-      form.append("optionNo", newOptionValue[i]);
-    }
-    for (let i = 0; i < roomFile.length; i++) {
-      form.append("innFile", roomFile[i]);
-    }
-    axios
-      .post(backServer + "/inn/roomReg", form, {
-        Headers: {
-          contentType: "multipart/form-data",
-          processType: false,
-        },
-      })
-      .then((res) => {
-        if (res.data.message === "success") {
+    if (
+      roomFile != "" &&
+      roomName != "" &&
+      roomMaxPeople != 0 &&
+      roomMinPeople != 0 &&
+      roomPrice != 0 &&
+      hashTagOption != []
+    ) {
+      console.log(roomFile);
+      console.log(roomName);
+      console.log(roomMaxPeople);
+      console.log(roomPrice);
+      console.log(hashTagOption);
+      console.log(newOptionValue);
+      const form = new FormData();
+      form.append("roomName", roomName);
+      form.append("roomMinPeople", roomMinPeople);
+      form.append("roomMaxPeople", roomMaxPeople);
+      form.append("roomPrice", roomPrice);
+      for (let i = 0; i < hashTagOption.length; i++) {
+        form.append("hashTagName", hashTagOption[i]);
+      }
+      for (let i = 0; i < newOptionValue.length; i++) {
+        form.append("optionNo", newOptionValue[i]);
+      }
+      for (let i = 0; i < roomFile.length; i++) {
+        form.append("innFile", roomFile[i]);
+      }
+      axios
+        .post(backServer + "/inn/roomReg", form, {
+          Headers: {
+            contentType: "multipart/form-data",
+            processType: false,
+          },
+        })
+        .then((res) => {
+          if (res.data.message === "success") {
+            Swal.fire({
+              title: "객실 등록 완료",
+              text: "객실 등록이 완료되었습니다.",
+              icon: "success",
+            });
+            naviGate("/mypage");
+          }
+        })
+        .catch((res) => {
           Swal.fire({
-            title: "객실 등록 완료",
-            text: "객실 등록이 완료되었습니다.",
-            icon: "success",
+            title: "객실 등록 실패",
+            text: "잠시 후 다시 시도해주세요.",
+            icon: "error",
           });
-          naviGate("/mypage");
-        }
-      })
-      .catch((res) => {
-        Swal.fire({
-          title: "객실 등록 실패",
-          text: "잠시 후 다시 시도해주세요.",
-          icon: "error",
         });
-      });
+    } else {
+      Swal.fire("입력양식을 모두 작성해주세요");
+    }
   };
   return (
     <div className="room-reg-all-wrap">

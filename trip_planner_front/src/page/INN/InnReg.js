@@ -22,14 +22,6 @@ const InnReg = (props) => {
 
   const write = () => {
     const backServer = process.env.REACT_APP_BACK_SERVER;
-    console.log("숙소 등록쓰");
-    console.log(innType);
-    console.log(innAddr);
-    console.log(innInfo);
-    console.log(innCheckInTime);
-    console.log(innCheckOutTime);
-    console.log(innIntro);
-    console.log(innFile);
     if (
       innType !== 0 &&
       innAddr !== "" &&
@@ -67,6 +59,8 @@ const InnReg = (props) => {
         .catch((res) => {
           console.log(res);
         });
+    } else {
+      Swal.fire("입력양식을 모두 작성해주세요");
     }
   };
   return (

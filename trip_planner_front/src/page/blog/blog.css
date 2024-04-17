@@ -269,7 +269,7 @@ blog-list-box {
   float: left;
   border: 5px solid #f1f1f1;
 }
-.blog-view-content{
+.blog-view-content {
   padding: 60px 0;
 }
 .blog-view-title {
@@ -302,7 +302,7 @@ blog-list-box {
   font-size: 24px;
   text-align: center;
 }
-.day-titie-box > span{
+.day-titie-box > span {
   font-family: pt-eb;
 }
 .blog-date-day {
@@ -320,13 +320,13 @@ blog-list-box {
   color: var(--main_04);
   font-family: pt-eb;
 }
-.schedule-content.ql-editor{
-  min-height: 500px;
+.schedule-content.ql-editor {
+  min-height: 300px;
   padding: 24px 0;
   border-top: 1px solid var(--line_02);
   /* border-bottom: 1px solid var(--line_02); */
 }
-.day-content + .day-content{
+.day-content + .day-content {
   border-top: 1px solid var(--line_02);
 }
 .date-day {

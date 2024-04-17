@@ -363,53 +363,51 @@ const BookPromotionListItem = (props) => {
 
   return (
     <li className="bookItem">
-      <Link to={"/mypage/"}>
-        <div className="item_top_wrap">
-          <div className="item_name">
-            <span className="badge orange">{item.promotionType}</span>{" "}
-            {item.promotionName}
+      <div className="item_top_wrap">
+        <div className="item_name">
+          <span className="badge orange">{item.promotionType}</span>{" "}
+          {item.promotionName}
+        </div>
+        <div className="badges">
+          {new Date(item.promotionExpiredDate) < new Date() ? (
+            <span className="badge gray">이용완료</span>
+          ) : (
+            <span className="badge green">이용가능</span>
+          )}
+        </div>
+      </div>
+      <div className="item_contents_wrap">
+        <div className="item_thumbs">
+          {item.promotionImg !== "null" ? (
+            <img
+              src={
+                backServer +
+                "/promotion/promotionThumbnail/" +
+                item.promotionImg
+              }
+              alt="상품 썸네일"
+            ></img>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="item_details">
+          <div className="row">
+            <div className="title">주문 번호</div>
+            <div className="cont">{item.orderNo}</div>
           </div>
-          <div className="badges">
-            {new Date(item.promotionExpiredDate.toLocaleDateString("ko-KR")) < new Date().toLocaleDateString("ko-KR") ? (
-              <span className="badge gray">이용완료</span>
-            ) : (
-              <span className="badge green">이용가능</span>
-            )}
+          <div className="row">
+            <div className="title">가격</div>
+            <div className="cont">
+              <span>{item.promotionPrice}</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="title">만료 기한</div>
+            <div className="cont">{item.promotionExpiredDate}</div>
           </div>
         </div>
-        <div className="item_contents_wrap">
-          <div className="item_thumbs">
-            {item.promotionImg !== "null" ? (
-              <img
-                src={
-                  backServer +
-                  "/promotion/promotionThumbnail/" +
-                  item.promotionImg
-                }
-                alt="상품 썸네일"
-              ></img>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="item_details">
-            <div className="row">
-              <div className="title">주문 번호</div>
-              <div className="cont">{item.orderNo}</div>
-            </div>
-            <div className="row">
-              <div className="title">가격</div>
-              <div className="cont">
-                <span>{item.promotionPrice}</span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="title">만료 기한</div>
-              <div className="cont">{item.promotionExpiredDate}</div>
-            </div>
-          </div>
-        </div>
-      </Link>
+      </div>
     </li>
   );
 };

@@ -1,6 +1,7 @@
 package kr.or.iei;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,8 @@ import kr.or.iei.util.LoginInterceptor;
 public class WebConfig implements WebMvcConfigurer{
 	@Autowired
 	private LoginInterceptor loginInterceptor;
+	@Value("${file.root}")
+	private String root;
 
 
 	@Override
@@ -28,28 +31,28 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
 		.addResourceHandler("/blog/editor/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
+		.addResourceLocations("file:///"+root+"/blogEditor/");
 		registry
 		.addResourceHandler("/blog/blogThumbnail/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/blogEditor/");
+		.addResourceLocations("file:///"+root+"/blogEditor/");
 		registry
 		.addResourceHandler("/inn/innFileList/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
+		.addResourceLocations("file:///"+root+"/inn/");
 		registry
 		.addResourceHandler("/inn/innFileRoomList/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/room/");
+		.addResourceLocations("file:///"+root+"/room/");
 		registry
 		.addResourceHandler("/tour/thumbnail/**","/tour/intronail/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/tour/");
+		.addResourceLocations("file:///"+root+"/tour/");
 		registry
 		.addResourceHandler("/inn/reservationInn/**","/inn/innList/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/inn/");
+		.addResourceLocations("file:///"+root+"/inn/");
 		registry
 		.addResourceHandler("/promotion/promotionThumbnail/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/promotion/");
+		.addResourceLocations("file:///"+root+"/promotion/");
 		registry
 		.addResourceHandler("/notice/editor/**")
-		.addResourceLocations("file:///C:/Temp/trip_planner/notice/");
+		.addResourceLocations("file:///"+root+"/notice/");
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
